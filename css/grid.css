@@ -1,0 +1,154 @@
+.gridder {
+/*   background-color: #15171E; */
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  list-style-type: none;
+}
+.gridder-list,
+.gridder-show {
+  font-size: 16px;
+}
+.gridder-navigation {
+	display: none;
+}
+.gridder-list {
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+}
+.gridder-show {
+  position: relative;
+  display: block;
+  float: left;
+  width: 100%;
+}
+.gridder-content {
+  display: none;
+}
+.gridder-list {
+  width: 25%;
+}
+
+.gridder-list img {
+  width: 100%;
+/*   opacity: .8; */
+}
+.gridder-list a,
+.gridder-list .fa-chevron-down {
+  opacity: 0;
+  transition: opacity 0.55s ease-in-out;
+  -moz-transition: opacity 0.55s ease-in-out;
+  -webkit-transition: opacity 0.55s ease-in-out;
+  font-size: 3.5em;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+}
+.gridder-list .fa-chevron-down {
+  font-size: 2.5em !important;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+}
+.gridder-list:hover img {
+  opacity: 1;
+  cursor: pointer;
+}
+.gridder-list:hover a {
+  font-size: 3.5em !important;
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.8;
+  transition: opacity 0.55s ease-in-out;
+  -moz-transition: opacity 0.55s ease-in-out;
+  -webkit-transition: opacity 0.55s ease-in-out;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+}
+.gridder-list:hover .fa-play-circle-o {
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.55s ease-in-out;
+  -moz-transition: all 0.55s ease-in-out;
+  -webkit-transition: all 0.55s ease-in-out;
+}
+.gridder-list:hover .fa-play-circle-o:hover {
+  color: rgba(48, 152, 100, 0.7);
+  transition: all 0.55s ease-in-out;
+  -moz-transition: all 0.55s ease-in-out;
+  -webkit-transition: all 0.55s ease-in-out;
+}
+.gridder-list:hover .fa-chevron-down {
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.8;
+  transition: all 0.55s ease-in-out;
+  -moz-transition: all 0.55s ease-in-out;
+  -webkit-transition: all 0.55s ease-in-out;
+  font-size: 2.5em !important;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+}
+.gridder-list:hover .fa-chevron-down:hover {
+  color: rgba(48, 152, 100, 0.7);
+  transition: all 0.55s ease-in-out;
+  -moz-transition: all 0.55s ease-in-out;
+  -webkit-transition: all 0.55s ease-in-out;
+  cursor: pointer;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+}
+.gridder-list:nth-of-type(6n) {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.og-expander-inner {
+	position: relative;
+	overflow: hidden;
+
+}
+/*
+.og-fullimg {
+    position: relative;
+    text-align: center;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+}
+*/
+.og-fullimg .channel-poster {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 500px;
+
+    &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: red url('http://placehold.it/900x506');
+  }
+}
+@media (max-width: 1100px) {
+  .gridder-list {
+    width: 33.33%;
+  }
+}
+@media (max-width: 868px) {
+  .gridder-list {
+    width: 50%;
+  }
+  
+}
+@media (max-width: 560px) {
+  .gridder-list {
+    width: 100%;
+  }
+  .og-fullimg .channel-poster {
+  	visibility: hidden;
+    min-height: 200px;
+  	
+  } 
+}
