@@ -13,7 +13,11 @@ require_once("functions.php");
 
 require_once("ds-templates.php");
 
-require_once("update.php");
+require 'updater/plugin-update-checker.php';
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'stoicbuddha.com/dotstudioz/api/updatetest.php',
+    __FILE__
+);
 
 $uri = $_SERVER['REQUEST_URI'];
 
