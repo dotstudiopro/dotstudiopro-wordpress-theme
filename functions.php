@@ -172,6 +172,25 @@ function list_categories(){
 	
 }
 
+function channel_revision_check(){
+	
+	global $wpdb, $post;
+	
+	$results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type = 'revision' AND post_parent = " . $post->ID);
+	
+	if(count($results) > 0){
+		
+		return TRUE;
+		
+	} else {
+		
+		return FALSE;
+		
+	}
+	
+}
+
+
 function grab_channel(){
 	
 	global $ds_curl;
@@ -619,8 +638,8 @@ function ds_channel_is_parent(){
 		
 	} 
 	
-	$results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_parent = " . $post->ID);
-	
+	$results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type != 'revision' AND post_parent = " . $post->ID);
+		
 	if(count($results) > 0){
 		
 		return TRUE;
@@ -730,6 +749,12 @@ function channels_check(){
 	
 	
 	foreach($channels as $c){
+		
+		if(!isset($c->categories[0]->slug)){
+			
+			continue;
+			
+		}
 		
 		$slug = rtrim(ltrim($c->slug,'-'),'-');
 					

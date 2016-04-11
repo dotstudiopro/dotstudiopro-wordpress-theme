@@ -219,8 +219,10 @@ function curl_command($command, $args = array()){
 		$channel_parent = $channel_check_grab->ID;
 	
 		$channel_grandparent = wp_get_post_parent_id( $post->post_parent );
+		
+		$revision = channel_revision_check();
 				
-		if($channel_grandparent == $channel_parent){
+		if($channel_grandparent == $channel_parent && !$revision){
 						
 			$parent = get_post($post->post_parent);
 			
@@ -228,7 +230,9 @@ function curl_command($command, $args = array()){
 						
 		} else {
 			
-			$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$post->post_name."/?detail=partial";
+			$postname = $post->post_name;
+			
+			$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$postname."/?detail=partial";
 			
 		}
 		

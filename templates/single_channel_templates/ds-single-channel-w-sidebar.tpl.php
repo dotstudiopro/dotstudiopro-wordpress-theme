@@ -63,7 +63,7 @@ get_header();
 		
 		}
 		
-
+		
 
 		if(is_array($channel) && count($channel) > 0){
 		
@@ -77,6 +77,7 @@ get_header();
 		<?php if($siblings && strlen($siblings) < 1){ ?>
 			<li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
 		<?php } ?>
+		<li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
 		
 		<li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
 	</ul>
@@ -186,6 +187,17 @@ get_header();
 	</div>
 	<div id='ds-tab-3' class='ds-tab-content'>
 		<?php echo $siblings;?>
+	</div>
+	<div id='ds-tab-4' class='ds-tab-content'>
+	
+	<?php 
+	
+	global $post;
+	
+	echo $post->post_content;
+	
+	?>
+	
 	</div>
 	<div class='ds-commenting-sidebar'>
 	<?php ds_template_fb_code(); ?>

@@ -122,9 +122,6 @@ function igrab_channel(){
 			
 		}
 		
-		
-		
-				
 		$company = $videos[0]->company;
 		
 		$channel_title = $title = $videos[0]->title;
@@ -137,7 +134,7 @@ function igrab_channel(){
 		
 		$directors = $videos[0]->directors;
 		
-		$image_id = $playlist = $videos[0]->video->thumb;
+		$image_id = $playlist = $videos[0]->videos_thumb;
 	
 		$playlist = $videos[0]->playlist;
 	
@@ -183,7 +180,7 @@ function igrab_channel(){
 			
 		}
 		
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $videos[0]->video->thumb);
+		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $videos[0]->videos_thumb);
 		
 		
 		return $to_return;

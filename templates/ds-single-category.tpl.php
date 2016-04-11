@@ -1,11 +1,5 @@
-<?php get_header();
+<?php get_header(); ?>
 
-
-
-
-
-
-?>
 <div id="main">
 	<ul class="gridder">
 
@@ -30,15 +24,15 @@
 					
 			$id =  $ch->_id;
 		
-			$thumb_id = isset( $ch->video->thumb) ?  $ch->video->thumb : '';	
+			$thumb_id = isset( $ch->videos_thumb) ?  $ch->videos_thumb : '';	
 			
 			$slug =  $ch->slug;
 			
 			$title = $ch->title;
 			
-			$spotlight_poster = $ch->spotlight_poster;
+			$spotlight_poster = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';
 			
-			$poster = isset( $ch->poster ) ?  $ch->poster : '';
+			$poster = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';
 			
 			$year = isset($ch->year) ? $ch->year : '';
 			
