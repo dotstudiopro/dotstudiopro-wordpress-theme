@@ -256,7 +256,7 @@ function channel_first_video(){
 	          		<ul class='ds-sharepad'>
 	          			<li>Share <i class='fa fa-share fa-small'></i></li>
 	          			<li>
-	          				<a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://stoicbuddha.com/dotstudioz/channels/man-jam-season-1/ class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
+	          				<a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://" . $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI] . " class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
 	          			</li>
 	          			<li><i class='fa fa-twitter fa-small'></i></li>
 	          			<li><i class='fa fa-googleplus fa-small'></i></li>
