@@ -2,7 +2,7 @@
 
 /*
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.0
+** Version: 1.2
 ** Author: dotstudioPRO
 ** Author URI: #
 */
@@ -15,7 +15,7 @@ require_once("ds-templates.php");
 
 require 'updater/plugin-update-checker.php';
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-    'stoicbuddha.com/dotstudioz/api/updatetest.php',
+    'http://stoicbuddha.com/dotstudioz/api/updatetest.php',
     __FILE__
 );
 
