@@ -8,7 +8,7 @@ function wptuts_scripts_load_cdn()
 	  wp_deregister_script( 'jquery' );
 	   
 	  // Register the library again from Google's CDN
-	  wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', array(), null, false );
+	  wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', array(), null, false );
 	   
 	  // Register the script like this for a plugin:
 	  wp_register_script( 'custom-script', plugins_url( '/js/custom-script.js', __FILE__ ), array( 'jquery' ) ); 
