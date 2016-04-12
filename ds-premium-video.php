@@ -7,6 +7,7 @@
 ** Author URI: #
 */
 
+/*test*/
 require_once("class.curl_commands.php");
 
 require_once("functions.php");
