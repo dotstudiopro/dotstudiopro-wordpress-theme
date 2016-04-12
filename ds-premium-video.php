@@ -2,12 +2,11 @@
 
 /*
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.12
+** Version: 1.13
 ** Author: dotstudioPRO
 ** Author URI: #
 */
 
-/*test*/
 require_once("class.curl_commands.php");
 
 require_once("functions.php");
