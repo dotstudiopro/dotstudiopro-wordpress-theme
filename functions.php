@@ -57,7 +57,39 @@ function ds_plugin_style(){
 	}
 		
 }
-function wptuts_styles_with_the_lot()
+
+function ds_light_theme_shadows(){
+	
+	if(get_option('ds_plugin_style') != 'light-style' || get_option('ds_light_theme_shadow') == 0){
+		
+		return;
+		
+	}
+	
+	echo '
+		<style>
+		/* Box shadows for light theme. Comment these to remove on grid */
+		.light-theme-shadow .gridder-show{
+		    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+ 		   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+		    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+
+		}
+
+		.light-theme-shadow .gridder-list img{
+ 		   -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+ 		   -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+ 		   box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+		}
+		</style>
+	';
+	
+}
+
+add_action("wp_head", "ds_light_theme_shadows", 990);
+
+
+function ds_styles()
 {
 	  // Register the style like this for a plugin:
 	  wp_register_style( 'ds-style', plugins_url( '/style.css', __FILE__ ), array(), '20120208', 'all' );
@@ -82,7 +114,9 @@ function wptuts_styles_with_the_lot()
 	  // For either a plugin or a theme, you can then enqueue the style:
 	  wp_enqueue_style( 'grid-style' );
 }
-add_action( 'wp_enqueue_scripts', 'wptuts_styles_with_the_lot' );
+add_action( 'wp_enqueue_scripts', 'ds_styles' );
+
+
 function add_my_var($public_query_vars) {
 	  $public_query_vars[] = 'video';
 	$public_query_vars[] = 'channel_category';
@@ -1097,6 +1131,8 @@ function ds_save_admin_options(){
 		
 		update_option('ds_plugin_style', sanitize_text_field($_POST['ds_plugin_style']));
 		
+		update_option('ds_light_theme_shadow', sanitize_text_field($_POST['ds_light_theme_shadow']));
+		
 		update_option('ds_channel_template', sanitize_text_field($_POST['ds_channel_template']));
 		
 		update_option('ds_development_check', sanitize_text_field($_POST['ds_development_check']));
@@ -1106,6 +1142,8 @@ function ds_save_admin_options(){
 		update_option('ds_plugin_custom_css', sanitize_text_field($_POST['ds_plugin_custom_css']));
 		
 		update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
+		
+		
 				
 	}
 

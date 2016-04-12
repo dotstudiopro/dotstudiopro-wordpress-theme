@@ -32,7 +32,7 @@
 			
 			$spotlight_poster = isset( $ch->spotlight_poster ) ?  $ch->spotlight_poster : '';
 			
-			$poster = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';
+			$poster = isset( $ch->poster) ?  $ch->poster : '';
 			
 			$year = isset($ch->year) ? $ch->year : '';
 			
