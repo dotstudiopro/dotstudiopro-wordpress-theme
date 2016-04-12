@@ -6,7 +6,7 @@ if(isset($_GET['ds-admin-action']) && $_GET['ds-admin-action'] == 'flush'){
 	
 }
 
-$colors = array('blue', 'pink', 'purple', 'orange', 'red', 'yellow');
+$colors = array('blue', 'pink', 'purple', 'orange', 'red', 'yellow', 'green');
 
 $current_slider_color = get_option('ds_player_slider_color');
 
@@ -104,7 +104,7 @@ foreach($templates as $v){
 					
 					<tr><td>Template</td><td><select name='ds_channel_template'><?php echo $template_list ?></select></td></tr>
 					
-					<tr><td>Template Colr Style</td><td><select name='ds_plugin_style'><?php echo $template_styles ?></select></td></tr>
+					<tr><td>Template Color Style</td><td><select name='ds_plugin_style'><?php echo $template_styles ?></select></td></tr>
 					
 					<tr><td>Copy plugin template files to my theme folder</b><br/><span class='description'>For custom template changes.</span></td><td><a class='button' href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td></tr>
 					
