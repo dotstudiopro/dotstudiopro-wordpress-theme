@@ -1,29 +1,32 @@
 <?php 
 
-if(ds_channel_is_parent()){
+function ds_is_channel_parent_check(){
+
+	if(ds_channel_is_parent()){
 	
 	
-	$videos = grab_channel();
+		$videos = grab_channel();
 	
-	$children = $videos[0]->childchannels;
+		$children = $videos[0]->childchannels;
 			
-	$child_slug = $children[0]->slug;
+		$child_slug = $children[0]->slug;
 	
-	$current = get_post(get_the_ID());
+		$current = get_post(get_the_ID());
 	
-	$category = get_query_var("channel_category", FALSE);
+		$category = get_query_var("channel_category", FALSE);
 	
-	if(!$category){
-			
-		$category = 'featured';
+		if(!$category){
+				
+			$category = 'featured';
 		
+		}
+	
+		$url = home_url("channels/".$current->post_name."/".$child_slug."/");
+	
+		wp_redirect( $url );
+		die();
+	
 	}
-	
-	$url = home_url("channels/".$current->post_name."/".$child_slug."/");
-	
-	wp_redirect( $url );
-	die();
-	
 }
 
 /** MOVE THIS TO THE FUNCTIONS FILE AS SOON AS POSSIBLE **/

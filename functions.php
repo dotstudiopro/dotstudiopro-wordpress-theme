@@ -1089,9 +1089,30 @@ function ds_save_admin_options(){
 		
 		update_option('ds_development_country', sanitize_text_field($_POST['ds_development_country']));
 		
+		update_option('ds_plugin_custom_css', sanitize_text_field($_POST['ds_plugin_custom_css']));
+		
+		update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
 				
 	}
 
+}
+
+/*** Change Comment Type ***/
+
+function ds_set_comments(){
+	
+	global $wpdb;
+	
+	$type = get_option('ds_comment_type');
+	
+	if($type == 'wordpress'){
+		
+		$channel_page = get_page_by_path('channels', OBJECT);
+		
+		$children = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_parent = $channel_page->ID");
+		
+	}
+	
 }
 
 /*** Channel Category Menu ***/
@@ -1186,9 +1207,45 @@ function ds_site_flush(){
 	 
 }
 
+function ds_template_copy(){
+	
+	$error = "";
+	
+	$templates = array( "ds-all-categories.tpl.php", "ds-single-category.tpl.php" );
+	
+	$single_channel_templates = array( "ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php" );
+	
+	foreach($templates as $t){
+		$plugin_dir = plugin_dir_path( __FILE__ ) . 'templates/'.$t;
+		$theme_dir = get_stylesheet_directory() . '/'.$t;
+
+		if (!copy($plugin_dir, $theme_dir)) {
+			$error = "&error=1";
+		}
+	}
+	
+	foreach($single_channel_templates as $t){
+		$plugin_dir = plugin_dir_path( __FILE__ ) . 'templates/single_channel_templates/'.$t;
+		$theme_dir = get_stylesheet_directory() . '/'.$t;
+
+		if (!copy($plugin_dir, $theme_dir)) {
+			$error = "&error=1";
+		}
+	}
+	
+	wp_redirect(site_url()."/wp-admin/admin.php?page=dot-studioz-options$error");
+	
+}
+
 if(isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['flush']) && $_GET['flush'] == 1){
 	
 	add_action("init", "ds_site_flush");
+	
+}
+
+if(isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['templatecopy']) && $_GET['templatecopy'] == 1){
+	
+	add_action("init", "ds_template_copy");
 	
 }
 
@@ -1274,3 +1331,11 @@ function ds_api_key_change(){
 	channels_check();
 	
 }
+
+function ds_add_custom_css(){
+	
+	echo "\n<style>" . get_option('ds_plugin_custom_css') . "</style>\n\n";
+	
+}
+
+add_action('wp_head', 'ds_add_custom_css', 999);

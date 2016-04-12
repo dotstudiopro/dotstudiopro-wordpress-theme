@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname( __FILE__ ) ."/../ds_single_channel_functions.php");
-
+ds_is_channel_parent_check();
 
 /*********************************************************/
 

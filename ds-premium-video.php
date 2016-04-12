@@ -13,6 +13,8 @@ require_once("functions.php");
 
 require_once("ds-templates.php");
 
+require_once("templates/ds_single_channel_functions.php");
+
 require 'updater/plugin-update-checker.php';
 $myUpdateChecker = PucFactory::buildUpdateChecker(
     'http://stoicbuddha.com/dotstudioz/api/updatetest.php',
