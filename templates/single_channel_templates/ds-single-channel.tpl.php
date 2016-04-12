@@ -70,7 +70,7 @@ get_header();
 		
 		<li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
 		<li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
-		<?php if($siblings && strlen($siblings) < 1){ ?>
+		<?php if($siblings && strlen($siblings) > 0){ ?>
 			<li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
 		<?php } ?>
 		<li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
