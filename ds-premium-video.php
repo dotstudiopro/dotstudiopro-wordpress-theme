@@ -1,8 +1,8 @@
 <?php
 
-/*
+/* 
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.14
+** Version: 1.15
 ** Author: dotstudioPRO
 ** Author URI: #
 */

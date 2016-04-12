@@ -348,16 +348,20 @@ function get_child_siblings(){
 	
 	global $post;
 	
-	$parent_grab = grab_parent_channel();
+	$parent = grab_parent_channel();
 	
-	$parent = $parent_grab[0];
+	if(!$parent){
+		
+		return '';
+		
+	}
 	
 	$parent_slug = $parent->slug;
 	
 	$category = get_query_var("channel_category", FALSE);
 	
 	$siblings = '';
-	
+		
 	foreach($parent->childchannels as $ch){
 		
 		$selected = '';

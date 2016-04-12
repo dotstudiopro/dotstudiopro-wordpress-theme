@@ -288,7 +288,7 @@ function curl_command($command, $args = array()){
 				
 		$token = get_option('ds_curl_token');
 		
-		$category = get_query_var("channel_category", FALSE);
+		$category = get_post_meta($post->ID, "ds-category", TRUE);
 		
 		ds_get_country();
 			
@@ -306,11 +306,11 @@ function curl_command($command, $args = array()){
 		
 		$channel_check_grab = get_page_by_path('channels');
 	
-		$channel_parent = $channel_check_grab->ID;
+		$channels_parent = $channel_check_grab->ID;
 	
 		$channel_grandparent = wp_get_post_parent_id( $post->post_parent );
-				
-		if($channel_grandparent == $channel_parent){
+					
+		if($channel_grandparent == $channels_parent){
 						
 			$parent = get_post($post->post_parent);
 			
@@ -356,13 +356,12 @@ function curl_command($command, $args = array()){
 		} else {
 			$r = json_decode($response);
 			
-			if($r->success){
-				
-				
-												
-				return $r->channels;
+			if(isset($r->channels[0])){
+					
+				return $r->channels[0];
 				
 			} else {
+				
 				
 				// Maybe log this somewhere?
 				return false;

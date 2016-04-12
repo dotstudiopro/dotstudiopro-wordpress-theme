@@ -962,7 +962,7 @@ function categories_loop(){
 	$cat = list_categories();
 	
 	foreach($cat as $c){
-		
+				
 		if(isset($c->image->poster)){
 			
 			$thumb_id = $c->image->poster."/960/540";
