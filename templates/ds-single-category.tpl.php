@@ -62,12 +62,12 @@
 		
 			?>
 			
-			<li class='gridder-list' data-griddercontent='#<?php echo $slug ?>'>
+			<li class='gridder-list light-theme-shadow' data-griddercontent='#<?php echo $slug ?>'>
 				<a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
 				<i class="fa fa-chevron-down"></i>
 	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
 	    		<div id='<?php echo $slug ?>' class='gridder-content'>
-	    			<div class='og-expander-inner clearfix'>
+	    			<div class='og-expander-inner light-theme-shadow clearfix'>
 			    		<a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo $poster ?>/900/506'' type='image/png'></object></a>
 			    		<div class="og-mask"></div>	
 			    		<div class='ds-details animated fadeInRight'>	
