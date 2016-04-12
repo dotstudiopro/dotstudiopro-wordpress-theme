@@ -60,7 +60,7 @@ function ds_plugin_style(){
 
 function ds_light_theme_shadows(){
 	
-	if(get_option('ds_plugin_style') != 'light-style'){
+	if(get_option('ds_plugin_style') != 'light-style' || get_option('ds_light_theme_shadow') == 0){
 		
 		return;
 		
@@ -1131,6 +1131,8 @@ function ds_save_admin_options(){
 		
 		update_option('ds_plugin_style', sanitize_text_field($_POST['ds_plugin_style']));
 		
+		update_option('ds_light_theme_shadow', sanitize_text_field($_POST['ds_light_theme_shadow']));
+		
 		update_option('ds_channel_template', sanitize_text_field($_POST['ds_channel_template']));
 		
 		update_option('ds_development_check', sanitize_text_field($_POST['ds_development_check']));
@@ -1140,6 +1142,8 @@ function ds_save_admin_options(){
 		update_option('ds_plugin_custom_css', sanitize_text_field($_POST['ds_plugin_custom_css']));
 		
 		update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
+		
+		
 				
 	}
 

@@ -103,8 +103,10 @@ foreach($templates as $v){
 					<tr><td>Player Slider Color</td><td><select name='ds_player_slider_color'><?php echo $selector_colors ?></select></td></tr>
 					
 					<tr><td>Template</td><td><select name='ds_channel_template'><?php echo $template_list ?></select></td></tr>
-					
+										
 					<tr><td>Template Color Style</td><td><select name='ds_plugin_style'><?php echo $template_styles ?></select></td></tr>
+					
+					<tr><td>Light Theme Shadow</td><td><select name='ds_light_theme_shadow'><option value='1' <?php echo get_option('ds_light_theme_shadow') == 1 ? 'selected="selected"' : ''; ?>>On</option><option value='0' <?php echo get_option('ds_light_theme_shadow') == 0 ? 'selected="selected"' : ''; ?>>Off</option></select></td></tr>
 					
 					<tr><td>Copy plugin template files to my theme folder</b><br/><span class='description'>For custom template changes.</span></td><td><a class='button' href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td></tr>
 					
