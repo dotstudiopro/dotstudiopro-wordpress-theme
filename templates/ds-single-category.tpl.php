@@ -24,7 +24,7 @@
 					
 			$id =  $ch->_id;
 		
-			$thumb_id = isset( $ch->videos_thumb) ?  $ch->videos_thumb : '';	
+			$thumb_id = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';	
 			
 			$slug =  $ch->slug;
 			
@@ -32,7 +32,7 @@
 			
 			$spotlight_poster = isset( $ch->spotlight_poster ) ?  $ch->spotlight_poster : '';
 			
-			$poster = isset( $ch->poster ) ?  $ch->poster : '';
+			$poster = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';
 			
 			$year = isset($ch->year) ? $ch->year : '';
 			
