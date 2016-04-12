@@ -35,16 +35,3 @@ ul.ds-tabs li.current{
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#FFFFFF', GradientType=1);
 }
 
-/* Box shadows for light theme. Comment these to remove on grid */
-.light-theme-shadow .gridder-show{
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-
-}
-
-.light-theme-shadow .gridder-list img{
-    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-}
