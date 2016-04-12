@@ -63,6 +63,8 @@
 			?>
 			
 			<li class='gridder-list' data-griddercontent='#<?php echo $slug ?>'>
+				<a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
+				<i class="fa fa-chevron-down"></i>
 	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
 	    		<div id='<?php echo $slug ?>' class='gridder-content'>
 	    			<div class='og-expander-inner clearfix'>
