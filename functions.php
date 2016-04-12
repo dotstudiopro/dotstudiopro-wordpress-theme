@@ -4,6 +4,8 @@ $ds_curl = new DotStudioz_Commands;
 
 function wptuts_scripts_load_cdn()
 {
+	
+	global $wpdb, $post;
 	  // Deregister the included library
 	  wp_deregister_script( 'jquery' );
 	   
@@ -15,10 +17,22 @@ function wptuts_scripts_load_cdn()
 	  // For either a plugin or a theme, you can then enqueue the script:
 	  wp_enqueue_script( 'custom-script' );
 	  
-	  // Register the script like this for a plugin:
-	  wp_register_script( 'grid-script', plugins_url( '/js/vendor/jquery.gridder.js', __FILE__ ), array( 'jquery' ) ); 
-	  // For either a plugin or a theme, you can then enqueue the script:
-	  wp_enqueue_script( 'grid-script' );
+	  $channels = get_page_by_path( 'channels' );
+	  
+	  $categories = get_page_by_path( 'channel-categories' );
+	  		  
+	  $parent = get_post($post->post_parent);		
+			  
+	  if($post->post_parent == $categories->ID || $parent->post_parent == $channels->ID || $parent->post_parent == $categories->ID || $channels->ID == $post->ID || $categories->ID == $post->ID){
+		
+		// Register the script like this for a plugin:
+		wp_register_script( 'grid-script', plugins_url( '/js/vendor/jquery.gridder.js', __FILE__ ), array( 'jquery' ) ); 
+		// For either a plugin or a theme, you can then enqueue the script:
+		wp_enqueue_script( 'grid-script' );
+	  
+	  }
+	  
+	  
 }
 add_action( 'wp_enqueue_scripts', 'wptuts_scripts_load_cdn' );
 
