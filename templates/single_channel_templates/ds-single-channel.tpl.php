@@ -18,7 +18,7 @@ add_action('wp_head', 'ds_meta_tags');
 get_header();
 
 ?>
-<div id="main">
+<div id="main" class="container">
 
 	<?php 
 				
