@@ -49,6 +49,28 @@
     float: left;
  }
 
+@media(screen and max-width:1620px){
+    .channel-poster{
+        margin-left:-80px;
+    }
+}
+@media(screen and max-width:1500px){
+    .og-expander-inner{
+        max-height:530px;
+    }
+    .channel-poster{
+        margin-left:-125px;
+    }
+}
+@media(screen and max-width:1500px){
+    .og-expander-inner{
+        max-height:475px;
+    }
+    .channel-poster{
+        margin-left:-185px;
+    }
+}
+
 /* ===========Tools=========================*/
 .ds-video-headliner-duration {
 	display: block;
@@ -101,15 +123,17 @@
     border: 1px solid transparent;
     white-space: nowrap;
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.42857143;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
-    user-select: none;	
+    user-select: none;
+    border-radius:8px;
 }
 .ds-button:hover {
+    text-decoration:none;
 	color: white;
 	background-color:#209869;
 }
