@@ -961,13 +961,19 @@ function categories_loop(){
 	
 	$cat = list_categories();
 	
-	
-	
 	foreach($cat as $c){
 		
-		$slug = $c->slug;
+		$post = get_page_by_path($c->slug);
 		
-		$image = get_option('ds-category-image-'.$slug);
+		$show_check = get_post_meta($post->ID, 'ds_show_category', TRUE);
+		
+		if(!$show_check){
+			
+			continue;
+			
+		}
+		
+		$image = get_option('ds-category-image-'.$c->slug);
 			
 		if($image){
 			
@@ -1019,7 +1025,7 @@ function categories_check(){
 	}
 		
 	foreach($categories as $c){
-		
+				
 		$check = $wpdb->get_results("SELECT id FROM ".$wpdb->prefix."posts WHERE post_name = '".$c->slug."' AND post_type != 'nav_menu_item'");
 			
 		if(count($check) > 0){
@@ -1036,6 +1042,14 @@ function categories_check(){
 			'post_excerpt' => 'Channel Category '.$c->name,
 			'post_parent' => $category_page_id
 		));	
+		
+		update_post_meta($page_id, 'ds_show_category', TRUE);
+		
+		if($c->homepage != 1){
+			
+			update_post_meta($page_id, 'ds_show_category', FALSE);
+			
+		}
 		
 	}
 		
@@ -1486,17 +1500,13 @@ function ds_cust_filename($dir, $name, $ext){
 	
 	$uploadedfile = $_FILES['ds-category-image'];
 
-	$movefile = wp_handle_upload( $uploadedfile, array('test_form' => FALSE,'unique_filename_callback' => 'ds_cust_filename' ) );
+	$movefile = wp_handle_upload( $uploadedfile, array('test_form' => FALSE, 'unique_filename_callback' => 'ds_cust_filename' ) );
 	
 	if ( $movefile && ! isset( $movefile['error'] ) ) {
 		
 		update_option("ds-category-image-$slug", $movefile['url']);
 		
-	} else {
-    
-		echo $movefile['error'];
-		
-	}
+	} 
 	 
  }
  
