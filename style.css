@@ -49,24 +49,24 @@
     float: left;
  }
 
-@media(screen and max-width:1620px){
-    .channel-poster{
+@media screen and (max-width:1620px){
+    .og-fullimg .channel-poster{
         margin-left:-80px;
     }
 }
-@media(screen and max-width:1500px){
+@media screen and (max-width:1500px){
     .og-expander-inner{
         max-height:530px;
     }
-    .channel-poster{
+    .og-fullimg .channel-poster{
         margin-left:-125px;
     }
 }
-@media(screen and max-width:1500px){
+@media screen and (max-width:1500px){
     .og-expander-inner{
         max-height:475px;
     }
-    .channel-poster{
+    .og-fullimg .channel-poster{
         margin-left:-185px;
     }
 }
