@@ -961,9 +961,19 @@ function categories_loop(){
 	
 	$cat = list_categories();
 	
+	
+	
 	foreach($cat as $c){
-				
-		if(isset($c->image->poster)){
+		
+		$slug = $c->slug;
+		
+		$image = get_option('ds-category-image-'.$slug);
+			
+		if($image){
+			
+			$thumb_id = $image;
+			
+		} else if(isset($c->image->poster)){
 			
 			$thumb_id = $c->image->poster."/960/540";
 			
@@ -1391,3 +1401,103 @@ function ds_add_custom_css(){
 }
 
 add_action('wp_head', 'ds_add_custom_css', 999);
+
+
+/** Custom category images **/
+
+add_action('post_edit_form_tag', 'add_post_enctype');
+
+function add_post_enctype() {
+    echo ' enctype="multipart/form-data"';
+}
+
+add_action("admin_init", "ds_category_images_init");
+ 
+	// Initialize the necessary functions for extra fields on Sales Pages
+	function ds_category_images_init(){
+		
+		$post = get_post($_GET['post']);
+		
+		$categories = get_page_by_path("channel-categories");
+				
+		
+		if($post->post_parent == $categories->ID){
+			
+			add_meta_box("ds_category_image", "Category Image", "ds_category_image_field", "page", "normal", "high");	
+			
+		}
+				
+	}
+	
+	function ds_category_image_field() {
+		
+		$post = get_post($_GET['post']);
+		
+		$image = get_option('ds-category-image-'.$post->post_name);
+		
+		$cat_image = '';
+		
+		if($image){
+			
+			$cat_image = "<img src='$image' />";
+			
+		}
+		
+		
+		?>
+		
+			<table class='widefat'>
+				
+				<tbody>
+				
+					<tr><td><h3>Upload new image</h3></td><td><input type='file' name='ds-category-image' /></td></tr>
+					
+					<tr><td><h3>Current image</h3></td><td><?php echo $cat_image; ?></td></tr>
+				
+				</tbody>
+			
+			</table>
+		
+		<?php 
+		
+	}
+
+	
+
+// You codes
+
+function ds_cust_filename($dir, $name, $ext){
+	
+	return $_FILES['ds-category-image']['name'].rand(100, 999).time().$ext;
+	
+}
+ 
+ function ds_save_category_image_field(){
+	 
+	if(!isset($_FILES['ds-category-image'])){
+		
+		return;
+		
+	}
+	
+	global $post;
+	
+	$slug = $post->post_name;
+	
+	$uploadedfile = $_FILES['ds-category-image'];
+
+	$movefile = wp_handle_upload( $uploadedfile, array('test_form' => FALSE,'unique_filename_callback' => 'ds_cust_filename' ) );
+	
+	if ( $movefile && ! isset( $movefile['error'] ) ) {
+		
+		update_option("ds-category-image-$slug", $movefile['url']);
+		
+	} else {
+    
+		echo $movefile['error'];
+		
+	}
+	 
+ }
+ 
+ add_action("save_post", "ds_save_category_image_field");
