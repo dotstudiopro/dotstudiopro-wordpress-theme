@@ -92,12 +92,6 @@ add_action("wp_head", "ds_light_theme_shadows", 990);
 function ds_styles()
 {
 	  // Register the style like this for a plugin:
-	  wp_register_style( 'ds-style', plugins_url( '/style.css', __FILE__ ), array(), '20120208', 'all' );
- 
-	  // For either a plugin or a theme, you can then enqueue the style:
-	  wp_enqueue_style( 'ds-style' );
-	  
-	  // Register the style like this for a plugin:
 	  wp_register_style( 'font-awesome-style', plugins_url( '/css/font-awesome.min.css?v=1234', __FILE__ ), array(), '20120208', 'all' );
  
 	  // For either a plugin or a theme, you can then enqueue the style:
@@ -113,6 +107,13 @@ function ds_styles()
  
 	  // For either a plugin or a theme, you can then enqueue the style:
 	  wp_enqueue_style( 'grid-style' );
+	  
+	  // Register the style like this for a plugin:
+	  wp_register_style( 'ds-style', plugins_url( '/style.css', __FILE__ ), array(), '20120208', 'all' );
+ 
+	  // For either a plugin or a theme, you can then enqueue the style:
+	  wp_enqueue_style( 'ds-style' );
+	  
 }
 add_action( 'wp_enqueue_scripts', 'ds_styles' );
 
@@ -959,15 +960,17 @@ function category_channel_loop(){
 
 function categories_loop(){
 	
+	set_time_limit(120);
+	
 	$cat = list_categories();
 	
 	foreach($cat as $c){
 		
-		$post = get_page_by_path($c->slug);
+		$post = get_page_by_path('channel-categories/'.$c->slug);
 		
 		$show_check = get_post_meta($post->ID, 'ds_show_category', TRUE);
 		
-		if(!$show_check){
+		if($show_check != 1){
 			
 			continue;
 			
@@ -1043,11 +1046,11 @@ function categories_check(){
 			'post_parent' => $category_page_id
 		));	
 		
-		update_post_meta($page_id, 'ds_show_category', TRUE);
+		update_post_meta($page_id, 'ds_show_category', 1);
 		
 		if($c->homepage != 1){
 			
-			update_post_meta($page_id, 'ds_show_category', FALSE);
+			update_post_meta($page_id, 'ds_show_category', 0);
 			
 		}
 		
