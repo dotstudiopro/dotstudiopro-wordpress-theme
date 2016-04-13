@@ -34,17 +34,3 @@ ul.ds-tabs li.current{
     background: linear-gradient(to right, rgba(225, 225, 225, 0) 4%, rgba(225, 225, 225, 0) 40%, rgba(225, 225, 225, 0) 41%, #FFFFFF 55%, #FFFFFF 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#FFFFFF', GradientType=1);
 }
-
-/* Box shadows for light theme. Comment these to remove on grid */
-.og-expander-inner.light-theme-shadow{
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-
-}
-
-.gridder-list.light-theme-shadow img{
-    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-}
