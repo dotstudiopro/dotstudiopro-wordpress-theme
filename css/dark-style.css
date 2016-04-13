@@ -45,3 +45,15 @@ ul.ds-tabs li.current{
     background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 52%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
 }
+#search-wrap ::-webkit-input-placeholder {
+    color: #ebebeb;
+}
+#search-wrap :-moz-placeholder {
+    color: #ebebeb;
+}
+#search-wrap ::-moz-placeholder {
+    color: #ebebeb;
+}
+#search-wrap :-ms-input-placeholder {
+    color: #ebebeb;
+}
