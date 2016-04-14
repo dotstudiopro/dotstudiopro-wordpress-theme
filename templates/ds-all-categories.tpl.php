@@ -2,7 +2,7 @@
 
 ?>
 <div id="main">
-	<ul class='ds-cat'>
+	<ul class='ds-cat nopadding'>
 
 	<?php categories_loop(); ?>
 	
