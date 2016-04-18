@@ -142,7 +142,7 @@ get_header();
 			?>
 			
 			<li <?php echo $selected; ?>>
-				<img src='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
+				<img class="img img-responsive" src='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
 				<div class='ds-overlay animated fadeIn'>
 				
 				<?php if(!get_child_siblings()){ ?>
