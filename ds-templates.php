@@ -9,7 +9,7 @@ function ds_all_categories_template($single_template) {
 		 
 	
 		// Set the template... 
-			if(!locate_template( 'ds-all-categories.php' )){
+			if(!locate_template( 'ds-all-categories.tpl.php' )){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 			$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
@@ -41,7 +41,7 @@ function ds_get_category_template($single_template) {
 		 
 	
 		// Set the template... 
-			if(!locate_template( 'ds-single-category.php' )){
+			if(!locate_template( 'ds-single-category.tpl.php' )){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 			$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
@@ -73,13 +73,13 @@ function ds_get_channel_template($single_template) {
 	
      if ($post->post_parent == $channel_parent || $channel_grandparent == $channel_parent) {
 	
-		// Set the template... 
-			if(!locate_template( 'ds-single-channel.php' )){
+			$template_option = get_option($template_option);
+	
+			// Set the template... 
+			if(!locate_template( $template_option . '.tpl.php )){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
-			
-			$template_option = get_option("ds_channel_template");
-			
+						
 			if(!$template_option || $template_option == 'default'){
 				
 				$template_option = "ds-single-channel";
@@ -91,7 +91,7 @@ function ds_get_channel_template($single_template) {
 					
 		} else {
 
-			$single_template = get_stylesheet_directory() . '/ds-single-channel.php';
+			$single_template = get_stylesheet_directory() . '/ds-single-channel.tpl.php';
 			
 		} 
 		
