@@ -213,5 +213,5 @@ get_header();
 	</div>
 	
 </div><!--main-->
-<?php get_sidebar("right");?>
+<?php get_sidebar();?>
 <?php get_footer();?>
