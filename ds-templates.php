@@ -8,17 +8,13 @@ function ds_all_categories_template($single_template) {
      if ($post->post_name == 'channel-categories') {
 		 
 	
-		// Set the template... 
-			if( strlen( locate_template( 'ds-all-categories.tpl.php' ) ) ){
+			// Set the template... 
+			if( strlen( locate_template( 'ds-all-categories.tpl.php', TRUE ) ) ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
-			$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
+				$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
 			
-		} else {
-
-			$single_template = get_stylesheet_directory() . '/ds-all-categories.tpl.php';
-			
-		} 
+			}
 		
      }
 	 
@@ -40,17 +36,13 @@ function ds_get_category_template($single_template) {
      if ($post->post_parent == $category_parent) {
 		 
 	
-		// Set the template... 
-			if( strlen( locate_template( 'ds-single-category.tpl.php' ) ) ){
+			// Set the template... 
+			if( strlen( locate_template( 'ds-single-category.tpl.php', TRUE ) ) ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
-			$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
+				$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
 			
-		} else {
-
-			$single_template = get_stylesheet_directory() . '/ds-single-category.tpl.php';
-			
-		} 
+			}
 		
      }
 	 
@@ -76,7 +68,7 @@ function ds_get_channel_template($single_template) {
 			$template_option = get_option('ds_channel_template');
 	
 			// Set the template... 
-			if( strlen( locate_template( $template_option . '.tpl.php' ) ) < 1 ){
+			if( strlen( locate_template( $template_option . '.tpl.php', TRUE ) ) < 1 ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 						
@@ -88,11 +80,7 @@ function ds_get_channel_template($single_template) {
 				
 			$single_template = dirname( __FILE__ ) . '/templates/single_channel_templates/' . $template_option . '.tpl.php';
 					
-		} else {
-
-			$single_template = get_stylesheet_directory() . '/' . $template_option . '.tpl.php ';
-			
-		} 
+		}
 		
      }
 	 
