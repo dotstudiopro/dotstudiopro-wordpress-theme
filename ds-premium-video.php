@@ -2,7 +2,7 @@
 
 /* 
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.19
+** Version: 1.2
 ** Author: dotstudioPRO
 ** Author URI: #
 */
