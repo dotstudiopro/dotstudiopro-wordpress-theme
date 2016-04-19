@@ -45,7 +45,20 @@ get_header();
 			          		</ul>
 		          		</div>
 		          		<div class='ds-col-4'>
-			          		<?php include(dirname( __FILE__ ) ."/../components/sharing.php"); ?>
+			          		<?php 
+							
+							if(is_file( dirname( __FILE__ ) ."/../components/sharing.php" ) ){
+								
+								include( dirname( __FILE__ ) ."/../components/sharing.php" );
+							
+							} else if( is_file( dirname( __FILE__ ) . "/ds-sharing.php" ) ){
+								
+								include( dirname( __FILE__ ) . "/ds-sharing.php" );
+								
+							}
+
+
+							?>
 		          		</div>
 	          		</div>
 	          	</div>	
