@@ -1312,7 +1312,7 @@ function ds_template_copy(){
 		}
 	}
 	
-	$plugin_dir = plugin_dir_path( __FILE__ ) . 'templates/single_channel_templates/components/sharing.php';
+	$plugin_dir = plugin_dir_path( __FILE__ ) . 'templates/components/sharing.php';
 	$theme_dir = get_stylesheet_directory() . '/ds-sharing.php';
 
 	if (!copy($plugin_dir, $theme_dir)) {
