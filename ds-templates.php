@@ -40,7 +40,7 @@ function ds_get_category_template($single_template) {
 			if( strlen( locate_template( 'ds-single-category.tpl.php', TRUE ) ) ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
-				$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
+				//$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
 			
 			}
 		

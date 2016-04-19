@@ -490,6 +490,7 @@ function grab_playlist(){
 }
 
 function grab_parent_playlist(){
+	return;
 	
 	if(!ds_channel_is_parent()){
 		
@@ -882,7 +883,7 @@ function channel_loop(){
 	}
 	
 }
-
+/*
 function category_channel_loop(){
 	
 	global $post, $wpdb;
@@ -955,6 +956,7 @@ function category_channel_loop(){
 	}
 	
 }
+*/
 
 
 
