@@ -153,11 +153,11 @@ get_header();
 				
 				<?php if(!get_child_siblings()){ ?>
 					
-					<a href='<?php echo site_url("channels/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
+					<a href='<?php echo home_url("channels/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
 					
 				<?php } else { ?>
 					
-					<a href='<?php echo site_url("channels/".$channel_parent->post_name."/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
+					<a href='<?php echo home_url("channels/".$channel_parent->post_name."/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
 					
 				<?php } ?>
 				

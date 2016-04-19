@@ -52,7 +52,7 @@
 			
 				foreach($children as $kid){
 				
-					$child_urls .= "<a href='".site_url("channels/$slug/".$kid->slug."/")."' class='ds-button'>".$kid->title."</a>";
+					$child_urls .= "<a href='".home_url("channels/$slug/".$kid->slug."/")."' class='ds-button'>".$kid->title."</a>";
 								
 				}
 				
@@ -63,12 +63,12 @@
 			?>
 			
 			<li class='gridder-list light-theme-shadow' data-griddercontent='#<?php echo $slug ?>'>
-				<a href='<?php echo site_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
+				<a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
 				<i class="fa fa-chevron-down"></i>
 	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
 	    		<div id='<?php echo $slug ?>' class='gridder-content'>
 	    			<div class='og-expander-inner light-theme-shadow clearfix'>
-			    		<a class='og-fullimg' href='<?php echo site_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo $poster ?>/1080/610'' type='image/png'></object></a>
+			    		<a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo $poster ?>/1080/610'' type='image/png'></object></a>
 			    		<div class="og-mask"></div>	
 			    		<div class='ds-details animated fadeInRight'>	
 							<h2 class='channel-title'><?php echo $title ?></h2>
@@ -81,7 +81,7 @@
 							<span>
 							<?php if(count($children) < 1){ ?>
 								
-								<a href= '<?php echo site_url("channels/$slug/") ?>' class='ds-button'>
+								<a href= '<?php echo home_url("channels/$slug/") ?>' class='ds-button'>
 									Watch Now
 								</a>
 							<?php 
