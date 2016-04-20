@@ -7,9 +7,10 @@ function ds_all_categories_template($single_template) {
 
      if ($post->post_name == 'channel-categories') {
 		 
+			$single_template = locate_template( 'ds-all-categories.tpl.php' );
 	
 			// Set the template... 
-			if( empty($single_template = locate_template( 'ds-all-categories.tpl.php' )) !== FALSE ){
+			if( empty($single_template) !== FALSE ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 				$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
@@ -35,9 +36,10 @@ function ds_get_category_template($single_template) {
 
      if ($post->post_parent == $category_parent) {
 		 
+			$single_template = locate_template( 'ds-single-category.tpl.php' );
 	
 			// Set the template... 
-			if(empty($single_template = locate_template( 'ds-single-category.tpl.php' )) !== FALSE ){
+			if( empty($single_template) !== FALSE ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 				$single_template = dirname( __FILE__ ) . '/templates/ds-single-category.tpl.php';
@@ -67,8 +69,10 @@ function ds_get_channel_template($single_template) {
 	
 			$template_option = get_option('ds_channel_template');
 	
+			$single_template = locate_template( $template_option . '.tpl.php' );
+	
 			// Set the template... 
-			if( empty($single_template = locate_template( $template_option . '.tpl.php' )) !== FALSE  ){
+			if(  empty($single_template) !== FALSE  ){
 			
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
 						
