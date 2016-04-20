@@ -127,7 +127,7 @@
 	</div><!--main-->
 
 
-<?php get_footer();?>
+
 
 <script>
 	$(function(){
@@ -141,3 +141,4 @@
 });
 
 </script>
+<?php get_footer();?>
