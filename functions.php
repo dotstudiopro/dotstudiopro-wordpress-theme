@@ -808,9 +808,7 @@ function channels_check(){
 		
 		$slug = rtrim(ltrim($c->slug,'-'),'-');
 					
-		$check = $wpdb->get_results("SELECT id FROM ".$wpdb->prefix."posts WHERE post_name = '".$slug."'");
-		
-		
+		$check = $wpdb->get_results("SELECT id FROM ".$wpdb->prefix."posts WHERE post_name = '".$slug."' AND post_parent = $channel_check_page_id");
 			
 		if(count($check) > 0){
 				
