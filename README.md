@@ -53,4 +53,7 @@ Once the plugin is installed a new tab will appears in Wordpress admin panel. Ot
 2. **Single Channel Template** gives you a choice between a single channel page with or without including your sidebar.
 3. **Theme** gives a choice between a dark and light theme.
 
+Demo Site
+--------
 
+[http://wordpress.dotstudiopro.com/](http://wordpress.dotstudiopro.com/)
