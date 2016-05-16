@@ -170,22 +170,12 @@ function ds_new_token(){
 	
 	global $ds_curl;
 	
-	$get_token = get_option( 'ds_curl_token' );
+	$token = $ds_curl->curl_command('token');
+
+	update_option( 'ds_curl_token', $token );
 	
-	$get_token_time = get_option( 'ds_curl_token_time' );
-	
-	$difference = floor((time() - $get_token_time)/84600);
-	
-	if(!$get_token || $difference > 25){
-	
-		$token = $ds_curl->curl_command('token');
-	
-		update_option( 'ds_curl_token', $token );
-		
-		update_option( 'ds_curl_token_time', time() );
-	
-	}
-	
+	update_option( 'ds_curl_token_time', time() );
+
 }
 
 function ds_get_country(){
@@ -635,9 +625,13 @@ function ds_check(){
 	
 	global $ds_curl;
 	
-	$token = get_option("ds_curl_token");
+	$token = get_option( 'ds_curl_token' );
 	
-	if(!$token){
+	$token_time = !$token ? 0 : get_option( 'ds_curl_token_time' );
+	
+	$difference = floor((time() - $token_time)/84600);
+	
+	if(!$token || $difference >= 25){
 		
 		ds_new_token();
 		
