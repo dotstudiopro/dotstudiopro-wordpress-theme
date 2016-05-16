@@ -118,6 +118,8 @@ foreach($templates as $v){
 					
 					<tr><td>Development Country (Abbreviation)</td><td><input type='text' name='ds_development_country' value='<?php echo get_option("ds_development_country") ?>' /></td></tr>
 					
+					<tr><td>Reset Token on Save<br><span class='description'>Use in case you believe you have issues with token authentication.</span></td><td><input type='checkbox' name='ds_token_reset' value='1' <?php echo get_option("ds_token_reset") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
+					
 					<input type='hidden' name='ds-save-admin-options' value='1' />
 					
 					</tbody>

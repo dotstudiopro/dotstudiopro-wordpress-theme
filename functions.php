@@ -1170,6 +1170,10 @@ function ds_save_admin_options(){
 		
 		update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
 		
+		update_option('ds_token_reset', sanitize_text_field($_POST['ds_token_reset']));
+		
+		
+		
 		
 				
 	}
@@ -1352,7 +1356,7 @@ function ds_api_key_change(){
 	$api = get_option('ds_api_key');
 	
 	// If the api key is posted, but hasn't changed, nothing to do here.
-	if($api == $_POST['ds_api_key']){
+	if( $api == $_POST['ds_api_key'] && !isset($_POST['ds_token_reset']) ){
 		
 		return;
 		
