@@ -16,6 +16,9 @@ This plugin extends dotstudioPRO functionality into Wordpress turning it into a 
 ![Wordpress 3.8](https://img.shields.io/badge/wordpress-3.8.x-blue.svg)
 ![PHP >= 5.3](https://img.shields.io/badge/php-%3E=5.3-green.svg)
 
+<div style="position: relative;padding-bottom: 56.25%;padding-top: 35px;height: 0;overflow: hidden;"><iframe style="position: absolute;top:0;left: 0;width: 100%;height: 100%;"  allowfullscreen="" frameborder="0" src="https://videos.dotstudiopro.com/player/5727c93d97f815821551334d?skin=%2Fassets%2Fjs%2Flib%2Fjw%2Fskins%2Fgreen.xml"></iframe></div>
+
+
 Installation
 --------
 
