@@ -427,6 +427,8 @@ function curl_command($command, $args = array()){
 		}
 		
 	} else if($command == 'single-category'){
+
+		set_time_limit(120);
 		
 		$token = get_option('ds_curl_token');
 		

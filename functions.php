@@ -1,5 +1,7 @@
 <?php 
 
+set_time_limit(120);
+
 $ds_curl = new DotStudioz_Commands;
 
 function wptuts_scripts_load_cdn()
@@ -1334,6 +1336,8 @@ if(isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET
 }
 
 function ds_api_key_change(){
+
+	set_time_limit(120);
 	
 	global $wpdb, $ds_curl;
 	

@@ -28,7 +28,7 @@
 			
 			$slug =  $ch->slug;
 			
-			$title = $ch->title;
+			$title = isset($ch->channel_logo) ? "<img src='$ch->channel_logo' />" : $ch->title;
 			
 			$spotlight_poster = isset( $ch->spotlight_poster ) ?  $ch->spotlight_poster : '';
 			
@@ -63,7 +63,7 @@
 			?>
 			
 			<li class='gridder-list light-theme-shadow' data-griddercontent='#<?php echo $slug ?>'>
-				<a href='<?php echo home_url("channels/$slug/") ?>' onclick='window.location="<?php echo home_url("channels/$slug/") ?>"' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
+				<a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
 				<i class="fa fa-chevron-down"></i>
 	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
 	    		<div id='<?php echo $slug ?>' class='gridder-content'>
