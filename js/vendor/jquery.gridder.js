@@ -194,9 +194,9 @@
             }
             
             /* CLICK EVENT */
-            _this.find(".gridder-list").on("click", function (e) {
+            _this.find(".gridder-list > img, .gridder-list > i").on("click", function (e) {
                 e.preventDefault();
-                var myself = $(this);
+                var myself = $(this).closest('.gridder-list');
                 openExpander(myself);
             });
             
