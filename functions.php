@@ -992,7 +992,7 @@ function categories_loop(){
 			
 		}
 								
-		echo "<li><a href='".home_url("channel-categories/".$c->slug)."'><img class='img img-responsive' src='$thumb_id' /></a><label class='delay' style='display: inline-block;'><h1>".$c->name."</h1></label></li>";
+		echo "<li><a href='".home_url("channel-categories/".$c->slug)."'><img class='img img-responsive' src='$thumb_id' /><label class='delay' style='display: inline-block;'><h1>".$c->name."</h1></label></a></li>";
 		
 	}
 	

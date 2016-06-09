@@ -2,12 +2,18 @@
 
 /* 
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.29
+** Version: 1.30
 ** Author: dotstudioPRO
 ** Author URI: #
 */
 
-require_once("class.curl_commands.php");
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+if(!class_exists('DotStudioz_Commands')){
+
+	require_once("class.curl_commands.php");
+
+}
 
 require_once("functions.php");
 
@@ -30,6 +36,28 @@ if(strpos($uri, 'wp-admin') === FALSE){
 } 
 
 add_action( 'wp_enqueue_scripts', 'ds_plugin_style' );
+
+// function dot_studioz_deactivate() {
+
+//     $plugins = get_option('active_plugins');
+
+    // foreach($plugins as $k => $v){
+
+    // 	if(strpos($v, "ds-premium-carousel")){
+
+    // 		unset($plugins[$k]);
+
+    // 		update_option('active_plugins', $plugins);
+
+    // 		break;
+
+    // 	}
+
+//     }
+
+
+// }
+// register_deactivation_hook( __FILE__, 'dot_studioz_deactivate' );
 
 
 /** Add Menu Entry **/
