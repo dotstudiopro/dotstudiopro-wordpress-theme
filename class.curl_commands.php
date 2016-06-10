@@ -284,6 +284,81 @@ function curl_command($command, $args = array()){
 			}
 		}
 		
+	}  else if($command == 'single-channel-by-id'){
+				
+		$token = get_option('ds_curl_token');
+
+		$channel_check_grab = get_page_by_path("channels/".$args['channel_slug']);
+		
+		$category = get_post_meta($channel_check_grab->ID, "ds-category", TRUE);
+		
+		ds_get_country();
+			
+		if(!$category){
+			
+			$category = 'featured';
+			
+		}
+		
+		if(!$token){
+								
+			return array();
+			
+		}
+
+			
+		$postname = $channel_check_grab->post_name;
+		
+		$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$postname."/?detail=partial";
+					
+		$curl = curl_init();
+				
+		$channel_name = $post->post_name;
+		
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => $url,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "GET",
+		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$_SERVER['REMOTE_ADDR']."\r\n-----011000010111000001101001--",
+		CURLOPT_HTTPHEADER => array(
+				"cache-control: no-cache",
+				"content-type: multipart/form-data; boundary=---011000010111000001101001",
+				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
+				"x-access-token:".$token
+		),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+			
+			//"cURL Error #:" . $err;
+			// Not sure what to do with this one.		Hm...
+		
+		} else {
+			$r = json_decode($response);
+			
+			if($r->success){
+				
+				
+												
+				return $r->channels;
+				
+			} else {
+				
+				// Maybe log this somewhere?
+				return false;
+				
+			}
+		}
+		
 	} else if($command == 'parent-channel'){
 				
 		$token = get_option('ds_curl_token');
