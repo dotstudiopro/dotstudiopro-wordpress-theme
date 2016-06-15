@@ -68,7 +68,7 @@
 	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
 	    		<div id='<?php echo $slug ?>' class='gridder-content'>
 	    			<div class='og-expander-inner light-theme-shadow clearfix'>
-			    		<a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo $poster ?>/1080/610'' type='image/png'></object></a>
+			    		<a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo $poster ?>/1080/610' type='image/png'></object></a>
 			    		<div class="og-mask"></div>	
 			    		<div class='ds-details animated fadeInRight'>	
 							<h2 class='channel-title'><?php echo $title ?></h2>
@@ -77,7 +77,7 @@
 								<li class='channel-language'><?php echo $language ?></li>
 								<li class='channel-company'><?php echo $company ?></li>
 							</ul>
-							<span class='ds-channel-description character-limit-300'>Description: <?php echo $description ?></span>
+							<span class='ds-channel-description'>Description: <?php echo strlen($description) > 300 ? substr($description, 0, 299)."..." : $description ?></span>
 							<span>
 							<?php if(count($children) < 1){ ?>
 								
@@ -112,34 +112,11 @@
 		}
 	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	?>
 	</ul>
 	
 	</div><!--main-->
 
-
-
-
-<script>
-	$(function(){
-  $(".character-limit-300").each(function(i){
-    len=$(this).text().length;
-    if(len>300)
-    {
-      $(this).text($(this).text().substr(0,300)+'...');
-    }
-  });       
-});
-
-
-</script>
 <?php get_footer();?>
