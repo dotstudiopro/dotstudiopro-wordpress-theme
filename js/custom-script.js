@@ -1,5 +1,5 @@
 ﻿//Tabs
-$(document).ready(function () {
+jQuery(function ($) {
 
   $('ul.ds-tabs li').click(function () {
     var tab_id = $(this).attr('data-tab');
@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 })
 //Scroll to anchors
-$(function () {
+jQuery(function ($) {
   $('a[href*="#"]:not([href="#"])').click(function () {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var target = $(this.hash);
@@ -29,7 +29,7 @@ $(function () {
 });
 //Gridder
 
-$(function () {
+jQuery(function ($) {
 	
 	if(!$('.gridder').length){
 		
@@ -62,7 +62,7 @@ $(function () {
 });
 
 // Toggle and Reveal
-$(function () {
+jQuery(function ($) {
 
   if (typeof $('.ds-video-headliner-description')[0] == "undefined" || $('.ds-video-headliner-description').length < 1) {
 
@@ -91,7 +91,7 @@ $(function () {
 
 //Limit Characters
 
-$(function () {
+jQuery(function ($) {
   $(".character-limit-90").each(function (i) {
     len = $(this).text().length;
     if (len > 90) {
@@ -103,7 +103,7 @@ $(function () {
 
 //Lazy Load Thumbnail List
 
-$(document).ready(function () {
+jQuery(function ($) {
 
   $(".ds-lazyload li").slice(21).hide();
 

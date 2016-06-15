@@ -190,7 +190,7 @@ function ds_get_country(){
 	
 }
 
-
+add_action("init", "ds_get_country");
 
 
 function list_channels(){
