@@ -77,8 +77,7 @@
 								<li class='channel-language'><?php echo $language ?></li>
 								<li class='channel-company'><?php echo $company ?></li>
 							</ul>
-							<span class='ds-channel-description character-limit-300'>Description: <?php echo $description ?></span>
-							<span>
+							<span class='ds-channel-description'>Description: <?php echo strlen($description) > 300 ? substr($description, 0, 299)."..." : $description ?></span>
 							<?php if(count($children) < 1){ ?>
 								
 								<a href= '<?php echo home_url("channels/$slug/") ?>' class='ds-button'>
@@ -126,20 +125,4 @@
 	
 	</div><!--main-->
 
-
-
-
-<script>
-	$(function(){
-  $(".character-limit-300").each(function(i){
-    len=$(this).text().length;
-    if(len>300)
-    {
-      $(this).text($(this).text().substr(0,300)+'...');
-    }
-  });       
-});
-
-
-</script>
 <?php get_footer();?>
