@@ -124,6 +124,8 @@ function igrab_channel(){
 			return array();
 			
 		}
+
+		// print_r($videos);
 		
 		$company = $videos[0]->company;
 		
@@ -138,6 +140,8 @@ function igrab_channel(){
 		$directors = $videos[0]->directors;
 		
 		$image_id = $playlist = $videos[0]->videos_thumb;
+
+		$poster = $videos[0]->poster;
 	
 		$playlist = $videos[0]->playlist;
 	
@@ -145,7 +149,7 @@ function igrab_channel(){
 		
 		$to_return['playlist'] = $playlist;
 		
-		$to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors);
+		$to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors, 'poster' => $poster);
 	
 		$to_return['link_url'] = $url = home_url("channels/".$post->post_name."/");
 		
