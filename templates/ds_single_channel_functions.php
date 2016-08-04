@@ -280,17 +280,17 @@ function channel_headline_video(){
 		
 		$id = $videos[0]->playlist[0]->_id;
 	
-		$title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : '';
+		$title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
 	
-		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : '';
+		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
 	
-		$description = isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : '';
+		$description = isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
 	
 		$company = isset($videos[0]->company) ? $videos[0]->company : '';
 	
-		$country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : '';
+		$country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
 	 
-		$language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : '';
+		$language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
 	
 		$year = isset($videos[0]->year) ? $videos[0]->year : '';
 	
@@ -320,6 +320,12 @@ function channel_headline_video(){
 				
 			}
 			
+		}
+
+		if(!$id){
+
+			$id = $videos[0]->video->_id;
+
 		}
 		
 		$player_slider_color = get_option("ds_player_slider_color");
