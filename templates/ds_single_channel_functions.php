@@ -125,7 +125,7 @@ function igrab_channel(){
 			
 		}
 
-		// print_r($videos);
+		//print_r($videos);
 		
 		$company = $videos[0]->company;
 		
@@ -236,7 +236,6 @@ function channel_headline_video(){
 			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 		
 		if($video){
-			
 			$id = get_query_var("video", FALSE);
 			
 			foreach($videos[0]->childchannels[0]->playlist as $pl){
@@ -279,19 +278,19 @@ function channel_headline_video(){
 			
 		}
 		
-		$id = $videos[0]->video->_id;
+		$id = $videos[0]->playlist[0]->_id;
 	
-		$title = isset($videos[0]->video->title) ? $videos[0]->video->title : '';
+		$title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : '';
 	
-		$duration = isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
+		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : '';
 	
-		$description = isset($videos[0]->video->description) ? $videos[0]->video->description : '';
+		$description = isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : '';
 	
 		$company = isset($videos[0]->company) ? $videos[0]->company : '';
 	
-		$country = isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+		$country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : '';
 	 
-		$language = isset($videos[0]->video->language) ? $videos[0]->video->language : '';
+		$language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : '';
 	
 		$year = isset($videos[0]->year) ? $videos[0]->year : '';
 	
@@ -379,7 +378,7 @@ function get_child_siblings(){
 		$siblings .= "
 		
 		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img src='http://image.myspotlight.tv/".$ch->video->thumb."/400/225' />
+			<img src='http://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
 			<h3>".$ch->title."</h3>
 		</a>";
 				
