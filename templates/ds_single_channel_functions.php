@@ -260,7 +260,7 @@ function channel_headline_video(){
 			
 		}
 		
-		$player_url = "http://$company.dotstudiopro.com/player/$id";
+		$player_url = "https://$company.dotstudiopro.com/player/$id";
 		
 		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
@@ -336,7 +336,7 @@ function channel_headline_video(){
 			
 		}
 	
-		$player_url = "http://$company.dotstudiopro.com/player/$id/?skin=%2Fassets%2Fjs%2Flib%2Fjw%2Fskins%2F$player_slider_color.xml&share=true";
+		$player_url = "https://$company.dotstudiopro.com/player/$id/?skin=%2Fassets%2Fjs%2Flib%2Fjw%2Fskins%2F$player_slider_color.xml&share=true";
 		
 		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
@@ -384,7 +384,7 @@ function get_child_siblings(){
 		$siblings .= "
 		
 		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img src='http://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
+			<img src='https://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
 			<h3>".$ch->title."</h3>
 		</a>";
 				
