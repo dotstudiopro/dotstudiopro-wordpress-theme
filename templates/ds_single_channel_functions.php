@@ -284,7 +284,21 @@ function channel_headline_video(){
 	
 		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
 	
-		$description = isset($videos[0]->description) && !get_query_var("video", false) ? $videos[0]->description : isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+		$chdescription = "";
+		
+		if(isset($videos[0]->description) && !get_query_var("video", false)){
+
+			$chdescription = $videos[0]->description;
+
+		} else if(isset($videos[0]->playlist[0]->description)){
+
+			$chdescription = $videos[0]->playlist[0]->description;
+
+		} else if(isset($videos[0]->video->country)){
+		
+			$chdescription = $videos[0]->video->country;
+
+		}
 	
 		$company = isset($videos[0]->company) ? $videos[0]->company : '';
 	
@@ -338,7 +352,7 @@ function channel_headline_video(){
 	
 		$player_url = "https://$company.dotstudiopro.com/player/$id/?skin=%2Fassets%2Fjs%2Flib%2Fjw%2Fskins%2F$player_slider_color.xml&share=true";
 		
-		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
 		return $to_return;
 		
