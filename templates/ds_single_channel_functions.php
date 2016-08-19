@@ -284,7 +284,7 @@ function channel_headline_video(){
 	
 		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
 	
-		$description = isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+		$description = isset($videos[0]->description) ? $videos[0]->description : isset($videos[0]->playlist[0]->description) ? $videos[0]->playlist[0]->description : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
 	
 		$company = isset($videos[0]->company) ? $videos[0]->company : '';
 	
