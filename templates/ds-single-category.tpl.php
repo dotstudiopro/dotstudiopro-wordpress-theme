@@ -42,7 +42,7 @@
 						
 			$company = $ch->company;
 			
-			$description = isset( $ch->video->description ) ?  $ch->video->description : $ch->description;
+			$description = isset( $ch->description ) ?  $ch->description : $ch->video->description;
 		
 			$children = $ch->childchannels;
 			

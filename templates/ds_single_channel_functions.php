@@ -285,10 +285,10 @@ function channel_headline_video(){
 		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
 	
 		$chdescription = "";
-		
-		if(isset($videos[0]->description) && !get_query_var("video", false)){
 
-			$chdescription = $videos[0]->description;
+		if(isset($videos[0]->video->description) && !get_query_var("video", false)){
+
+			$chdescription = $videos[0]->video->description;
 
 		} else if(isset($videos[0]->playlist[0]->description)){
 
