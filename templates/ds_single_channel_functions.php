@@ -124,10 +124,10 @@ function igrab_channel(){
 			return array();
 			
 		}
-
-		//print_r($videos);
 		
 		$company = $videos[0]->company;
+
+		$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 		
 		$channel_title = $title = $videos[0]->title;
 		
@@ -234,6 +234,8 @@ function channel_headline_video(){
 			$year = isset($videos[0]->year) ? $videos[0]->year : '';
 	
 			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+
+			$company_id = isset($videos[0]->company_id) ? $videos[0]->video->company_id : '';
 		
 		if($video){
 			$id = get_query_var("video", FALSE);
@@ -260,7 +262,7 @@ function channel_headline_video(){
 			
 		}
 		
-		$player_url = "https://$company.dotstudiopro.com/player/$id";
+		$player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 		
 		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
@@ -301,6 +303,8 @@ function channel_headline_video(){
 		}
 	
 		$company = isset($videos[0]->company) ? $videos[0]->company : '';
+
+		$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 	
 		$country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
 	 
@@ -341,16 +345,8 @@ function channel_headline_video(){
 			$id = $videos[0]->video->_id;
 
 		}
-		
-		$player_slider_color = get_option("ds_player_slider_color");
-
-		if(!$player_slider_color){
-			
-			$player_slider_color = 'green';
-			
-		}
 	
-		$player_url = "https://$company.dotstudiopro.com/player/$id/?skin=%2Fassets%2Fjs%2Flib%2Fjw%2Fskins%2F$player_slider_color.xml&share=true";
+		$player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 		
 		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
@@ -406,4 +402,147 @@ function get_child_siblings(){
 	
 	return $siblings;
 	
+}
+
+function display_single_channel_extra_info($channel, $post_id){
+	if(is_array($channel) && count($channel) > 0){
+		
+		?>
+<div id='primary' class='content-area'>	
+	<?php if($channel['count'] > 1){ ?>
+	<ul class="ds-tabs">
+		
+		<li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
+		<li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
+		<?php if($siblings && strlen($siblings) > 0){ ?>
+			<li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
+		<?php } ?>
+		<li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
+		
+		<li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
+	</ul>
+	<?php } ?>
+	
+	<div id='ds-tab-1' class='ds-tab-content current'>
+		<div id="loading"><h5>Loading...</h5></div>
+		
+		<ul class='ds-video-thumbnails ds-lazyload'>
+		<?php 
+		
+			
+		
+			$this_post = get_post($post_id);
+			
+			$channel_parent = '';
+			
+			$category = get_query_var("channel_category", FALSE);
+			
+			$counter = 1;
+			
+		foreach($channel['playlist'] as $pl){
+			
+			$selected = ''; 
+						
+			$id =  $pl->_id;
+		
+			$thumb_id = $pl->thumb;	
+			
+			$title = isset($pl->title) ? $pl->title : '';
+	
+			$duration = isset($pl->duration) ? round($pl->duration/60) : '';
+	
+			$description = isset($pl->description) ? $pl->description : '';
+	
+			$company = isset($pl->company) ? $pl->company : '';
+	
+			$country = isset($pl->country) ? $pl->country : '';
+	 
+			$language = isset($pl->language) ? $pl->language : '';
+	
+			$year = isset($pl->year) ? $pl->year : '';
+	
+			$rating = isset($pl->rating) ? $pl->rating : '';
+			
+			$channel_parent = get_post( $this_post->post_parent );
+			
+			$epnum = key($pl);
+			
+			$selected_id = get_query_var("video", FALSE);
+					
+			if($id == $selected_id || $counter == 1 && !$selected_id){
+				
+				$selected = "class='selected'";
+				
+			}
+			
+			$counter++;
+					
+			?>
+			
+			<li <?php echo $selected; ?>>
+				<img class="img img-responsive" src='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
+				<div class='ds-overlay animated fadeIn'>
+				
+				<?php if(!get_child_siblings()){ ?>
+					
+					<a href='<?php echo home_url("channels/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
+					
+				<?php } else { ?>
+					
+					<a href='<?php echo home_url("channels/".$channel_parent->post_name."/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
+					
+				<?php } ?>
+				
+					
+				 <i class='fa fa-play-circle-o fa-3x'></i>
+				</a>
+				<label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
+				</div>
+				<h3 class='character-limit-90'><?php echo $title ?></h3>
+				<span class='ds-video-year animated fadeIn'><small>Year: <?php echo $year ?></small></span>
+				<span class='ds-video-country animated fadeIn'><small>Country: <?php echo $country ?></small></span>
+				<span class='ds-video-description character-limit-90 animated fadeIn'><?php echo $description ?></span>
+			</li>
+			<?php
+			
+			}
+			
+			?>
+			</ul>
+	</div>
+	<div id='ds-tab-2' class='ds-tab-content'>
+		<span class='ds-video-headliner-description'>
+		<?php echo $channel['details']['description']; ?>
+		
+		Actors: <?php echo implode(", ", $channel['details']['actors']); ?>
+		
+		Writers: <?php echo implode(", ", $channel['details']['writers']); ?>
+		
+		Directors: <?php echo implode(", ", $channel['details']['directors']); ?>
+		
+		</span>
+	</div>
+	<div id='ds-tab-3' class='ds-tab-content'>
+		<?php echo $siblings;?>
+	</div>
+	<div id='ds-tab-4' class='ds-tab-content'>
+	
+	<?php 
+	
+	global $post;
+	
+	echo $post->post_content;
+	
+	?>
+	
+	</div>
+	<div class='ds-commenting-sidebar'>
+	<?php ds_template_fb_code(); ?>
+	</div>
+	<?php
+		} else { ?>
+			
+			<h1>This channel is not available in your country.</h1>			
+			
+		<?php }
 }
