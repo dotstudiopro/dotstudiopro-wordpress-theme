@@ -573,7 +573,7 @@ function curl_command($command, $args = array()){
 	
 }
 
-	public function get_ip(){
+	function get_ip(){
 
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 		//check ip from share internet
