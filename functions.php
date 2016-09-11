@@ -1523,3 +1523,27 @@ function ds_cust_filename($dir, $name, $ext){
  }
  
  add_action("save_post", "ds_save_category_image_field");
+
+function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header){
+
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => $curl_url,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => $curl_request_type,
+		CURLOPT_POSTFIELDS => $curl_post_fields,
+		CURLOPT_HTTPHEADER => $curl_header,
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	return (object) compact('response', 'err');
+}
