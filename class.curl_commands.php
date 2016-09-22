@@ -19,36 +19,20 @@ function curl_command($command, $args = array()){
 		
 	if($command == "token"){
 		
-		$curl = curl_init();
-
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://api.myspotlight.tv/token", // This will change to the live URL at some point
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"key\"\r\n\r\n".$api_key."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+		$result = ds_run_curl_command("http://api.myspotlight.tv/token",
+			"POST", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"key\"\r\n\r\n".$api_key."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-		
-
-		curl_close($curl);
-
-		if ($err) {
+		if ($result->err) {
 			
 			// Maybe log this somewhere?			
 			return false;
 			
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if($r->success){
 				
@@ -92,33 +76,23 @@ function curl_command($command, $args = array()){
 				
 		$curl = curl_init();
 
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://api.myspotlight.tv/country",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"token\"\r\n\r\n\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+
+		$result = ds_run_curl_command("http://api.myspotlight.tv/country",
+			"POST", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"token\"\r\n\r\n\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
 				"x-access-token:".$token
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
 
-		curl_close($curl);
 
-		if ($err) {
+		if ($result->err) {
 			
 			$error = "cURL Error: $err";
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			
 						
@@ -149,38 +123,22 @@ function curl_command($command, $args = array()){
 			return array();
 			
 		}
-		
-		$curl = curl_init();
-
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://api.myspotlight.tv/channels/".$this->country."?detail=partial",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."?detail=partial",
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
 				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if($r->success){
 												
@@ -239,36 +197,23 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 				
 		$channel_name = $post->post_name;
-		
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => $url,
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+
+		$result = ds_run_curl_command($url,
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
 				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+			));
+		
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if($r->success){
 				
@@ -314,36 +259,23 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 				
 		$channel_name = $post->post_name;
-		
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => $url,
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+
+		$result = ds_run_curl_command($url,
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
 				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+			));
+		
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if($r->success){
 				
@@ -400,36 +332,23 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 				
 		$channel_name = $post->post_name;
-		
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => $url,
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+
+		$result = ds_run_curl_command($url,
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
 				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if(isset($r->channels[0])){
 					
@@ -458,36 +377,22 @@ function curl_command($command, $args = array()){
 		
 		$curl = curl_init();
 		
-		
-
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://api.myspotlight.tv/categories/".$this->country."",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+		$result = ds_run_curl_command("http://api.myspotlight.tv/categories/".$this->country,
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
+				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		 
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if(count($r->categories)){
 												
@@ -512,39 +417,23 @@ function curl_command($command, $args = array()){
 			return array();
 			
 		}
-		
-		
-		
-		$curl = curl_init();
 
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://api.myspotlight.tv/channels/".$this->country."/".$cat."?detail=partial",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "GET",
-		CURLOPT_POSTFIELDS => "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
-		CURLOPT_HTTPHEADER => array(
+		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."/".$cat."?detail=partial",
+			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
+				"postman-token: a917610f-ab5b-ef69-72a7-dacdc00581ee",
 				"x-access-token:".$token
-		),
-		));
+			));
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-
-		curl_close($curl);
-
-		if ($err) {
+		if ($result->err) {
 			
 			//"cURL Error #:" . $err;
 			// Not sure what to do with this one.		Hm...
 		
 		} else {
-			$r = json_decode($response);
+			$r = json_decode($result->response);
 			
 			if(isset($r->message)){
 				
