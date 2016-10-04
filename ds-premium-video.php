@@ -2,9 +2,9 @@
 
 /* 
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.46
+** Version: 1.47
 ** Author: dotstudioPRO
-** Author URI: #
+** Author URI: # 
 */
 
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
