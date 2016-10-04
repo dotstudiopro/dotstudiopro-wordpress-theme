@@ -5,7 +5,7 @@
 ** Version: 1.48
 ** Author: dotstudioPRO
 ** Author URI: # 
-*/
+*/ 
 
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
