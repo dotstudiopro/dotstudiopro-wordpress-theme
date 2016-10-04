@@ -262,7 +262,7 @@ function channel_headline_video(){
 			
 		}
 		
-		$player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+		$player_url = "http://$company.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 		
 		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 		
