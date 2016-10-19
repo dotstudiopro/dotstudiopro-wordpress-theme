@@ -795,6 +795,8 @@ function channels_check(){
 	
 	
 	foreach($channels as $c){
+
+		$duplicate = false;
 		
 		if(!isset($c->categories[0]->slug)){
 			
@@ -808,7 +810,7 @@ function channels_check(){
 			
 		if(count($check) > 0){
 				
-			continue;
+			$duplicate = true;
 				
 		}
 		
@@ -817,13 +819,15 @@ function channels_check(){
 		$page_id = wp_insert_post(array(
 			'post_title' => $c->title,
 			'post_type' =>'page',		
-			'post_name' => $slug,
+			'post_name' => $duplicate ? $slug . '-' . count($check) : $slug,
 			'post_status' => 'publish',
 			'post_excerpt' => 'Channel '.$name,
 			'post_parent' => $channel_check_page_id
 		));		
 		
-		update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
+		update_post_meta( $page_id, 'ds-category', $c->categories[0]->slug );
+
+		update_post_meta( $page_id, 'ds-duplicate', ($duplicate ? count($check) : 0) );
 				
 		if(count($c->childchannels) > 0){
 						
