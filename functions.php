@@ -801,7 +801,6 @@ function channels_check(){
 		
 	}	
 	
-	
 	foreach($channels as $c){
 
 		$duplicate = false;
@@ -835,7 +834,7 @@ function channels_check(){
 		
 		update_post_meta( $page_id, 'ds-category', $c->categories[0]->slug );
 
-		update_post_meta( $page_id, 'ds-duplicate', ($duplicate ? count($check) : 0) );
+		if($duplicate) update_post_meta( $page_id, 'ds-duplicate', ($duplicate ? count($check) : 0) );
 				
 		if(count($c->childchannels) > 0){
 						

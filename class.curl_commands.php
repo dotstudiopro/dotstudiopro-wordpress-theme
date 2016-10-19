@@ -18,6 +18,7 @@ function curl_command($command, $args = array()){
 	
 		
 	if($command == "token"){
+
 		
 		$result = ds_run_curl_command("http://api.myspotlight.tv/token",
 			"POST", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"key\"\r\n\r\n".$api_key."\r\n-----011000010111000001101001--",
@@ -35,6 +36,8 @@ function curl_command($command, $args = array()){
 			$r = json_decode($result->response);
 			
 			if($r->success){
+
+
 				
 				return $r->token;
 				
@@ -157,6 +160,8 @@ function curl_command($command, $args = array()){
 		$token = get_option('ds_curl_token');
 		
 		$category = get_post_meta($post->ID, "ds-category", TRUE);
+
+		$duplicate = get_post_meta($post->ID, "ds-duplicate", false);
 		
 		ds_get_country();
 			
@@ -179,16 +184,24 @@ function curl_command($command, $args = array()){
 		$channel_grandparent = wp_get_post_parent_id( $post->post_parent );
 		
 		$revision = channel_revision_check();
+
+		if($duplicate && (int) $duplicate !== 0){
+
+			$pop = explode( "-", $post->post_name );
+
+			array_pop( $pop );
+
+		}
+
+		$postname = $duplicate && (int) $duplicate !== 0 ? implode( "-", $pop ) : $post->post_name;
 				
 		if($channel_grandparent == $channel_parent && !$revision){
 						
 			$parent = get_post($post->post_parent);
 			
-			$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$parent->post_name."/".$post->post_name."/?detail=partial";
+			$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$parent->post_name."/".$postname."/?detail=partial";
 						
 		} else {
-			
-			$postname = $post->post_name;
 			
 			$url = "http://api.myspotlight.tv/channels/".$this->country."/$category/".$postname."/?detail=partial";
 			
