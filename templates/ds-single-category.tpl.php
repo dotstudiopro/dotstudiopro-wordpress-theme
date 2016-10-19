@@ -28,6 +28,25 @@
 			
 			$slug =  $ch->slug;
 			
+			$slug_check = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "posts WHERE post_name LIKE '%" . $ch->slug . "%'");
+
+			if(count($slug_check) > 1){
+	
+				foreach($slug_check as $sl){
+
+					$category = get_post_meta($sl->ID, 'ds-category', TRUE);
+
+					if(strtolower($category) == strtolower($post_slug)){
+
+						$slug = $sl->post_name;
+						break;		
+
+					} 
+
+				}
+
+			}
+			
 			$title = isset($ch->channel_logo) && strlen($ch->channel_logo) > 0 ? "<img src='$ch->channel_logo' />" : $ch->title;
 			
 			$spotlight_poster = isset( $ch->spotlight_poster ) ?  $ch->spotlight_poster : '';
