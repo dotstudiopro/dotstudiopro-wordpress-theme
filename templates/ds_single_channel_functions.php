@@ -235,7 +235,7 @@ function channel_headline_video(){
 	
 			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
-			$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+			$company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
 		
 		if($video){
 			$id = get_query_var("video", FALSE);
