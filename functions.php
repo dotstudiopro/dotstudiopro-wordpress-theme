@@ -1100,7 +1100,6 @@ function ds_meta_tags(){
 	
 	<meta name="description" content="<?php echo $description; ?>">
   <meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
-​
   <!-- OG meta -->
   <meta property="og:site_name" content="<?php echo $name_site; ?>">
   <meta property="og:description" content="<?php echo $description; ?>">
@@ -1110,7 +1109,6 @@ function ds_meta_tags(){
   <meta property="og:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
   <meta property="og:image:width" content="640" >
   <meta property="og:image:height" content="360" >
-​
   <!-- Twitter Summay Card -->
   <meta name="twitter:card" content="summary_large_image" >
   <meta name="twitter:title" content="<?php echo $name; ?>">
@@ -1118,7 +1116,6 @@ function ds_meta_tags(){
   <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
   <meta name="twitter:description" content="<?php echo $description; ?>">
   <meta name="twitter:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360">
-	
 	<?php
 	
 }
