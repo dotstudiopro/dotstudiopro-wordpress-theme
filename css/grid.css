@@ -1,5 +1,4 @@
 .gridder {
-/*   background-color: #15171E; */
   padding: 0;
   margin: 0;
   font-size: 0;
@@ -11,7 +10,7 @@
   font-size: 16px;
 }
 .gridder-navigation {
-	display: none;
+  display: none;
 }
 .gridder-list {
   display: inline-block;
@@ -31,74 +30,65 @@
   width: 25%;
   position:relative;
 }
+
+.gridder-list img {
+  width: 100%;
+}
+
+/* Position play button and chevron arrow */
 .gridder-og-play{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
 }
-
-.gridder-list img {
-  width: 100%;
-/*   opacity: .8; */
-}
-.gridder-list a,
-.gridder-list .fa-chevron-down {
-  opacity: 0;
-  transition: opacity 0.55s ease-in-out;
-  -moz-transition: opacity 0.55s ease-in-out;
-  -webkit-transition: opacity 0.55s ease-in-out;
-  font-size: 3.5em;
-  color: rgba(255, 255, 255, 0.5);
-  position:absolute;
-  left:50%;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-}
 .gridder-list .fa-chevron-down {
   font-size: 2.5em !important;
   bottom:8px;
+  left:50%;
+  transform:translateX(-50%);
+  position:absolute;
 }
-.gridder-list:hover img {
-  opacity: 1;
-  cursor: pointer;
-}
-.gridder-list:hover a {
-  font-size: 3.5em !important;
-  color: rgba(255, 255, 255, 0.7);
-  opacity: 0.8;
-  transition: opacity 0.55s ease-in-out;
-  -moz-transition: opacity 0.55s ease-in-out;
-  -webkit-transition: opacity 0.55s ease-in-out;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-}
-.gridder-list:hover .fa-play-circle-o {
+
+/* Set initial color on play button and chevron (invisible, low opacity) */
+.gridder-list .gridder-og-play,
+.gridder-list .fa-chevron-down {
+  opacity: 0;
+  transition: all 0.55s ease-in-out;
+  -moz-transition: all 0.55s ease-in-out;
+  -webkit-transition: all 0.55s ease-in-out;
+  font-size: 3.5em;
   color: rgba(255, 255, 255, 0.5);
+}
+
+/* Font awesome icon needs it's own transition rules */
+.gridder-list .fa-play-circle-o{
   transition: all 0.55s ease-in-out;
   -moz-transition: all 0.55s ease-in-out;
   -webkit-transition: all 0.55s ease-in-out;
 }
+
+/* First some effects happen to OTHER elements when we hover over any grid item in the list */
+.gridder-list:hover .gridder-og-play{
+  font-size: 3.5em !important;
+  opacity: 1;
+}
+
+/* Both the play circle and the chevron start off a slightly opaque white */
+.gridder-list:hover .fa-play-circle-o,
+.gridder-list:hover .fa-chevron-down{
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 1;
+}
+
+/* CHANGE COLOUR HERE TO CHANGE THE COLOUR ON THE PLAY BUTTON WHEN YOU HOVER OVER IT */
 .gridder-list:hover .fa-play-circle-o:hover {
   color: rgba(48, 152, 100, 0.7);
-  transition: all 0.55s ease-in-out;
-  -moz-transition: all 0.55s ease-in-out;
-  -webkit-transition: all 0.55s ease-in-out;
+  cursor: pointer;
 }
-.gridder-list:hover .fa-chevron-down {
-  color: rgba(255, 255, 255, 0.7);
-  opacity: 0.8;
-  transition: all 0.55s ease-in-out;
-  -moz-transition: all 0.55s ease-in-out;
-  -webkit-transition: all 0.55s ease-in-out;
-  font-size: 2.5em !important;
-}
+/* CHANGE COLOUR HERE TO CHANGE THE COLOUR ON THE CHEVRON DOWN WHEN YOU HOVER OVER IT */
 .gridder-list:hover .fa-chevron-down:hover {
-  color: rgba(48, 152, 100, 0.7);
-  transition: all 0.55s ease-in-out;
-  -moz-transition: all 0.55s ease-in-out;
-  -webkit-transition: all 0.55s ease-in-out;
+  color: rgba(0, 46, 100, 0.7);
   cursor: pointer;
 }
 .gridder-list:nth-of-type(6n) {
@@ -107,8 +97,8 @@
 }
 
 .og-expander-inner {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 
 }
 /*
@@ -152,7 +142,7 @@
     width: 100%;
   }
   .og-fullimg .channel-poster {
-  	visibility: hidden;
+    visibility: hidden;
     min-height: 200px;
   }
 }

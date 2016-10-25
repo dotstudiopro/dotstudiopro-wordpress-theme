@@ -799,6 +799,11 @@ function channels_check(){
 				
 		$channel_check_page_id = $channel_check->ID;
 		
+	}
+
+	if(!is_array($channels)){
+		// Make sure that channels is actually an array we can loop through.
+		return;
 	}	
 	
 	foreach($channels as $c){
