@@ -398,13 +398,13 @@ function get_child_siblings(){
 		} else if(!empty($ch->poster)){
 			$image = $ch->poster;
 		} else {
-			$image = $ch->playlist[0]->thumb;
+			$image = "http://image.myspotlight.tv/" . $ch->playlist[0]->thumb;
 		}
 		
 		$siblings .= "
 		
 		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img class='img img-responsive' src='http://image.myspotlight.tv/".$image."/400/225' />
+			<img class='img img-responsive' src='".$image."/400/225' />
 			<h3>".$ch->title."</h3>
 		</a>";
 				
