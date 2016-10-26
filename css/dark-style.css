@@ -57,3 +57,7 @@ ul.ds-tabs li.current{
 #search-wrap :-ms-input-placeholder {
     color: #ebebeb;
 }
+#ds-tab-3 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
