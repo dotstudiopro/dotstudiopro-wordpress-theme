@@ -229,7 +229,7 @@ function channel_headline_video(){
 	
 			$company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-			$company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+			$company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
 	
 			$country = isset($playlist->country) ? $playlist->country : '';
 	
@@ -238,8 +238,6 @@ function channel_headline_video(){
 			$year = isset($videos[0]->year) ? $videos[0]->year : '';
 	
 			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
-
-			$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 		
 		if($video){
 			$id = get_query_var("video", FALSE);
