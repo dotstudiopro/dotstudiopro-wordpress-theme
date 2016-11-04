@@ -315,7 +315,7 @@ function channel_first_video(){
 			</div>";
 	
 }
- 
+
 function child_channel_first_video(){
 	
 	global $ds_curl;
@@ -630,6 +630,7 @@ function grab_category($category){
 	return $category;
 	
 }
+
 
 function ds_check(){
 	
@@ -1104,7 +1105,7 @@ function ds_meta_tags(){
   <meta property="og:type" content="website" >
   <meta property="og:url" content="<?php echo $meta->url; ?>">
   <meta property="og:title" content="<?php echo $name; ?>" >
-  <meta property="og:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
+  <meta property="og:image" content="<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
   <meta property="og:image:width" content="640" >
   <meta property="og:image:height" content="360" >
 ​
@@ -1114,7 +1115,7 @@ function ds_meta_tags(){
   <meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
   <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
   <meta name="twitter:description" content="<?php echo $description; ?>">
-  <meta name="twitter:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360">
+  <meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360">
 	
 	<?php
 	
