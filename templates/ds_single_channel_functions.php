@@ -396,7 +396,7 @@ function get_child_siblings(){
 		$siblings .= "
 		
 		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img src='https://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
+			<img src='http://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
 			<h3>".$ch->title."</h3>
 		</a>";
 				
