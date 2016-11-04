@@ -1105,7 +1105,7 @@ function ds_meta_tags(){
   <meta property="og:type" content="website" >
   <meta property="og:url" content="<?php echo $meta->url; ?>">
   <meta property="og:title" content="<?php echo $name; ?>" >
-  <meta property="og:image" content="<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
+  <meta property="og:image" content="<?php echo $meta->image_id; ?>/640/360">
   <meta property="og:image:width" content="640" >
   <meta property="og:image:height" content="360" >
 ​
