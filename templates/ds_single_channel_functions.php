@@ -68,6 +68,8 @@ function igrab_channel(){
 		$channel_parent = get_post( $post->post_parent );
 		
 		$image_id = $playlist[0]->thumb;
+
+		$poster = $videos[0]->poster;
 	
 		$to_return['playlist'] = $playlist;
 		
@@ -111,7 +113,7 @@ function igrab_channel(){
 			
 		}
 		
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
+		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $poster);
 	
 		return $to_return;
 	
@@ -187,7 +189,7 @@ function igrab_channel(){
 			
 		}
 		
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $videos[0]->videos_thumb);
+		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $poster);
 		
 		
 		return $to_return;
@@ -235,7 +237,7 @@ function channel_headline_video(){
 	
 			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
-			$company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+			$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 		
 		if($video){
 			$id = get_query_var("video", FALSE);
@@ -390,21 +392,11 @@ function get_child_siblings(){
 			$selected = "active";
 			
 		}
-
-		$image = "";
-
-		if(!empty($ch->spotlight_poster)){
-			$image = $ch->spotlight_poster;
-		} else if(!empty($ch->poster)){
-			$image = $ch->poster;
-		} else {
-			$image = "http://image.myspotlight.tv/" . $ch->playlist[0]->thumb;
-		}
 		
 		$siblings .= "
 		
 		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img class='img img-responsive' src='".$image."/400/225' />
+			<img src='https://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
 			<h3>".$ch->title."</h3>
 		</a>";
 				

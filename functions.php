@@ -315,7 +315,7 @@ function channel_first_video(){
 			</div>";
 	
 }
- 
+
 function child_channel_first_video(){
 	
 	global $ds_curl;
@@ -631,6 +631,7 @@ function grab_category($category){
 	
 }
 
+
 function ds_check(){
 	
 	global $ds_curl;
@@ -799,16 +800,10 @@ function channels_check(){
 				
 		$channel_check_page_id = $channel_check->ID;
 		
-	}
-
-	if(!is_array($channels)){
-		// Make sure that channels is actually an array we can loop through.
-		return;
 	}	
 	
+	
 	foreach($channels as $c){
-
-		$duplicate = false;
 		
 		if(!isset($c->categories[0]->slug)){
 			
@@ -822,7 +817,7 @@ function channels_check(){
 			
 		if(count($check) > 0){
 				
-			$duplicate = true;
+			continue;
 				
 		}
 		
@@ -831,15 +826,13 @@ function channels_check(){
 		$page_id = wp_insert_post(array(
 			'post_title' => $c->title,
 			'post_type' =>'page',		
-			'post_name' => $duplicate ? $slug . '-' . count($check) : $slug,
+			'post_name' => $slug,
 			'post_status' => 'publish',
 			'post_excerpt' => 'Channel '.$name,
 			'post_parent' => $channel_check_page_id
 		));		
 		
-		update_post_meta( $page_id, 'ds-category', $c->categories[0]->slug );
-
-		if($duplicate) update_post_meta( $page_id, 'ds-duplicate', ($duplicate ? count($check) : 0) );
+		update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 				
 		if(count($c->childchannels) > 0){
 						
@@ -1105,22 +1098,25 @@ function ds_meta_tags(){
 	
 	<meta name="description" content="<?php echo $description; ?>">
   <meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
+​
   <!-- OG meta -->
   <meta property="og:site_name" content="<?php echo $name_site; ?>">
   <meta property="og:description" content="<?php echo $description; ?>">
   <meta property="og:type" content="website" >
   <meta property="og:url" content="<?php echo $meta->url; ?>">
   <meta property="og:title" content="<?php echo $name; ?>" >
-  <meta property="og:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
+  <meta property="og:image" content="<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
   <meta property="og:image:width" content="640" >
   <meta property="og:image:height" content="360" >
+​
   <!-- Twitter Summay Card -->
   <meta name="twitter:card" content="summary_large_image" >
   <meta name="twitter:title" content="<?php echo $name; ?>">
   <meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
   <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
   <meta name="twitter:description" content="<?php echo $description; ?>">
-  <meta name="twitter:image" content="http://image.myspotlight.tv/<?php echo $meta->image_id; ?>/640/360">
+  <meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360">
+	
 	<?php
 	
 }
