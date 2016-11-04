@@ -228,6 +228,8 @@ function channel_headline_video(){
 			$description = isset($playlist->description) ? $playlist->description : '';
 	
 			$company = isset($videos[0]->company) ? $videos[0]->company : '';
+
+			$company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
 	
 			$country = isset($playlist->country) ? $playlist->country : '';
 	
