@@ -441,7 +441,7 @@ function display_single_channel_extra_info($channel, $post_id){
 			
 			$counter = 1;
 			
-		foreach($channel['playlist'] as $pl){
+		foreach($channel['playlist']as $pl){
 			
 			$selected = ''; 
 						
@@ -482,7 +482,7 @@ function display_single_channel_extra_info($channel, $post_id){
 			?>
 			
 			<li <?php echo $selected; ?>>
-				<img class="img img-responsive" src='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
+				<img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
 				<div class='ds-overlay animated fadeIn'>
 				
 				<?php if(!get_child_siblings()){ ?>
@@ -510,6 +510,8 @@ function display_single_channel_extra_info($channel, $post_id){
 			}
 			
 			?>
+			
+			
 			</ul>
 	</div>
 	<div id='ds-tab-2' class='ds-tab-content'>
@@ -548,3 +550,4 @@ function display_single_channel_extra_info($channel, $post_id){
 			
 		<?php }
 }
+

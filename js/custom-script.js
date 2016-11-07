@@ -100,34 +100,6 @@ jQuery(function ($) {
   });
 });
 
-
-//Lazy Load Thumbnail List
-
-jQuery(function ($) {
-
-  $(".ds-lazyload li").slice(21).hide();
-
-  var mincount = 21;
-  var maxcount = 40;
-
-
-  $(window).scroll(function () {
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 10) {
-      $(".ds-lazyload li").slice(mincount, maxcount).fadeIn(1200);
-
-      $("#loading").fadeIn(100).delay(1000).fadeOut(100);
-
-      mincount = mincount + 21;
-      maxcount = maxcount + 21
-
-    }
-  });
-
-
-
-});
-
-
 // Sharing POP UP
 
 (function ($, window) {
@@ -152,3 +124,36 @@ jQuery(function ($) {
   });
 })(jQuery, window);
 
+
+// Super quick and dirty lazy loader script
+  function elementInViewport(el) {
+    var top = el.offsetTop;
+    var left = el.offsetLeft;
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
+
+    return (
+      top < (window.pageYOffset + window.innerHeight) &&
+      left < (window.pageXOffset + window.innerWidth) &&
+      (top + height) > window.pageYOffset &&
+      (left + width) > window.pageXOffset
+    );
+  }
+
+  jQuery(window).scroll(function(){
+    jQuery("img.lazy:not([src])").each(function(){
+      console.log(jQuery(jQuery(this).parent().find('.ds-overlay')));
+      jQuery(jQuery(this).parent().find('.ds-overlay')).hide();
+      // If the element is in the viewport, set the image source
+      if(elementInViewport(this)){
+        jQuery(this).hide().attr('src', jQuery(this).attr('data-original')).fadeIn('slow');
+        jQuery(this).parent().find('.ds-overlay').delay( 800 ).fadeIn('slow');
+      }
+    });
+  });

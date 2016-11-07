@@ -19,6 +19,7 @@ function wptuts_scripts_load_cdn()
 	  // For either a plugin or a theme, you can then enqueue the script:
 	  wp_enqueue_script( 'custom-script' );
 	  
+	  
 	  $channels = get_page_by_path( 'channels' );
 	  
 	  $categories = get_page_by_path( 'channel-categories' );
