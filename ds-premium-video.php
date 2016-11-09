@@ -1,11 +1,11 @@
 <?php
 
-/* 
+/*
 ** Plugin Name: dotstudioPRO Premium Video
-** Version: 1.68
+** Version: 1.69
 ** Author: dotstudioPRO
-** Author URI: # 
-*/ 
+** Author URI: #
+*/
 
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
@@ -33,7 +33,7 @@ if(strpos($uri, 'wp-admin') === FALSE){
 
 	add_action('init', 'ds_check');
 
-} 
+}
 
 add_action( 'wp_enqueue_scripts', 'ds_plugin_style' );
 
@@ -62,9 +62,9 @@ add_action( 'wp_enqueue_scripts', 'ds_plugin_style' );
 
 /** Add Menu Entry **/
 function dot_studioz_menu() {
-	
+
 	add_menu_page( 'dotstudioPRO Options', 'dotstudioPRO Options', 'manage_options', 'dot-studioz-options', 'dot_studioz_menu_page', 'dashicons-video-alt' );
-	
+
 }
 
 add_action( 'admin_menu', 'dot_studioz_menu' );
@@ -74,15 +74,15 @@ function dot_studioz_menu_page() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
-	
+
 	echo "<div class='wrap'>";
-	
-			
-	include("menu.tpl.php");	
-	
-	
+
+
+	include("menu.tpl.php");
+
+
 	echo "</div>";
-	
+
 }
 /** End Menu Entry **/
 
