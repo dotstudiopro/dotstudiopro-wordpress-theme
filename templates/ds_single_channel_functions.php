@@ -225,7 +225,7 @@ function channel_headline_video(){
 
 			$duration = round($playlist->duration/60);
 
-			$description = isset($playlist->description) ? $playlist->description : '';
+			$description = isset($videos[0]->description) ? $videos[0]->description : '';
 
 			$company = isset($videos[0]->company) ? $videos[0]->company : '';
 
@@ -289,8 +289,7 @@ function channel_headline_video(){
 		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
 
 		$chdescription = "";
-
-		if(isset($videos[0]->video->description) && !get_query_var("video", false)){
+		if(isset($videos[0]->video->description)){
 
 			$chdescription = $videos[0]->video->description;
 
@@ -328,7 +327,7 @@ function channel_headline_video(){
 
 					$duration = round($pl->duration/60);
 
-					$description = $pl->description;
+					$chdescription = $pl->description;
 
 					$country = $pl->country;
 
