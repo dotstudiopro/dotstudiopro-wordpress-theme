@@ -1120,7 +1120,7 @@ function ds_meta_tags(){
 
 }
 
-/*************************/
+/******* ******************/
 
 /*** Code Wrappers for Misc. Things ***/
 
