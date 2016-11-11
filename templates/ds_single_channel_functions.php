@@ -113,7 +113,7 @@ function igrab_channel(){
 
 		}
 
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
+		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => "http://image.myspotlight.tv/" . $image_id);
 
 		return $to_return;
 
@@ -141,7 +141,7 @@ function igrab_channel(){
 
 		$directors = $videos[0]->directors;
 
-		$image_id = $playlist = $videos[0]->videos_thumb;
+		$image_id = $videos[0]->playlist[0]->thumb;
 
 		$poster = $videos[0]->poster;
 
@@ -189,7 +189,7 @@ function igrab_channel(){
 
 		}
 
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
+		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => "http://image.myspotlight.tv/" . $image_id);
 
 
 		return $to_return;
