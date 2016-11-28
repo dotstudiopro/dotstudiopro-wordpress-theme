@@ -210,7 +210,17 @@ function list_categories(){
 
 	$categories = $ds_curl->curl_command('all-categories');
 
-	return $categories;
+	$categories_filtered = [];
+
+	foreach($categories as $cat){
+
+		if(!empty($cat->platforms) && !empty($cat->platforms[0]) && isset($cat->platforms[0]->website) && (string) $cat->platforms[0]->website === 'false' || !isset($cat->platforms[0]->website)) continue;
+
+		$categories_filtered[] = $cat;
+
+	}
+
+	return $categories_filtered;
 
 }
 
