@@ -845,6 +845,8 @@ function channels_check(){
 
 		update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 
+		if( !empty($c->spotlight_poster) ) update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
+
 		if(count($c->childchannels) > 0){
 
 			$parent_id = $page_id;
@@ -865,6 +867,8 @@ function channels_check(){
 				));
 
 				update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
+
+				if( !empty($c->spotlight_poster) ) update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
 
 
 			}
