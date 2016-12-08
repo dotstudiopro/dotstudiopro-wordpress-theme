@@ -1,552 +1,548 @@
 <?php
 
-function ds_is_channel_parent_check(){
+function ds_is_channel_parent_check()
+{
 
-	if(ds_channel_is_parent()){
+    if (ds_channel_is_parent()) {
 
+        $videos = grab_channel();
 
-		$videos = grab_channel();
+        $children = $videos[0]->childchannels;
 
-		$children = $videos[0]->childchannels;
+        $child_slug = $children[0]->slug;
 
-		$child_slug = $children[0]->slug;
+        $current = get_post(get_the_ID());
 
-		$current = get_post(get_the_ID());
+        $category = get_query_var("channel_category", false);
 
-		$category = get_query_var("channel_category", FALSE);
+        if (!$category) {
 
-		if(!$category){
+            $category = 'featured';
 
-			$category = 'featured';
+        }
 
-		}
+        $url = home_url("channels/" . $current->post_name . "/" . $child_slug . "/");
 
-		$url = home_url("channels/".$current->post_name."/".$child_slug."/");
+        wp_redirect($url);
+        die();
 
-		wp_redirect( $url );
-		die();
-
-	}
+    }
 }
 
 /** MOVE THIS TO THE FUNCTIONS FILE AS SOON AS POSSIBLE **/
 
-function igrab_channel(){
+function igrab_channel()
+{
 
-	global $post;
+    global $post;
 
-	$video = FALSE;
+    $video = false;
 
-	if(ds_channel_is_child()){
+    if (ds_channel_is_child()) {
 
-		$videos = grab_channel();
+        $videos = grab_channel();
 
-		if(!is_array($videos)){
+        if (!is_array($videos)) {
 
-			return array();
+            return array();
 
-		}
+        }
 
-		$channel_title = $videos[0]->title;
+        $channel_title = $videos[0]->title;
 
-		$company = $videos[0]->company;
+        $company = $videos[0]->company;
 
-		$title = $videos[0]->childchannels[0]->title;
+        $title = $videos[0]->childchannels[0]->title;
 
-		$description = $videos[0]->description;
+        $description = $videos[0]->description;
 
-		$actors = $videos[0]->actors;
+        $actors = $videos[0]->actors;
 
-		$writers = $videos[0]->writers;
+        $writers = $videos[0]->writers;
 
-		$directors = $videos[0]->directors;
+        $directors = $videos[0]->directors;
 
-		$category = get_query_var("channel_category", FALSE);
+        $category = get_query_var("channel_category", false);
 
-		$playlist = $videos[0]->childchannels[0]->playlist;
+        $playlist = $videos[0]->childchannels[0]->playlist;
 
-		$channel_parent = get_post( $post->post_parent );
+        $channel_parent = get_post($post->post_parent);
 
-		$image_id = "http://image.myspotlight.tv/" . $playlist[0]->thumb;
+        $image_id = "http://image.myspotlight.tv/" . $playlist[0]->thumb;
 
-		$poster = $videos[0]->poster;
+        $poster = $videos[0]->poster;
 
-		$to_return['playlist'] = $playlist;
+        $to_return['playlist'] = $playlist;
 
-		$to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors);
+        $to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors);
 
-		$to_return['link_url'] = $url = home_url("channels/".$channel_parent->post_name."/".$post->post_name);
+        $to_return['link_url'] = $url = home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name);
 
-		$to_return['count'] = count($playlist);
+        $to_return['count'] = count($playlist);
 
-		$video = get_query_var("video", FALSE);
+        $video = get_query_var("video", false);
 
-		if($video){
+        if ($video) {
 
-			$id = get_query_var("video", FALSE);
+            $id = get_query_var("video", false);
 
-			$url = home_url("channels/".$channel_parent->post_name."/".$post->post_name."/video=$id");
+            $url = home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/video=$id");
 
-			foreach($videos[0]->childchannels[0]->playlist as $pl){
+            foreach ($videos[0]->childchannels[0]->playlist as $pl) {
 
-				if($pl->_id == $id){
+                if ($pl->_id == $id) {
 
-					$title = $pl->title;
+                    $title = $pl->title;
 
-					$duration = round($pl->duration/60);
+                    $duration = round($pl->duration / 60);
 
-					$description = $pl->description;
+                    $description = $pl->description;
 
-					$country = $pl->country;
+                    $country = $pl->country;
 
-					$language = $pl->language;
+                    $language = $pl->language;
 
-					$image_id = "http://image.myspotlight.tv/" . $pl->thumb;
+                    $image_id = "http://image.myspotlight.tv/" . $pl->thumb;
 
+                    break;
 
+                }
 
-					break;
+            }
 
-				}
+        }
 
-			}
+        $to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
 
-		}
+        return $to_return;
 
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
+    } else {
 
-		return $to_return;
+        $videos = grab_channel();
 
-	} else {
+        if (!is_array($videos)) {
 
-		$videos = grab_channel();
+            return array();
 
-		if(!is_array($videos)){
+        }
 
-			return array();
+        $company = $videos[0]->company;
 
-		}
+        $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 
-		$company = $videos[0]->company;
+        $channel_title = $title = $videos[0]->title;
 
-		$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+        $description = $videos[0]->description;
 
-		$channel_title = $title = $videos[0]->title;
+        $actors = $videos[0]->actors;
 
-		$description = $videos[0]->description;
+        $writers = $videos[0]->writers;
 
-		$actors = $videos[0]->actors;
+        $directors = $videos[0]->directors;
 
-		$writers = $videos[0]->writers;
+        $image_id = "http://image.myspotlight.tv/" . (!empty($videos[0]->playlist[0]->thumb) ? $videos[0]->playlist[0]->thumb : $videos[0]->video->thumb);
 
-		$directors = $videos[0]->directors;
+        $poster = $videos[0]->poster;
 
-		$image_id = "http://image.myspotlight.tv/" . $videos[0]->playlist[0]->thumb;
+        $playlist = $videos[0]->playlist;
 
-		$poster = $videos[0]->poster;
+        $category = get_query_var("channel_category", false);
 
-		$playlist = $videos[0]->playlist;
+        $to_return['playlist'] = $playlist;
 
-		$category = get_query_var("channel_category", FALSE);
+        $to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors, 'poster' => $poster);
 
-		$to_return['playlist'] = $playlist;
+        $to_return['link_url'] = $url = home_url("channels/" . $post->post_name . "/");
 
-		$to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors, 'poster' => $poster);
+        $to_return['count'] = count($playlist);
 
-		$to_return['link_url'] = $url = home_url("channels/".$post->post_name."/");
+        $video = get_query_var("video", false);
 
-		$to_return['count'] = count($playlist);
+        if ($video) {
 
-		$video = get_query_var("video", FALSE);
+            $id = get_query_var("video", false);
 
-		if($video){
+            $url = home_url("channels/" . $post->post_name . "/video=$id");
 
-			$id = get_query_var("video", FALSE);
+            foreach ($videos[0]->playlist as $pl) {
 
-			$url = home_url("channels/".$post->post_name."/video=$id");
+                if ($pl->_id == $id) {
 
-			foreach($videos[0]->playlist as $pl){
+                    $title = $pl->title;
 
-				if($pl->_id == $id){
+                    $duration = round($pl->duration / 60);
 
-					$title = $pl->title;
+                    $description = $pl->description;
 
-					$duration = round($pl->duration/60);
+                    $country = $pl->country;
 
-					$description = $pl->description;
+                    $language = $pl->language;
 
-					$country = $pl->country;
+                    $image_id = "http://image.myspotlight.tv/" . $pl->thumb;
 
-					$language = $pl->language;
+                    break;
 
-					$image_id = "http://image.myspotlight.tv/" . $pl->thumb;
+                }
 
-					break;
+            }
 
-				}
+        }
 
-			}
+        $to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
 
-		}
+        return $to_return;
 
-		$to_return['for_meta'] = (object) array('description' => $description, 'url' => $url, 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
-
-
-		return $to_return;
-
-	}
+    }
 
 }
 
+function channel_headline_video()
+{
 
-function channel_headline_video(){
+    global $ds_curl;
 
-	global $ds_curl;
+    $video = get_query_var("video", false);
 
-	$video = get_query_var("video", FALSE);
+    if (ds_channel_is_child()) {
 
-	if(ds_channel_is_child()){
+        $videos = grab_channel();
 
-			$videos = grab_channel();
+        if (!is_array($videos)) {
 
-			if(!is_array($videos)){
+            $videos = new stdClass;
 
-				$videos = new stdClass;
+            return $videos;
 
-				return $videos;
+        }
 
-			}
+        $playlist = $videos[0]->childchannels[0]->playlist[0];
 
-			$playlist = $videos[0]->childchannels[0]->playlist[0];
+        $id = $playlist->_id;
 
-			$id = $playlist->_id;
+        $title = $playlist->title;
 
-			$title = $playlist->title;
+        $duration = round($playlist->duration / 60);
 
-			$duration = round($playlist->duration/60);
+        $description = isset($videos[0]->description) ? $videos[0]->description : '';
 
-			$description = isset($videos[0]->description) ? $videos[0]->description : '';
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-			$company = isset($videos[0]->company) ? $videos[0]->company : '';
+        $company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
 
-			$company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
+        $country = isset($playlist->country) ? $playlist->country : '';
 
-			$country = isset($playlist->country) ? $playlist->country : '';
+        $language = isset($playlist->language) ? $playlist->language : '';
 
-			$language = isset($playlist->language) ? $playlist->language : '';
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
 
-			$year = isset($videos[0]->year) ? $videos[0]->year : '';
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
-			$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+        if ($video) {
+            $id = get_query_var("video", false);
 
-		if($video){
-			$id = get_query_var("video", FALSE);
+            foreach ($videos[0]->childchannels[0]->playlist as $pl) {
 
-			foreach($videos[0]->childchannels[0]->playlist as $pl){
+                if ($pl->_id == $id) {
 
-				if($pl->_id == $id){
+                    $title = $pl->title;
 
-					$title = $pl->title;
+                    $duration = round($pl->duration / 60);
 
-					$duration = round($pl->duration/60);
+                    $description = $pl->description;
 
-					$description = $pl->description;
+                    $country = $pl->country;
 
-					$country = $pl->country;
+                    $language = $pl->language;
 
-					$language = $pl->language;
+                    break;
 
-					break;
+                }
 
-				}
+            }
 
-			}
+        }
 
-		}
+        $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
-		$player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
-		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+        return $to_return;
 
-		return $to_return;
+    } else {
 
-	} else {
+        $videos = grab_channel();
 
-		$videos = grab_channel();
+        if (!is_array($videos)) {
 
-		if(!is_array($videos)){
+            $videos = new stdClass;
 
-			$videos = new stdClass;
+            return $videos;
 
-			return $videos;
+        }
 
-		}
+        $id = $videos[0]->playlist[0]->_id;
 
-		$id = $videos[0]->playlist[0]->_id;
+        $title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
 
-		$title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
+        $duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration / 60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration / 60) : '';
 
-		$duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration/60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration/60) : '';
+        $chdescription = "";
+        if (isset($videos[0]->video->description)) {
 
-		$chdescription = "";
-		if(isset($videos[0]->video->description)){
+            $chdescription = $videos[0]->video->description;
 
-			$chdescription = $videos[0]->video->description;
+        } else if (isset($videos[0]->playlist[0]->description)) {
 
-		} else if(isset($videos[0]->playlist[0]->description)){
+            $chdescription = $videos[0]->playlist[0]->description;
 
-			$chdescription = $videos[0]->playlist[0]->description;
+        } else if (isset($videos[0]->video->country)) {
 
-		} else if(isset($videos[0]->video->country)){
+            $chdescription = $videos[0]->video->country;
 
-			$chdescription = $videos[0]->video->country;
+        }
 
-		}
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-		$company = isset($videos[0]->company) ? $videos[0]->company : '';
+        $company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
 
-		$company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+        $country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
 
-		$country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+        $language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
 
-		$language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
 
-		$year = isset($videos[0]->year) ? $videos[0]->year : '';
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
-		$rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+        if ($video) {
 
-		if($video){
+            $id = get_query_var("video", false);
 
-			$id = get_query_var("video", FALSE);
+            foreach ($videos[0]->playlist as $pl) {
 
-			foreach($videos[0]->playlist as $pl){
+                if ($pl->_id == $id) {
 
-				if($pl->_id == $id){
+                    $title = $pl->title;
 
-					$title = $pl->title;
+                    $duration = round($pl->duration / 60);
 
-					$duration = round($pl->duration/60);
+                    $chdescription = $pl->description;
 
-					$chdescription = $pl->description;
+                    $country = $pl->country;
 
-					$country = $pl->country;
+                    $language = $pl->language;
 
-					$language = $pl->language;
+                    break;
 
-					break;
+                }
 
-				}
+            }
 
-			}
+        }
 
-		}
+        if (!$id) {
 
-		if(!$id){
+            $id = $videos[0]->video->_id;
 
-			$id = $videos[0]->video->_id;
+        }
 
-		}
+        $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
-		$player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
-		$to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country'  => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+        return $to_return;
 
-		return $to_return;
-
-	}
-
+    }
 
 }
 
-function get_child_siblings(){
+function get_child_siblings()
+{
 
-	if(!ds_channel_is_child()){
+    if (!ds_channel_is_child()) {
 
-		return false;
+        return false;
 
-	}
+    }
 
-	global $post;
+    global $post;
 
-	$parent = grab_parent_channel();
+    $parent = grab_parent_channel();
 
-	if(!$parent){
+    if (!$parent) {
 
-		return '';
+        return '';
 
-	}
+    }
 
-	$parent_slug = $parent->slug;
+    $parent_slug = $parent->slug;
 
-	$category = get_query_var("channel_category", FALSE);
+    $category = get_query_var("channel_category", false);
 
-	$siblings = '';
+    $siblings = '';
 
-	foreach($parent->childchannels as $ch){
+    foreach ($parent->childchannels as $ch) {
 
-		$selected = '';
+        $selected = '';
 
-		if($ch->slug==$post->post_name){
+        if ($ch->slug == $post->post_name) {
 
-			$selected = "active";
+            $selected = "active";
 
-		}
+        }
 
-		$siblings .= "
+        $siblings .= "
 
-		<a href='".home_url("channels/".$parent->slug."/".$ch->slug."/")."' class='$selected'>
-			<img src='http://image.myspotlight.tv/".$ch->playlist[0]->thumb."/400/225' />
-			<h3>".$ch->title."</h3>
-		</a>";
+        <a href='" . home_url("channels/" . $parent->slug . "/" . $ch->slug . "/") . "' class='$selected'>
+            <img src='http://image.myspotlight.tv/" . $ch->playlist[0]->thumb . "/400/225' />
+            <h3>" . $ch->title . "</h3>
+        </a>";
 
-	}
+    }
 
-	return $siblings;
+    return $siblings;
 
 }
 
-function display_single_channel_extra_info($channel, $post_id){
-	if(is_array($channel) && count($channel) > 0){
+function display_single_channel_extra_info($channel, $post_id)
+{
+    if (is_array($channel) && count($channel) > 0) {
 
-		?>
+        ?>
 <div id='primary' class='content-area'>
-	<?php if($channel['count'] > 1){ ?>
-	<ul class="ds-tabs">
+    <?php if ($channel['count'] > 1) {?>
+    <ul class="ds-tabs">
 
-		<li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
-		<li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
-		<?php if($siblings && strlen($siblings) > 0){ ?>
-			<li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
-		<?php } ?>
-		<li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
+        <li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
+        <li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
+        <?php if ($siblings && strlen($siblings) > 0) {?>
+            <li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
+        <?php }?>
+        <li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
 
-		<li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
-	</ul>
-	<?php } ?>
+        <li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
+    </ul>
+    <?php }?>
 
-	<div id='ds-tab-1' class='ds-tab-content current'>
-		<div id="loading"><h5>Loading...</h5></div>
+    <div id='ds-tab-1' class='ds-tab-content current'>
+        <div id="loading"><h5>Loading...</h5></div>
 
-		<ul class='ds-video-thumbnails ds-lazyload'>
-		<?php
+        <ul class='ds-video-thumbnails ds-lazyload'>
+        <?php
 
+        $this_post = get_post($post_id);
 
+        $channel_parent = '';
 
-			$this_post = get_post($post_id);
+        $category = get_query_var("channel_category", false);
 
-			$channel_parent = '';
+        $counter = 1;
 
-			$category = get_query_var("channel_category", FALSE);
+        foreach ($channel['playlist'] as $pl) {
 
-			$counter = 1;
+            $selected = '';
 
-		foreach($channel['playlist']as $pl){
+            $id = $pl->_id;
 
-			$selected = '';
+            $thumb_id = $pl->thumb;
 
-			$id =  $pl->_id;
+            $title = isset($pl->title) ? $pl->title : '';
 
-			$thumb_id = $pl->thumb;
+            $duration = isset($pl->duration) ? round($pl->duration / 60) : '';
 
-			$title = isset($pl->title) ? $pl->title : '';
+            $description = isset($pl->description) ? $pl->description : '';
 
-			$duration = isset($pl->duration) ? round($pl->duration/60) : '';
+            $company = isset($pl->company) ? $pl->company : '';
 
-			$description = isset($pl->description) ? $pl->description : '';
+            $country = isset($pl->country) ? $pl->country : '';
 
-			$company = isset($pl->company) ? $pl->company : '';
+            $language = isset($pl->language) ? $pl->language : '';
 
-			$country = isset($pl->country) ? $pl->country : '';
+            $year = isset($pl->year) ? $pl->year : '';
 
-			$language = isset($pl->language) ? $pl->language : '';
+            $rating = isset($pl->rating) ? $pl->rating : '';
 
-			$year = isset($pl->year) ? $pl->year : '';
+            $channel_parent = get_post($this_post->post_parent);
 
-			$rating = isset($pl->rating) ? $pl->rating : '';
+            $epnum = key($pl);
 
-			$channel_parent = get_post( $this_post->post_parent );
+            $selected_id = get_query_var("video", false);
 
-			$epnum = key($pl);
+            if ($id == $selected_id || $counter == 1 && !$selected_id) {
 
-			$selected_id = get_query_var("video", FALSE);
+                $selected = "class='selected'";
 
-			if($id == $selected_id || $counter == 1 && !$selected_id){
+            }
 
-				$selected = "class='selected'";
+            $counter++;
 
-			}
+            ?>
 
-			$counter++;
+            <li <?php echo $selected; ?>>
+                <img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
+                <div class='ds-overlay animated fadeIn'>
 
-			?>
+                <?php if (!get_child_siblings()) {?>
 
-			<li <?php echo $selected; ?>>
-				<img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
-				<div class='ds-overlay animated fadeIn'>
+                    <a href='<?php echo home_url("channels/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
 
-				<?php if(!get_child_siblings()){ ?>
+                <?php } else {?>
 
-					<a href='<?php echo home_url("channels/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
+                    <a href='<?php echo home_url("channels/" . $channel_parent->post_name . "/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
 
-				<?php } else { ?>
-
-					<a href='<?php echo home_url("channels/".$channel_parent->post_name."/".$this_post->post_name."/?video=$id&channel_category=$category") ?>'>
-
-				<?php } ?>
+                <?php }?>
 
 
-				 <i class='fa fa-play-circle-o fa-3x'></i>
-				</a>
-				<label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
-				</div>
-				<h3 class='character-limit-90'><?php echo $title ?></h3>
-				<span class='ds-video-year animated fadeIn'><small>Year: <?php echo $year ?></small></span>
-				<span class='ds-video-country animated fadeIn'><small>Country: <?php echo $country ?></small></span>
-				<span class='ds-video-description character-limit-90 animated fadeIn'><?php echo $description ?></span>
-			</li>
-			<?php
+                 <i class='fa fa-play-circle-o fa-3x'></i>
+                </a>
+                <label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
+                </div>
+                <h3 class='character-limit-90'><?php echo $title ?></h3>
+                <span class='ds-video-year animated fadeIn'><small>Year: <?php echo $year ?></small></span>
+                <span class='ds-video-country animated fadeIn'><small>Country: <?php echo $country ?></small></span>
+                <span class='ds-video-description character-limit-90 animated fadeIn'><?php echo $description ?></span>
+            </li>
+            <?php
 
-			}
+        }
 
-			?>
+        ?>
 
 
-			</ul>
-	</div>
-	<div id='ds-tab-2' class='ds-tab-content'>
-		<span class='ds-video-headliner-description'>
-		<?php echo $channel['details']['description']; ?>
+            </ul>
+    </div>
+    <div id='ds-tab-2' class='ds-tab-content'>
+        <span class='ds-video-headliner-description'>
+        <?php echo $channel['details']['description']; ?>
 
-		Actors: <?php echo implode(", ", $channel['details']['actors']); ?>
+        Actors: <?php echo implode(", ", $channel['details']['actors']); ?>
 
-		Writers: <?php echo implode(", ", $channel['details']['writers']); ?>
+        Writers: <?php echo implode(", ", $channel['details']['writers']); ?>
 
-		Directors: <?php echo implode(", ", $channel['details']['directors']); ?>
+        Directors: <?php echo implode(", ", $channel['details']['directors']); ?>
 
-		</span>
-	</div>
-	<div id='ds-tab-3' class='ds-tab-content'>
-		<?php echo $siblings;?>
-	</div>
-	<div id='ds-tab-4' class='ds-tab-content'>
+        </span>
+    </div>
+    <div id='ds-tab-3' class='ds-tab-content'>
+        <?php echo $siblings; ?>
+    </div>
+    <div id='ds-tab-4' class='ds-tab-content'>
 
-	<?php
+    <?php
 
-	global $post;
+        global $post;
 
-	echo $post->post_content;
+        echo $post->post_content;
 
-	?>
+        ?>
 
-	</div>
-	<div class='ds-commenting-sidebar'>
-	<?php ds_template_fb_code(); ?>
-	</div>
-	<?php
-		} else { ?>
+    </div>
+    <div class='ds-commenting-sidebar'>
+    <?php ds_template_fb_code();?>
+    </div>
+    <?php
+} else {?>
 
-			<h1>This channel is not available in your country.</h1>
+            <h1>This channel is not available in your country.</h1>
 
-		<?php }
+        <?php }
 }
-
