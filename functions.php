@@ -70,22 +70,22 @@ function ds_light_theme_shadows()
     }
 
     echo '
-		<style>
-			/* Box shadows for light theme. Comment these to remove on grid */
-			.og-expander-inner.light-theme-shadow{
-			    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-			    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-			    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+        <style>
+            /* Box shadows for light theme. Comment these to remove on grid */
+            .og-expander-inner.light-theme-shadow{
+                -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+                -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+                box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
 
-			}
+            }
 
-			.gridder-list.light-theme-shadow img{
-			    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-			    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-			    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-			}
-		</style>
-	';
+            .gridder-list.light-theme-shadow img{
+                -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+            }
+        </style>
+    ';
 
 }
 
@@ -213,7 +213,7 @@ function list_categories()
 
     $categories = $ds_curl->curl_command('all-categories');
 
-    $categories_filtered = [];
+    $categories_filtered = array();
 
     foreach ($categories as $cat) {
 
@@ -300,36 +300,36 @@ function channel_first_video()
     $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
     return "<div class='ds-video-headliner'>
-				<div class='ds-video-fluidMedia'>
-				<div class='player'></div><script src='$url'></script>
-				</div>
-				<div class='ds-col-8'>
-					<h1 class='ds-video-headliner-title'>$title</h1>
-					<span class='ds-video-headliner-duration'>($duration min)</span>
-					<ul class='ds-videometalist'>
-		              <li>$country</li>
-		              <li>Rating:$rating</li>
-		              <li>$language</li>
-		              <li>$year</li>
-	              	  <li>$company</li>
-	          		</ul>
-	          		<ul class='ds-sharepad'>
-	          			<li>Share <i class='fa fa-share fa-small'></i></li>
-	          			<li>
-	          				<a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI] . " class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
-	          			</li>
-	          			<li><i class='fa fa-twitter fa-small'></i></li>
-	          			<li><i class='fa fa-googleplus fa-small'></i></li>
-	          			<li><i class='fa fa-tumblr fa-small'></i></li>
-	          			<li><i class='fa fa-pinterest fa-small'></i></li>
+                <div class='ds-video-fluidMedia'>
+                <div class='player'></div><script src='$url'></script>
+                </div>
+                <div class='ds-col-8'>
+                    <h1 class='ds-video-headliner-title'>$title</h1>
+                    <span class='ds-video-headliner-duration'>($duration min)</span>
+                    <ul class='ds-videometalist'>
+                      <li>$country</li>
+                      <li>Rating:$rating</li>
+                      <li>$language</li>
+                      <li>$year</li>
+                      <li>$company</li>
+                    </ul>
+                    <ul class='ds-sharepad'>
+                        <li>Share <i class='fa fa-share fa-small'></i></li>
+                        <li>
+                            <a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI] . " class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
+                        </li>
+                        <li><i class='fa fa-twitter fa-small'></i></li>
+                        <li><i class='fa fa-googleplus fa-small'></i></li>
+                        <li><i class='fa fa-tumblr fa-small'></i></li>
+                        <li><i class='fa fa-pinterest fa-small'></i></li>
 
-	          		</ul>
-	        		</div>
-	        		<div class='ds-col-4'>
-	        			<div id='companion300x250'></div>
-	        		</div>
+                    </ul>
+                    </div>
+                    <div class='ds-col-4'>
+                        <div id='companion300x250'></div>
+                    </div>
 
-			</div>";
+            </div>";
 
 }
 
@@ -382,26 +382,26 @@ function channel_selected_video()
     $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
     return "<div class='ds-video-headliner'>
-				<div class='ds-video-fluidMedia'>
-				<div class='player'></div><script src='$url'></script>
-				</div>
-				<div class='ds-col-6'>
-					<h1 class='ds-video-headliner-title'>$title</h1>
-					<span class='ds-video-headliner-duration'>($duration min)</span>
-					<ul class='ds-videometalist'>
-		              <li>$country</li>
-		              <li>Rating:$rating</li>
-		              <li>$language</li>
-		              <li>$year</li>
-	              	  <li>$company</li>
-	          		</ul>
-	        		</div>
-	        		<div class='ds-col-4'>
-	        			<div id='companion300x250'></div>
-	        		</div>
-				<span class='ds-video-headliner-description'>$description</span>
+                <div class='ds-video-fluidMedia'>
+                <div class='player'></div><script src='$url'></script>
+                </div>
+                <div class='ds-col-6'>
+                    <h1 class='ds-video-headliner-title'>$title</h1>
+                    <span class='ds-video-headliner-duration'>($duration min)</span>
+                    <ul class='ds-videometalist'>
+                      <li>$country</li>
+                      <li>Rating:$rating</li>
+                      <li>$language</li>
+                      <li>$year</li>
+                      <li>$company</li>
+                    </ul>
+                    </div>
+                    <div class='ds-col-4'>
+                        <div id='companion300x250'></div>
+                    </div>
+                <span class='ds-video-headliner-description'>$description</span>
 
-			</div>";
+            </div>";
 
 }
 
@@ -487,21 +487,21 @@ function grab_playlist()
         $epnum = key($pl);
 
         echo "
-			<li>
-				<img src='http://image.myspotlight.tv/$thumb_id/380/215' />
-				<div class='ds-overlay animated fadeIn'>
-					<a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/?video=$id") . "'>
-				 <i class='fa fa-play-circle-o fa-3x'></i>
-				</a>
-				<label class='delay' style='display: inline-block;'><small>$duration min</small></label>
-				</div>
-				<h3>$title</h3>
-				<span class='ds-video-year animated fadeIn'><small>Year: $year</small></span>
-				<span class='ds-video-country animated fadeIn'><small>Country: $country</small></span>
-				<span class='ds-video-description animated fadeIn'>$description</span>
-			</li>
+            <li>
+                <img src='http://image.myspotlight.tv/$thumb_id/380/215' />
+                <div class='ds-overlay animated fadeIn'>
+                    <a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/?video=$id") . "'>
+                 <i class='fa fa-play-circle-o fa-3x'></i>
+                </a>
+                <label class='delay' style='display: inline-block;'><small>$duration min</small></label>
+                </div>
+                <h3>$title</h3>
+                <span class='ds-video-year animated fadeIn'><small>Year: $year</small></span>
+                <span class='ds-video-country animated fadeIn'><small>Country: $country</small></span>
+                <span class='ds-video-description animated fadeIn'>$description</span>
+            </li>
 
-			";
+            ";
 
     }
 
@@ -554,22 +554,22 @@ function grab_parent_playlist()
         $description = $ch->video->description;
 
         echo "
-				<a href='" . home_url("channels/" . $post->post_name . "/$slug/") . "'></a>
-			 <li class='gridder-list' data-griddercontent='#content1'>
-	      		<img class='channel-spotlight-poster' src='$spotlight_poster/400/225'>
-	  		</li>
-	  		<div id='content1' class='gridder-content'>
-	  			<span class='channel-title'>$title</span>
-			<span class='channel-spotlight-poster-holder'><img src='http://image.myspotlight.tv/$thumb_id/1280/720' /></span>
-			<span class='channel-poster-holder'><img class='channel-poster' src='$poster'></span>
-			<span class='channel-year'>Year: $year</span>
-			<span class='channel-language'>Language: $language</span>
-			<span class='channel-company>Company: $company</span>
-			<span class='channel-description'>Description: $description</span>
+                <a href='" . home_url("channels/" . $post->post_name . "/$slug/") . "'></a>
+             <li class='gridder-list' data-griddercontent='#content1'>
+                <img class='channel-spotlight-poster' src='$spotlight_poster/400/225'>
+            </li>
+            <div id='content1' class='gridder-content'>
+                <span class='channel-title'>$title</span>
+            <span class='channel-spotlight-poster-holder'><img src='http://image.myspotlight.tv/$thumb_id/1280/720' /></span>
+            <span class='channel-poster-holder'><img class='channel-poster' src='$poster'></span>
+            <span class='channel-year'>Year: $year</span>
+            <span class='channel-language'>Language: $language</span>
+            <span class='channel-company>Company: $company</span>
+            <span class='channel-description'>Description: $description</span>
 
-	  		</div>
+            </div>
 
-			";
+            ";
 
     }
 
@@ -619,22 +619,22 @@ function grab_child_playlist()
         $epnum = key($pl);
 
         echo "
-			<li class='gridder-list' data-griddercontent='#content1'>
-	      		<img src='http://image.myspotlight.tv/$thumb_id/380/215' />
-	      		<a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/") . "'></a>
-	  		</li>
-	  		<div id='content1' class='gridder-content'> Content goes here... </div>
-			<span class='ds-video-title'>$title</span>
+            <li class='gridder-list' data-griddercontent='#content1'>
+                <img src='http://image.myspotlight.tv/$thumb_id/380/215' />
+                <a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/") . "'></a>
+            </li>
+            <div id='content1' class='gridder-content'> Content goes here... </div>
+            <span class='ds-video-title'>$title</span>
 
-			<img src='http://image.myspotlight.tv/$thumb_id/380/215' /></a>
+            <img src='http://image.myspotlight.tv/$thumb_id/380/215' /></a>
 
-			<span class='ds-video-duration'>Duration: $duration</span>
-			<span class='ds-video-year'>Year: $year</span>
-			<span class='ds-video-country'>Country: $country</span>
-			<span class='ds-video-company>Company: $company</span>
-			<span class='ds-video-description'>Description: $description</span>
+            <span class='ds-video-duration'>Duration: $duration</span>
+            <span class='ds-video-year'>Year: $year</span>
+            <span class='ds-video-country'>Country: $country</span>
+            <span class='ds-video-company>Company: $company</span>
+            <span class='ds-video-description'>Description: $description</span>
 
-			";
+            ";
 
     }
 
@@ -1122,22 +1122,22 @@ function ds_meta_tags()
     }
 
     ?><meta name="description" content="<?php echo $description; ?>">
-	<meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
-	<!-- OG meta --><meta property="og:site_name" content="<?php echo $name_site; ?>">
-	<meta property="og:description" content="<?php echo $description; ?>">
-	<meta property="og:type" content="website" >
-	<meta property="og:url" content="<?php echo $meta->url; ?>">
-	<meta property="og:title" content="<?php echo $name; ?>" >
-	<meta property="og:image" content="<?php echo $meta->image_id; ?>">
-	<meta property="og:image:width" content="640" >
-	<meta property="og:image:height" content="360" >
-	<!-- Twitter Summay Card -->
-	<meta name="twitter:card" content="summary_large_image" >
-	<meta name="twitter:title" content="<?php echo $name; ?>">
-	<meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
-	<meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
-	<meta name="twitter:description" content="<?php echo $description; ?>">
-	<meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360"><?php
+    <meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
+    <!-- OG meta --><meta property="og:site_name" content="<?php echo $name_site; ?>">
+    <meta property="og:description" content="<?php echo $description; ?>">
+    <meta property="og:type" content="website" >
+    <meta property="og:url" content="<?php echo $meta->url; ?>">
+    <meta property="og:title" content="<?php echo $name; ?>" >
+    <meta property="og:image" content="<?php echo $meta->image_id; ?>">
+    <meta property="og:image:width" content="640" >
+    <meta property="og:image:height" content="360" >
+    <!-- Twitter Summay Card -->
+    <meta name="twitter:card" content="summary_large_image" >
+    <meta name="twitter:title" content="<?php echo $name; ?>">
+    <meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
+    <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
+    <meta name="twitter:description" content="<?php echo $description; ?>">
+    <meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360"><?php
 
 }
 
@@ -1149,20 +1149,20 @@ function ds_template_fb_code()
 {
 
     ?>
-	<div id="ds-comments">
-	   <div class="fb-comments" data-colorscheme="dark" data-href="<?php echo home_url(); ?>" data-width="100%" data-numposts="5"></div>
-		</div>
+    <div id="ds-comments">
+       <div class="fb-comments" data-colorscheme="dark" data-href="<?php echo home_url(); ?>" data-width="100%" data-numposts="5"></div>
+        </div>
 
-	  <div id="fb-root"></div>
-	  <script>(function(d, s, id) {
-	    var js, fjs = d.getElementsByTagName(s)[0];
-	    if (d.getElementById(id)) return;
-	    js = d.createElement(s); js.id = id;
-	    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=243289792365862";
-	    fjs.parentNode.insertBefore(js, fjs);
-	  }(document, 'script', 'facebook-jssdk'));</script>
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=243289792365862";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
 
-	<?php
+    <?php
 
 }
 
@@ -1501,19 +1501,19 @@ function ds_category_image_field()
 
     ?>
 
-			<table class='widefat'>
+            <table class='widefat'>
 
-				<tbody>
+                <tbody>
 
-					<tr><td><h3>Upload new image</h3></td><td><input type='file' name='ds-category-image' /></td></tr>
+                    <tr><td><h3>Upload new image</h3></td><td><input type='file' name='ds-category-image' /></td></tr>
 
-					<tr><td><h3>Current image</h3></td><td><?php echo $cat_image; ?></td></tr>
+                    <tr><td><h3>Current image</h3></td><td><?php echo $cat_image; ?></td></tr>
 
-				</tbody>
+                </tbody>
 
-			</table>
+            </table>
 
-		<?php
+        <?php
 
 }
 
