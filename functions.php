@@ -662,6 +662,53 @@ function grab_video($video)
 
 }
 
+/*** IFRAME REPLACE ***/
+
+add_action('wp', 'dsp_iframe_replace');
+function dsp_iframe_replace()
+{
+    if (is_admin()) {
+        return;
+    }
+
+    // Start output and check HTML
+    ob_start('dsp_iframe_html');
+}
+
+function dsp_iframe_html($html)
+{
+
+    $iframe_split = explode('<iframe', $html);
+    foreach($iframe_split as $if){
+        $split_two = explode('</iframe>', $if)[0];
+        $params = explode(' ', $split_two);
+        $source = '';
+        foreach($params as $param){
+            if(strpos($param, 'src') !== false){
+                $source = explode('"', explode('src="', str_replace("'", '"', $param))[1])[0];
+                if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
+                    $video = explode("?", explode("/player/", $source)[1])[0];
+                    $videoObj = grab_video($video);
+                    $img = "<img class='video_$video iframe-placeholder' src='$videoObj->socialImage' />";
+                    $iframe = '<iframe' . $split_two . '</iframe>';
+                    $iframe2 = str_replace('?skin', '?autostart=true&skin', $iframe);
+                    $js = "<script>
+                    $('.video_$video').click(function(){
+                        var img = this;
+                        $(this).after('$iframe2');
+                        $(this).remove();
+                    });
+                    </script>";
+                    $html = str_replace($iframe, $img . $js, $html);
+                }
+            }
+        }
+    }
+    return $html;
+}
+
+/*** REPLACE IFRAME ***/
+
 function ds_check()
 {
 
