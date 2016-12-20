@@ -651,6 +651,17 @@ function grab_category($category)
 
 }
 
+function grab_video($video)
+{
+
+    global $ds_curl;
+
+    $videoObj = $ds_curl->curl_command('play', array("video" => $video));
+
+    return $videoObj;
+
+}
+
 function ds_check()
 {
 
