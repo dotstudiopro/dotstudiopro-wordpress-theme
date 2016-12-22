@@ -697,6 +697,10 @@ function dsp_iframe_html($html)
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
         $split_two = explode('</iframe>', $if)[0];
+        if(strpos($split_two, 'data-fancyloader') !== false){
+    		$val = explode('"', explode('data-fancyloader="', str_replace("'", '"', $split_two))[1])[0];
+    		if($val === 'false') continue;
+		}
         $params = explode(' ', $split_two);
         $source = '';
         foreach($params as $param){

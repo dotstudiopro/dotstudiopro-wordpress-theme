@@ -80,7 +80,7 @@ $fancy_load_option = get_option("ds_fancy_load");
 
 $sel_yes = $fancy_load_option ? 'selected' : '';
 $sel_no = !$fancy_load_option ? 'selected' : '';
-$fancy_load = "<option value='1' $sel_yeses>Yes</option><option value='0' $sel_no>No</option>";
+$fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>No</option>";
 
 /** End Fancy **/
 
