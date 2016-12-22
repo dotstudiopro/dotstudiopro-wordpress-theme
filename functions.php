@@ -225,6 +225,7 @@ function list_categories()
 
     foreach ($categories as $cat) {
 
+<<<<<<< HEAD
         if (!empty($cat->platforms) && !empty($cat->platforms[0]) && isset($cat->platforms[0]->website) && (string) $cat->platforms[0]->website === 'false' || !isset($cat->platforms[0]->website)) {
             continue;
         }
@@ -232,6 +233,157 @@ function list_categories()
         $categories_filtered[] = $cat;
 
     }
+=======
+function channel_first_video(){
+	
+	global $ds_curl;
+	
+	$videos = grab_channel();
+	
+	$id = $videos[0]->video->_id;
+	
+	$title = $videos[0]->video->title;
+	
+	$duration = round($videos[0]->video->duration/60);
+	
+	$description = $videos[0]->video->description;
+	
+	$company = $videos[0]->company;
+
+	$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+	
+	$country = $videos[0]->video->country;
+	
+	$language = $videos[0]->video->language;
+	
+	$year = $videos[0]->year;
+	
+	$rating = $videos[0]->rating;
+	
+	$url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+	
+	return "<div class='ds-video-headliner'>
+				<div class='ds-video-fluidMedia'>
+				<div class='player'></div><script src='$url'></script>
+				</div>
+				<div class='ds-col-8'>
+					<h1 class='ds-video-headliner-title'>$title</h1>
+					<span class='ds-video-headliner-duration'>($duration min)</span>
+					<ul class='ds-videometalist'>
+		              <li>$country</li>
+		              <li>Rating:$rating</li>
+		              <li>$language</li>
+		              <li>$year</li>
+	              	  <li>$company</li>
+	          		</ul>
+	          		<ul class='ds-sharepad'>
+	          			<li>Share <i class='fa fa-share fa-small'></i></li>
+	          			<li>
+	          				<a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://" . $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI] . " class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
+	          			</li>
+	          			<li><i class='fa fa-twitter fa-small'></i></li>
+	          			<li><i class='fa fa-googleplus fa-small'></i></li>
+	          			<li><i class='fa fa-tumblr fa-small'></i></li>
+	          			<li><i class='fa fa-pinterest fa-small'></i></li>
+	          		
+	          		</ul>
+	        		</div>
+	        		<div class='ds-col-4'>
+	        			<div id='companion300x250'></div>
+	        		</div>
+				
+			</div>";
+	
+}
+
+function child_channel_first_video(){
+	
+	global $ds_curl;
+	
+	$videos = grab_channel();
+	
+	$id = $videos[0]->childchannels[0]->playlist[0]->_id;
+	
+	$company = $videos[0]->company;
+	
+	$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+	
+	$url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+	
+	return "<div class='player'></div><script src='$url'></script>";
+	
+}
+
+function channel_selected_video(){
+	
+	global $ds_curl;
+	
+	$video_id = get_query_var("video", FALSE);
+	
+	$videos = grab_channel();
+		
+	$title = $videos[0]->video->title;
+	
+	$duration = round($videos[0]->video->duration/60);
+	
+	$description = $videos[0]->video->description;
+	
+	$company = $videos[0]->company;
+	
+	$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+	
+	$country = $videos[0]->video->country;
+	
+	$language = $videos[0]->video->language;
+	
+	$year = $videos[0]->year;
+	
+	$rating = $videos[0]->rating;
+	
+	$url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+	
+	return "<div class='ds-video-headliner'>
+				<div class='ds-video-fluidMedia'>
+				<div class='player'></div><script src='$url'></script>
+				</div>
+				<div class='ds-col-6'>
+					<h1 class='ds-video-headliner-title'>$title</h1>
+					<span class='ds-video-headliner-duration'>($duration min)</span>
+					<ul class='ds-videometalist'>
+		              <li>$country</li>
+		              <li>Rating:$rating</li>
+		              <li>$language</li>
+		              <li>$year</li>
+	              	  <li>$company</li>
+	          		</ul>
+	        		</div>
+	        		<div class='ds-col-4'>
+	        			<div id='companion300x250'></div>
+	        		</div>
+				<span class='ds-video-headliner-description'>$description</span>
+				
+			</div>";
+	
+}
+
+function child_channel_selected_video(){
+	
+	global $ds_curl;
+	
+	$id = get_query_var("video", FALSE);
+	
+	$videos = grab_channel();
+		
+	$company = $videos[0]->company;
+	
+	$company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+	
+	$url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=".get_option("ds_player_slider_color", "228b22")."&autostart=".(get_option("ds_player_autostart", 0) == 1 ? "true" : "false")."&sharing=".(get_option("ds_player_sharing", 0) == 1 ? "true" : "false")."&muteonstart=".(get_option("ds_player_mute", 0) == 1 ? "true" : "false")."&disablecontrolbar=".(get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+	
+	return "<div class='player'></div><script src='$url'></script>";
+	
+}
+>>>>>>> 974f5cca27716a447a41a962ab879570bab12b20
 
     return $categories_filtered;
 
@@ -244,7 +396,37 @@ function channel_revision_check()
 
     $results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type = 'revision' AND post_parent = " . $post->ID);
 
+<<<<<<< HEAD
     if (count($results) > 0) {
+=======
+
+function ds_check(){
+	
+	global $ds_curl;
+	
+	$token = get_option( 'ds_curl_token' );
+	
+	$token_time = !$token ? 0 : get_option( 'ds_curl_token_time' );
+	
+	$difference = floor((time() - $token_time)/84600);
+	
+	if(!$token || $difference >= 25){
+		
+		ds_new_token();
+		
+	}
+	
+	$country = ds_get_country();
+	
+	
+	if(!$country && !isset($ds_curl->country)){
+		
+		// Talk to Joe about doing something
+				
+	}
+		
+}
+>>>>>>> 974f5cca27716a447a41a962ab879570bab12b20
 
         return true;
 
@@ -276,6 +458,62 @@ function grab_parent_channel()
 
     return $channels;
 
+<<<<<<< HEAD
+=======
+function ds_meta_tags(){
+	
+	global $channel;
+	
+	if(!$channel){
+		
+		return;
+		
+	}
+	
+	$meta = $channel['for_meta'];
+	
+	$description = str_replace('"', "'", $meta->description);
+	
+	if($meta->channel_title == $meta->title){
+		
+		$name_site = $meta->title . " - " .  get_bloginfo( 'name' );
+		
+		$name = $meta->title;
+		
+	} else {
+		
+		$name_site = $meta->title . " - " .  $meta->channel_title . " - " .  get_bloginfo( 'name' );
+		
+		$name = $meta->title . " - " .  $meta->channel_title;
+		
+	}
+	
+	?>
+	
+	<meta name="description" content="<?php echo $description; ?>">
+  <meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
+​
+  <!-- OG meta -->
+  <meta property="og:site_name" content="<?php echo $name_site; ?>">
+  <meta property="og:description" content="<?php echo $description; ?>">
+  <meta property="og:type" content="website" >
+  <meta property="og:url" content="<?php echo $meta->url; ?>">
+  <meta property="og:title" content="<?php echo $name; ?>" >
+  <meta property="og:image" content="<?php echo $meta->image_id; ?>/640/360" name="shareimgdata" id="shareimgdata" >
+  <meta property="og:image:width" content="640" >
+  <meta property="og:image:height" content="360" >
+​
+  <!-- Twitter Summay Card -->
+  <meta name="twitter:card" content="summary_large_image" >
+  <meta name="twitter:title" content="<?php echo $name; ?>">
+  <meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
+  <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
+  <meta name="twitter:description" content="<?php echo $description; ?>">
+  <meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360">
+	
+	<?php
+	
+>>>>>>> 974f5cca27716a447a41a962ab879570bab12b20
 }
 
 function channel_first_video()
