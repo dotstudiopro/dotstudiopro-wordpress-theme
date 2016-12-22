@@ -89,6 +89,88 @@ jQuery(function ($) {
 
 });
 
+
+jQuery(function ($) {
+    var contList = $('.iframe_container');
+
+    $(window).resize(function() {
+      posPlayBtns();
+    });
+    posPlayBtns();
+
+    function posPlayBtns() {
+      // center the "play" button
+      $.each(contList,function(key,val) {
+        var faCirc = $(this).find('.iframe_fa');
+        var w = $(this).width();
+        var faW = faCirc.width();
+        var l = (w-faW)/2;
+        faCirc.css('margin-left',l);
+
+      });      
+    }
+
+    $(window).scroll(function() {
+        // when window scrolls, play the video that is in view
+        $.each(contList,function(key,val) {
+            var theID = $(this).attr('id').replace('_container','');
+            var IsAlreadyPlaying = $(this).attr('data-isplaying') == '1';
+
+            var thisTop = $(this).offset().top - $(window).scrollTop();
+            var theLink = $('#' + theID + '_link');
+
+            if(thisTop <= ($(window).height() *.6) && thisTop >= -100) {
+              if(!IsAlreadyPlaying) {
+                $(this).attr('data-isplaying','1');
+                playTheVid(theLink);
+              }
+            } else {
+                $(this).attr('data-isplaying','0');
+                $(this).find('.iframe_vid').remove();
+                theLink.removeClass('hidden');                
+            }
+        });
+
+    });
+
+
+    function playTheVid(which) {
+
+      var theID = which.attr('href').replace('#','');
+      var iframeSrc = $('#' + theID + '_container').attr('data-vidurl');
+      var fmeWidth = which.find('img').width();
+      var fmeHeight = which.find('img').height();
+
+      $('.iframe_vid').remove();
+      $('.iframe_launch').removeClass('hidden');
+      $('.iframe_spinner_container').fadeOut('fast');
+      which.addClass('hidden');
+      $('#' + theID + '_spinner').fadeIn('medium');
+
+      var strOut = '' 
+      + '<iframe name="' + theID + '_fme" class="iframe_vid" src="' + iframeSrc + '&autostart=true&muteonstart=true" width="' + fmeWidth + '" height="' + fmeHeight + '" style="width:' + fmeWidth + 'px\;height:' + fmeHeight + 'px\;" scrolling="no" frameborder="0" allowfullscreen></iframe>'
+      $('#'+theID + '_link').after(strOut);      
+
+      setTimeout(function() {
+          $('#' + theID + '_spinner').fadeOut('slow');
+      },2000);
+
+
+
+    }
+
+    // video image preview iframe swap onclick
+    $('a.iframe_launch').click(function(e) {
+      e.preventDefault();
+      playTheVid($(this));
+  });
+   
+
+});
+
+
+
+
 //Limit Characters
 
 jQuery(function ($) {

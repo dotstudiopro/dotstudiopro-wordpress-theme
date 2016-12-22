@@ -116,6 +116,14 @@ function ds_styles()
     // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('ds-style');
 
+    // Styles for the FancyFrame portion of this plugin:
+    wp_register_style('fancyframe-style', plugins_url('/css/fancyframes.css', __FILE__), array(), '20120208', 'all');
+
+    // For either a plugin or a theme, you can then enqueue the style:
+    wp_enqueue_style('fancyframe-style');
+
+
+
 }
 add_action('wp_enqueue_scripts', 'ds_styles');
 
@@ -675,6 +683,14 @@ function dsp_iframe_replace()
     ob_start('dsp_iframe_html');
 }
 
+
+
+function generateRandomString($length = 5) {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+}
+
+
+
 function dsp_iframe_html($html)
 {
 
@@ -689,17 +705,18 @@ function dsp_iframe_html($html)
                 if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
                     $video = explode("?", explode("/player/", $source)[1])[0];
                     $videoObj = grab_video($video);
-                    $img = "<img class='video_$video iframe-placeholder' src='$videoObj->socialImage' />";
-                    $iframe = '<iframe' . $split_two . '</iframe>';
-                    $iframe2 = str_replace('?skin', '?autostart=true&skin', $iframe);
-                    $js = "<script>
-                    $('.video_$video').click(function(){
-                        var img = this;
-                        $(this).after('$iframe2');
-                        $(this).remove();
-                    });
-                    </script>";
-                    $html = str_replace($iframe, $img . $js, $html);
+                    
+
+                    
+                    $rndID = generateRandomString(5);
+
+                    $strOut =  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
+                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->socialImage . '" /></a>';
+                    $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';                    
+                    $iframe = '<iframe' . $split_two . '</iframe>';                    
+                    $html = str_replace($iframe, $strOut, $html);
+
+
                 }
             }
         }
