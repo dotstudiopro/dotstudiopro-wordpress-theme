@@ -30,11 +30,11 @@ jQuery(function ($) {
 //Gridder
 
 jQuery(function ($) {
-	
+
 	if(!$('.gridder').length){
-		
+
 		return;
-		
+
 	}
 
   // Call Gridder
@@ -93,22 +93,22 @@ jQuery(function ($) {
 jQuery(function ($) {
     var contList = $('.iframe_container');
 
-    $(window).resize(function() {
-      posPlayBtns();
-    });
-    posPlayBtns();
+    // $(window).resize(function() {
+    //   posPlayBtns();
+    // });
+    // posPlayBtns();
 
-    function posPlayBtns() {
-      // center the "play" button
-      $.each(contList,function(key,val) {
-        var faCirc = $(this).find('.iframe_fa');
-        var w = $(this).width();
-        var faW = faCirc.width();
-        var l = (w-faW)/2;
-        faCirc.css('margin-left',l);
+    // function posPlayBtns() {
+    //   // center the "play" button
+    //   $.each(contList,function(key,val) {
+    //     var faCirc = $(this).find('.iframe_fa');
+    //     var w = $(this).width();
+    //     var faW = faCirc.width();
+    //     var l = (w-faW)/2;
+    //     faCirc.css('margin-left',l);
 
-      });      
-    }
+    //   });
+    // }
 
     $(window).scroll(function() {
         // when window scrolls, play the video that is in view
@@ -127,7 +127,7 @@ jQuery(function ($) {
             } else {
                 $(this).attr('data-isplaying','0');
                 $(this).find('.iframe_vid').remove();
-                theLink.removeClass('hidden');                
+                theLink.removeClass('hidden');
             }
         });
 
@@ -147,9 +147,9 @@ jQuery(function ($) {
       which.addClass('hidden');
       $('#' + theID + '_spinner').fadeIn('medium');
 
-      var strOut = '' 
+      var strOut = ''
       + '<iframe name="' + theID + '_fme" class="iframe_vid" src="' + iframeSrc + '&autostart=true&muteonstart=true" width="' + fmeWidth + '" height="' + fmeHeight + '" style="width:' + fmeWidth + 'px\;height:' + fmeHeight + 'px\;" scrolling="no" frameborder="0" allowfullscreen></iframe>'
-      $('#'+theID + '_link').after(strOut);      
+      $('#'+theID + '_link').after(strOut);
 
       setTimeout(function() {
           $('#' + theID + '_spinner').fadeOut('slow');
@@ -164,7 +164,7 @@ jQuery(function ($) {
       e.preventDefault();
       playTheVid($(this));
   });
-   
+
 
 });
 
