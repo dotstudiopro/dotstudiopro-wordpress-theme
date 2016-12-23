@@ -675,7 +675,7 @@ function grab_video($video)
 add_action('wp', 'dsp_iframe_replace');
 function dsp_iframe_replace()
 {
-    if (is_admin() || !get_option("ds_fancy_load")) {
+    if (is_admin()) {
         return;
     }
 
@@ -697,27 +697,22 @@ function dsp_iframe_html($html)
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
         $split_two = explode('</iframe>', $if)[0];
-        if(strpos($split_two, 'data-fancyloader') !== false){
-    		$val = explode('"', explode('data-fancyloader="', str_replace("'", '"', $split_two))[1])[0];
-    		if($val === 'false') continue;
-		}
         $params = explode(' ', $split_two);
         $source = '';
         foreach($params as $param){
-            if(strpos($param, 'src') !== false){
+
+            if(strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false){
                 $source = explode('"', explode('src="', str_replace("'", '"', $param))[1])[0];
                 if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
                     $video = explode("?", explode("/player/", $source)[1])[0];
                     $videoObj = grab_video($video);
-
-
-
+                                        
                     $rndID = generateRandomString(5);
-
-                    $strOut =  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
+                    $strOut = '';
+                    $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
                     $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->socialImage . '" /></a>';
-                    $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
-                    $iframe = '<iframe' . $split_two . '</iframe>';
+                    $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';                    
+                    $iframe = '<iframe' . $split_two . '</iframe>';                    
                     $html = str_replace($iframe, $strOut, $html);
 
 
@@ -1265,8 +1260,6 @@ function ds_save_admin_options()
         update_option('ds_light_theme_shadow', sanitize_text_field($_POST['ds_light_theme_shadow']));
 
         update_option('ds_channel_template', sanitize_text_field($_POST['ds_channel_template']));
-
-        update_option('ds_fancy_load', sanitize_text_field($_POST['ds_fancy_load']));
 
         update_option('ds_development_check', sanitize_text_field($_POST['ds_development_check']));
 
