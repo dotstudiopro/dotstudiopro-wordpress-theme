@@ -118,6 +118,8 @@ $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>
 
 					<tr><td>Use FancyLoad Iframe Loader</td><td><select name='ds_fancy_load'><?php echo $fancy_load ?></select></td></tr>
 
+					<tr><td>Auto-assign 'Browse' Menu on Flush<br/><span class='description'>Set the 'Browse Channel Categories' menu as the main nav on flush.</span></td><td><input type='checkbox' name='ds_auto_assign_menu' value='1' <?php echo get_option("ds_auto_assign_menu") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
+
 					<tr><td>Copy plugin template files to my theme folder</b><br/><span class='description'>For custom template changes.</span></td><td><a class='button' href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td></tr>
 
 					<tr><td>Custom CSS</td><td><textarea name='ds_plugin_custom_css'><?php echo $custom_css ?></textarea></td></tr>

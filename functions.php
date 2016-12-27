@@ -706,13 +706,13 @@ function dsp_iframe_html($html)
                 if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
                     $video = explode("?", explode("/player/", $source)[1])[0];
                     $videoObj = grab_video($video);
-                                        
+
                     $rndID = generateRandomString(5);
                     $strOut = '';
                     $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
                     $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->socialImage . '" /></a>';
-                    $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';                    
-                    $iframe = '<iframe' . $split_two . '</iframe>';                    
+                    $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
+                    $iframe = '<iframe' . $split_two . '</iframe>';
                     $html = str_replace($iframe, $strOut, $html);
 
 
@@ -1271,6 +1271,8 @@ function ds_save_admin_options()
 
         update_option('ds_token_reset', sanitize_text_field($_POST['ds_token_reset']));
 
+        update_option('ds_auto_assign_menu', sanitize_text_field($_POST['ds_auto_assign_menu']));
+
     }
 
 }
@@ -1325,7 +1327,19 @@ function ds_create_channel_category_menu()
 
         }
 
+        $auto_assign = get_option('ds_auto_assign_menu');
+
+        if(empty($auto_assign)) return;
+
+        $locations = get_theme_mod('nav_menu_locations');
+        $locations['main_nav'] = $menu_id;
+        $locations['header_nav'] = $menu_id;
+        $locations['top'] = $menu_id; // WP 2017
+        set_theme_mod( 'nav_menu_locations', $locations );
+
     }
+
+
 
 }
 add_action("init", "ds_create_channel_category_menu");
@@ -1380,6 +1394,8 @@ function ds_site_flush()
 
     // Rebuild Channels
     channels_check();
+
+    ds_create_channel_category_menu();
 
     wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options");
     exit;
@@ -1519,6 +1535,8 @@ function ds_api_key_change()
 
     // Rebuild Channels
     channels_check();
+
+    ds_create_channel_category_menu();
 
 }
 
