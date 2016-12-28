@@ -696,15 +696,20 @@ function dsp_iframe_html($html)
 
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
-        $split_two = explode('</iframe>', $if)[0];
+        $split_one = explode('</iframe>', $if);
+        $split_two = $split_one[0];
         $params = explode(' ', $split_two);
         $source = '';
         foreach($params as $param){
 
             if(strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false){
-                $source = explode('"', explode('src="', str_replace("'", '"', $param))[1])[0];
+                $source_split1 = explode('src="', str_replace("'", '"', $param));
+                $source_split2 = explode('"', $source_split1[1]);
+                $source = $source_split2[0];
                 if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
-                    $video = explode("?", explode("/player/", $source)[1])[0];
+                    $video_explode1 = explode("/player/", $source);
+                    $video_explode2 = $video_explode1[1];
+                    $video = $video_explode2[0];
                     $videoObj = grab_video($video);
 
                     $rndID = generateRandomString(5);
