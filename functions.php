@@ -1,6 +1,6 @@
 <?php
 
-set_time_limit(120);
+set_time_limit(240);
 
 $ds_curl = new DotStudioz_Commands;
 
@@ -919,14 +919,16 @@ function channels_check()
 
         }
 
-        $name = isset($c->name) ? $c->name : '';
+        $channel_info = !empty($c->description) ? $c->description : !empty($c->video->description) ? $c->video->description : $c->title;
+
+        if(empty($channel_info)) $channel_info = "No description.";
 
         $page_id = wp_insert_post(array(
-            'post_title'   => $c->title,
+            'post_title'   => !empty($c->title) ? $c->title : ucwords(str_replace('-', ' ', $slug)),
             'post_type'    => 'page',
             'post_name'    => $slug,
             'post_status'  => 'publish',
-            'post_excerpt' => 'Channel ' . $name,
+            'post_excerpt' => $channel_info,
             'post_parent'  => $channel_check_page_id,
         ));
 
@@ -1158,6 +1160,10 @@ function categories_check()
 
             update_post_meta($page_id, 'ds_show_category', 0);
 
+        }
+
+        if (!empty($c->image->spotlight_poster)) {
+            update_post_meta($page_id, 'ds-spotlight-poster', $c->image->spotlight_poster);
         }
 
     }
