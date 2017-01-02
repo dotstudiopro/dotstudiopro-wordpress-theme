@@ -40,6 +40,8 @@ add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
 function ds_plugin_style()
 {
 
+    // Check the style option and set up light or dark, depending
+
     $admin_option = get_option('ds_plugin_style');
 
     if (!$admin_option) {
@@ -93,33 +95,21 @@ add_action("wp_head", "ds_light_theme_shadows", 990);
 
 function ds_styles()
 {
-    // Register the style like this for a plugin:
-    wp_register_style('font-awesome-style', plugins_url('/css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
 
-    // For either a plugin or a theme, you can then enqueue the style:
+    wp_register_style('font-awesome-style', plugins_url('/css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('font-awesome-style');
 
-    // Register the style like this for a plugin:
     wp_register_style('animate-style', plugins_url('/css/animate.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('animate-style');
-    // Register the style like this for a plugin:
-    wp_register_style('grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
 
-    // For either a plugin or a theme, you can then enqueue the style:
+    wp_register_style('grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('grid-style');
 
-    // Register the style like this for a plugin:
     wp_register_style('ds-style', plugins_url('/style.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('ds-style');
 
     // Styles for the FancyFrame portion of this plugin:
     wp_register_style('fancyframe-style', plugins_url('/css/fancyframes.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('fancyframe-style');
 
 
@@ -132,6 +122,7 @@ function ds_video_var($public_query_vars)
     $public_query_vars[] = 'video';
     return $public_query_vars;
 }
+
 add_filter('query_vars', 'ds_video_var');
 
 function ds_check_api_key_set()
@@ -156,6 +147,8 @@ add_action('admin_notices', 'ds_check_api_key_set');
 function ds_new_token()
 {
 
+    // Acquire an API token and save it for later use.
+
     global $ds_curl;
 
     $token = $ds_curl->curl_command('token');
@@ -168,6 +161,8 @@ function ds_new_token()
 
 function ds_get_country()
 {
+
+    // Get the current user's country based on IP
 
     global $ds_curl;
 
@@ -215,6 +210,8 @@ function list_categories()
 
 function channel_revision_check()
 {
+
+    // Check if we have revisions to the current channel page
 
     global $wpdb, $post;
 
@@ -299,6 +296,8 @@ function generateRandomString($length = 5) {
 
 function ds_iframe_html($html)
 {
+
+    // Replace <iframe> code with a div that loads the iframe based on scroll.
 
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
@@ -447,6 +446,8 @@ function ds_headliner_video_for_template()
 function channels_check()
 {
 
+    // Completely reprocess/recreate all channel pages.  This is done when the admin requests a flush.
+
     global $wpdb;
 
     $channels = list_channels();
@@ -501,6 +502,7 @@ function channels_check()
         update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 
         if (!empty($c->spotlight_poster)) {
+            // Set up a spotlight poster for use in things like the iframe replacement div
             update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
         }
 
@@ -526,6 +528,7 @@ function channels_check()
                 update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 
                 if (!empty($c->spotlight_poster)) {
+                    // Set up a spotlight poster for use in things like the iframe replacement div
                     update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
                 }
 
@@ -605,6 +608,8 @@ function categories_loop()
 
 function categories_check()
 {
+
+    // Completely reprocess/recreate all category pages.  This is done when the admin requests a flush.
 
     global $wpdb;
 
@@ -826,6 +831,7 @@ function ds_create_channel_category_menu()
 
         if(empty($auto_assign)) return;
 
+        // Set the main menu up in the correct spot post-flush.
         $locations = get_theme_mod('nav_menu_locations');
         $locations['main_nav'] = $menu_id;
         $locations['header_nav'] = $menu_id;
@@ -841,6 +847,8 @@ add_action("init", "ds_create_channel_category_menu");
 
 function ds_site_flush()
 {
+
+    // Completely delete and recreate all category and channel pages.  This is necessary when channels are created or deleted in the DSP dashboard, as well as categories.  There are other use cases, but that is the most common.
 
     global $wpdb;
 
@@ -899,6 +907,8 @@ function ds_site_flush()
 
 function ds_template_copy()
 {
+
+    // Copy the page templates to the current active theme directory for manipulation by the admin without having to edit our specific template files.
 
     $error = "";
 
@@ -1076,6 +1086,8 @@ function ds_category_images_init()
 function ds_category_image_field()
 {
 
+    // Create the field for uploading custom category images.
+
     $post = get_post($_GET['post']);
 
     $image = get_option('ds-category-image-' . $post->post_name);
@@ -1105,8 +1117,6 @@ function ds_category_image_field()
         <?php
 
 }
-
-// You codes
 
 function ds_cust_filename($dir, $name, $ext)
 {
@@ -1144,6 +1154,8 @@ add_action("save_post", "ds_save_category_image_field");
 
 function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
 {
+
+    // Simplify the cURL execution for various API commands within the curl commands class
 
     $curl = curl_init();
 
