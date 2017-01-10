@@ -1,10 +1,10 @@
 <?php
 
-set_time_limit(120);
+set_time_limit(240);
 
 $ds_curl = new DotStudioz_Commands;
 
-function wptuts_scripts_load_cdn()
+function ds_scripts_load_cdn()
 {
 
     global $wpdb, $post;
@@ -35,10 +35,12 @@ function wptuts_scripts_load_cdn()
     }
 
 }
-add_action('wp_enqueue_scripts', 'wptuts_scripts_load_cdn');
+add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
 
 function ds_plugin_style()
 {
+
+    // Check the style option and set up light or dark, depending
 
     $admin_option = get_option('ds_plugin_style');
 
@@ -93,33 +95,21 @@ add_action("wp_head", "ds_light_theme_shadows", 990);
 
 function ds_styles()
 {
-    // Register the style like this for a plugin:
-    wp_register_style('font-awesome-style', plugins_url('/css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
 
-    // For either a plugin or a theme, you can then enqueue the style:
+    wp_register_style('font-awesome-style', plugins_url('/css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('font-awesome-style');
 
-    // Register the style like this for a plugin:
     wp_register_style('animate-style', plugins_url('/css/animate.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('animate-style');
-    // Register the style like this for a plugin:
-    wp_register_style('grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
 
-    // For either a plugin or a theme, you can then enqueue the style:
+    wp_register_style('grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('grid-style');
 
-    // Register the style like this for a plugin:
     wp_register_style('ds-style', plugins_url('/style.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('ds-style');
 
     // Styles for the FancyFrame portion of this plugin:
     wp_register_style('fancyframe-style', plugins_url('/css/fancyframes.css', __FILE__), array(), '20120208', 'all');
-
-    // For either a plugin or a theme, you can then enqueue the style:
     wp_enqueue_style('fancyframe-style');
 
 
@@ -127,36 +117,13 @@ function ds_styles()
 }
 add_action('wp_enqueue_scripts', 'ds_styles');
 
-function add_my_var($public_query_vars)
+function ds_video_var($public_query_vars)
 {
     $public_query_vars[] = 'video';
-    $public_query_vars[] = 'channel_category';
     return $public_query_vars;
 }
-add_filter('query_vars', 'add_my_var');
 
-function ds_rewrite_rules()
-{
-
-    $option_check = get_option('rewrite_array');
-
-    if (!$option_check) {
-
-        return;
-
-    }
-
-    for ($a = 0; $a < count($option_check[0]); $a++) {
-
-        //echo "add_rewrite_rule(".$option_check[0][$a].", ".$option_check[1][$a].", 'top')\n\n";
-
-        add_rewrite_rule($option_check[0][$a], $option_check[1][$a], 'top');
-
-    }
-
-}
-// Depreciated, but may be useful in the future.
-//add_action('init', 'ds_rewrite_rules', 10, 0);
+add_filter('query_vars', 'ds_video_var');
 
 function ds_check_api_key_set()
 {
@@ -180,6 +147,8 @@ add_action('admin_notices', 'ds_check_api_key_set');
 function ds_new_token()
 {
 
+    // Acquire an API token and save it for later use.
+
     global $ds_curl;
 
     $token = $ds_curl->curl_command('token');
@@ -192,6 +161,8 @@ function ds_new_token()
 
 function ds_get_country()
 {
+
+    // Get the current user's country based on IP
 
     global $ds_curl;
 
@@ -240,6 +211,8 @@ function list_categories()
 function channel_revision_check()
 {
 
+    // Check if we have revisions to the current channel page
+
     global $wpdb, $post;
 
     $results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type = 'revision' AND post_parent = " . $post->ID);
@@ -278,376 +251,6 @@ function grab_parent_channel()
 
 }
 
-function channel_first_video()
-{
-
-    global $ds_curl;
-
-    $videos = grab_channel();
-
-    $id = $videos[0]->video->_id;
-
-    $title = $videos[0]->video->title;
-
-    $duration = round($videos[0]->video->duration / 60);
-
-    $description = $videos[0]->video->description;
-
-    $company = $videos[0]->company;
-
-    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
-
-    $country = $videos[0]->video->country;
-
-    $language = $videos[0]->video->language;
-
-    $year = $videos[0]->year;
-
-    $rating = $videos[0]->rating;
-
-    $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
-
-    return "<div class='ds-video-headliner'>
-                <div class='ds-video-fluidMedia'>
-                <div class='player'></div><script src='$url'></script>
-                </div>
-                <div class='ds-col-8'>
-                    <h1 class='ds-video-headliner-title'>$title</h1>
-                    <span class='ds-video-headliner-duration'>($duration min)</span>
-                    <ul class='ds-videometalist'>
-                      <li>$country</li>
-                      <li>Rating:$rating</li>
-                      <li>$language</li>
-                      <li>$year</li>
-                      <li>$company</li>
-                    </ul>
-                    <ul class='ds-sharepad'>
-                        <li>Share <i class='fa fa-share fa-small'></i></li>
-                        <li>
-                            <a href='https://www.facebook.com/dialog/share?app_id=375655362631161&display=popup&href=http://" . $_SERVER[HTTP_HOST] . $_SERVER[REQUEST_URI] . " class='js-social-share buffer' target='_blank'><i class='fa fa-facebook fa-shadow'></i></a>
-                        </li>
-                        <li><i class='fa fa-twitter fa-small'></i></li>
-                        <li><i class='fa fa-googleplus fa-small'></i></li>
-                        <li><i class='fa fa-tumblr fa-small'></i></li>
-                        <li><i class='fa fa-pinterest fa-small'></i></li>
-
-                    </ul>
-                    </div>
-                    <div class='ds-col-4'>
-                        <div id='companion300x250'></div>
-                    </div>
-
-            </div>";
-
-}
-
-function child_channel_first_video()
-{
-
-    global $ds_curl;
-
-    $videos = grab_channel();
-
-    $id = $videos[0]->childchannels[0]->playlist[0]->_id;
-
-    $company = $videos[0]->company;
-
-    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
-
-    $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
-
-    return "<div class='player'></div><script src='$url'></script>";
-
-}
-
-function channel_selected_video()
-{
-
-    global $ds_curl;
-
-    $video_id = get_query_var("video", false);
-
-    $videos = grab_channel();
-
-    $title = $videos[0]->video->title;
-
-    $duration = round($videos[0]->video->duration / 60);
-
-    $description = $videos[0]->video->description;
-
-    $company = $videos[0]->company;
-
-    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
-
-    $country = $videos[0]->video->country;
-
-    $language = $videos[0]->video->language;
-
-    $year = $videos[0]->year;
-
-    $rating = $videos[0]->rating;
-
-    $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
-
-    return "<div class='ds-video-headliner'>
-                <div class='ds-video-fluidMedia'>
-                <div class='player'></div><script src='$url'></script>
-                </div>
-                <div class='ds-col-6'>
-                    <h1 class='ds-video-headliner-title'>$title</h1>
-                    <span class='ds-video-headliner-duration'>($duration min)</span>
-                    <ul class='ds-videometalist'>
-                      <li>$country</li>
-                      <li>Rating:$rating</li>
-                      <li>$language</li>
-                      <li>$year</li>
-                      <li>$company</li>
-                    </ul>
-                    </div>
-                    <div class='ds-col-4'>
-                        <div id='companion300x250'></div>
-                    </div>
-                <span class='ds-video-headliner-description'>$description</span>
-
-            </div>";
-
-}
-
-function child_channel_selected_video()
-{
-
-    global $ds_curl;
-
-    $id = get_query_var("video", false);
-
-    $videos = grab_channel();
-
-    $company = $videos[0]->company;
-
-    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
-
-    $url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
-
-    return "<div class='player'></div><script src='$url'></script>";
-
-}
-
-function child_video()
-{
-
-    if (!ds_channel_is_child()) {
-
-        return false;
-
-    }
-
-    $uri = $_SERVER['REQUEST_URI'];
-
-    $exp = explode(get_query_var("channel_category", false) . "/" . get_query_var("video", false), $uri);
-
-    $id = str_replace("/", "", $exp[1]);
-
-    if (strlen($id) > 0) {
-
-        return true;
-
-    }
-
-}
-
-function grab_playlist()
-{
-
-    global $ds_curl, $post;
-
-    $videos = grab_channel();
-
-    $company = $videos[0]->company;
-
-    $playlist = $videos[0]->playlist;
-
-    $category = get_query_var("channel_category", false);
-
-    echo "<ul class='ds-video-thumbnails'>";
-
-    foreach ($playlist as $pl) {
-
-        $id = $pl->_id;
-
-        $thumb_id = $pl->thumb;
-
-        $title = $pl->title;
-
-        $duration = round($pl->duration / 60);
-
-        $year = $videos[0]->year;
-
-        $country = $pl->country;
-
-        $rating = $pl->rating;
-
-        $company = $pl->company;
-
-        $description = $pl->description;
-
-        $category = get_query_var("channel_category", false);
-
-        $epnum = key($pl);
-
-        echo "
-            <li>
-                <img src='http://image.myspotlight.tv/$thumb_id/380/215' />
-                <div class='ds-overlay animated fadeIn'>
-                    <a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/?video=$id") . "'>
-                 <i class='fa fa-play-circle-o fa-3x'></i>
-                </a>
-                <label class='delay' style='display: inline-block;'><small>$duration min</small></label>
-                </div>
-                <h3>$title</h3>
-                <span class='ds-video-year animated fadeIn'><small>Year: $year</small></span>
-                <span class='ds-video-country animated fadeIn'><small>Country: $country</small></span>
-                <span class='ds-video-description animated fadeIn'>$description</span>
-            </li>
-
-            ";
-
-    }
-
-    echo "</ul>";
-
-}
-
-function grab_parent_playlist()
-{
-    return;
-
-    if (!ds_channel_is_parent()) {
-
-        return false;
-
-    }
-
-    global $ds_curl, $wpdb, $post;
-
-    $videos = grab_channel();
-
-    $company = $videos[0]->company;
-
-    $category = get_query_var("channel_category", false);
-
-    $children = $videos[0]->childchannels;
-
-    foreach ($children as $ch) {
-
-        $id = $ch->_id;
-
-        $thumb_id = $ch->video->thumb;
-
-        $slug = $ch->slug;
-
-        $title = $ch->title;
-
-        $spotlight_poster = $ch->spotlight_poster;
-
-        $poster = $ch->poster;
-
-        $year = $ch->year;
-
-        $language = $ch->language;
-
-        $rating = $ch->rating;
-
-        $company = $ch->company;
-
-        $description = $ch->video->description;
-
-        echo "
-                <a href='" . home_url("channels/" . $post->post_name . "/$slug/") . "'></a>
-             <li class='gridder-list' data-griddercontent='#content1'>
-                <img class='channel-spotlight-poster' src='$spotlight_poster/400/225'>
-            </li>
-            <div id='content1' class='gridder-content'>
-                <span class='channel-title'>$title</span>
-            <span class='channel-spotlight-poster-holder'><img src='http://image.myspotlight.tv/$thumb_id/1280/720' /></span>
-            <span class='channel-poster-holder'><img class='channel-poster' src='$poster'></span>
-            <span class='channel-year'>Year: $year</span>
-            <span class='channel-language'>Language: $language</span>
-            <span class='channel-company>Company: $company</span>
-            <span class='channel-description'>Description: $description</span>
-
-            </div>
-
-            ";
-
-    }
-
-}
-
-function grab_child_playlist()
-{
-
-    if (!ds_channel_is_child()) {
-
-        return false;
-
-    }
-
-    global $ds_curl, $wpdb, $post;
-
-    $videos = grab_channel();
-
-    $company = $videos[0]->company;
-
-    $category = get_query_var("channel_category", false);
-
-    $playlist = $videos[0]->childchannels[0]->playlist;
-
-    $channel_parent = get_post($post->post_parent);
-
-    foreach ($playlist as $pl) {
-
-        $id = $pl->_id;
-
-        $thumb_id = $pl->thumb;
-
-        $title = $pl->title;
-
-        $duration = round($pl->duration / 60);
-
-        $year = $pl->year;
-
-        $country = $pl->country;
-
-        $rating = $pl->rating;
-
-        $company = $pl->company;
-
-        $description = $pl->description;
-
-        $epnum = key($pl);
-
-        echo "
-            <li class='gridder-list' data-griddercontent='#content1'>
-                <img src='http://image.myspotlight.tv/$thumb_id/380/215' />
-                <a href='" . home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/") . "'></a>
-            </li>
-            <div id='content1' class='gridder-content'> Content goes here... </div>
-            <span class='ds-video-title'>$title</span>
-
-            <img src='http://image.myspotlight.tv/$thumb_id/380/215' /></a>
-
-            <span class='ds-video-duration'>Duration: $duration</span>
-            <span class='ds-video-year'>Year: $year</span>
-            <span class='ds-video-country'>Country: $country</span>
-            <span class='ds-video-company>Company: $company</span>
-            <span class='ds-video-description'>Description: $description</span>
-
-            ";
-
-    }
-
-}
-
 function grab_category($category)
 {
 
@@ -672,15 +275,15 @@ function grab_video($video)
 
 /*** IFRAME REPLACE ***/
 
-add_action('wp', 'dsp_iframe_replace');
-function dsp_iframe_replace()
+add_action('wp', 'ds_iframe_replace');
+function ds_iframe_replace()
 {
     if (is_admin()) {
         return;
     }
 
     // Start output and check HTML
-    ob_start('dsp_iframe_html');
+    ob_start('ds_iframe_html');
 }
 
 
@@ -691,20 +294,27 @@ function generateRandomString($length = 5) {
 
 
 
-function dsp_iframe_html($html)
+function ds_iframe_html($html)
 {
+
+    // Replace <iframe> code with a div that loads the iframe based on scroll.
 
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
-        $split_two = explode('</iframe>', $if)[0];
+        $split_one = explode('</iframe>', $if);
+        $split_two = $split_one[0];
         $params = explode(' ', $split_two);
         $source = '';
         foreach($params as $param){
 
             if(strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false){
-                $source = explode('"', explode('src="', str_replace("'", '"', $param))[1])[0];
+                $source_split1 = explode('src="', str_replace("'", '"', $param));
+                $source_split2 = explode('"', $source_split1[1]);
+                $source = $source_split2[0];
                 if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
-                    $video = explode("?", explode("/player/", $source)[1])[0];
+                    $video_explode1 = explode("/player/", $source);
+                    $video_explode2 = $video_explode1[1];
+                    $video = $video_explode2[0];
                     $videoObj = grab_video($video);
 
                     $rndID = generateRandomString(5);
@@ -723,7 +333,7 @@ function dsp_iframe_html($html)
     return $html;
 }
 
-/*** REPLACE IFRAME ***/
+/*** END REPLACE IFRAME ***/
 
 function ds_check()
 {
@@ -739,14 +349,6 @@ function ds_check()
     if (!$token || $difference >= 25) {
 
         ds_new_token();
-
-    }
-
-    $country = ds_get_country();
-
-    if (!$country && !isset($ds_curl->country)) {
-
-        // Talk to Joe about doing something
 
     }
 
@@ -846,38 +448,10 @@ function ds_headliner_video_for_template()
 
 }
 
-function ds_get_playlist_for_template()
-{
-
-    if (ds_channel_is_parent()) {
-
-        grab_parent_playlist();
-
-    } else if (ds_channel_is_child()) {
-
-        grab_child_playlist();
-
-    } else {
-
-        grab_playlist();
-
-    }
-
-}
-
-add_action("init", function () {
-
-    /*
-$channels = list_channels();
-
-print_r($channels);
-
-die();
- */
-});
-
 function channels_check()
 {
+
+    // Completely reprocess/recreate all channel pages.  This is done when the admin requests a flush.
 
     global $wpdb;
 
@@ -919,20 +493,23 @@ function channels_check()
 
         }
 
-        $name = isset($c->name) ? $c->name : '';
+        $channel_info = !empty($c->description) ? $c->description : !empty($c->video->description) ? $c->video->description : $c->title;
+
+        if(empty($channel_info)) $channel_info = "No description.";
 
         $page_id = wp_insert_post(array(
-            'post_title'   => $c->title,
+            'post_title'   => !empty($c->title) ? $c->title : ucwords(str_replace('-', ' ', $slug)),
             'post_type'    => 'page',
             'post_name'    => $slug,
             'post_status'  => 'publish',
-            'post_excerpt' => 'Channel ' . $name,
+            'post_excerpt' => $channel_info,
             'post_parent'  => $channel_check_page_id,
         ));
 
         update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 
         if (!empty($c->spotlight_poster)) {
+            // Set up a spotlight poster for use in things like the iframe replacement div
             update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
         }
 
@@ -958,6 +535,7 @@ function channels_check()
                 update_post_meta($page_id, 'ds-category', $c->categories[0]->slug);
 
                 if (!empty($c->spotlight_poster)) {
+                    // Set up a spotlight poster for use in things like the iframe replacement div
                     update_post_meta($page_id, 'ds-spotlight-poster', $c->spotlight_poster);
                 }
 
@@ -990,79 +568,6 @@ function channel_loop()
     }
 
 }
-/*
-function category_channel_loop(){
-
-global $post, $wpdb;
-
-$channel_check_grab = get_page_by_path('channel-categories');
-
-$category_parent = $channel_check_grab->ID;
-
-$post_slug=$post->post_name;
-
-if($post->post_parent != $category_parent){
-
-return;
-
-}
-
-$channels = grab_category($post_slug);
-
-if(!$channels || count($channels) < 1){
-
-echo "No channels to display.";
-
-return;
-}
-
-foreach($channels as $ch){
-
-$id =  $ch->_id;
-
-$thumb_id = $ch->video->thumb;
-
-$slug =  $ch->slug;
-
-$title = $ch->title;
-
-$spotlight_poster = $ch->spotlight_poster;
-
-$poster = $ch->poster;
-
-$year = $ch->year;
-
-$language = $ch->language;
-
-$rating = $ch->rating;
-
-$company = $ch->company;
-
-$description = $ch->video->description;
-
-echo "
-
-<li class='gridder-list' data-griddercontent='#content1'>
-<img class='channel-spotlight-poster' src='$spotlight_poster/400/225'>
-<a href='".home_url("channels/$slug/")."'><img src='http://image.myspotlight.tv/$thumb_id/1280/720'></a>
-<div id='content1' class='gridder-content'>
-<span class='channel-title'>$title</span>
-<span class='channel-poster-holder'><img class='channel-poster' src='$poster'></span>
-<span class='channel-year'>Year: $year</span>
-<span class='channel-language'>Language: $language</span>
-<span class='channel-company>Company: $company</span>
-<span class='channel-description'>Description: $description</span>
-
-</div>
-</li>
-
-";
-
-}
-
-}
- */
-
 function categories_loop()
 {
 
@@ -1111,6 +616,8 @@ function categories_loop()
 function categories_check()
 {
 
+    // Completely reprocess/recreate all category pages.  This is done when the admin requests a flush.
+
     global $wpdb;
 
     $categories = list_categories();
@@ -1158,6 +665,10 @@ function categories_check()
 
             update_post_meta($page_id, 'ds_show_category', 0);
 
+        }
+
+        if (!empty($c->image->spotlight_poster)) {
+            update_post_meta($page_id, 'ds-spotlight-poster', $c->image->spotlight_poster);
         }
 
     }
@@ -1333,6 +844,7 @@ function ds_create_channel_category_menu()
 
         if(empty($auto_assign)) return;
 
+        // Set the main menu up in the correct spot post-flush.
         $locations = get_theme_mod('nav_menu_locations');
         $locations['main_nav'] = $menu_id;
         $locations['header_nav'] = $menu_id;
@@ -1348,6 +860,8 @@ add_action("init", "ds_create_channel_category_menu");
 
 function ds_site_flush()
 {
+
+    // Completely delete and recreate all category and channel pages.  This is necessary when channels are created or deleted in the DSP dashboard, as well as categories.  There are other use cases, but that is the most common.
 
     global $wpdb;
 
@@ -1406,6 +920,8 @@ function ds_site_flush()
 
 function ds_template_copy()
 {
+
+    // Copy the page templates to the current active theme directory for manipulation by the admin without having to edit our specific template files.
 
     $error = "";
 
@@ -1566,11 +1082,13 @@ add_action("admin_init", "ds_category_images_init");
 function ds_category_images_init()
 {
 
+    if(empty($_GET['post'])) return false;
+
     $post = get_post($_GET['post']);
 
     $categories = get_page_by_path("channel-categories");
 
-    if ($post->post_parent == $categories->ID) {
+    if ((int) $post->post_parent === (int) $categories->ID) {
 
         add_meta_box("ds_category_image", "Category Image", "ds_category_image_field", "page", "normal", "high");
 
@@ -1580,6 +1098,8 @@ function ds_category_images_init()
 
 function ds_category_image_field()
 {
+
+    // Create the field for uploading custom category images.
 
     $post = get_post($_GET['post']);
 
@@ -1610,8 +1130,6 @@ function ds_category_image_field()
         <?php
 
 }
-
-// You codes
 
 function ds_cust_filename($dir, $name, $ext)
 {
@@ -1649,6 +1167,8 @@ add_action("save_post", "ds_save_category_image_field");
 
 function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
 {
+
+    // Simplify the cURL execution for various API commands within the curl commands class
 
     $curl = curl_init();
 
