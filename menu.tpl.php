@@ -12,6 +12,8 @@ $current_slider_color = get_option('ds_player_slider_color');
 
 $styles = array('light-style', 'dark-style');
 
+$autoplay = get_option('ds_player_autoplay');
+
 $templates = scandir(dirname( __FILE__ ) . '/templates/single_channel_templates/');
 
 unset($templates[0]);
@@ -117,6 +119,8 @@ $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>
 					<tr><td>Light Theme Shadow</td><td><select name='ds_light_theme_shadow'><option value='1' <?php echo get_option('ds_light_theme_shadow') == 1 ? 'selected="selected"' : ''; ?>>On</option><option value='0' <?php echo get_option('ds_light_theme_shadow') == 0 ? 'selected="selected"' : ''; ?>>Off</option></select></td></tr>
 
 					<tr><td>Use FancyLoad Iframe Loader</td><td><select name='ds_fancy_load'><?php echo $fancy_load ?></select></td></tr>
+
+					<tr><td>Autoplay Video On Page Load<br/><span class='description'>Check to autoplay video on channel page</span></td><td><input type='checkbox' name='ds_player_autoplay' value='1' <?php echo get_option("ds_player_autoplay") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 
 					<tr><td>Auto-assign 'Browse' Menu on Flush<br/><span class='description'>Set the 'Browse Channel Categories' menu as the main nav on flush.</span></td><td><input type='checkbox' name='ds_auto_assign_menu' value='1' <?php echo get_option("ds_auto_assign_menu") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 

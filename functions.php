@@ -1273,6 +1273,8 @@ function ds_save_admin_options()
 
         update_option('ds_auto_assign_menu', sanitize_text_field($_POST['ds_auto_assign_menu']));
 
+        update_option('ds_player_autoplay', sanitize_text_field($_POST['ds_player_autoplay']));
+
     }
 
 }
