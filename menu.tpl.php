@@ -122,6 +122,8 @@ $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>
 
 					<tr><td>Autoplay Video On Page Load<br/><span class='description'>Check to autoplay video on channel page</span></td><td><input type='checkbox' name='ds_player_autoplay' value='1' <?php echo get_option("ds_player_autoplay") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 
+					<tr><td>Auto-Redirect Page On Video End<br/><span class='description'>Check to automatically redirect the page to the next video in the channel collection</span></td><td><input type='checkbox' name='ds_player_autoredir' value='1' <?php echo get_option("ds_player_autoredir") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
+
 					<tr><td>Auto-assign 'Browse' Menu on Flush<br/><span class='description'>Set the 'Browse Channel Categories' menu as the main nav on flush.</span></td><td><input type='checkbox' name='ds_auto_assign_menu' value='1' <?php echo get_option("ds_auto_assign_menu") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 
 					<tr><td>Copy plugin template files to my theme folder</b><br/><span class='description'>For custom template changes.</span></td><td><a class='button' href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td></tr>
