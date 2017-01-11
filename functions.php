@@ -1192,3 +1192,173 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
 
     return (object) compact('response', 'err');
 }
+
+
+
+
+function display_video_options_javascript() {
+?>
+                <script type="text/javascript">
+                    var $ = jQuery;
+                    $(document).ready(function() {
+                        var playerwrap = $('.ds-video-fluidMedia').first();
+                        playerwrap.append('<div id="anibox">&nbsp;</div>');
+                        var player = playerwrap.find( '.player' );
+                        if ( player.length === 0 ) {
+                            return;
+                        }
+
+                        playerwrap.css({
+                            'width': '70%',
+                            'padding-bottom':'39%',
+                            'max-height': '300px',
+                            'margin': 'auto'
+                        });
+
+
+                        var anibox = $('#anibox');
+                        anibox.hide();
+                        var lt = playerwrap.offset().left;
+                        var aniboxFull = {
+                                'background-color': '#000',
+                                'width': $('.player').width(),
+                                'height': player.height()*.8,
+                                'left': lt,
+                                'top': '0',
+                                'position': 'fixed',
+                        };                    
+                        anibox.css(aniboxFull);
+
+
+                        if ( playerwrap.length === 0 ) {
+                            return;
+                        }
+                        
+                        
+                        $( window ).scroll( function( e ) {
+                            //if ( ! sidebar.is(':visible') )
+                            //  return true;
+                            var vidWidth = $(window).width() * 0.2;
+                            var vidFull = {
+                                    width:      '100%',
+                                    height:     '100%',
+                                    boxShadow:  'none',
+                                    outline:    0,
+                                    position:   'inherit',
+                                    right:      0,
+                                    top:        0,
+                                    borderTop:  'inherit'
+                                };
+
+                            var vidSmall = {
+                                    zIndex:     '9999',
+                                    width:      vidWidth,
+                                    height: 'auto',
+                                    boxShadow:  '0 5px 2px rgba(0, 0, 0, 0.4)',
+                                    outline:    '3px solid #fff',
+                                    position:   'fixed',
+                                    top:        200,
+                                    right:      vidWidth * 0.1,
+                                    borderTop:  '7px solid white'
+                                };
+
+
+                            var smLt = player.offset().left;
+                            var aniboxSmall = {
+                                'width': vidWidth,
+                                'height': vidWidth*9/16,
+                                'top' : 200,
+                                'outline':  '3px solid #fff',
+                                'position':'fixed'
+                            };
+
+
+                            var scroll_top = $( this ).scrollTop();
+
+                            if ( scroll_top > ( playerwrap.offset().top + 130 ) && ! player.hasClass( 'onsidebar' ) ) {
+                                player.hide();
+                                anibox.show();
+                                aniboxSmall.left = $(window).width() - 100;
+                                anibox.animate(aniboxSmall,{
+                                    duration:500,
+                                    complete: function() {
+                                        player.show();
+                                        anibox.hide();
+                                    }
+                                });
+
+                                player.addClass( 'onsidebar' ).css(vidSmall);
+                                $(window).trigger( 'resize' );
+                            }
+
+                            if ( scroll_top < ( playerwrap.offset().top + 130 ) && player.hasClass( 'onsidebar' ) ) {
+                                player.hide();
+                                anibox.show()
+                                anibox.animate(aniboxFull, {
+                                    duration: 500,
+                                    complete: function() {
+                                        player.show();
+                                        anibox.hide();
+                                    }
+                                });
+                                player.removeClass( 'onsidebar' ).css(vidFull);
+                                $(window).trigger( 'resize' );
+                            }
+                        } );    
+
+
+
+                        var i = 0;
+                        checkVidLoaded();
+
+                        function checkVidLoaded() {
+                            var max = 10;
+                            var vid = $('#dsp-vid-js-player_html5_api')[0];
+                            i++;
+
+                            if(vid == undefined && i <max) {
+                                setTimeout(function() {
+                                    checkVidLoaded()
+                                },1000);                                
+                            } else {
+
+                                // autoplay functionality
+                                <?php if(get_option("ds_player_autoplay") == 1) { ?>
+                                vid.play();
+                                <?php }?>
+
+
+                                // auto redirect functionality
+                                <?php if(get_option("ds_player_autoredir") == 1) { ?>
+                                vid.onended = function(e) {
+                                    var aryVidList = $('ul.ds-video-thumbnails li');
+                                    var aryURLs = [];
+
+                                    $.each(aryVidList,function(key,val) {
+                                        if($(this).hasClass('selected')) {
+                                            strToPush = 'selected'
+                                        } else {
+                                            strToPush = $(this).find('a').attr('href');
+                                        }
+                                        aryURLs.push(strToPush);
+                                    });
+
+                                    var vidIdx = aryURLs.indexOf('selected') + 1;
+                                    var strURL = aryURLs[vidIdx];
+                                    if(strURL == undefined) {
+                                        strURL = aryURLs[0];
+                                    }
+                                    window.location.assign(strURL);
+                                }
+                                <?php }?>
+
+                            }
+
+                        }
+
+                    });
+                </script>
+<?php
+
+
+}
