@@ -1,26 +1,43 @@
 <?php
 
+
+function ds_home_template($single_template) {
+
+	global $post;
+
+  if ($post->post_name == 'home') {
+
+		$single_template = locate_template( 'ds-home.tpl.php' );
+
+		// Set the template...
+		if( empty($single_template) !== FALSE ){
+			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
+			$single_template = dirname( __FILE__ ) . '/templates/ds-home.tpl.php';
+		}
+   }
+	 // Return either the template we made, or the template in the theme folders.
+     return $single_template;
+}
+
+add_filter( 'page_template', 'ds_home_template', 11 );
+
+
+
 function ds_all_categories_template($single_template) {
 
 	global $post;
 
+  if ($post->post_name == 'channel-categories') {
 
-     if ($post->post_name == 'channel-categories') {
+		$single_template = locate_template( 'ds-all-categories.tpl.php' );
 
-			$single_template = locate_template( 'ds-all-categories.tpl.php' );
-
-			// Set the template...
-			if( empty($single_template) !== FALSE ){
-
+		// Set the template...
+		if( empty($single_template) !== FALSE ){
 			// If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
-				$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
-
-			}
-
-     }
-
+			$single_template = dirname( __FILE__ ) . '/templates/ds-all-categories.tpl.php';
+		}
+   }
 	 // Return either the template we made, or the template in the theme folders.
-
      return $single_template;
 }
 
