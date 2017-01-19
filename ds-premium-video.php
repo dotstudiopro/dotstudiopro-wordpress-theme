@@ -17,6 +17,8 @@ if (!class_exists('DotStudioz_Commands')) {
 
 require_once "functions.php";
 
+require_once "carousel_functions.php";
+
 require_once "ds-templates.php";
 
 require_once "templates/ds_single_channel_functions.php";
@@ -36,7 +38,7 @@ if (strpos($uri, 'wp-admin') === false) {
 }
 
 add_action('wp_enqueue_scripts', 'ds_plugin_style');
-
+add_action( 'wp_enqueue_scripts', 'ds_owl_carousel' );
 // function dot_studioz_deactivate() {
 
 //     $plugins = get_option('active_plugins');
@@ -74,6 +76,10 @@ function dot_studioz_menu_page()
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
+
+    wp_enqueue_style( 'ds-admin-css', plugin_dir_url( __FILE__ ) . 'css/owl.carousel.admin.min.css' );
+    wp_enqueue_script( 'ds-admin-js', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.admin.min.js' );
+   
 
     echo "<div class='wrap'>";
 

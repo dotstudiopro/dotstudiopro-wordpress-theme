@@ -73,12 +73,14 @@
 			    				<div><label>Related Videos</label></div>
 			    				<div class='ds-playlist-theater-mode-wrapper'>
 				    				<div class='related-videos-carousel'>
-				    						<?php //echo do_shortcode("[ds_owl_carousel  channels='all-things-cannabis,art-attack,awesome-ink,cartographies,collegehumor,cupcake-jemma,epic-meal-time' autoplay_hover_pause='1' autoplay='0' autoplay_timeout='3000' autoplay_speed='1000' notitle='1' items='10']"); ?>
+				    						<?php echo do_shortcode("[ds_owl_carousel  channels='all-things-cannabis,art-attack,awesome-ink,cartographies,collegehumor,cupcake-jemma,epic-meal-time' autoplay_hover_pause='1' autoplay='0' autoplay_timeout='3000' autoplay_speed='1000' notitle='1' items='10']"); ?>
 												<?php 
+													/*
 														$rec_id = '587fd28799f815f820681c9c';
 														$rec_size = 5;				    						
+														cho ds_owl_recommended_videos_html(array('rec_id' => $rec_id, 'rec_size' => $rec_size)); 
+													*/
 												?>
-				    						<?php echo ds_owl_recommended_videos_html(array('rec_id' => $rec_id, 'rec_size' => $rec_size)); ?>
 				    				</div>
 				    			</div>
 			    		</div>
