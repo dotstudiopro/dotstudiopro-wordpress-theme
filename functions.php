@@ -35,7 +35,6 @@ function ds_scripts_load_cdn()
     }
 
 }
-add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
 
 function ds_plugin_style()
 {
@@ -91,7 +90,6 @@ function ds_light_theme_shadows()
 
 }
 
-add_action("wp_head", "ds_light_theme_shadows", 990);
 
 function ds_styles()
 {
@@ -115,7 +113,6 @@ function ds_styles()
 
 
 }
-add_action('wp_enqueue_scripts', 'ds_styles');
 
 function ds_video_var($public_query_vars)
 {
@@ -142,7 +139,7 @@ function ds_check_api_key_set()
     </div>
     <?php
 }
-add_action('admin_notices', 'ds_check_api_key_set');
+
 
 function ds_new_token()
 {
@@ -172,116 +169,86 @@ function ds_get_country()
 
 }
 
-add_action("init", "ds_get_country");
 
-function list_channels()
-{
 
+function list_recommended($rec_id='',$rec_size=5) {
     global $ds_curl;
-
-    $channels = $ds_curl->curl_command('all-channels');
-
-    return $channels;
-
+    $recommended = $ds_curl->curl_command('recommended',array("rec_size" => $rec_size, "rec_id" => $rec_id));
+    return $recommended;
 }
 
-function list_categories()
-{
 
+function list_channels() {
     global $ds_curl;
+    $channels = $ds_curl->curl_command('all-channels');
+    return $channels;
+}
 
+
+function list_categories() {
+    global $ds_curl;
     $categories = $ds_curl->curl_command('all-categories');
-
     $categories_filtered = array();
-
     foreach ($categories as $cat) {
-
         if (!empty($cat->platforms) && !empty($cat->platforms[0]) && isset($cat->platforms[0]->website) && (string) $cat->platforms[0]->website === 'false' || !isset($cat->platforms[0]->website)) {
             continue;
         }
-
         $categories_filtered[] = $cat;
-
     }
-
     return $categories_filtered;
-
 }
 
-function channel_revision_check()
-{
 
+
+function channel_revision_check() {
     // Check if we have revisions to the current channel page
-
     global $wpdb, $post;
-
     $results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type = 'revision' AND post_parent = " . $post->ID);
-
     if (count($results) > 0) {
-
         return true;
-
     } else {
-
         return false;
-
     }
-
 }
 
-function grab_channel()
-{
 
+
+function grab_channel() {
     global $ds_curl;
-
     $channels = $ds_curl->curl_command('single-channel');
-
     return $channels;
-
 }
 
-function grab_parent_channel()
-{
 
+
+function grab_parent_channel() {
     global $ds_curl;
-
     $channels = $ds_curl->curl_command('parent-channel');
-
     return $channels;
-
 }
 
-function grab_category($category)
-{
 
+
+function grab_category($category) {
     global $ds_curl;
-
     $category = $ds_curl->curl_command('single-category', array("category" => $category));
-
     return $category;
-
 }
+
+
 
 function grab_video($video)
 {
-
     global $ds_curl;
-
     $videoObj = $ds_curl->curl_command('play', array("video" => $video));
-
     return $videoObj;
-
 }
 
-/*** IFRAME REPLACE ***/
 
-add_action('wp', 'ds_iframe_replace');
-function ds_iframe_replace()
-{
+function ds_iframe_replace() {
     if (is_admin()) {
         return;
     }
-
     // Start output and check HTML
     ob_start('ds_iframe_html');
 }
@@ -294,11 +261,8 @@ function generateRandomString($length = 5) {
 
 
 
-function ds_iframe_html($html)
-{
-
+function ds_iframe_html($html) {
     // Replace <iframe> code with a div that loads the iframe based on scroll.
-
     $iframe_split = explode('<iframe', $html);
     foreach($iframe_split as $if){
         $split_one = explode('</iframe>', $if);
@@ -306,7 +270,6 @@ function ds_iframe_html($html)
         $params = explode(' ', $split_two);
         $source = '';
         foreach($params as $param){
-
             if(strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false){
                 $source_split1 = explode('src="', str_replace("'", '"', $param));
                 $source_split2 = explode('"', $source_split1[1]);
@@ -324,8 +287,6 @@ function ds_iframe_html($html)
                     $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
                     $iframe = '<iframe' . $split_two . '</iframe>';
                     $html = str_replace($iframe, $strOut, $html);
-
-
                 }
             }
         }
@@ -333,120 +294,79 @@ function ds_iframe_html($html)
     return $html;
 }
 
-/*** END REPLACE IFRAME ***/
 
-function ds_check()
-{
 
+
+
+function ds_check() {
     global $ds_curl;
-
     $token = get_option('ds_curl_token');
-
     $token_time = !$token ? 0 : get_option('ds_curl_token_time');
-
     $difference = floor((time() - $token_time) / 84600);
-
     if (!$token || $difference >= 25) {
-
         ds_new_token();
-
     }
-
 }
 
 function ds_no_country()
 {
-
     $country = ds_get_country();
-
     if ($country) {
-
         return;
-
     }
-
     ?>
     <div class="update-nag">
         <p>Please check your dotstudioPRO API key.  We are having issues authenticating with our server.</p>
     </div>
     <?php
-
 }
 
-add_action("admin_notices", "ds_no_country");
 
-function ds_channel_is_parent()
-{
 
+function ds_channel_is_parent() {
     global $wpdb, $post;
-
     $channel_check_grab = get_page_by_path('channels');
-
     $channel_check = $channel_check_grab->ID;
-
     if ($post->post_parent != $channel_check) {
-
         return false;
-
     }
-
     $results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type != 'revision' AND post_parent = " . $post->ID);
-
     if (count($results) > 0) {
-
         return true;
-
     } else {
-
         return false;
-
     }
-
 }
 
-function ds_channel_is_child()
-{
 
+
+function ds_channel_is_child() {
     global $post;
-
     if ($post->post_parent == 0) {
-
         return false;
-
     }
-
     $channel_check_grab = get_page_by_path('channels');
-
     $channel_parent = $channel_check_grab->ID;
-
     $channel_grandparent = wp_get_post_parent_id($post->post_parent);
-
     if ($channel_parent == $channel_grandparent) {
-
         return true;
-
     } else {
-
         return false;
-
     }
-
 }
 
-function ds_headliner_video_for_template()
-{
 
+
+
+function ds_headliner_video_for_template() {
     if (!ds_channel_is_parent() && !ds_channel_is_child()) {
-
         echo get_query_var("video", false) ? channel_selected_video() : channel_first_video();
-
     } else if (ds_channel_is_child()) {
-
         echo get_query_var("video", false) ? child_channel_selected_video() : child_channel_first_video();
-
     }
-
 }
+
+
 
 function channels_check()
 {
@@ -860,7 +780,6 @@ function ds_create_channel_category_menu()
 
 
 }
-add_action("init", "ds_create_channel_category_menu");
 
 function ds_site_flush()
 {
@@ -962,17 +881,6 @@ function ds_template_copy()
 
 }
 
-if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['flush']) && $_GET['flush'] == 1) {
-
-    add_action("init", "ds_site_flush");
-
-}
-
-if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['templatecopy']) && $_GET['templatecopy'] == 1) {
-
-    add_action("init", "ds_template_copy");
-
-}
 
 function ds_api_key_change()
 {
@@ -1062,118 +970,87 @@ function ds_api_key_change()
 
 }
 
+
+
+
 function ds_add_custom_css()
 {
-
     echo "\n<style>" . get_option('ds_plugin_custom_css') . "</style>\n\n";
 
 }
 
-add_action('wp_head', 'ds_add_custom_css', 999);
-
 /** Custom category images **/
 
-add_action('post_edit_form_tag', 'add_post_enctype');
+
 
 function add_post_enctype()
 {
     echo ' enctype="multipart/form-data"';
 }
 
-add_action("admin_init", "ds_category_images_init");
+
 
 // Initialize the necessary functions for extra fields on Sales Pages
 function ds_category_images_init()
 {
-
     if(empty($_GET['post'])) return false;
-
     $post = get_post($_GET['post']);
-
     $categories = get_page_by_path("channel-categories");
 
     if ((int) $post->post_parent === (int) $categories->ID) {
-
         add_meta_box("ds_category_image", "Category Image", "ds_category_image_field", "page", "normal", "high");
-
     }
-
 }
 
-function ds_category_image_field()
-{
 
+
+
+function ds_category_image_field() {
     // Create the field for uploading custom category images.
-
     $post = get_post($_GET['post']);
-
     $image = get_option('ds-category-image-' . $post->post_name);
-
     $cat_image = '';
-
     if ($image) {
-
         $cat_image = "<img src='$image' />";
-
     }
-
     ?>
-
             <table class='widefat'>
-
                 <tbody>
-
                     <tr><td><h3>Upload new image</h3></td><td><input type='file' name='ds-category-image' /></td></tr>
-
                     <tr><td><h3>Current image</h3></td><td><?php echo $cat_image; ?></td></tr>
-
                 </tbody>
-
             </table>
-
-        <?php
-
+    <?php
 }
 
-function ds_cust_filename($dir, $name, $ext)
-{
 
+
+
+
+function ds_cust_filename($dir, $name, $ext) {
     return $_FILES['ds-category-image']['name'] . rand(100, 999) . time() . $ext;
-
 }
 
-function ds_save_category_image_field()
-{
 
+
+
+function ds_save_category_image_field() {
     if (!isset($_FILES['ds-category-image'])) {
-
         return;
-
     }
 
     global $post;
-
     $slug = $post->post_name;
-
     $uploadedfile = $_FILES['ds-category-image'];
-
     $movefile = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'ds_cust_filename'));
-
     if ($movefile && !isset($movefile['error'])) {
-
         update_option("ds-category-image-$slug", $movefile['url']);
-
     }
-
 }
 
-add_action("save_post", "ds_save_category_image_field");
 
-function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
-{
-
+function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header) {
     // Simplify the cURL execution for various API commands within the curl commands class
-
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -1192,184 +1069,42 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
     $err      = curl_error($curl);
 
     curl_close($curl);
-
     return (object) compact('response', 'err');
 }
 
 
 
 
-function display_video_options_javascript() {
-?>
-                <script type="text/javascript">
-                    var $ = jQuery;
-                    $(document).ready(function() {
-
-                        var minifyVid = <?php echo get_option("ds_player_minivid") == 1 ? "true;" : "false;"; ?>
-                        var autoRedir = <?php echo get_option("ds_player_autoredir") == 1 ? "true;" : "false;"; ?>
-                        var autoPlay = <?php echo get_option("ds_player_autoplay") == 1 ? "true;" : "false;"; ?>
-
-                        var playerwrap = $('.ds-video-fluidMedia').first();
-                        if(minifyVid) {
-                            playerwrap.append('<div id="anibox">&nbsp;</div>');
-                        }
-                        
-                        var player = playerwrap.find( '.player' );
-                        if ( player.length === 0 ) {
-                            return;
-                        }
-
-                        playerwrap.css({
-                            'width': '70%',
-                            'padding-bottom':'39%',
-                            'max-height': '300px',
-                            'margin': 'auto'
-                        });
-
-                        if(minifyVid) {
-
-                            var anibox = $('#anibox');
-                            anibox.hide();
-                            var lt = playerwrap.offset().left;
-                            var aniboxFull = {
-                                    'background-color': '#000',
-                                    'width': $('.player').width(),
-                                    'height': player.height()*.8,
-                                    'left': lt,
-                                    'top': '0',
-                                    'position': 'fixed',
-                            };                    
-                            anibox.css(aniboxFull);
-
-
-                            if ( playerwrap.length === 0 ) {
-                                return;
-                            }
-                            
-                            
-                            $( window ).scroll( function( e ) {
-                                //if ( ! sidebar.is(':visible') )
-                                //  return true;
-                                var vidWidth = $(window).width() * 0.2;
-                                var vidFull = {
-                                        width:      '100%',
-                                        height:     '100%',
-                                        boxShadow:  'none',
-                                        outline:    0,
-                                        position:   'inherit',
-                                        right:      0,
-                                        top:        0,
-                                        borderTop:  'inherit'
-                                    };
-
-                                var vidSmall = {
-                                        zIndex:     '10',
-                                        width:      vidWidth,
-                                        height: 'auto',
-                                        boxShadow:  '0 5px 2px rgba(0, 0, 0, 0.4)',
-                                        outline:    '3px solid #fff',
-                                        position:   'fixed',
-                                        top:        200,
-                                        right:      vidWidth * 0.1
-                                    };
-
-
-                                var smLt = player.offset().left;
-                                var aniboxSmall = {
-                                    'width': vidWidth,
-                                    'height': vidWidth*9/16,
-                                    'top' : 200,
-                                    'outline':  '3px solid #fff',
-                                    'position':'fixed'
-                                };
-
-
-                                var scroll_top = $( this ).scrollTop();
-
-                                if ( scroll_top > ( playerwrap.offset().top + 130 ) && ! player.hasClass( 'onsidebar' ) ) {
-                                    player.hide();
-                                    anibox.show();
-                                    aniboxSmall.left = $(window).width() - 100;
-                                    anibox.animate(aniboxSmall,{
-                                        duration:500,
-                                        complete: function() {
-                                            player.show();
-                                            anibox.hide();
-                                        }
-                                    });
-
-                                    player.addClass( 'onsidebar' ).css(vidSmall);
-                                    $(window).trigger( 'resize' );
-                                }
-
-                                if ( scroll_top < ( playerwrap.offset().top + 130 ) && player.hasClass( 'onsidebar' ) ) {
-                                    player.hide();
-                                    anibox.show()
-                                    anibox.animate(aniboxFull, {
-                                        duration: 500,
-                                        complete: function() {
-                                            player.show();
-                                            anibox.hide();
-                                        }
-                                    });
-                                    player.removeClass( 'onsidebar' ).css(vidFull);
-                                    $(window).trigger( 'resize' );
-                                }
-                            });  
-
-                        }  
-
-                        var i = 0;
-                        checkVidLoaded();
-
-                        function checkVidLoaded() {
-                            var max = 10;
-                            var vid = $('#dsp-vid-js-player_html5_api')[0];
-                            i++;
-
-                            if(vid == undefined && i <max) {
-                                setTimeout(function() {
-                                    checkVidLoaded()
-                                },1000);                                
-                            } else {
-
-                                // autoplay functionality
-                                if(autoPlay) {
-                                    vid.play();    
-                                }
-
-                                // auto redirect functionality
-                                if(autoRedir) {
-                                    vid.onended = function(e) {
-                                        var aryVidList = $('ul.ds-video-thumbnails li');
-                                        var aryURLs = [];
-
-                                        $.each(aryVidList,function(key,val) {
-                                            if($(this).hasClass('selected')) {
-                                                strToPush = 'selected'
-                                            } else {
-                                                strToPush = $(this).find('a').attr('href');
-                                            }
-                                            aryURLs.push(strToPush);
-                                        });
-
-                                        var vidIdx = aryURLs.indexOf('selected') + 1;
-                                        var strURL = aryURLs[vidIdx];
-                                        if(strURL == undefined) {
-                                            strURL = aryURLs[0];
-                                        }
-                                        window.location.assign(strURL);
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
-                    });
-                </script>
-<?php
-
+function display_channel_video_player() {
+    $vidPlayerFile = "channel-video.php";
+        
+    if(is_file( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile )) {
+        include( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile );
+    } 
 
 }
+
+
+
+
+if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['flush']) && $_GET['flush'] == 1) {
+    add_action("init", "ds_site_flush");
+}
+
+if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['templatecopy']) && $_GET['templatecopy'] == 1) {
+    add_action("init", "ds_template_copy");
+}
+
+
+add_action("admin_notices", "ds_no_country");
+add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
+add_action("wp_head", "ds_light_theme_shadows", 990);
+add_action('wp_enqueue_scripts', 'ds_styles');
+add_action('admin_notices', 'ds_check_api_key_set');
+add_action("init", "ds_get_country");
+add_action('wp', 'ds_iframe_replace');
+add_action("init", "ds_create_channel_category_menu");
+add_action('wp_head', 'ds_add_custom_css', 999);
+add_action('post_edit_form_tag', 'add_post_enctype');
+add_action("admin_init", "ds_category_images_init");
+add_action("save_post", "ds_save_category_image_field");
