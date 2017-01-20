@@ -53,6 +53,7 @@
 
 	    <!-- VIDEO PLAYER -->
 			<div class='ds-video-headliner'>
+					<div id="anibox">&nbsp;</div>
 			    <div class='row'>
 			    		<div class='col-md-8 ds-video'>
 									<div class='ds-video-fluidMedia'>
