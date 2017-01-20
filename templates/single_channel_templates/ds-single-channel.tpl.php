@@ -64,7 +64,7 @@ get_header();
 
 		            $thumb_id = $pl->thumb;
 
-		            $title = isset($pl->title) ? $pl->title : '';
+		            $title = isset($pl->title) ? substr($pl->title,0,50) : '';
 
 		            $duration = isset($pl->duration) ? round($pl->duration / 60) : '';
 
