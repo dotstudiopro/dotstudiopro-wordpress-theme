@@ -137,6 +137,8 @@ $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>
 
 					<tr><td>Minified Video On Vertical Scroll<br/><span class='description'>Check to minify channel video to the right side of the screen when scrolling down</span></td><td><input type='checkbox' name='ds_player_minivid' value='1' <?php echo get_option("ds_player_minivid") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 
+					<tr><td>Enable Recommended Videos Playlist<br/><span class='description'>Will display the recommended videos playlist when enabled</span></td><td><input type='checkbox' name='ds_player_recplaylist' value='1' <?php echo get_option("ds_player_recplaylist") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
+
 					<tr><td>Auto-assign 'Browse' Menu on Flush<br/><span class='description'>Set the 'Browse Channel Categories' menu as the main nav on flush.</span></td><td><input type='checkbox' name='ds_auto_assign_menu' value='1' <?php echo get_option("ds_auto_assign_menu") == 1 ? 'checked="checked"' : '' ?> /></td></tr>
 
 					<tr><td>Copy plugin template files to my theme folder</b><br/><span class='description'>For custom template changes.</span></td><td><a class='button' href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td></tr>

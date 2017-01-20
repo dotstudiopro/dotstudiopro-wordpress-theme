@@ -710,6 +710,8 @@ function ds_save_admin_options()
 
         update_option('ds_player_minivid', sanitize_text_field($_POST['ds_player_minivid']));
 
+        update_option('ds_player_recplaylist', sanitize_text_field($_POST['ds_player_recplaylist']));
+
     }
 
 }

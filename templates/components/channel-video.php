@@ -4,6 +4,7 @@
 				$minifyVid = get_option('ds_player_minivid');
 				$autoRedir = get_option('ds_player_autoredir');
 				$autoPlay = get_option('ds_player_autoplay');
+				$recPlaylist = get_option('ds_player_recplaylist');
 		?>
 
 
@@ -58,7 +59,7 @@
 			    		<div class='col-md-8 ds-video'>
 									<div class='ds-video-fluidMedia'>
 											<div class='ds-player-togglemode'><i class='fa fa-arrows-alt fa-2x'>&nbsp;</i></div>
-											<div class="player" data-minifyVid='<?php echo $minifyVid;?>' data-autoRedir='<?php echo $autoRedir;?>' data-autoPlay='<?php echo $autoPlay;?>'></div>
+											<div class="player" data-minifyVid='<?php echo $minifyVid;?>' data-autoRedir='<?php echo $autoRedir;?>' data-autoPlay='<?php echo $autoPlay;?>' data-recPlaylist='<?php echo $recPlaylist ?>'></div>
 											<script src="<?php echo $headline_video->player ?>"></script>
 									</div>
 			    		</div>
