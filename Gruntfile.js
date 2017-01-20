@@ -40,6 +40,8 @@ module.exports = function(grunt) {
 										'js/owl.carousel.custom.min.js': ['src/js/owl.carousel.custom.js']
 								}, {
 										'js/channel.video.functions.min.js': ['src/js/channel.video.functions.js']
+								}, {
+										'js/channel.display.functions.min.js': ['src/js/channel.display.functions.js']
 								}, ]
 						}
 				}
