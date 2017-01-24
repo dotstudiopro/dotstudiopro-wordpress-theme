@@ -8,6 +8,45 @@
 		?>
 
 
+	    <!-- VIDEO PLAYER -->
+			<div class='ds-video-headliner'>
+					<div id="anibox">&nbsp;</div>
+			    <div class='row'>
+			    		<div class='col-md-8 ds-video'>
+									<div class='ds-video-fluidMedia'>
+											<?php if($recPlaylist === '1'): ?><div class='ds-player-togglemode'><i class='fa fa-arrows-alt fa-2x'>&nbsp;</i></div><?php endif;?>
+											<div class="player" data-minifyVid='<?php echo $minifyVid;?>' data-autoRedir='<?php echo $autoRedir;?>' data-autoPlay='<?php echo $autoPlay;?>' data-recPlaylist='<?php echo $recPlaylist ?>'></div>
+											<script src="<?php echo $headline_video->player ?>"></script>
+									</div>
+			    		</div>
+			    		<!-- STANDARD MODE PLAYLIST -->
+			    		<div class='col-md-4 ds-vid-playlist ds-playlist-standard-mode active-playlist'>
+			    				
+			    		</div>
+			    </div>
+
+			    <div class='row'>
+			    		<!-- THEATER MODE PLAYLIST -->			    		
+			    		<div class='col-md-12 ds-vid-playlist ds-playlist-theater-mode'>
+			    				<div><label>Related Videos</label></div>
+			    				<div class='ds-playlist-theater-mode-wrapper'>
+				    				<div class='related-videos-carousel'>
+				    						<?php echo do_shortcode("[ds_owl_carousel  channels='all-things-cannabis,art-attack,awesome-ink,cartographies,collegehumor,cupcake-jemma,epic-meal-time' autoplay_hover_pause='1' autoplay='0' autoplay_timeout='3000' autoplay_speed='1000' notitle='1' items='10']"); ?>
+												<?php 
+													/*
+														$rec_id = '587fd28799f815f820681c9c';
+														$rec_size = 5;				    						
+														cho ds_owl_recommended_videos_html(array('rec_id' => $rec_id, 'rec_size' => $rec_size)); 
+													*/
+												?>
+				    				</div>
+				    			</div>
+			    		</div>
+			    </div>
+			</div>
+
+
+
 			<div class='ds-metabox'>
 
 					<!-- TITLE -->
@@ -52,42 +91,6 @@
 	        </div>
 	    </div>
 
-	    <!-- VIDEO PLAYER -->
-			<div class='ds-video-headliner'>
-					<div id="anibox">&nbsp;</div>
-			    <div class='row'>
-			    		<div class='col-md-8 ds-video'>
-									<div class='ds-video-fluidMedia'>
-											<?php if($recPlaylist === '1'): ?><div class='ds-player-togglemode'><i class='fa fa-arrows-alt fa-2x'>&nbsp;</i></div><?php endif;?>
-											<div class="player" data-minifyVid='<?php echo $minifyVid;?>' data-autoRedir='<?php echo $autoRedir;?>' data-autoPlay='<?php echo $autoPlay;?>' data-recPlaylist='<?php echo $recPlaylist ?>'></div>
-											<script src="<?php echo $headline_video->player ?>"></script>
-									</div>
-			    		</div>
-			    		<!-- STANDARD MODE PLAYLIST -->
-			    		<div class='col-md-4 ds-vid-playlist ds-playlist-standard-mode active-playlist'>
-			    				
-			    		</div>
-			    </div>
-
-			    <div class='row'>
-			    		<!-- THEATER MODE PLAYLIST -->			    		
-			    		<div class='col-md-12 ds-vid-playlist ds-playlist-theater-mode'>
-			    				<div><label>Related Videos</label></div>
-			    				<div class='ds-playlist-theater-mode-wrapper'>
-				    				<div class='related-videos-carousel'>
-				    						<?php echo do_shortcode("[ds_owl_carousel  channels='all-things-cannabis,art-attack,awesome-ink,cartographies,collegehumor,cupcake-jemma,epic-meal-time' autoplay_hover_pause='1' autoplay='0' autoplay_timeout='3000' autoplay_speed='1000' notitle='1' items='10']"); ?>
-												<?php 
-													/*
-														$rec_id = '587fd28799f815f820681c9c';
-														$rec_size = 5;				    						
-														cho ds_owl_recommended_videos_html(array('rec_id' => $rec_id, 'rec_size' => $rec_size)); 
-													*/
-												?>
-				    				</div>
-				    			</div>
-			    		</div>
-			    </div>
-			</div>
 
 		<?php
 

@@ -288,7 +288,6 @@ ul.ds-tabs li.current{
     content: "| ";
 }
 .ds-video-headliner-description {
-    height:100px;
     display:block;
     padding:10px;
     overflow:hidden;
@@ -321,7 +320,9 @@ ul.ds-tabs li.current{
 .ds-video-thumbnails li {
 /* 	position: relative; */
 	width: 28%;
-    min-height: 404px;
+    height:375px;
+    overflow: hidden;
+    max-height:375px;
     padding: 0;
     margin: 0px 21px 0px 21px;
     cursor: pointer;
@@ -363,7 +364,6 @@ ul.ds-tabs li.current{
 
 }
 .ds-video-description {
-    height: 100px;
     display: list-item;
     overflow: hidden;
     text-overflow: ellipsis;
