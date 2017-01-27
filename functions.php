@@ -395,6 +395,7 @@ function channels_check()
 
     }
 
+
     foreach ($channels as $c) {
 
         if (!isset($c->categories[0]->slug)) {
