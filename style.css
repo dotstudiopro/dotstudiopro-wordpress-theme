@@ -329,6 +329,7 @@ ul.ds-tabs li.current{
     float: left;
     list-style-type: none;
 }
+
 .ds-overlay {
 	position: relative;
 }

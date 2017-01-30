@@ -51,49 +51,62 @@ function ds_owl_carousel_html($args){
 function ds_owl_recommended_videos_html($args) {
 	// renders the recommended videos playlist for the channel video player
 
-	$rec_id = $args['rec_id'];
+	$video_id = $args['video_id'];
 	$rec_size = $args['rec_size'];
 
-	$recommended = list_recommended($rec_id, $rec_size);
+	$recommended = list_recommended($video_id, $rec_size);
 
-	var_dump($recommended);
-	return;
+	// error checking
+	if($recommended[0] === false) {
+		$strOut = $recommended[1];
+	} else {
+		$opts = ds_owl_create_opts(array(
+				'autoplay_hover_pause' => '1',
+				'autoplay' => '0',
+				'autoplay_timeout' => '3000',
+				'autoplay_speed' => '1000',
+				'notitle' => '1',
+				'items' => '8'
+			));
 
-	$opts = ds_owl_create_opts(array(
-			'autoplay_hover_pause' => '1',
-			'autoplay' => '0',
-			'autoplay_timeout' => '3000',
-			'autoplay_speed' => '1000',
-			'notitle' => '1',
-			'items' => '8'
-		));
+		$rndId = ds_owl_carousel_rnd_id(5);
+		$strOut =  "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+		$strOut .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
 
-	$rndId = ds_owl_carousel_rnd_id(5);
-	$carousel =  "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
-	$carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
+		foreach($recommended as $video){
+			$info = $video->_source;
 
-	foreach($objects as $o){
-		if(trim($o->title.'') !== '') {
-			$description = strlen($o->description) > 150 ? substr($o->description, 0, 150)."..." : $o->description;
-			$title = strlen($o->title) > 20 ? substr($o->title, 0, 20)."..." : $o->title;
-			$imageexp = explode("/",$o->poster);
-			$image = $imageexp[3];
-			$carousel .= "<div class='center-container item'>";
-			$carousel .= "		<div>";
-			$carousel .= "			<i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
-			$carousel .= "			<a href='".home_url("channels/$o->slug")."' class='vert-center' data-title='$o->title' data-desc='$description'>";
-			$carousel .= "				<img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
-			$carousel .= "			</a>";
-			$carousel .= "		</div>";
-			$carousel .= "		<div><strong><small class='owl-carousel-subtitle'>$o->title</small></strong></div>";
-			$carousel .= "</div>";			
+			$title = $info->title;
+			$image = $info->thumb;
+			$id = $video->_id;
+			$description = '';
+			$slug = '';
+
+
+
+
+			if(trim($title.'') !== '') {
+				$description = strlen($description) > 150 ? substr($description, 0, 150)."..." : $description;
+				$title = strlen($title) > 20 ? substr($title, 0, 20)."..." : $title;
+//				$imageexp = explode("/",$o->poster);
+//				$image = $imageexp[3];
+				$strOut .= "<div class='center-container item'>";
+				$strOut .= "		<div>";
+				$strOut .= "			<i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
+				$strOut .= "			<a href='".home_url("channels/$slug")."' class='vert-center' data-title='$title' data-desc='$description'>";
+				$strOut .= "				<img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
+				$strOut .= "			</a>";
+				$strOut .= "		</div>";
+				$strOut .= "		<div><strong><small class='owl-carousel-subtitle'>$title</small></strong></div>";
+				$strOut .= "</div>";			
+			}
+
 		}
+		$strOut .= "</div>";
 
 	}
 
-	$carousel .= "</div>";
-
-	return $carousel;
+	return $strOut;
 
 }
 
@@ -213,6 +226,7 @@ function ds_owl_carousel_rnd_id($length = 10)
     }
     return $randomString;
 }
+
 
 
 

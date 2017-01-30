@@ -171,10 +171,10 @@ function ds_get_country()
 
 
 
-function list_recommended($rec_id='',$rec_size=5) {
+function list_recommended($video_id='', $rec_size=8) {
     global $ds_curl;
-    $recommended = $ds_curl->curl_command('recommended',array("rec_size" => $rec_size, "rec_id" => $rec_id));
-    return $recommended;
+    $result = $ds_curl->curl_command('recommended',array("rec_size" => $rec_size, "video_id" => $video_id));
+    return $result;
 }
 
 
@@ -274,16 +274,15 @@ function ds_iframe_html($html) {
                 $source_split1 = explode('src="', str_replace("'", '"', $param));
                 $source_split2 = explode('"', $source_split1[1]);
                 $source = $source_split2[0];
-                if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
+                if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false) {
                     $video_explode1 = explode("/player/", $source);
-                    $video_explode2 = $video_explode1[1];
+                    $video_explode2 = explode("?", $video_explode1[1]);
                     $video = $video_explode2[0];
-                    $videoObj = grab_video($video);
-
+                    $videoObj = grab_video($video);                       
                     $rndID = generateRandomString(5);
-                    $strOut = '';
+                    $strOut = ''; 
                     $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
-                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->socialImage . '" /></a>';
+                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->thumb . '" /></a>';
                     $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
                     $iframe = '<iframe' . $split_two . '</iframe>';
                     $html = str_replace($iframe, $strOut, $html);
@@ -496,11 +495,14 @@ function categories_loop()
 
     $cat = list_categories();
 
+
     foreach ($cat as $c) {
 
         $post = get_page_by_path('channel-categories/' . $c->slug);
 
         $show_check = get_post_meta($post->ID, 'ds_show_category', true);
+
+
 
         if ($show_check != 1) {
 
@@ -712,6 +714,8 @@ function ds_save_admin_options()
         update_option('ds_player_minivid', sanitize_text_field($_POST['ds_player_minivid']));
 
         update_option('ds_player_recplaylist', sanitize_text_field($_POST['ds_player_recplaylist']));
+
+        update_option('ds_fancy_load',sanitize_text_field($_POST['ds_fancy_load']));
 
     }
 
