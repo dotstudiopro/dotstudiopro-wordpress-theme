@@ -88,13 +88,11 @@ function ds_owl_recommended_videos_html($args) {
 			if(trim($title.'') !== '') {
 				$description = strlen($description) > 150 ? substr($description, 0, 150)."..." : $description;
 				$title = strlen($title) > 20 ? substr($title, 0, 20)."..." : $title;
-//				$imageexp = explode("/",$o->poster);
-//				$image = $imageexp[3];
 				$strOut .= "<div class='center-container item'>";
 				$strOut .= "		<div>";
 				$strOut .= "			<i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
 				$strOut .= "			<a href='".home_url("channels/$slug")."' class='vert-center' data-title='$title' data-desc='$description'>";
-				$strOut .= "				<img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
+				$strOut .= "				<img class='owl-thumb' src='https://image.dotstudiopro.com/$image/177/100' />";
 				$strOut .= "			</a>";
 				$strOut .= "		</div>";
 				$strOut .= "		<div><strong><small class='owl-carousel-subtitle'>$title</small></strong></div>";
