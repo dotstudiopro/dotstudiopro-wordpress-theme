@@ -703,6 +703,8 @@ function ds_save_admin_options()
 
         update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
 
+        update_option('ds_player_mute', sanitize_text_field($_POST['ds_player_mute']));
+
         update_option('ds_token_reset', sanitize_text_field($_POST['ds_token_reset']));
 
         update_option('ds_auto_assign_menu', sanitize_text_field($_POST['ds_auto_assign_menu']));

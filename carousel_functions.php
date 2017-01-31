@@ -128,8 +128,6 @@ function ds_owl_category_html($args) {
 	$carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
 			
 	$catItems = grab_category($category_slug);
-	$title = $channels->title;
-
 
 	if($catItems && is_array($catItems)){
 
