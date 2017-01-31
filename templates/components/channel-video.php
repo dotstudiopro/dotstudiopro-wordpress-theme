@@ -27,20 +27,20 @@
 			    </div>
 
 			    <div class='row'>
-			    		<div class='col-md-12'>
+			    		<div class='col-md-12 col-sm-12 col-xs-12'>
 
 								<div class='ds-metabox'>
 
 										<!-- TITLE -->
 										<div class='row'>
-												<div class='col-md-12'>
+												<div class='col-md-12 col-sm-12 col-xs-12'>
 													<h1 class='ds-video-headliner-title'><?php echo $headline_video->title ?></h1>
 												</div>
 										</div>
 
 										<!-- DESCRIPTION -->
 						        <div class="row">
-						        		<div class='col-md-12 ds-metabox'>
+						        		<div class='col-md-12 col-sm-12 col-xs-12 ds-metabox'>
 								      		<span class='ds-video-headliner-description'><?php echo $headline_video->description ?></span>
 								      		<hr>
 													<a class='ds-more'>Show More</a>
@@ -50,7 +50,7 @@
 						        <!-- METADATA AND SHARING -->
 										<div class='row'>
 												<!-- meta -->
-												<div class='col-md-9'>
+												<div class='col-md-8 col-sm-12 col-xs-12'>
 													<ul class='ds-videometalist'>
 												  			<li><?php echo $headline_video->duration ?> min</li>
 									              <li><?php echo $headline_video->country ?></li>
@@ -61,7 +61,7 @@
 								         	</ul>
 							       	 	</div>
 							       	 	<!-- sharing -->
-							       	 	<div class='col-md-3'>
+							       	 	<div class='col-md-4 col-sm-12 col-xs-12'>
 									        <?php
 													if(is_file( dirname( __FILE__ ) ."/../components/sharing.php" ) ){
 														include( dirname( __FILE__ ) ."/../components/sharing.php" );
@@ -79,7 +79,7 @@
 
 			    <div class='row'>
 			    		<!-- THEATER MODE PLAYLIST -->			    		
-			    		<div class='col-md-12 ds-vid-playlist ds-playlist-theater-mode'>
+			    		<div class='col-md-12 col-sm-12 col-xs-12 ds-vid-playlist ds-playlist-theater-mode'>
 			    				<div><label>Related Videos</label></div>
 			    				<div class='ds-playlist-theater-mode-wrapper'>
 				    				<div class='related-videos-carousel'>

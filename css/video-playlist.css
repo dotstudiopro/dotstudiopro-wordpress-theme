@@ -163,39 +163,6 @@
 	opacity: 0.5;
 }
 
-.ds-playlist-standard-mode::-webkit-scrollbar {
-  width: 13px;
-  height: 13px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-button {
-  width: 7px;
-  height: 7px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb {
-  background: #f90006;
-  border: 0px none #ffffff;
-  border-radius: 50px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb:hover {
-  background: #f90006;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb:active {
-  background: #3a3a3a;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track {
-  background: #9d0004;
-  border: 0px none #ffffff;
-  border-radius: 50px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track:hover {
-  background: #9d0004;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track:active {
-  background: #9d0004;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-corner {
-  background: transparent;
-}
 
 
 @media (max-width: 1000px) {

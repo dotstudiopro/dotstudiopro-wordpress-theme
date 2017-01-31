@@ -1,0 +1,92 @@
+/*
+video.channel.customization.css
+
+USAGE: use this file to customize the video player, playlist, and channel 
+page styles 
+
+*/
+
+
+/* STANDARD MODE PLAYLIST SCROLLBAR COLORS */
+
+
+.ds-playlist-standard-mode::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-button {
+  width: 7px;
+  height: 7px;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-thumb {
+  background: #f90006;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-thumb:hover {
+  background: #f90006;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-thumb:active {
+  background: #3a3a3a;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-track {
+  background: #9d0004;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-track:hover {
+  background: #9d0004;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-track:active {
+  background: #9d0004;
+}
+.ds-playlist-standard-mode::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+.ds-video-headliner .col-md-12, 
+.ds-video-headliner .col-sm-12, 
+.ds-video-headliner .col-xs-12 {
+	padding-left:0;
+}
+
+
+@media (max-width: 600px) { 
+	h1.ds-video-headliner-title {
+		font-size:24px;
+	}
+	span.ds-video-headliner-description {
+		font-size:16px;
+	}
+
+	.ds-metabox .ds-videometalist li {
+		font-size:12px;
+	}
+
+}
+
+@media (min-width: 600px) and (max-width: 900px) { 
+	h1.ds-video-headliner-title {
+		font-size:28px;
+	}
+	span.ds-video-headliner-description {
+		font-size:18px;
+	}
+
+	.ds-metabox .ds-videometalist li {
+		font-size:14px;
+	}
+
+}
+
+
+
+@media(max-width: 1000px) {
+	ul.ds-sharepad {
+		float:left;
+	}
+	.ds-sharepad i {
+		font-size:14px;
+	}
+}
