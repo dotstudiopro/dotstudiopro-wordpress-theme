@@ -209,7 +209,14 @@ function channel_headline_video()
 
         wp_enqueue_style('video-playlist',plugins_url('dotstudiopro-wordpress/css/video-playlist.css'));
 
-        wp_enqueue_style('video-custom',plugins_url('dotstudiopro-wordpress/css/video.channel.customization.css'));
+        $video_custom_css = locate_template( 'video.channel.customization.css' );
+
+        if(!empty($video_custom_css)){
+            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));    
+        } else {
+            wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');    
+        }
+        
 
         $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 

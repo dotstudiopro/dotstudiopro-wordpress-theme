@@ -45,21 +45,14 @@ page styles
 
 
 
-/*
-.ds-video-headliner .col-md-12, 
-.ds-video-headliner .col-sm-12, 
-.ds-video-headliner .col-xs-12 {
-	padding-left:0;
-}
-
-*/
-
 .ds-playlist-theater-outer-container {
 	margin:15px;
 }
 
 .ds-playlist-theater-inner-container {
-	background-color: #fff;
+		clear: both;
+		overflow-y:hidden;
+		background-color: #fff;
     height: 100%;
     padding: 10px;
     border-radius: 5px;

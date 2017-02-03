@@ -850,6 +850,25 @@ function ds_site_flush()
 
 }
 
+function ds_templates_exist() {
+    $templates = array("ds-all-categories.tpl.php",
+        "ds-single-category.tpl.php",
+        "ds-home.tpl.php",
+        "ds-single-channel.tpl.php",
+        "ds-single-channel-w-sidebar.tpl.php",
+        "video.channel.customization.css",
+        "ds-sharing.php");
+
+    foreach($templates as $t) {
+        $file_path = get_stylesheet_directory() . '/' . $t;    
+        if(file_exists($file_path)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 function ds_template_copy()
 {
 
@@ -857,8 +876,7 @@ function ds_template_copy()
 
     $error = "";
 
-    $templates = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php");
-
+    $templates = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php","ds-home.tpl.php");
     $single_channel_templates = array("ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php");
 
     foreach ($templates as $t) {
@@ -885,6 +903,14 @@ function ds_template_copy()
     if (!copy($plugin_dir, $theme_dir)) {
         $error = "&error=1";
     }
+
+    $plugin_dir = plugin_dir_path(__FILE__) . 'css/video.channel.customization.css';
+    $theme_dir  = get_stylesheet_directory() . '/video.channel.customization.css';
+
+    if (!copy($plugin_dir, $theme_dir)) {
+        $error = "&error=1";
+    }
+
 
     wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options$error");
 
