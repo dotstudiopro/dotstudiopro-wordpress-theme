@@ -17,7 +17,7 @@
 									<div class='ds-video-fluidMedia'>
 											<?php if($recPlaylist === '1'): ?><div class='ds-player-togglemode'><i class='fa fa-arrows-alt fa-2x'>&nbsp;</i></div><?php endif;?>
 											<div class="player" data-minifyVid='<?php echo $minifyVid;?>' data-autoRedir='<?php echo $autoRedir;?>' data-autoPlay='<?php echo $autoPlay;?>' data-recPlaylist='<?php echo $recPlaylist ?>'></div>
-											<script src="<?php echo $headline_video->player ?>"></script>
+											<script id='videoloader' src="<?php echo $headline_video->player ?>"></script>
 									</div>
 			    		</div>
 			    		<!-- STANDARD MODE PLAYLIST -->

@@ -75,11 +75,13 @@ function ds_owl_recommended_videos_html($args) {
 
 		foreach($recommended as $video){
 			$info = $video->_source;
+			$video_id = $video->_id;
 
 			$title = $info->title;
 			$image = $info->thumb;
 			$id = $video->_id;
-			$description = '';
+			$company_id = $info->company_id;
+			$description =  'No description currently available';
 			$slug = '';
 
 
@@ -87,11 +89,11 @@ function ds_owl_recommended_videos_html($args) {
 
 			if(trim($title.'') !== '') {
 				$description = strlen($description) > 150 ? substr($description, 0, 150)."..." : $description;
-				$title = strlen($title) > 20 ? substr($title, 0, 20)."..." : $title;
+				$title = strlen($title) > 30 ? substr($title, 0, 30)."..." : $title;
 				$strOut .= "<div class='center-container item'>";
 				$strOut .= "		<div>";
 				$strOut .= "			<i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
-				$strOut .= "			<a href='".home_url("channels/$slug")."' class='vert-center' data-title='$title' data-desc='$description'>";
+				$strOut .= "			<a href='#$video_id' class='vert-center rec-list-item' data-title='$title' data-desc='$description'>";
 				$strOut .= "				<img class='owl-thumb' src='https://image.dotstudiopro.com/$image/177/100' />";
 				$strOut .= "			</a>";
 				$strOut .= "		</div>";
