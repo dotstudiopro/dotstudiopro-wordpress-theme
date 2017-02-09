@@ -89,7 +89,7 @@ function ds_owl_recommended_videos_html($args) {
 
 			if(trim($title.'') !== '') {
 				$description = strlen($description) > 150 ? substr($description, 0, 150)."..." : $description;
-				$title = strlen($title) > 30 ? substr($title, 0, 30)."..." : $title;
+				$title = strlen($title) > 50 ? substr($title, 0, 50)."..." : $title;
 				$strOut .= "<div class='center-container item'>";
 				$strOut .= "		<div>";
 				$strOut .= "			<i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";

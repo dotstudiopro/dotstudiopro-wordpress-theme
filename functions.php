@@ -278,11 +278,12 @@ function ds_iframe_html($html) {
                     $video_explode1 = explode("/player/", $source);
                     $video_explode2 = explode("?", $video_explode1[1]);
                     $video = $video_explode2[0];
-                    $videoObj = grab_video($video);                       
+                    $videoObj = grab_video($video);
+                    $posterImg = $videoObj->thumb . "/1000/562";
                     $rndID = generateRandomString(5);
                     $strOut = ''; 
                     $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
-                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->thumb . '" /></a>';
+                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $posterImg . '" /></a>';
                     $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
                     $iframe = '<iframe' . $split_two . '</iframe>';
                     $html = str_replace($iframe, $strOut, $html);
