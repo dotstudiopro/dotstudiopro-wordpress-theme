@@ -17,11 +17,9 @@ if (!class_exists('DotStudioz_Commands')) {
 
 require_once "functions.php";
 
-require_once "carousel_functions.php";
+require_once "ds-carousel-functions.php";
 
-require_once "ds-templates.php";
-
-require_once "templates/ds_single_channel_functions.php";
+require_once "ds-single-channel-functions.php";
 
 require 'updater/plugin-update-checker.php';
 $myUpdateChecker = PucFactory::buildUpdateChecker(
