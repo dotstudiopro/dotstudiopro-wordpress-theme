@@ -495,19 +495,14 @@ function categories_loop()
 
     $cat = list_categories();
 
-
     foreach ($cat as $c) {
 
         $post = get_page_by_path('channel-categories/' . $c->slug);
 
         $show_check = get_post_meta($post->ID, 'ds_show_category', true);
 
-
-
         if ($show_check != 1) {
-
             continue;
-
         }
 
         $image = get_option('ds-category-image-' . $c->slug);
@@ -1146,6 +1141,7 @@ function ds_all_categories_template($single_template) {
 
     global $post;
 
+
   if ($post->post_name == 'channel-categories') {
 
         $single_template = locate_template( 'ds-all-categories.tpl.php' );
@@ -1157,6 +1153,7 @@ function ds_all_categories_template($single_template) {
         }
    }
      // Return either the template we made, or the template in the theme folders.
+
      return $single_template;
 }
 
@@ -1445,9 +1442,9 @@ function channel_headline_video()
         $video_custom_css = locate_template( 'video.channel.customization.css' );
 
         if(!empty($video_custom_css)){
-            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));    
-        } else {
             wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');    
+        } else {
+            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));    
         }
         
 

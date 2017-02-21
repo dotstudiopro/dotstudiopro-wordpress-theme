@@ -14,7 +14,7 @@ $styles = array('light-style', 'dark-style');
 
 $autoplay = get_option('ds_player_autoplay');
 
-$templates = scandir(dirname( __FILE__ ) . '/templates/single_channel_templates/');
+$templates = scandir(dirname( __FILE__ ) . '/templates/');
 
 unset($templates[0]);
 

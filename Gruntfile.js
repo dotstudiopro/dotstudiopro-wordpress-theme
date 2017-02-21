@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 								files: [{
 										'js/owl.carousel.admin.min.js': ['src/js/owl.carousel.admin.js']
 								}, {
-										'js/jquery.girdder.min.js': ['src/js/jquery.gridder.js']
+										'js/jquery.gridder.min.js': ['src/js/jquery.gridder.js']
 								}, {
 										'js/owl.carousel.min.js': ['src/js/owl.carousel.js']
 								}, {
