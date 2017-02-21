@@ -24,9 +24,9 @@ module.exports = function(grunt) {
 						},
 						dist: {
 								files: [{
-										'css/owl.carousel.min.css': 'src/scss/owl.carousel.scss'
+										'css/owl.carousel.css': 'src/scss/owl.carousel.scss'
 								}, {
-										'css/owl.carousel.admin.min.css': 'src/scss/owl.carousel.admin.scss'
+										'css/owl.carousel.admin.css': 'src/scss/owl.carousel.admin.scss'
 								}, ]
 						}
 				},
@@ -35,9 +35,11 @@ module.exports = function(grunt) {
 								files: [{
 										'js/owl.carousel.admin.min.js': ['src/js/owl.carousel.admin.js']
 								}, {
+										'js/jquery.girdder.min.js': ['src/js/jquery.gridder.js']
+								}, {
 										'js/owl.carousel.min.js': ['src/js/owl.carousel.js']
 								}, {
-										'js/owl.carousel.custom.min.js': ['src/js/owl.carousel.custom.js']
+										'js/channel.functions.min.js': ['src/js/channel.functions.js']
 								}, {
 										'js/channel.video.functions.min.js': ['src/js/channel.video.functions.js']
 								}, {
