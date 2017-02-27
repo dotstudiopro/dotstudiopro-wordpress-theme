@@ -714,6 +714,10 @@ function ds_save_admin_options()
 
         update_option('ds_fancy_load',sanitize_text_field($_POST['ds_fancy_load']));
 
+        update_option('ds_show_playlist_above_meta',sanitize_text_field($_POST['ds_show_playlist_above_meta']));
+
+
+
     }
 
 }
@@ -1344,6 +1348,31 @@ function igrab_channel()
 
 }
 
+
+
+function ds_theater_mode_playlist($videoId) {
+    $strOut = "";
+    $strOut .= "<div class='row'>";
+    $strOut .= "    <!-- THEATER MODE PLAYLIST -->";                      
+    $strOut .= "    <div class='col-md-12 col-sm-12 col-xs-12 ds-vid-playlist ds-playlist-theater-mode'>";
+    $strOut .= "        <div class='ds-playlist-theater-outer-container'>";
+    $strOut .= "            <div><label>Related Videos</label></div>";
+    $strOut .= "                <div class='ds-playlist-theater-inner-container'>";
+    $strOut .= "                    <div class='ds-playlist-theater-mode-wrapper'>";
+    $strOut .= "                         <div class='related-videos-carousel'>";
+    $strOut .=                              ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8)); 
+    $strOut .= "                          </div>";
+    $strOut .= "                     </div>";
+    $strOut .= "                </div>";
+    $strOut .= "          </div>";
+    $strOut .= "    </div>";
+    $strOut .= "</div>";
+    return $strOut;
+}
+
+
+
+
 function channel_headline_video()
 {
 
@@ -1351,7 +1380,7 @@ function channel_headline_video()
 
     $video = get_query_var("video", false);
 
-    $is_child = ds_channel_is_child();
+    if (ds_channel_is_child()) {
 
         $videos = grab_channel();
 
@@ -1363,49 +1392,32 @@ function channel_headline_video()
 
         }
 
-        $playlist = $is_child ? $videos[0]->childchannels[0]->playlist : $videos[0]->playlist;
+        $playlist = $videos[0]->childchannels[0]->playlist[0];
 
-        $tags = $playlist[0]->tags;
+        $id = $playlist->_id;
 
-        $id = $playlist[0]->_id;
+        $title = $playlist->title;
 
-        $title = $is_child ? $playlist[0]->title : !empty($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : !empty($videos[0]->video->title) ? $videos[0]->video->title : '';
+        $duration = round($playlist->duration / 60);
 
-        $duration = $is_child ? round($playlist[0]->duration / 60) : !empty($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration / 60) : !empty($videos[0]->video->duration) ? round($videos[0]->video->duration / 60) : '';
+        $description = isset($videos[0]->description) ? $videos[0]->description : '';
 
-        $description = "";
-        if (!empty($videos[0]->video->description)) {
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-            $description = $videos[0]->video->description;
+        $company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
 
-        } else if (!empty($videos[0]->playlist[0]->description)) {
+        $country = isset($playlist->country) ? $playlist->country : '';
 
-            $description = $videos[0]->playlist[0]->description;
+        $language = isset($playlist->language) ? $playlist->language : '';
 
-        } else if (!empty($videos[0]->video->country)) {
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
 
-            $description = $videos[0]->video->country;
-
-        } else if (!empty($videos[0]->description)){
-            $description = $videos[0]->description;
-        }
-
-        $company = !empty($videos[0]->company) ? $videos[0]->company : '';
-
-        $company_id = !empty($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : !empty($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
-
-        $country = !empty($playlist[0]->country) ? $playlist[0]->country : '';
-
-        $language = !empty($playlist[0]->language) ? $playlist[0]->language : !empty($videos[0]->video->language) ? $videos[0]->video->language : '';
-
-        $year = !empty($videos[0]->year) ? $videos[0]->year : '';
-
-        $rating = !empty($videos[0]->rating) ? $videos[0]->rating : '';
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
         if ($video) {
             $id = get_query_var("video", false);
 
-            foreach ($playlist as $pl) {
+            foreach ($videos[0]->childchannels[0]->playlist as $pl) {
 
                 if ($pl->_id == $id) {
 
@@ -1419,7 +1431,82 @@ function channel_headline_video()
 
                     $language = $pl->language;
 
-                    $tags = $pl->tags;
+                    break;
+
+                }
+
+            }
+
+        }
+
+        $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+
+        return $to_return;
+
+    } else {
+
+        $videos = grab_channel();
+
+        if (!is_array($videos)) {
+
+            $videos = new stdClass;
+
+            return $videos;
+
+        }
+
+        $id = $videos[0]->playlist[0]->_id;
+
+        $title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
+
+        $duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration / 60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration / 60) : '';
+
+        $chdescription = "";
+        if (isset($videos[0]->video->description)) {
+
+            $chdescription = $videos[0]->video->description;
+
+        } else if (isset($videos[0]->playlist[0]->description)) {
+
+            $chdescription = $videos[0]->playlist[0]->description;
+
+        } else if (isset($videos[0]->video->country)) {
+
+            $chdescription = $videos[0]->video->country;
+
+        }
+
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
+
+        $company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+
+        $country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+
+        $language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
+
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
+
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+
+        if ($video) {
+
+            $id = get_query_var("video", false);
+
+            foreach ($videos[0]->playlist as $pl) {
+
+                if ($pl->_id == $id) {
+
+                    $title = $pl->title;
+
+                    $duration = round($pl->duration / 60);
+
+                    $chdescription = $pl->description;
+
+                    $country = $pl->country;
+
+                    $language = $pl->language;
 
                     break;
 
@@ -1428,6 +1515,14 @@ function channel_headline_video()
             }
 
         }
+
+        if (!$id) {
+
+            $id = $videos[0]->video->_id;
+
+        }
+
+
         wp_register_script('channel-video-functions', plugins_url('js/channel.video.functions.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-video-functions');
@@ -1446,15 +1541,20 @@ function channel_headline_video()
         } else {
             wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));    
         }
-        
+
+
 
         $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
-        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url, 'tags'=>$tags);
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
         return $to_return;
 
+    }
+
 }
+
+
 
 function get_child_siblings()
 {

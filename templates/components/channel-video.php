@@ -6,6 +6,7 @@
 				$autoPlay = get_option('ds_player_autoplay');
 				$recPlaylist = get_option('ds_player_recplaylist');
 				$videoId = $headline_video->_id;
+				$show_playlist_above_meta = get_option('ds_show_playlist_above_meta');
 		?>
 
 
@@ -25,6 +26,10 @@
 			    				
 			    		</div>
 			    </div>
+
+			   <?php if($show_playlist_above_meta) {
+			   		echo ds_theater_mode_playlist($videoId);
+			   	} ?>
 
 			    <div class='row'>
 			    		<div class='col-md-12 col-sm-12 col-xs-12'>
@@ -77,21 +82,10 @@
 			    		</div>
 			    </div>
 
-			    <div class='row'>
-			    		<!-- THEATER MODE PLAYLIST -->			    		
-			    		<div class='col-md-12 col-sm-12 col-xs-12 ds-vid-playlist ds-playlist-theater-mode'>
-			    				<div class='ds-playlist-theater-outer-container'>
-				    				<div><label>Related Videos</label></div>
-				    				<div class='ds-playlist-theater-inner-container'>
-						    				<div class='ds-playlist-theater-mode-wrapper'>
-							    				<div class='related-videos-carousel'>
-															<?php  echo ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8)); ?>
-							    				</div>
-							    			</div>
-							    	</div>
-					    		</div>
-			    		</div>
-			    </div>
+			   <?php if(!$show_playlist_above_meta) {
+			   		echo ds_theater_mode_playlist($videoId);
+			   	} ?>
+
 			</div>
 
 
