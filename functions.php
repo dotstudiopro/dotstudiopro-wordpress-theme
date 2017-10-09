@@ -280,7 +280,7 @@ function ds_iframe_html($html) {
                     $videoObj = grab_video($video);
                     $posterImg = $videoObj->thumb . "/1000/562";
                     $rndID = generateRandomString(5);
-                    $strOut = ''; 
+                    $strOut = '';
                     $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
                     $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $posterImg . '" /></a>';
                     $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
@@ -859,7 +859,7 @@ function ds_templates_exist() {
         "ds-sharing.php");
 
     foreach($templates as $t) {
-        $file_path = get_stylesheet_directory() . '/' . $t;    
+        $file_path = get_stylesheet_directory() . '/' . $t;
         if(file_exists($file_path)) {
             return true;
         }
@@ -1095,7 +1095,7 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
         CURLOPT_TIMEOUT        => 30,
         CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST  => $curl_request_type,
-        CURLOPT_POSTFIELDS     => $curl_post_fields,
+        CURLOPT_POSTFIELDS     => $curl_request_type == 'POST' ? $curl_post_fields : "",
         CURLOPT_HTTPHEADER     => $curl_header,
     ));
 
@@ -1111,10 +1111,10 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
 
 function display_channel_video_player() {
     $vidPlayerFile = "channel-video.php";
-        
+
     if(is_file( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile )) {
         include( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile );
-    } 
+    }
 
 }
 
@@ -1353,14 +1353,14 @@ function igrab_channel()
 function ds_theater_mode_playlist($videoId) {
     $strOut = "";
     $strOut .= "<div class='row'>";
-    $strOut .= "    <!-- THEATER MODE PLAYLIST -->";                      
+    $strOut .= "    <!-- THEATER MODE PLAYLIST -->";
     $strOut .= "    <div class='col-md-12 col-sm-12 col-xs-12 ds-vid-playlist ds-playlist-theater-mode'>";
     $strOut .= "        <div class='ds-playlist-theater-outer-container'>";
     $strOut .= "            <div><label>Related Videos</label></div>";
     $strOut .= "                <div class='ds-playlist-theater-inner-container'>";
     $strOut .= "                    <div class='ds-playlist-theater-mode-wrapper'>";
     $strOut .= "                         <div class='related-videos-carousel'>";
-    $strOut .=                              ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8)); 
+    $strOut .=                              ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8));
     $strOut .= "                          </div>";
     $strOut .= "                     </div>";
     $strOut .= "                </div>";
@@ -1537,9 +1537,9 @@ function channel_headline_video()
         $video_custom_css = locate_template( 'video.channel.customization.css' );
 
         if(!empty($video_custom_css)){
-            wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');    
+            wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');
         } else {
-            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));    
+            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));
         }
 
 
@@ -1604,7 +1604,7 @@ function get_child_siblings()
 
 
 function ds_owl_carousel_check_main_plugin() {
-    
+
     ?>
 
     <div class="update-nag">
@@ -1643,7 +1643,7 @@ function ds_owl_carousel_html($args){
     if($args['channels'] !== '') {
             // generate the code for showing items within a channel
         return ds_owl_channel_html($args);
-    } 
+    }
     if($args['category'] !== '') {
             // generate the code for showing items within a category
         return ds_owl_category_html($args);
@@ -1701,7 +1701,7 @@ function ds_owl_recommended_videos_html($args) {
                 $strOut .= "            </a>";
                 $strOut .= "        </div>";
                 $strOut .= "        <div><strong><small class='owl-carousel-subtitle'>$title</small></strong></div>";
-                $strOut .= "</div>";            
+                $strOut .= "</div>";
             }
 
         }
@@ -1729,7 +1729,7 @@ function ds_owl_category_html($args) {
         $carousel .= "<div class='owl-carousel-title' style='position:relative;'><h2 class='$titleclass'>$title</h2><a class='owl-carousel-ellipsis' href='/channel-categories/$category_slug/' title='More...'>...</a></div>";
     }
     $carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
-            
+
     $catItems = grab_category($category_slug);
 
     if($catItems && is_array($catItems)){
@@ -1748,7 +1748,7 @@ function ds_owl_category_html($args) {
             $carousel .= "              <img class='owl-thumb' src='$spotlight_poster/1280/720' />";
             $carousel .= "          </a>";
             $carousel .= "      </div>";
-            $carousel .= "</div>";              
+            $carousel .= "</div>";
         }
     }
 
@@ -1790,7 +1790,7 @@ function ds_owl_channel_html($args) {
             $carousel .= "          </a>";
             $carousel .= "      </div>";
             $carousel .= "      <div><strong><small class='owl-carousel-subtitle'>$o->title</small></strong></div>";
-            $carousel .= "</div>";          
+            $carousel .= "</div>";
         }
 
     }
@@ -1810,7 +1810,7 @@ function ds_owl_create_opts($args) {
        function ($v, $k) { return sprintf("%s=%s", trim($k), trim($v)); },
        $args,
        array_keys($args)
-    )); 
+    ));
 
     return $opts;
 }
@@ -1845,7 +1845,7 @@ function ds_owl_grab_channel_by_id($id) {
     global $ds_curl;
     $channel = $ds_curl->curl_command( 'single-channel-by-id', array( 'channel_slug' => str_replace( " ", "", $id ) ) );
     return $channel;
-    
+
 }
 
 
@@ -1891,7 +1891,7 @@ function ds_owl_carousel_display_shortcode( $atts ) {
         'dots' => false,
         'rtl' => false,
         'nav' => false,
-        'notitle' => false, 
+        'notitle' => false,
         'titleclass' => ''
 
     ), $atts, 'ds_owl_carousel' );
@@ -1922,7 +1922,6 @@ if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GE
 if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['templatecopy']) && $_GET['templatecopy'] == 1) {
     add_action("init", "ds_template_copy");
 }
-
 
 add_filter('query_vars', 'ds_video_var');
 add_filter( 'page_template', 'ds_get_channel_template', 11 );
