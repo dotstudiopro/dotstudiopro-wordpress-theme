@@ -132,7 +132,7 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 
 		$result = ds_run_curl_command("http://api.myspotlight.tv/search/recommendation?q=".$video_id."&size=".$rec_size."&from=0",
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -170,7 +170,7 @@ function curl_command($command, $args = array()){
 		}
 
 		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."?detail=partial",
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -262,7 +262,7 @@ function curl_command($command, $args = array()){
 		$channel_name = $post->post_name;
 
 		$result = ds_run_curl_command($url,
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -326,7 +326,7 @@ function curl_command($command, $args = array()){
 		$channel_name = $post->post_name;
 
 		$result = ds_run_curl_command($url,
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -399,7 +399,7 @@ function curl_command($command, $args = array()){
 		$channel_name = $post->post_name;
 
 		$result = ds_run_curl_command($url,
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -443,7 +443,7 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 
 		$result = ds_run_curl_command("http://api.myspotlight.tv/categories/".$this->country,
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -484,7 +484,7 @@ function curl_command($command, $args = array()){
 		}
 
 		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."/".$cat."?detail=partial",
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
@@ -553,7 +553,7 @@ function curl_command($command, $args = array()){
 
 
 		$result = ds_run_curl_command("http://api.myspotlight.tv/video/play2/$video",
-			"GET", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001--",
+			"GET", "",
 			array(
 				"cache-control: no-cache",
 				"content-type: multipart/form-data; boundary=---011000010111000001101001",
