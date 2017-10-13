@@ -1539,7 +1539,7 @@ function channel_headline_video()
         if(!empty($video_custom_css)){
             wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');
         } else {
-            wp_enqueue_style('video-custom',plugins_url('/dotstudiopro-wordpress/css/video.channel.customization.css'));
+            wp_enqueue_style('video-custom', plugin_dir_url( __FILE__ ) . 'css/video.channel.customization.css');
         }
 
 
