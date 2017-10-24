@@ -4,7 +4,8 @@ set_time_limit(240);
 
 $ds_curl = new DotStudioz_Commands;
 
-function ds_verify_var($var){
+function ds_verify_var($var)
+{
     return !empty($var) ? $var : '';
 }
 
@@ -19,7 +20,7 @@ function ds_scripts_load_cdn()
     wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', array(), null, false);
 
     // Register the script like this for a plugin:
-    wp_register_script('custom-script', plugins_url('/js/custom-script.js', __FILE__), array('jquery'));
+    wp_register_script('custom-script', plugins_url('/js/channel.functions.min.js', __FILE__), array('jquery'));
     // For either a plugin or a theme, you can then enqueue the script:
     wp_enqueue_script('custom-script');
 
@@ -32,7 +33,7 @@ function ds_scripts_load_cdn()
     if ($post->post_parent == $categories->ID || $parent->post_parent == $channels->ID || $parent->post_parent == $categories->ID || $channels->ID == $post->ID || $categories->ID == $post->ID) {
 
         // Register the script like this for a plugin:
-        wp_register_script('grid-script', plugins_url('/js/vendor/jquery.gridder.js', __FILE__), array('jquery'));
+        wp_register_script('grid-script', plugins_url('/js/jquery.gridder.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('grid-script');
 
@@ -94,7 +95,6 @@ function ds_light_theme_shadows()
 
 }
 
-
 function ds_styles()
 {
 
@@ -107,14 +107,12 @@ function ds_styles()
     wp_register_style('grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('grid-style');
 
-    wp_register_style('ds-style', plugins_url('/style.css', __FILE__), array(), '20120208', 'all');
+    wp_register_style('ds-style', plugins_url('/css/style.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('ds-style');
 
     // Styles for the FancyFrame portion of this plugin:
     wp_register_style('fancyframe-style', plugins_url('/css/fancyframes.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('fancyframe-style');
-
-
 
 }
 
@@ -123,8 +121,6 @@ function ds_video_var($public_query_vars)
     $public_query_vars[] = 'video';
     return $public_query_vars;
 }
-
-add_filter('query_vars', 'ds_video_var');
 
 function ds_check_api_key_set()
 {
@@ -143,7 +139,6 @@ function ds_check_api_key_set()
     </div>
     <?php
 }
-
 
 function ds_new_token()
 {
@@ -173,25 +168,24 @@ function ds_get_country()
 
 }
 
-
-
-function list_recommended($rec_id='',$rec_size=5) {
+function list_recommended($video_id = '', $rec_size = 8)
+{
     global $ds_curl;
-    $recommended = $ds_curl->curl_command('recommended',array("rec_size" => $rec_size, "rec_id" => $rec_id));
-    return $recommended;
+    $result = $ds_curl->curl_command('recommended', array("rec_size" => $rec_size, "video_id" => $video_id));
+    return $result;
 }
 
-
-function list_channels() {
+function list_channels()
+{
     global $ds_curl;
     $channels = $ds_curl->curl_command('all-channels');
     return $channels;
 }
 
-
-function list_categories() {
+function list_categories()
+{
     global $ds_curl;
-    $categories = $ds_curl->curl_command('all-categories');
+    $categories          = $ds_curl->curl_command('all-categories');
     $categories_filtered = array();
     foreach ($categories as $cat) {
         if (!empty($cat->platforms) && !empty($cat->platforms[0]) && isset($cat->platforms[0]->website) && (string) $cat->platforms[0]->website === 'false' || !isset($cat->platforms[0]->website)) {
@@ -202,9 +196,8 @@ function list_categories() {
     return $categories_filtered;
 }
 
-
-
-function channel_revision_check() {
+function channel_revision_check()
+{
     // Check if we have revisions to the current channel page
     global $wpdb, $post;
     $results = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "posts WHERE post_type = 'revision' AND post_parent = " . $post->ID);
@@ -215,25 +208,22 @@ function channel_revision_check() {
     }
 }
 
-
-
-function grab_channel() {
+function grab_channel()
+{
     global $ds_curl;
     $channels = $ds_curl->curl_command('single-channel');
     return $channels;
 }
 
-
-
-function grab_parent_channel() {
+function grab_parent_channel()
+{
     global $ds_curl;
     $channels = $ds_curl->curl_command('parent-channel');
     return $channels;
 }
 
-
-
-function grab_category($category) {
+function grab_category($category)
+{
     global $ds_curl;
     $category = $ds_curl->curl_command('single-category', array("category" => $category));
     return $category;
@@ -246,7 +236,8 @@ function grab_video($video)
     return $videoObj;
 }
 
-function ds_iframe_replace() {
+function ds_iframe_replace()
+{
     if (is_admin()) {
         return;
     }
@@ -254,36 +245,38 @@ function ds_iframe_replace() {
     ob_start('ds_iframe_html');
 }
 
-function generateRandomString($length = 5) {
-    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+function generateRandomString($length = 5)
+{
+    return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
 }
 
-function ds_iframe_html($html) {
+function ds_iframe_html($html)
+{
     // Replace <iframe> code with a div that loads the iframe based on scroll.
     $iframe_split = explode('<iframe', $html);
-    foreach($iframe_split as $if){
+    foreach ($iframe_split as $if) {
         $split_one = explode('</iframe>', $if);
         $split_two = $split_one[0];
-        $params = explode(' ', $split_two);
-        $source = '';
-        foreach($params as $param){
-            if(strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false){
+        $params    = explode(' ', $split_two);
+        $source    = '';
+        foreach ($params as $param) {
+            if (strpos($param, 'src') !== false && strpos($split_two, 'nofancyframe') === false) {
                 $source_split1 = explode('src="', str_replace("'", '"', $param));
                 $source_split2 = explode('"', $source_split1[1]);
-                $source = $source_split2[0];
-                if(strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false){
+                $source        = $source_split2[0];
+                if (strpos($source, "dotstudiopro") !== false || strpos($source, 'dotstudiodev') !== false) {
                     $video_explode1 = explode("/player/", $source);
-                    $video_explode2 = $video_explode1[1];
-                    $video = $video_explode2[0];
-                    $videoObj = grab_video($video);
-
-                    $rndID = generateRandomString(5);
-                    $strOut = '';
-                    $strOut .=  '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
-                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $videoObj->socialImage . '" /></a>';
+                    $video_explode2 = explode("?", $video_explode1[1]);
+                    $video          = $video_explode2[0];
+                    $videoObj       = grab_video($video);
+                    $posterImg      = $videoObj->thumb . "/1000/562";
+                    $rndID          = generateRandomString(5);
+                    $strOut         = '';
+                    $strOut .= '<div id="' . $rndID . '_container" class="iframe_container" data-vidurl="' . $source . '" data-isplaying="0">';
+                    $strOut .= '<a href="#' . $rndID . '" id="' . $rndID . '_link" class="iframe_launch"><i class="iframe_fa fa fa-play-circle-o"></i><img class="iframe_thumb" id="' . $rndID . '_thumb" src="' . $posterImg . '" /></a>';
                     $strOut .= '<div id="' . $rndID . '_spinner" class="iframe_spinner_container" style="display:none;"><div class="iframe_spinner"></div></div>';
                     $iframe = '<iframe' . $split_two . '</iframe>';
-                    $html = str_replace($iframe, $strOut, $html);
+                    $html   = str_replace($iframe, $strOut, $html);
                 }
             }
         }
@@ -291,13 +284,10 @@ function ds_iframe_html($html) {
     return $html;
 }
 
-
-
-
-
-function ds_check() {
+function ds_check()
+{
     global $ds_curl;
-    $token = get_option('ds_curl_token');
+    $token      = get_option('ds_curl_token');
     $token_time = !$token ? 0 : get_option('ds_curl_token_time');
     $difference = floor((time() - $token_time) / 84600);
     if (!$token || $difference >= 25) {
@@ -318,12 +308,11 @@ function ds_no_country()
     <?php
 }
 
-
-
-function ds_channel_is_parent() {
+function ds_channel_is_parent()
+{
     global $wpdb, $post;
     $channel_check_grab = get_page_by_path('channels');
-    $channel_check = $channel_check_grab->ID;
+    $channel_check      = $channel_check_grab->ID;
     if ($post->post_parent != $channel_check) {
         return false;
     }
@@ -335,15 +324,14 @@ function ds_channel_is_parent() {
     }
 }
 
-
-
-function ds_channel_is_child() {
+function ds_channel_is_child()
+{
     global $post;
     if ($post->post_parent == 0) {
         return false;
     }
-    $channel_check_grab = get_page_by_path('channels');
-    $channel_parent = $channel_check_grab->ID;
+    $channel_check_grab  = get_page_by_path('channels');
+    $channel_parent      = $channel_check_grab->ID;
     $channel_grandparent = wp_get_post_parent_id($post->post_parent);
     if ($channel_parent == $channel_grandparent) {
         return true;
@@ -352,18 +340,14 @@ function ds_channel_is_child() {
     }
 }
 
-
-
-
-function ds_headliner_video_for_template() {
+function ds_headliner_video_for_template()
+{
     if (!ds_channel_is_parent() && !ds_channel_is_child()) {
         echo get_query_var("video", false) ? channel_selected_video() : channel_first_video();
     } else if (ds_channel_is_child()) {
         echo get_query_var("video", false) ? child_channel_selected_video() : child_channel_first_video();
     }
 }
-
-
 
 function channels_check()
 {
@@ -412,7 +396,9 @@ function channels_check()
 
         $channel_info = !empty($c->description) ? $c->description : !empty($c->video->description) ? $c->video->description : $c->title;
 
-        if(empty($channel_info)) $channel_info = "No description.";
+        if (empty($channel_info)) {
+            $channel_info = "No description.";
+        }
 
         $page_id = wp_insert_post(array(
             'post_title'   => !empty($c->title) ? $c->title : ucwords(str_replace('-', ' ', $slug)),
@@ -499,9 +485,7 @@ function categories_loop()
         $show_check = get_post_meta($post->ID, 'ds_show_category', true);
 
         if ($show_check != 1) {
-
             continue;
-
         }
 
         $image = get_option('ds-category-image-' . $c->slug);
@@ -697,6 +681,8 @@ function ds_save_admin_options()
 
         update_option('ds_comment_type', sanitize_text_field($_POST['ds_comment_type']));
 
+        update_option('ds_player_mute', sanitize_text_field($_POST['ds_player_mute']));
+
         update_option('ds_token_reset', sanitize_text_field($_POST['ds_token_reset']));
 
         update_option('ds_auto_assign_menu', sanitize_text_field($_POST['ds_auto_assign_menu']));
@@ -706,6 +692,12 @@ function ds_save_admin_options()
         update_option('ds_player_autoredir', sanitize_text_field($_POST['ds_player_autoredir']));
 
         update_option('ds_player_minivid', sanitize_text_field($_POST['ds_player_minivid']));
+
+        update_option('ds_player_recplaylist', sanitize_text_field($_POST['ds_player_recplaylist']));
+
+        update_option('ds_fancy_load', sanitize_text_field($_POST['ds_fancy_load']));
+
+        update_option('ds_show_playlist_above_meta', sanitize_text_field($_POST['ds_show_playlist_above_meta']));
 
     }
 
@@ -763,18 +755,18 @@ function ds_create_channel_category_menu()
 
         $auto_assign = get_option('ds_auto_assign_menu');
 
-        if(empty($auto_assign)) return;
+        if (empty($auto_assign)) {
+            return;
+        }
 
         // Set the main menu up in the correct spot post-flush.
-        $locations = get_theme_mod('nav_menu_locations');
-        $locations['main_nav'] = $menu_id;
+        $locations               = get_theme_mod('nav_menu_locations');
+        $locations['main_nav']   = $menu_id;
         $locations['header_nav'] = $menu_id;
-        $locations['top'] = $menu_id; // WP 2017
-        set_theme_mod( 'nav_menu_locations', $locations );
+        $locations['top']        = $menu_id; // WP 2017
+        set_theme_mod('nav_menu_locations', $locations);
 
     }
-
-
 
 }
 
@@ -838,6 +830,25 @@ function ds_site_flush()
 
 }
 
+function ds_templates_exist()
+{
+    $templates = array("ds-all-categories.tpl.php",
+        "ds-single-category.tpl.php",
+        "ds-home.tpl.php",
+        "ds-single-channel.tpl.php",
+        "ds-single-channel-w-sidebar.tpl.php",
+        "video.channel.customization.css",
+        "ds-sharing.php");
+
+    foreach ($templates as $t) {
+        $file_path = get_stylesheet_directory() . '/' . $t;
+        if (file_exists($file_path)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function ds_template_copy()
 {
 
@@ -845,8 +856,7 @@ function ds_template_copy()
 
     $error = "";
 
-    $templates = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php");
-
+    $templates                = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php", "ds-home.tpl.php");
     $single_channel_templates = array("ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php");
 
     foreach ($templates as $t) {
@@ -859,7 +869,7 @@ function ds_template_copy()
     }
 
     foreach ($single_channel_templates as $t) {
-        $plugin_dir = plugin_dir_path(__FILE__) . 'templates/single_channel_templates/' . $t;
+        $plugin_dir = plugin_dir_path(__FILE__) . 'templates/' . $t;
         $theme_dir  = get_stylesheet_directory() . '/' . $t;
 
         if (!copy($plugin_dir, $theme_dir)) {
@@ -874,10 +884,16 @@ function ds_template_copy()
         $error = "&error=1";
     }
 
+    $plugin_dir = plugin_dir_path(__FILE__) . 'css/video.channel.customization.css';
+    $theme_dir  = get_stylesheet_directory() . '/video.channel.customization.css';
+
+    if (!copy($plugin_dir, $theme_dir)) {
+        $error = "&error=1";
+    }
+
     wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options$error");
 
 }
-
 
 function ds_api_key_change()
 {
@@ -967,9 +983,6 @@ function ds_api_key_change()
 
 }
 
-
-
-
 function ds_add_custom_css()
 {
     echo "\n<style>" . get_option('ds_plugin_custom_css') . "</style>\n\n";
@@ -978,20 +991,19 @@ function ds_add_custom_css()
 
 /** Custom category images **/
 
-
-
 function add_post_enctype()
 {
     echo ' enctype="multipart/form-data"';
 }
 
-
-
 // Initialize the necessary functions for extra fields on Sales Pages
 function ds_category_images_init()
 {
-    if(empty($_GET['post'])) return false;
-    $post = get_post($_GET['post']);
+    if (empty($_GET['post'])) {
+        return false;
+    }
+
+    $post       = get_post($_GET['post']);
     $categories = get_page_by_path("channel-categories");
 
     if ((int) $post->post_parent === (int) $categories->ID) {
@@ -999,13 +1011,11 @@ function ds_category_images_init()
     }
 }
 
-
-
-
-function ds_category_image_field() {
+function ds_category_image_field()
+{
     // Create the field for uploading custom category images.
-    $post = get_post($_GET['post']);
-    $image = get_option('ds-category-image-' . $post->post_name);
+    $post      = get_post($_GET['post']);
+    $image     = get_option('ds-category-image-' . $post->post_name);
     $cat_image = '';
     if ($image) {
         $cat_image = "<img src='$image' />";
@@ -1020,33 +1030,28 @@ function ds_category_image_field() {
     <?php
 }
 
-
-
-
-
-function ds_cust_filename($dir, $name, $ext) {
+function ds_cust_filename($dir, $name, $ext)
+{
     return $_FILES['ds-category-image']['name'] . rand(100, 999) . time() . $ext;
 }
 
-
-
-
-function ds_save_category_image_field() {
+function ds_save_category_image_field()
+{
     if (!isset($_FILES['ds-category-image'])) {
         return;
     }
 
     global $post;
-    $slug = $post->post_name;
+    $slug         = $post->post_name;
     $uploadedfile = $_FILES['ds-category-image'];
-    $movefile = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'ds_cust_filename'));
+    $movefile     = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'ds_cust_filename'));
     if ($movefile && !isset($movefile['error'])) {
         update_option("ds-category-image-$slug", $movefile['url']);
     }
 }
 
-
-function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header) {
+function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
+{
     // Simplify the cURL execution for various API commands within the curl commands class
     $curl = curl_init();
 
@@ -1058,7 +1063,7 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
         CURLOPT_TIMEOUT        => 30,
         CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST  => $curl_request_type,
-        CURLOPT_POSTFIELDS     => $curl_post_fields,
+        CURLOPT_POSTFIELDS     => $curl_request_type == 'POST' ? $curl_post_fields : "",
         CURLOPT_HTTPHEADER     => $curl_header,
     ));
 
@@ -1069,14 +1074,147 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
     return (object) compact('response', 'err');
 }
 
-
-
-
-function display_channel_video_player() {
+function display_channel_video_player()
+{
     $vidPlayerFile = "channel-video.php";
 
-    if(is_file( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile )) {
-        include( dirname( __FILE__ ) ."/templates/components/".$vidPlayerFile );
+    if (is_file(dirname(__FILE__) . "/templates/components/" . $vidPlayerFile)) {
+        include dirname(__FILE__) . "/templates/components/" . $vidPlayerFile;
+    }
+
+}
+
+function ds_home_template($single_template)
+{
+
+    global $post;
+
+    if ($post->post_name == 'home') {
+
+        $single_template = locate_template('ds-home.tpl.php');
+
+        // Set the template...
+        if (empty($single_template) !== false) {
+            // If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
+            $single_template = dirname(__FILE__) . '/templates/ds-home.tpl.php';
+        }
+    }
+    // Return either the template we made, or the template in the theme folders.
+    return $single_template;
+}
+
+function ds_all_categories_template($single_template)
+{
+
+    global $post;
+
+    if ($post->post_name == 'channel-categories') {
+
+        $single_template = locate_template('ds-all-categories.tpl.php');
+
+        // Set the template...
+        if (empty($single_template) !== false) {
+            // If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
+            $single_template = dirname(__FILE__) . '/templates/ds-all-categories.tpl.php';
+        }
+    }
+    // Return either the template we made, or the template in the theme folders.
+
+    return $single_template;
+}
+
+function ds_get_category_template($single_template)
+{
+
+    global $post;
+
+    $category_check_grab = get_page_by_path('channel-categories');
+
+    $category_parent = $category_check_grab->ID;
+
+    if ($post->post_parent == $category_parent) {
+
+        $single_template = locate_template('ds-single-category.tpl.php');
+
+        // Set the template...
+        if (empty($single_template) !== false) {
+
+            // If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
+            $single_template = dirname(__FILE__) . '/templates/ds-single-category.tpl.php';
+
+        }
+
+    }
+
+    // Return either the template we made, or the template in the theme folders.
+
+    return $single_template;
+}
+
+function ds_get_channel_template($single_template)
+{
+
+    global $post;
+
+    $channel_check_grab = get_page_by_path('channels');
+
+    $channel_parent = $channel_check_grab->ID;
+
+    $channel_grandparent = wp_get_post_parent_id($post->post_parent);
+
+    if ($post->post_parent == $channel_parent || $channel_grandparent == $channel_parent) {
+
+        $template_option = get_option('ds_channel_template');
+
+        $single_template = locate_template($template_option . '.tpl.php');
+
+        // Set the template...
+        if (empty($single_template) !== false) {
+
+            // If we can't locate a file named ds-single-category.php that should be the template file, we use our own template...
+
+            if (!$template_option || $template_option == 'default') {
+
+                $template_option = "ds-single-channel";
+
+            }
+
+            $single_template = dirname(__FILE__) . '/templates/' . $template_option . '.tpl.php';
+
+        }
+
+    }
+
+    // Return either the template we made, or the template in the theme folders.
+
+    return $single_template;
+}
+
+function ds_is_channel_parent_check()
+{
+
+    if (ds_channel_is_parent()) {
+
+        $videos = grab_channel();
+
+        $children = $videos[0]->childchannels;
+
+        $child_slug = $children[0]->slug;
+
+        $current = get_post(get_the_ID());
+
+        $category = get_query_var("channel_category", false);
+
+        if (!$category) {
+
+            $category = 'featured';
+
+        }
+
+        $url = home_url("channels/" . $current->post_name . "/" . $child_slug . "/");
+
+        wp_redirect($url);
+        die();
     }
 }
 
@@ -1097,29 +1235,29 @@ function igrab_channel()
 
     }
 
-    $channel_title = ds_verify_var($videos[0]->title);
+    $channel_title = $videos[0]->title;
 
-    $company = ds_verify_var($videos[0]->company);
+    $company = $videos[0]->company;
 
-    $company_id = ds_verify_var($videos[0]->video->company_id);
+    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
 
-    $title = $is_child ? ds_verify_var($videos[0]->childchannels[0]->title) : ds_verify_var($videos[0]->title);
+    $title = $is_child ? $videos[0]->childchannels[0]->title : $videos[0]->title;
 
-    $description = ds_verify_var($videos[0]->description);
+    $description = $videos[0]->description;
 
-    $actors = ds_verify_var($videos[0]->actors);
+    $actors = $videos[0]->actors;
 
-    $writers = ds_verify_var($videos[0]->writers);
+    $writers = $videos[0]->writers;
 
-    $directors = $ds_verify_var(videos[0]->directors);
+    $directors = $videos[0]->directors;
 
     $image_id = $is_child ? "http://image.myspotlight.tv/" . $playlist[0]->thumb : "http://image.myspotlight.tv/" . (!empty($videos[0]->playlist[0]->thumb) ? $videos[0]->playlist[0]->thumb : $videos[0]->video->thumb);
 
-    $playlist = $is_child ? ds_verify_var($videos[0]->childchannels[0]->playlist) : ds_verify_var($videos[0]->playlist);
+    $playlist = $is_child ? $videos[0]->childchannels[0]->playlist : $videos[0]->playlist;
 
     $channel_parent = get_post($post->post_parent);
 
-    $poster = ds_verify_var($videos[0]->poster);
+    $poster = $videos[0]->poster;
 
     $to_return['playlist'] = $playlist;
 
@@ -1141,17 +1279,17 @@ function igrab_channel()
 
             if ($pl->_id == $id) {
 
-                $title = ds_verify_var($pl->title);
+                $title = $pl->title;
 
                 $duration = round($pl->duration / 60);
 
-                $description = ds_verify_var($pl->description);
+                $description = $pl->description;
 
-                $country = ds_verify_var($pl->country);
+                $country = $pl->country;
 
-                $language = ds_verify_var($pl->language);
+                $language = $pl->language;
 
-                $image_id = "http://image.myspotlight.tv/" . ds_verify_var($pl->thumb);
+                $image_id = "http://image.myspotlight.tv/" . $pl->thumb;
 
                 break;
 
@@ -1167,9 +1305,8 @@ function igrab_channel()
 
 }
 
-
-
-function ds_theater_mode_playlist($videoId) {
+function ds_theater_mode_playlist($videoId)
+{
     $strOut = "";
     $strOut .= "<div class='row'>";
     $strOut .= "    <!-- THEATER MODE PLAYLIST -->";
@@ -1179,7 +1316,7 @@ function ds_theater_mode_playlist($videoId) {
     $strOut .= "                <div class='ds-playlist-theater-inner-container'>";
     $strOut .= "                    <div class='ds-playlist-theater-mode-wrapper'>";
     $strOut .= "                         <div class='related-videos-carousel'>";
-    $strOut .=                              ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8));
+    $strOut .= ds_owl_recommended_videos_html(array('video_id' => $videoId, 'rec_size' => 8));
     $strOut .= "                          </div>";
     $strOut .= "                     </div>";
     $strOut .= "                </div>";
@@ -1188,6 +1325,346 @@ function ds_theater_mode_playlist($videoId) {
     $strOut .= "</div>";
     return $strOut;
 }
+
+function get_child_siblings()
+{
+
+    if (!ds_channel_is_child()) {
+
+        return false;
+
+    }
+
+    global $post;
+
+    $parent = grab_parent_channel();
+
+    if (!$parent) {
+
+        return '';
+
+    }
+
+    $parent_slug = $parent->slug;
+
+    $siblings = '';
+
+    foreach ($parent->childchannels as $ch) {
+
+        $selected = '';
+
+        if ($ch->slug == $post->post_name) {
+
+            $selected = "active";
+
+        }
+
+        $siblings .= "
+
+        <a href='" . home_url("channels/" . $parent->slug . "/" . $ch->slug . "/") . "' class='$selected'>
+            <img src='http://image.myspotlight.tv/" . $ch->playlist[0]->thumb . "/400/225' />
+            <h3>" . $ch->title . "</h3>
+        </a>";
+
+    }
+
+    return $siblings;
+
+}
+
+function ds_owl_carousel_check_main_plugin()
+{
+
+    ?>
+
+    <div class="update-nag">
+        <p>dotstudioPRO Premium Video plugin is not installed, is inactive, or the version is too low for this add-on.  The dotstudioPRO Premium Owl Carousel plugin has been deactivated.</p>
+    </div>
+
+    <?php
+
+}
+
+function ds_owl_admin_animation_select($name, $className = '')
+{
+    $aryAnimations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble', 'jello', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight', 'bounceOutUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flipInX', 'flipInY', 'flipOutX', 'flipOutY', 'lightSpeedIn', 'lightSpeedOut', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft', 'rotateOutUpRight', 'hinge', 'rollIn', 'rollOut', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideInDown', 'slideInLeft', 'slideInRight', 'slideInUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp'];
+    $strOut        = '<select name=' . $name . ' id=' . $name . ' class="' . $className . '" disabled=disabled>';
+    $strOut .= '<option value="">-- None --</option>';
+    for ($i = 0; $i <= count($aryAnimations) - 1; $i++) {
+        $strOut .= '<option value=' . $aryAnimations[$i] . '>' . $aryAnimations[$i] . '</option>';
+    }
+    $strOut .= '<select>';
+    return $strOut;
+
+}
+
+function ds_owl_carousel()
+{
+
+    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . 'js/owl.carousel.min.js', array('jquery'));
+    //wp_enqueue_script( 'owl-carousel-custom', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.custom.min.js' );
+    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . 'css/owl.carousel.min.css');
+    wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+
+}
+
+function ds_owl_carousel_html($args)
+{
+
+    if ($args['channels'] !== '') {
+        // generate the code for showing items within a channel
+        return ds_owl_channel_html($args);
+    }
+    if ($args['category'] !== '') {
+        // generate the code for showing items within a category
+        return ds_owl_category_html($args);
+    }
+}
+
+function ds_owl_recommended_videos_html($args)
+{
+    // renders the recommended videos playlist for the channel video player
+
+    $video_id = $args['video_id'];
+    $rec_size = $args['rec_size'];
+
+    $recommended = list_recommended($video_id, $rec_size);
+
+    // error checking
+    if ($recommended[0] === false) {
+        $strOut = $recommended[1];
+    } else {
+        $opts = ds_owl_create_opts(array(
+            'autoplay_hover_pause' => '1',
+            'autoplay'             => '0',
+            'autoplay_timeout'     => '3000',
+            'autoplay_speed'       => '1000',
+            'notitle'              => '1',
+            'items'                => '8',
+        ));
+
+        $rndId  = ds_owl_carousel_rnd_id(5);
+        $strOut = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+        $strOut .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
+
+        foreach ($recommended as $video) {
+            $info     = $video->_source;
+            $video_id = $video->_id;
+
+            $title       = $info->title;
+            $image       = $info->thumb;
+            $id          = $video->_id;
+            $company_id  = $info->company_id;
+            $description = 'No description currently available';
+            $slug        = '';
+
+            if (trim($title . '') !== '') {
+                $description = strlen($description) > 150 ? substr($description, 0, 150) . "..." : $description;
+                $title       = strlen($title) > 50 ? substr($title, 0, 50) . "..." : $title;
+                $strOut .= "<div class='center-container item'>";
+                $strOut .= "        <div>";
+                $strOut .= "            <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
+                $strOut .= "            <a href='#$video_id' class='vert-center rec-list-item' data-title='$title' data-desc='$description'>";
+                $strOut .= "                <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/177/100' />";
+                $strOut .= "            </a>";
+                $strOut .= "        </div>";
+                $strOut .= "        <div><strong><small class='owl-carousel-subtitle'>$title</small></strong></div>";
+                $strOut .= "</div>";
+            }
+
+        }
+        $strOut .= "</div>";
+
+    }
+
+    return $strOut;
+
+}
+
+function ds_owl_category_html($args)
+{
+
+    $category_slug = $args['category'];
+    $category      = get_page_by_path('/channel-categories/' . $category_slug, OBJECT);
+    $title         = $args['title'] !== '' ? $args['title'] : $category->post_title;
+    $opts          = ds_owl_create_opts($args);
+    $rndId         = ds_owl_carousel_rnd_id(5);
+    $titleclass    = $args['titleclass'];
+
+    $carousel = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+    if ($args['notitle'] != true) {
+        $carousel .= "<div class='owl-carousel-title' style='position:relative;'><h2 class='$titleclass'>$title</h2><a class='owl-carousel-ellipsis' href='/channel-categories/$category_slug/' title='More...'>...</a></div>";
+    }
+    $carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
+
+    $catItems = grab_category($category_slug);
+
+    if ($catItems && is_array($catItems)) {
+
+        foreach ($catItems as $ch) {
+            // iterate thru the channels, get the applicable thumbnails, create the HTML output
+
+            $id               = $ch->_id;
+            $thumb_id         = isset($ch->videos_thumb) ? $ch->videos_thumb : '';
+            $slug             = $ch->slug;
+            $spotlight_poster = isset($ch->spotlight_poster) ? $ch->spotlight_poster : '';
+
+            $carousel .= "<div class='center-container item'>";
+            $carousel .= "      <div>";
+            $carousel .= "          <a href='" . home_url("channels/$slug") . "' class='vert-center'>";
+            $carousel .= "              <img class='owl-thumb' src='$spotlight_poster/1280/720' />";
+            $carousel .= "          </a>";
+            $carousel .= "      </div>";
+            $carousel .= "</div>";
+        }
+    }
+
+    $carousel .= "</div>";
+    return $carousel;
+}
+
+function ds_owl_channel_html($args)
+{
+
+    if (strpos($args['channels'], ',') !== false) {
+        $channels = explode(',', $args['channels']);
+    } else {
+        $channels = array($args['channels']);
+    }
+    $rndId      = ds_owl_carousel_rnd_id(5);
+    $objects    = ds_owl_carousel_build_objects($channels);
+    $opts       = ds_owl_create_opts($args);
+    $title      = $args['title'] !== '' ? $args['title'] : 'Featured Channels';
+    $titleclass = $args['titleclass'];
+
+    $carousel = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+    if ($args['notitle'] != true) {
+        $carousel .= "<div class='owl-carousel-title' style='position:relative;'><h2 class='$titleclass'>$title</h2></div>";
+    }
+    $carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
+
+    foreach ($objects as $o) {
+        if (trim($o->title . '') !== '') {
+            $description = strlen($o->description) > 150 ? substr($o->description, 0, 150) . "..." : $o->description;
+            $title       = strlen($o->title) > 20 ? substr($o->title, 0, 20) . "..." : $o->title;
+            $imageexp    = explode("/", $o->poster);
+            $image       = $imageexp[3];
+            $carousel .= "<div class='center-container item'>";
+            $carousel .= "      <div>";
+            $carousel .= "          <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
+            $carousel .= "          <a href='" . home_url("channels/$o->slug") . "' class='vert-center' data-title='$o->title' data-desc='$description'>";
+            $carousel .= "              <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
+            $carousel .= "          </a>";
+            $carousel .= "      </div>";
+            $carousel .= "      <div><strong><small class='owl-carousel-subtitle'>$o->title</small></strong></div>";
+            $carousel .= "</div>";
+        }
+
+    }
+
+    $carousel .= "</div>";
+
+    return $carousel;
+}
+
+function ds_owl_create_opts($args)
+{
+    unset($args['channels']);
+    unset($args['category']);
+    unset($args['title']);
+
+    $opts = implode(', ', array_map(
+        function ($v, $k) {return sprintf("%s=%s", trim($k), trim($v));},
+        $args,
+        array_keys($args)
+    ));
+
+    return $opts;
+}
+
+function ds_owl_carousel_rnd_id($length = 10)
+{
+    $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString     = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function ds_owl_carousel_build_objects($ids = array())
+{
+    $objs = array();
+    foreach ($ids as $id) {
+        $obj    = ds_owl_grab_channel_by_id($id);
+        $objs[] = $obj[0];
+    }
+    return $objs;
+}
+
+function ds_owl_grab_channel_by_id($id)
+{
+    global $ds_curl;
+    $channel = $ds_curl->curl_command('single-channel-by-id', array('channel_slug' => str_replace(" ", "", $id)));
+    return $channel;
+
+}
+
+function ds_owl_carousel_local_channels_list()
+{
+
+    global $wpdb;
+
+    $channel_parent = get_page_by_path("channels");
+
+    $channels = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "posts WHERE post_parent = " . $channel_parent->ID . " ORDER BY post_name ASC");
+
+    $channels_list = "";
+
+    foreach ($channels as $ch) {
+
+        $channels_list .= "<input type='checkbox' name='channel' value='$ch->post_name'> $ch->post_title<br/>";
+
+    }
+
+    return $channels_list;
+
+}
+
+function ds_owl_carousel_display_shortcode($atts)
+{
+
+    $args = shortcode_atts(array(
+
+        'channels'             => '',
+        'category'             => '',
+        'title'                => '',
+        'autoplay'             => true,
+        'dots'                 => false,
+        'autoplay_timeout'     => 3000,
+        'autoplay_speed'       => 1000,
+        'autoplay_hover_pause' => false,
+        'items'                => 3,
+        'slide_by'             => 1,
+        'animate_out'          => '',
+        'animate_in'           => '',
+        'dots'                 => false,
+        'rtl'                  => false,
+        'nav'                  => false,
+        'notitle'              => false,
+        'titleclass'           => '',
+
+    ), $atts, 'ds_owl_carousel');
+
+    if (!count($args['channels']) || !count($args['category'])) {
+        return;
+    }
+
+    return ds_owl_carousel_html($args);
+
+}
+add_shortcode('ds_owl_carousel', 'ds_owl_carousel_display_shortcode');
 
 function channel_headline_video()
 {
@@ -1212,23 +1689,23 @@ function channel_headline_video()
 
         $id = $playlist->_id;
 
-        $title = ds_verify_var($playlist->title);
+        $title = $playlist->title;
 
         $duration = round($playlist->duration / 60);
 
-        $description = ds_verify_var($videos[0]->description);
+        $description = isset($videos[0]->description) ? $videos[0]->description : '';
 
-        $company = ds_verify_var($videos[0]->company);
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-        $company_id = ds_verify_var($videos[0]->childchannels[0]->company_id);
+        $company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
 
-        $country = ds_verify_var($playlist->country);
+        $country = isset($playlist->country) ? $playlist->country : '';
 
-        $language = ds_verify_var($playlist->language);
+        $language = isset($playlist->language) ? $playlist->language : '';
 
-        $year = ds_verify_var($videos[0]->year);
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
 
-        $rating = ds_verify_var($videos[0]->rating);
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
 
         if ($video) {
             $id = get_query_var("video", false);
@@ -1237,15 +1714,15 @@ function channel_headline_video()
 
                 if ($pl->_id == $id) {
 
-                    $title = ds_verify_var($pl->title);
+                    $title = $pl->title;
 
                     $duration = round($pl->duration / 60);
 
-                    $description = ds_verify_var($pl->description);
+                    $description = $pl->description;
 
-                    $country = ds_verify_var($pl->country);
+                    $country = $pl->country;
 
-                    $language = ds_verify_var($pl->language);
+                    $language = $pl->language;
 
                     break;
 
@@ -1314,15 +1791,15 @@ function channel_headline_video()
 
                 if ($pl->_id == $id) {
 
-                    $title = ds_verify_var($pl->title);
+                    $title = $pl->title;
 
                     $duration = round($pl->duration / 60);
 
-                    $chdescription = ds_verify_var($pl->description);
+                    $chdescription = $pl->description;
 
-                    $country = ds_verify_var($pl->country);
+                    $country = $pl->country;
 
-                    $language = ds_verify_var($pl->language);
+                    $language = $pl->language;
 
                     break;
 
@@ -1338,7 +1815,6 @@ function channel_headline_video()
 
         }
 
-
         wp_register_script('channel-video-functions', plugins_url('js/channel.video.functions.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-video-functions');
@@ -1347,18 +1823,15 @@ function channel_headline_video()
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-display-functions');
 
+        wp_enqueue_style('video-playlist', plugins_url('dotstudiopro-wordpress/css/video-playlist.css'));
 
-        wp_enqueue_style('video-playlist',plugins_url('dotstudiopro-wordpress/css/video-playlist.css'));
+        $video_custom_css = locate_template('video.channel.customization.css');
 
-        $video_custom_css = locate_template( 'video.channel.customization.css' );
-
-        if(!empty($video_custom_css)){
-            wp_enqueue_style('video-custom',get_template_directory_uri() . '/video.channel.customization.css');
+        if (!empty($video_custom_css)) {
+            wp_enqueue_style('video-custom', get_template_directory_uri() . '/video.channel.customization.css');
         } else {
-            wp_enqueue_style('video-custom', plugin_dir_url( __FILE__ ) . 'css/video.channel.customization.css');
+            wp_enqueue_style('video-custom', plugin_dir_url(__FILE__) . 'css/video.channel.customization.css');
         }
-
-
 
         $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
@@ -1369,8 +1842,6 @@ function channel_headline_video()
     }
 
 }
-
-
 
 function get_child_siblings()
 {
@@ -1418,8 +1889,8 @@ function get_child_siblings()
 
 }
 
-
-function ds_owl_carousel_check_main_plugin() {
+function ds_owl_carousel_check_main_plugin()
+{
 
     ?>
 
@@ -1431,43 +1902,44 @@ function ds_owl_carousel_check_main_plugin() {
 
 }
 
-function ds_owl_admin_animation_select($name,$className='') {
-    $aryAnimations = ['bounce','flash','pulse','rubberBand','shake','swing','tada','wobble','jello','bounceIn','bounceInDown','bounceInLeft','bounceInRight','bounceInUp','bounceOut','bounceOutDown','bounceOutLeft','bounceOutRight','bounceOutUp','fadeIn','fadeInDown','fadeInDownBig','fadeInLeft','fadeInLeftBig','fadeInRight','fadeInRightBig','fadeInUp','fadeInUpBig','fadeOut','fadeOutDown','fadeOutDownBig','fadeOutLeft','fadeOutLeftBig','fadeOutRight','fadeOutRightBig','fadeOutUp','fadeOutUpBig','flipInX','flipInY','flipOutX','flipOutY','lightSpeedIn','lightSpeedOut','rotateIn','rotateInDownLeft','rotateInDownRight','rotateInUpLeft','rotateInUpRight','rotateOut','rotateOutDownLeft','rotateOutDownRight','rotateOutUpLeft','rotateOutUpRight','hinge','rollIn','rollOut','zoomIn','zoomInDown','zoomInLeft','zoomInRight','zoomInUp','zoomOut','zoomOutDown','zoomOutLeft','zoomOutRight','zoomOutUp','slideInDown','slideInLeft','slideInRight','slideInUp','slideOutDown','slideOutLeft','slideOutRight','slideOutUp'];
-    $strOut = '<select name='.$name.' id='.$name.' class="'.$className.'" disabled=disabled>';
+function ds_owl_admin_animation_select($name, $className = '')
+{
+    $aryAnimations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble', 'jello', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight', 'bounceOutUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flipInX', 'flipInY', 'flipOutX', 'flipOutY', 'lightSpeedIn', 'lightSpeedOut', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft', 'rotateOutUpRight', 'hinge', 'rollIn', 'rollOut', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideInDown', 'slideInLeft', 'slideInRight', 'slideInUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp'];
+    $strOut        = '<select name=' . $name . ' id=' . $name . ' class="' . $className . '" disabled=disabled>';
     $strOut .= '<option value="">-- None --</option>';
-    for($i = 0; $i <= count($aryAnimations)-1; $i++) {
-        $strOut .= '<option value='.$aryAnimations[$i].'>'.$aryAnimations[$i].'</option>';
+    for ($i = 0; $i <= count($aryAnimations) - 1; $i++) {
+        $strOut .= '<option value=' . $aryAnimations[$i] . '>' . $aryAnimations[$i] . '</option>';
     }
     $strOut .= '<select>';
     return $strOut;
 
 }
 
+function ds_owl_carousel()
+{
 
-
-function ds_owl_carousel(){
-
-    wp_enqueue_script( 'owl-carousel', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.min.js', array('jquery') );
+    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . 'js/owl.carousel.min.js', array('jquery'));
     //wp_enqueue_script( 'owl-carousel-custom', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.custom.min.js' );
-    wp_enqueue_style( 'owl-carousel-min', plugin_dir_url( __FILE__ ) . 'css/owl.carousel.min.css' );
-    wp_enqueue_style( 'ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . 'css/owl.carousel.min.css');
+    wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }
 
-function ds_owl_carousel_html($args){
+function ds_owl_carousel_html($args)
+{
 
-    if($args['channels'] !== '') {
-            // generate the code for showing items within a channel
+    if ($args['channels'] !== '') {
+        // generate the code for showing items within a channel
         return ds_owl_channel_html($args);
     }
-    if($args['category'] !== '') {
-            // generate the code for showing items within a category
+    if ($args['category'] !== '') {
+        // generate the code for showing items within a category
         return ds_owl_category_html($args);
     }
 }
 
-
-function ds_owl_recommended_videos_html($args) {
+function ds_owl_recommended_videos_html($args)
+{
     // renders the recommended videos playlist for the channel video player
 
     $video_id = $args['video_id'];
@@ -1476,39 +1948,36 @@ function ds_owl_recommended_videos_html($args) {
     $recommended = list_recommended($video_id, $rec_size);
 
     // error checking
-    if($recommended[0] === false) {
+    if ($recommended[0] === false) {
         $strOut = $recommended[1];
     } else {
         $opts = ds_owl_create_opts(array(
-                'autoplay_hover_pause' => '1',
-                'autoplay' => '0',
-                'autoplay_timeout' => '3000',
-                'autoplay_speed' => '1000',
-                'notitle' => '1',
-                'items' => '8'
-            ));
+            'autoplay_hover_pause' => '1',
+            'autoplay'             => '0',
+            'autoplay_timeout'     => '3000',
+            'autoplay_speed'       => '1000',
+            'notitle'              => '1',
+            'items'                => '8',
+        ));
 
-        $rndId = ds_owl_carousel_rnd_id(5);
-        $strOut =  "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+        $rndId  = ds_owl_carousel_rnd_id(5);
+        $strOut = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
         $strOut .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
 
-        foreach($recommended as $video){
-            $info = $video->_source;
+        foreach ($recommended as $video) {
+            $info     = $video->_source;
             $video_id = $video->_id;
 
-            $title = $info->title;
-            $image = $info->thumb;
-            $id = $video->_id;
-            $company_id = $info->company_id;
-            $description =  'No description currently available';
-            $slug = '';
+            $title       = $info->title;
+            $image       = $info->thumb;
+            $id          = $video->_id;
+            $company_id  = $info->company_id;
+            $description = 'No description currently available';
+            $slug        = '';
 
-
-
-
-            if(trim($title.'') !== '') {
-                $description = strlen($description) > 150 ? substr($description, 0, 150)."..." : $description;
-                $title = strlen($title) > 50 ? substr($title, 0, 50)."..." : $title;
+            if (trim($title . '') !== '') {
+                $description = strlen($description) > 150 ? substr($description, 0, 150) . "..." : $description;
+                $title       = strlen($title) > 50 ? substr($title, 0, 50) . "..." : $title;
                 $strOut .= "<div class='center-container item'>";
                 $strOut .= "        <div>";
                 $strOut .= "            <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
@@ -1529,38 +1998,37 @@ function ds_owl_recommended_videos_html($args) {
 
 }
 
-
-
-function ds_owl_category_html($args) {
+function ds_owl_category_html($args)
+{
 
     $category_slug = $args['category'];
-    $category = get_page_by_path( '/channel-categories/' . $category_slug, OBJECT );
-    $title = $args['title'] !== '' ? $args['title'] : $category->post_title;
-    $opts = ds_owl_create_opts($args);
-    $rndId = ds_owl_carousel_rnd_id(5);
-    $titleclass = $args['titleclass'];
+    $category      = get_page_by_path('/channel-categories/' . $category_slug, OBJECT);
+    $title         = $args['title'] !== '' ? $args['title'] : $category->post_title;
+    $opts          = ds_owl_create_opts($args);
+    $rndId         = ds_owl_carousel_rnd_id(5);
+    $titleclass    = $args['titleclass'];
 
-    $carousel =  "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
-    if($args['notitle'] != true) {
+    $carousel = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+    if ($args['notitle'] != true) {
         $carousel .= "<div class='owl-carousel-title' style='position:relative;'><h2 class='$titleclass'>$title</h2><a class='owl-carousel-ellipsis' href='/channel-categories/$category_slug/' title='More...'>...</a></div>";
     }
     $carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
 
     $catItems = grab_category($category_slug);
 
-    if($catItems && is_array($catItems)){
+    if ($catItems && is_array($catItems)) {
 
-        foreach($catItems as $ch) {
+        foreach ($catItems as $ch) {
             // iterate thru the channels, get the applicable thumbnails, create the HTML output
 
-            $id =  $ch->_id;
-            $thumb_id = isset( $ch->videos_thumb ) ?  $ch->videos_thumb : '';
-            $slug =  $ch->slug;
-            $spotlight_poster = isset( $ch->spotlight_poster ) ?  $ch->spotlight_poster : '';
+            $id               = $ch->_id;
+            $thumb_id         = isset($ch->videos_thumb) ? $ch->videos_thumb : '';
+            $slug             = $ch->slug;
+            $spotlight_poster = isset($ch->spotlight_poster) ? $ch->spotlight_poster : '';
 
             $carousel .= "<div class='center-container item'>";
             $carousel .= "      <div>";
-            $carousel .= "          <a href='".home_url("channels/$slug")."' class='vert-center'>";
+            $carousel .= "          <a href='" . home_url("channels/$slug") . "' class='vert-center'>";
             $carousel .= "              <img class='owl-thumb' src='$spotlight_poster/1280/720' />";
             $carousel .= "          </a>";
             $carousel .= "      </div>";
@@ -1572,36 +2040,36 @@ function ds_owl_category_html($args) {
     return $carousel;
 }
 
+function ds_owl_channel_html($args)
+{
 
-function ds_owl_channel_html($args) {
-
-    if(strpos($args['channels'], ',') !== false){
-        $channels = explode( ',', $args['channels'] );
+    if (strpos($args['channels'], ',') !== false) {
+        $channels = explode(',', $args['channels']);
     } else {
         $channels = array($args['channels']);
     }
-    $rndId = ds_owl_carousel_rnd_id(5);
-    $objects = ds_owl_carousel_build_objects( $channels );
-    $opts = ds_owl_create_opts($args);
-    $title = $args['title'] !== '' ? $args['title'] : 'Featured Channels';
+    $rndId      = ds_owl_carousel_rnd_id(5);
+    $objects    = ds_owl_carousel_build_objects($channels);
+    $opts       = ds_owl_create_opts($args);
+    $title      = $args['title'] !== '' ? $args['title'] : 'Featured Channels';
     $titleclass = $args['titleclass'];
 
-    $carousel =  "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
-    if($args['notitle'] != true) {
+    $carousel = "<div id='owl-carosel-width-$rndId' class='owl-carousel-width'></div>";
+    if ($args['notitle'] != true) {
         $carousel .= "<div class='owl-carousel-title' style='position:relative;'><h2 class='$titleclass'>$title</h2></div>";
     }
     $carousel .= "<div class='owl-carousel owl-theme' id='owl-carousel-$rndId' data-options='$opts'>";
 
-    foreach($objects as $o){
-        if(trim($o->title.'') !== '') {
-            $description = strlen($o->description) > 150 ? substr($o->description, 0, 150)."..." : $o->description;
-            $title = strlen($o->title) > 20 ? substr($o->title, 0, 20)."..." : $o->title;
-            $imageexp = explode("/",$o->poster);
-            $image = $imageexp[3];
+    foreach ($objects as $o) {
+        if (trim($o->title . '') !== '') {
+            $description = strlen($o->description) > 150 ? substr($o->description, 0, 150) . "..." : $o->description;
+            $title       = strlen($o->title) > 20 ? substr($o->title, 0, 20) . "..." : $o->title;
+            $imageexp    = explode("/", $o->poster);
+            $image       = $imageexp[3];
             $carousel .= "<div class='center-container item'>";
             $carousel .= "      <div>";
             $carousel .= "          <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
-            $carousel .= "          <a href='".home_url("channels/$o->slug")."' class='vert-center' data-title='$o->title' data-desc='$description'>";
+            $carousel .= "          <a href='" . home_url("channels/$o->slug") . "' class='vert-center' data-title='$o->title' data-desc='$description'>";
             $carousel .= "              <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
             $carousel .= "          </a>";
             $carousel .= "      </div>";
@@ -1616,67 +2084,62 @@ function ds_owl_channel_html($args) {
     return $carousel;
 }
 
-
-function ds_owl_create_opts($args) {
+function ds_owl_create_opts($args)
+{
     unset($args['channels']);
     unset($args['category']);
     unset($args['title']);
 
     $opts = implode(', ', array_map(
-       function ($v, $k) { return sprintf("%s=%s", trim($k), trim($v)); },
-       $args,
-       array_keys($args)
+        function ($v, $k) {return sprintf("%s=%s", trim($k), trim($v));},
+        $args,
+        array_keys($args)
     ));
 
     return $opts;
 }
 
-
-
 function ds_owl_carousel_rnd_id($length = 10)
 {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
-    $randomString = '';
+    $randomString     = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
 }
 
-
-
-
-function ds_owl_carousel_build_objects($ids = array()){
+function ds_owl_carousel_build_objects($ids = array())
+{
     $objs = array();
-    foreach($ids as $id){
-        $obj = ds_owl_grab_channel_by_id($id);
+    foreach ($ids as $id) {
+        $obj    = ds_owl_grab_channel_by_id($id);
         $objs[] = $obj[0];
     }
     return $objs;
 }
 
-
-function ds_owl_grab_channel_by_id($id) {
+function ds_owl_grab_channel_by_id($id)
+{
     global $ds_curl;
-    $channel = $ds_curl->curl_command( 'single-channel-by-id', array( 'channel_slug' => str_replace( " ", "", $id ) ) );
+    $channel = $ds_curl->curl_command('single-channel-by-id', array('channel_slug' => str_replace(" ", "", $id)));
     return $channel;
 
 }
 
-
-
-function ds_owl_carousel_local_channels_list(){
+function ds_owl_carousel_local_channels_list()
+{
 
     global $wpdb;
 
     $channel_parent = get_page_by_path("channels");
 
-    $channels = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_parent = ".$channel_parent->ID." ORDER BY post_name ASC");
+    $channels = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "posts WHERE post_parent = " . $channel_parent->ID . " ORDER BY post_name ASC");
 
     $channels_list = "";
 
-    foreach($channels as $ch){
+    foreach ($channels as $ch) {
 
         $channels_list .= "<input type='checkbox' name='channel' value='$ch->post_name'> $ch->post_title<br/>";
 
@@ -1686,39 +2149,39 @@ function ds_owl_carousel_local_channels_list(){
 
 }
 
+function ds_owl_carousel_display_shortcode($atts)
+{
 
-function ds_owl_carousel_display_shortcode( $atts ) {
+    $args = shortcode_atts(array(
 
-
-    $args = shortcode_atts( array(
-
-        'channels' => '',
-        'category' => '',
-        'title' => '',
-        'autoplay' => true,
-        'dots' => false,
-        'autoplay_timeout' => 3000,
-        'autoplay_speed' => 1000,
+        'channels'             => '',
+        'category'             => '',
+        'title'                => '',
+        'autoplay'             => true,
+        'dots'                 => false,
+        'autoplay_timeout'     => 3000,
+        'autoplay_speed'       => 1000,
         'autoplay_hover_pause' => false,
-        'items' => 3,
-        'slide_by' => 1,
-        'animate_out' => '',
-        'animate_in' => '',
-        'dots' => false,
-        'rtl' => false,
-        'nav' => false,
-        'notitle' => false,
-        'titleclass' => ''
+        'items'                => 3,
+        'slide_by'             => 1,
+        'animate_out'          => '',
+        'animate_in'           => '',
+        'dots'                 => false,
+        'rtl'                  => false,
+        'nav'                  => false,
+        'notitle'              => false,
+        'titleclass'           => '',
 
-    ), $atts, 'ds_owl_carousel' );
+    ), $atts, 'ds_owl_carousel');
 
-    if(!count($args['channels'])  || !count($args['category']))
+    if (!count($args['channels']) || !count($args['category'])) {
         return;
+    }
 
     return ds_owl_carousel_html($args);
 
 }
-add_shortcode( 'ds_owl_carousel', 'ds_owl_carousel_display_shortcode' );
+add_shortcode('ds_owl_carousel', 'ds_owl_carousel_display_shortcode');
 
 if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['flush']) && $_GET['flush'] == 1) {
     add_action("init", "ds_site_flush");
@@ -1728,6 +2191,11 @@ if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GE
     add_action("init", "ds_template_copy");
 }
 
+add_filter('query_vars', 'ds_video_var');
+add_filter('page_template', 'ds_get_channel_template', 11);
+add_filter('page_template', 'ds_get_category_template', 11);
+add_filter('page_template', 'ds_all_categories_template', 11);
+add_filter('page_template', 'ds_home_template', 11);
 
 add_action("admin_notices", "ds_no_country");
 add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
