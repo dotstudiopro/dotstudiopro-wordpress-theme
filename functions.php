@@ -1217,7 +1217,7 @@ function ds_get_channel_template($single_template) {
 
             }
 
-            $single_template = dirname( __FILE__ ) . '/templates/single_channel_templates/' . $template_option . '.tpl.php';
+            $single_template = dirname( __FILE__ ) . '/templates/' . $template_option . '.tpl.php';
 
         }
 
