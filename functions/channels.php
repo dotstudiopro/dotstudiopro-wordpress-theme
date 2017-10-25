@@ -366,3 +366,412 @@ function ds_site_flush()
     exit;
 
 }
+
+// Initialize the necessary functions for extra fields on Category pages
+function ds_category_images_init()
+{
+    if (empty($_GET['post'])) {
+        return false;
+    }
+
+    $post       = get_post($_GET['post']);
+    $categories = get_page_by_path("channel-categories");
+
+    if ((int) $post->post_parent === (int) $categories->ID) {
+        add_meta_box("ds_category_image", "Category Image", "ds_category_image_field", "page", "normal", "high");
+    }
+}
+
+// Create the field for uploading custom category images.
+function ds_category_image_field()
+{
+    $post      = get_post($_GET['post']);
+    $image     = get_option('ds-category-image-' . $post->post_name);
+    $cat_image = '';
+    if ($image) {
+        $cat_image = "<img src='$image' />";
+    }
+    ?>
+            <table class='widefat'>
+                <tbody>
+                    <tr><td><h3>Upload new image</h3></td><td><input type='file' name='ds-category-image' /></td></tr>
+                    <tr><td><h3>Current image</h3></td><td><?php echo $cat_image; ?></td></tr>
+                </tbody>
+            </table>
+    <?php
+}
+
+// Get a random filename for image upload; TODO: see if we even need to/should do this
+function ds_cust_filename($dir, $name, $ext)
+{
+    return $_FILES['ds-category-image']['name'] . rand(100, 999) . time() . $ext;
+}
+
+// Save the category image on post save
+function ds_save_category_image_field()
+{
+    if (!isset($_FILES['ds-category-image'])) {
+        return;
+    }
+
+    global $post;
+    $slug         = $post->post_name;
+    $uploadedfile = $_FILES['ds-category-image'];
+    $movefile     = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'ds_cust_filename'));
+    if ($movefile && !isset($movefile['error'])) {
+        update_option("ds-category-image-$slug", $movefile['url']);
+    }
+}
+
+// Include the video player template if we have it
+function display_channel_video_player()
+{
+    $vidPlayerFile = "channel-video.php";
+
+    if (is_file(dirname(__FILE__) . "/templates/components/" . $vidPlayerFile)) {
+        include dirname(__FILE__) . "/templates/components/" . $vidPlayerFile;
+    }
+
+}
+
+// If we have a channel that is a parent, we redirect to the first child, since we don't have pages for parent channel displays
+function ds_is_channel_parent_check()
+{
+
+    if (ds_channel_is_parent()) {
+
+        $videos = grab_channel();
+
+        $children = $videos[0]->childchannels;
+
+        $child_slug = $children[0]->slug;
+
+        $current = get_post(get_the_ID());
+
+        $category = get_query_var("channel_category", false);
+
+        if (!$category) {
+
+            $category = 'featured';
+
+        }
+
+        $url = home_url("channels/" . $current->post_name . "/" . $child_slug . "/");
+
+        wp_redirect($url);
+        die();
+    }
+}
+
+// Grab a a channel from within a channel page
+function igrab_channel()
+{
+
+    global $post;
+
+    $video = false;
+
+    $is_child = ds_channel_is_child();
+
+    $videos = grab_channel();
+
+    if (!is_array($videos)) {
+
+        return array();
+
+    }
+
+    $channel_title = $videos[0]->title;
+
+    $company = $videos[0]->company;
+
+    $company_id = isset($videos[0]->video->company_id) ? $videos[0]->video->company_id : '';
+
+    $title = $is_child ? $videos[0]->childchannels[0]->title : $videos[0]->title;
+
+    $description = $videos[0]->description;
+
+    $actors = $videos[0]->actors;
+
+    $writers = $videos[0]->writers;
+
+    $directors = $videos[0]->directors;
+
+    $image_id = $is_child ? "http://image.myspotlight.tv/" . $playlist[0]->thumb : "http://image.myspotlight.tv/" . (!empty($videos[0]->playlist[0]->thumb) ? $videos[0]->playlist[0]->thumb : $videos[0]->video->thumb);
+
+    $playlist = $is_child ? $videos[0]->childchannels[0]->playlist : $videos[0]->playlist;
+
+    $channel_parent = get_post($post->post_parent);
+
+    $poster = $videos[0]->poster;
+
+    $to_return['playlist'] = $playlist;
+
+    $to_return['details'] = array('description' => $description, 'actors' => $actors, 'writers' => $writers, 'directors' => $directors, 'poster' => $poster);
+
+    $to_return['link_url'] = $is_child ? home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name) : home_url("channels/" . $post->post_name . "/");
+
+    $to_return['count'] = count($playlist);
+
+    $video = get_query_var("video", false);
+
+    if ($video) {
+
+        $id = get_query_var("video", false);
+
+        $url = home_url("channels/" . $channel_parent->post_name . "/" . $post->post_name . "/video=$id");
+
+        foreach ($playlist as $pl) {
+
+            if ($pl->_id == $id) {
+
+                $title = $pl->title;
+
+                $duration = round($pl->duration / 60);
+
+                $description = $pl->description;
+
+                $country = $pl->country;
+
+                $language = $pl->language;
+
+                $image_id = "http://image.myspotlight.tv/" . $pl->thumb;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    $to_return['for_meta'] = (object) array('description' => $description, 'url' => $to_return['link_url'], 'channel_title' => $channel_title, 'title' => $title, 'image_id' => $image_id);
+
+    return $to_return;
+
+}
+
+// Get the headline video for a channel in the video-channel template
+function channel_headline_video()
+{
+
+    global $ds_curl;
+
+    $video = get_query_var("video", false);
+
+    if (ds_channel_is_child()) {
+
+        $videos = grab_channel();
+
+        if (!is_array($videos)) {
+
+            $videos = new stdClass;
+
+            return $videos;
+
+        }
+
+        $playlist = $videos[0]->childchannels[0]->playlist[0];
+
+        $id = $playlist->_id;
+
+        $title = $playlist->title;
+
+        $duration = round($playlist->duration / 60);
+
+        $description = isset($videos[0]->description) ? $videos[0]->description : '';
+
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
+
+        $company_id = isset($videos[0]->childchannels[0]->company_id) ? $videos[0]->childchannels[0]->company_id : $videos[0]->spotlight_company_id;
+
+        $country = isset($playlist->country) ? $playlist->country : '';
+
+        $language = isset($playlist->language) ? $playlist->language : '';
+
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
+
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+
+        if ($video) {
+            $id = get_query_var("video", false);
+
+            foreach ($videos[0]->childchannels[0]->playlist as $pl) {
+
+                if ($pl->_id == $id) {
+
+                    $title = $pl->title;
+
+                    $duration = round($pl->duration / 60);
+
+                    $description = $pl->description;
+
+                    $country = $pl->country;
+
+                    $language = $pl->language;
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+
+        return $to_return;
+
+    } else {
+
+        $videos = grab_channel();
+
+        if (!is_array($videos)) {
+
+            $videos = new stdClass;
+
+            return $videos;
+
+        }
+
+        $id = $videos[0]->playlist[0]->_id;
+
+        $title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
+
+        $duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration / 60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration / 60) : '';
+
+        $chdescription = "";
+        if (isset($videos[0]->video->description)) {
+
+            $chdescription = $videos[0]->video->description;
+
+        } else if (isset($videos[0]->playlist[0]->description)) {
+
+            $chdescription = $videos[0]->playlist[0]->description;
+
+        } else if (isset($videos[0]->video->country)) {
+
+            $chdescription = $videos[0]->video->country;
+
+        }
+
+        $company = isset($videos[0]->company) ? $videos[0]->company : '';
+
+        $company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+
+        $country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+
+        $language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
+
+        $year = isset($videos[0]->year) ? $videos[0]->year : '';
+
+        $rating = isset($videos[0]->rating) ? $videos[0]->rating : '';
+
+        if ($video) {
+
+            $id = get_query_var("video", false);
+
+            foreach ($videos[0]->playlist as $pl) {
+
+                if ($pl->_id == $id) {
+
+                    $title = $pl->title;
+
+                    $duration = round($pl->duration / 60);
+
+                    $chdescription = $pl->description;
+
+                    $country = $pl->country;
+
+                    $language = $pl->language;
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        if (!$id) {
+
+            $id = $videos[0]->video->_id;
+
+        }
+
+        wp_register_script('channel-video-functions', plugins_url('js/channel.video.functions.min.js', __FILE__), array('jquery'));
+        // For either a plugin or a theme, you can then enqueue the script:
+        wp_enqueue_script('channel-video-functions');
+
+        wp_register_script('channel-display-functions', plugins_url('js/channel.display.functions.min.js', __FILE__), array('jquery'));
+        // For either a plugin or a theme, you can then enqueue the script:
+        wp_enqueue_script('channel-display-functions');
+
+        wp_enqueue_style('video-playlist', plugins_url('dotstudiopro-wordpress/css/video-playlist.css'));
+
+        $video_custom_css = locate_template('video.channel.customization.css');
+
+        if (!empty($video_custom_css)) {
+            wp_enqueue_style('video-custom', get_template_directory_uri() . '/video.channel.customization.css');
+        } else {
+            wp_enqueue_style('video-custom', plugin_dir_url(__FILE__) . 'css/video.channel.customization.css');
+        }
+
+        $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+
+        $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
+
+        return $to_return;
+
+    }
+
+}
+
+// Get the siblings of a child channel for displaying in templates
+function get_child_siblings()
+{
+
+    if (!ds_channel_is_child()) {
+
+        return false;
+
+    }
+
+    global $post;
+
+    $parent = grab_parent_channel();
+
+    if (!$parent) {
+
+        return '';
+
+    }
+
+    $parent_slug = $parent->slug;
+
+    $siblings = '';
+
+    foreach ($parent->childchannels as $ch) {
+
+        $selected = '';
+
+        if ($ch->slug == $post->post_name) {
+
+            $selected = "active";
+
+        }
+
+        $siblings .= "
+
+        <a href='" . home_url("channels/" . $parent->slug . "/" . $ch->slug . "/") . "' class='$selected'>
+            <img src='http://image.myspotlight.tv/" . $ch->playlist[0]->thumb . "/400/225' />
+            <h3>" . $ch->title . "</h3>
+        </a>";
+
+    }
+
+    return $siblings;
+
+}
