@@ -37,8 +37,8 @@ function ds_channel_is_child()
 // Completely reprocess/recreate all channel pages; this is done when the admin requests a flush
 function channels_check()
 {
-	// This process can take a moment, so we make sure we have time
-	set_time_limit(240);
+    // This process can take a moment, so we make sure we have time
+    set_time_limit(240);
 
     global $wpdb;
 
@@ -428,8 +428,8 @@ function display_channel_video_player()
 {
     $vidPlayerFile = "channel-video.php";
 
-    if (is_file(dirname(__FILE__) . "/templates/components/" . $vidPlayerFile)) {
-        include dirname(__FILE__) . "/templates/components/" . $vidPlayerFile;
+    if (is_file(dirname(__FILE__) . "/../templates/components/" . $vidPlayerFile)) {
+        include dirname(__FILE__) . "/../templates/components/" . $vidPlayerFile;
     }
 
 }
@@ -637,33 +637,49 @@ function channel_headline_video()
         }
 
         $id = $videos[0]->playlist[0]->_id;
+        $playlist = !empty($videos[0]->playlist[0]) ? $videos[0]->playlist[0] : new stdClass;
+        // If we don't have a video as part of this, set the video as the first video in the playlist
+        $video = !empty($videos[0]->video) ? $videos[0]->video : $playlist;
 
-        $title = isset($videos[0]->playlist[0]->title) ? $videos[0]->playlist[0]->title : isset($videos[0]->video->title) ? $videos[0]->video->title : '';
+        $title = $duration = '';
 
-        $duration = isset($videos[0]->playlist[0]->duration) ? round($videos[0]->playlist[0]->duration / 60) : isset($videos[0]->video->duration) ? round($videos[0]->video->duration / 60) : '';
+        if(isset($playlist->title)) {
+            $title = $playlist->title;
+        } else if($video->title) {
+            $title = $video->title;
+        }
+
+        if(isset($playlist->duration)) {
+            $duration = round($playlist->duration / 60);
+        } else if(isset($video->duration)) {
+            $duration = round($video->duration / 60);
+        }
 
         $chdescription = "";
-        if (isset($videos[0]->video->description)) {
+        if (isset($video->description)) {
 
-            $chdescription = $videos[0]->video->description;
+            $chdescription = $video->description;
 
-        } else if (isset($videos[0]->playlist[0]->description)) {
+        } else if (isset($playlist->description)) {
 
-            $chdescription = $videos[0]->playlist[0]->description;
+            $chdescription = $playlist->description;
 
-        } else if (isset($videos[0]->video->country)) {
+        } else if (isset($video->country)) {
 
-            $chdescription = $videos[0]->video->country;
+            $chdescription = $video->country;
 
         }
 
         $company = isset($videos[0]->company) ? $videos[0]->company : '';
 
-        $company_id = isset($videos[0]->playlist[0]->company_id) ? $videos[0]->playlist[0]->company_id : $videos[0]->spotlight_company_id;
+        $company_id = isset($playlist->company_id) ? $playlist->company_id : $videos[0]->spotlight_company_id;
 
-        $country = isset($videos[0]->playlist[0]->country) ? $videos[0]->playlist[0]->country : isset($videos[0]->video->country) ? $videos[0]->video->country : '';
+        $country = !empty($playlist) && !empty($playlist->country)
+         ? $playlist->country :
+         !empty($video) && !empty($video->country)
+          ? $video->country : '';
 
-        $language = isset($videos[0]->playlist[0]->language) ? $videos[0]->playlist[0]->language : isset($videos[0]->video->language) ? $videos[0]->video->language : '';
+        $language = isset($playlist->language) ? $playlist->language : isset($video->language) ? $video->language : '';
 
         $year = isset($videos[0]->year) ? $videos[0]->year : '';
 
@@ -697,15 +713,15 @@ function channel_headline_video()
 
         if (!$id) {
 
-            $id = $videos[0]->video->_id;
+            $id = $video->_id;
 
         }
 
-        wp_register_script('channel-video-functions', plugins_url('js/channel.video.functions.min.js', __FILE__), array('jquery'));
+        wp_register_script('channel-video-functions', plugins_url('../js/channel.video.functions.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-video-functions');
 
-        wp_register_script('channel-display-functions', plugins_url('js/channel.display.functions.min.js', __FILE__), array('jquery'));
+        wp_register_script('channel-display-functions', plugins_url('../js/channel.display.functions.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-display-functions');
 
@@ -716,7 +732,7 @@ function channel_headline_video()
         if (!empty($video_custom_css)) {
             wp_enqueue_style('video-custom', get_template_directory_uri() . '/video.channel.customization.css');
         } else {
-            wp_enqueue_style('video-custom', plugin_dir_url(__FILE__) . 'css/video.channel.customization.css');
+            wp_enqueue_style('video-custom', plugin_dir_url(__FILE__) . '../css/video.channel.customization.css');
         }
 
         $player_url = "http://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autostart", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
@@ -734,9 +750,7 @@ function get_child_siblings()
 {
 
     if (!ds_channel_is_child()) {
-
         return false;
-
     }
 
     global $post;
@@ -744,9 +758,7 @@ function get_child_siblings()
     $parent = grab_parent_channel();
 
     if (!$parent) {
-
         return '';
-
     }
 
     $parent_slug = $parent->slug;
@@ -774,4 +786,41 @@ function get_child_siblings()
 
     return $siblings;
 
+}
+
+// Check if the front page is a channel, and nag the admin to tell them that will break the channel
+function ds_is_front_page_channel(){
+    $frontpage_id = (int) get_option( 'page_on_front' );
+    // The ID will be 0 if it's not set, so we can ignore it if so
+    if($frontpage_id < 1) return;
+    $page = get_post($frontpage_id);
+    // If the page doesn't exist for whatever reason, no reason to keep going
+    if(!$page) return;
+    // If the post doesn't have a parent, it's not a channel page
+    if ($page->post_parent == 0) return;
+
+    $channels_check_grab  = get_page_by_path('channels');
+    $channels_parent      = $channels_check_grab->ID;
+    $channel_grandparent = wp_get_post_parent_id($page->post_parent);
+    $channel_parent = get_post($page->post_parent);
+
+    // If the page parent isn't the main All Channels page and isn't a channel, no need to nag
+    if ($channels_parent != $channel_parent->ID && $channel_parent->post_parent != $channel_grandparent) return;
+
+    ?>
+    <div class="notice notice-warning">
+        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> It appears you've set a channel as your front page.  <b>DO NOT DO THIS!</b> This will cause that channel to not work properly.  Please change it as soon as possible to a non-channel front page. <a class='button button-primary' href='<?php echo strpos($_SERVER['REQUEST_URI'], '?') !== false ? $_SERVER['REQUEST_URI'] . '&dspdev_set_frontpage_to_category=1' : $_SERVER['REQUEST_URI'] . '?dspdev_set_frontpage_to_category=1'; ?>'>Set Front Page to Channel Categories</a></p>
+    </div>
+    <?php
+}
+
+function ds_set_front_page_to_categories() {
+    if(empty($_GET['dspdev_set_frontpage_to_category']) || $_GET['dspdev_set_frontpage_to_category'] != 1) return;
+    $cats = get_page_by_path('channel-categories');
+    if(!$cats) return;
+    update_option( 'page_on_front', $cats->ID );
+    update_option( 'show_on_front', 'page' );
+    $url = str_replace('&dspdev_set_frontpage_to_category=1', '', str_replace('dspdev_set_frontpage_to_category=1', '', $_SERVER['HTTP_REFERER']));
+    wp_redirect( $url );
+    exit;
 }

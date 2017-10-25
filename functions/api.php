@@ -13,7 +13,7 @@ function ds_check_api_key_set()
         return false;
     }
     ?>
-    <div class="update-nag">
+    <div class="notice notice-warning">
         <p>You need to enter your API Key in order to use its features. <a href="<?php echo home_url('wp-admin/admin.php?page=dot-studioz-options') ?>">Do so here.</a></p>
     </div>
     <?php

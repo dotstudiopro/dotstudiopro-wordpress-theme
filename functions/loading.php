@@ -12,9 +12,9 @@ function ds_scripts_load_cdn()
     wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', array(), null, false);
 
     // Register the script like this for a plugin:
-    wp_register_script('dspdev-premvid-channel-functions', plugins_url('/js/channel.functions.min.js', __FILE__), array('jquery'));
+    wp_register_script('dspdev-premvid-channel-functions', plugins_url('/../js/channel.functions.min.js', __FILE__), array('jquery'));
     // For either a plugin or a theme, you can then enqueue the script:
-    wp_enqueue_script('dspdev-channel-functions');
+    wp_enqueue_script('dspdev-premvid-channel-functions');
 
     $channels = get_page_by_path('channels');
 
@@ -25,7 +25,7 @@ function ds_scripts_load_cdn()
     if ($post->post_parent == $categories->ID || $parent->post_parent == $channels->ID || $parent->post_parent == $categories->ID || $channels->ID == $post->ID || $categories->ID == $post->ID) {
 
         // Register the script like this for a plugin:
-        wp_register_script('grid-script', plugins_url('/js/jquery.gridder.min.js', __FILE__), array('jquery'));
+        wp_register_script('grid-script', plugins_url('/../js/jquery.gridder.min.js', __FILE__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('grid-script');
 
@@ -44,14 +44,14 @@ function ds_plugin_style()
 
         wp_enqueue_style(
             'ds-plugin-style',
-            plugin_dir_url(__FILE__) . 'css/light-style.css'
+            plugin_dir_url(__FILE__) . '../css/light-style.css'
         );
 
     } else {
 
         wp_enqueue_style(
             'ds-plugin-style',
-            plugin_dir_url(__FILE__) . "css/$admin_option.css"
+            plugin_dir_url(__FILE__) . "../css/$admin_option.css"
         );
 
     }
@@ -62,20 +62,20 @@ function ds_plugin_style()
 function ds_styles()
 {
 
-    wp_register_style('dspdev-premvid-font-awesome-style', plugins_url('/css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
+    wp_register_style('dspdev-premvid-font-awesome-style', plugins_url('/../css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('dspdev-premvid-font-awesome-style');
 
-    wp_register_style('dspdev-premvid-animate-style', plugins_url('/css/animate.css', __FILE__), array(), '20120208', 'all');
+    wp_register_style('dspdev-premvid-animate-style', plugins_url('/../css/animate.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('dspdev-premvid-animate-style');
 
-    wp_register_style('dspdev-premvid-grid-style', plugins_url('/css/grid.css', __FILE__), array(), '20120208', 'all');
+    wp_register_style('dspdev-premvid-grid-style', plugins_url('/../css/grid.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('dspdev-premvid-grid-style');
 
-    wp_register_style('dspdev-premvid-style', plugins_url('/css/style.css', __FILE__), array(), '20120208', 'all');
+    wp_register_style('dspdev-premvid-style', plugins_url('/../css/style.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('dspdev-premvid-style');
 
     // Styles for the FancyFrame portion of this plugin:
-    wp_register_style('dspdev-premvid-fancyframe-style', plugins_url('/css/fancyframes.css', __FILE__), array(), '20120208', 'all');
+    wp_register_style('dspdev-premvid-fancyframe-style', plugins_url('/../css/fancyframes.css', __FILE__), array(), '20120208', 'all');
     wp_enqueue_style('dspdev-premvid-fancyframe-style');
 
 }

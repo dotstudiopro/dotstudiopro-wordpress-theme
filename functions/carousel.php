@@ -26,7 +26,7 @@ function ds_owl_carousel_check_main_plugin()
 
     ?>
 
-    <div class="update-nag">
+    <div class="notice notice-warning">
         <p>dotstudioPRO Premium Video plugin is not installed, is inactive, or the version is too low for this add-on.  The dotstudioPRO Premium Owl Carousel plugin has been deactivated.</p>
     </div>
 
@@ -50,9 +50,9 @@ function ds_owl_admin_animation_select($name, $className = '')
 function ds_owl_carousel()
 {
 
-    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . 'js/owl.carousel.min.js', array('jquery'));
+    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../js/owl.carousel.min.js', array('jquery'));
     //wp_enqueue_script( 'owl-carousel-custom', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.custom.min.js' );
-    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . 'css/owl.carousel.min.css');
+    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . '../css/owl.carousel.min.css');
     wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }

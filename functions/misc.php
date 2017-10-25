@@ -124,7 +124,7 @@ function ds_no_country()
         return;
     }
     ?>
-    <div class="update-nag">
+    <div class="notice notice-warning">
         <p>Please check your dotstudioPRO API key.  We cannot determine a country for your server using our geolocation server.  If you are in a local development environment, please set the development mode option and country in the dotstudioPRO Premium Video Options.  If you are not, please contact us.</p>
     </div>
     <?php
@@ -239,7 +239,7 @@ function ds_template_copy()
     $single_channel_templates = array("ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php");
 
     foreach ($templates as $t) {
-        $plugin_dir = plugin_dir_path(__FILE__) . 'templates/' . $t;
+        $plugin_dir = plugin_dir_path(__FILE__) . '../templates/' . $t;
         $theme_dir  = get_stylesheet_directory() . '/' . $t;
 
         if (!copy($plugin_dir, $theme_dir)) {
@@ -248,7 +248,7 @@ function ds_template_copy()
     }
 
     foreach ($single_channel_templates as $t) {
-        $plugin_dir = plugin_dir_path(__FILE__) . 'templates/' . $t;
+        $plugin_dir = plugin_dir_path(__FILE__) . '../templates/' . $t;
         $theme_dir  = get_stylesheet_directory() . '/' . $t;
 
         if (!copy($plugin_dir, $theme_dir)) {
@@ -256,14 +256,14 @@ function ds_template_copy()
         }
     }
 
-    $plugin_dir = plugin_dir_path(__FILE__) . 'templates/components/sharing.php';
+    $plugin_dir = plugin_dir_path(__FILE__) . '../templates/components/sharing.php';
     $theme_dir  = get_stylesheet_directory() . '/ds-sharing.php';
 
     if (!copy($plugin_dir, $theme_dir)) {
         $error = "&error=1";
     }
 
-    $plugin_dir = plugin_dir_path(__FILE__) . 'css/video.channel.customization.css';
+    $plugin_dir = plugin_dir_path(__FILE__) . '../css/video.channel.customization.css';
     $theme_dir  = get_stylesheet_directory() . '/video.channel.customization.css';
 
     if (!copy($plugin_dir, $theme_dir)) {
