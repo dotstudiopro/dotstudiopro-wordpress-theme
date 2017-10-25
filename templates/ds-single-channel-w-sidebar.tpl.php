@@ -16,8 +16,6 @@ add_action('wp_head', 'ds_meta_tags');
 
 /********************************************/
 
-
-
 get_header();
 
 ?>
@@ -25,24 +23,23 @@ get_header();
 
 <?php display_channel_video_player(); ?>
 
-
 <?php
 	if(is_array($channel) && count($channel) > 0){
 	?>
 
 		<div id='primary' class='content-area'>
 		    <?php if ($channel['count'] > 1) {?>
-		    <ul class="ds-tabs">
+			    <ul class="ds-tabs">
 
-		        <li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
-		        <li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
-		        <?php if ($siblings && strlen($siblings) > 0) {?>
-		            <li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
-		        <?php }?>
-		        <li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
+			        <li class='ds-tab-link current' data-tab='ds-tab-1'>More Episodes</li>
+			        <li class='ds-tab-link' data-tab='ds-tab-2'>Details</li>
+			        <?php if ($siblings && strlen($siblings) > 0) {?>
+			            <li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
+			        <?php }?>
+			        <li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
 
-		        <li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
-		    </ul>
+			        <li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
+			    </ul>
 		    <?php }?>
 
 		    <div id='ds-tab-1' class='ds-tab-content current'>
