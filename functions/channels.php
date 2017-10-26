@@ -636,22 +636,22 @@ function channel_headline_video()
 
         }
 
-        $id = $videos[0]->playlist[0]->_id;
+        $id       = $videos[0]->playlist[0]->_id;
         $playlist = !empty($videos[0]->playlist[0]) ? $videos[0]->playlist[0] : new stdClass;
         // If we don't have a video as part of this, set the video as the first video in the playlist
         $video = !empty($videos[0]->video) ? $videos[0]->video : $playlist;
 
         $title = $duration = '';
 
-        if(isset($playlist->title)) {
+        if (isset($playlist->title)) {
             $title = $playlist->title;
-        } else if($video->title) {
+        } else if ($video->title) {
             $title = $video->title;
         }
 
-        if(isset($playlist->duration)) {
+        if (isset($playlist->duration)) {
             $duration = round($playlist->duration / 60);
-        } else if(isset($video->duration)) {
+        } else if (isset($video->duration)) {
             $duration = round($video->duration / 60);
         }
 
@@ -675,9 +675,9 @@ function channel_headline_video()
         $company_id = isset($playlist->company_id) ? $playlist->company_id : $videos[0]->spotlight_company_id;
 
         $country = !empty($playlist) && !empty($playlist->country)
-         ? $playlist->country :
-         !empty($video) && !empty($video->country)
-          ? $video->country : '';
+        ? $playlist->country :
+        !empty($video) && !empty($video->country)
+        ? $video->country : '';
 
         $language = isset($playlist->language) ? $playlist->language : isset($video->language) ? $video->language : '';
 
@@ -789,23 +789,34 @@ function get_child_siblings()
 }
 
 // Check if the front page is a channel, and nag the admin to tell them that will break the channel
-function ds_is_front_page_channel(){
-    $frontpage_id = (int) get_option( 'page_on_front' );
+function ds_is_front_page_channel()
+{
+    $frontpage_id = (int) get_option('page_on_front');
     // The ID will be 0 if it's not set, so we can ignore it if so
-    if($frontpage_id < 1) return;
+    if ($frontpage_id < 1) {
+        return;
+    }
+
     $page = get_post($frontpage_id);
     // If the page doesn't exist for whatever reason, no reason to keep going
-    if(!$page) return;
-    // If the post doesn't have a parent, it's not a channel page
-    if ($page->post_parent == 0) return;
+    if (!$page) {
+        return;
+    }
 
-    $channels_check_grab  = get_page_by_path('channels');
-    $channels_parent      = $channels_check_grab->ID;
+    // If the post doesn't have a parent, it's not a channel page
+    if ($page->post_parent == 0) {
+        return;
+    }
+
+    $channels_check_grab = get_page_by_path('channels');
+    $channels_parent     = $channels_check_grab->ID;
     $channel_grandparent = wp_get_post_parent_id($page->post_parent);
-    $channel_parent = get_post($page->post_parent);
+    $channel_parent      = get_post($page->post_parent);
 
     // If the page parent isn't the main All Channels page and isn't a channel, no need to nag
-    if ($channels_parent != $channel_parent->ID && $channel_parent->post_parent != $channel_grandparent) return;
+    if ($channels_parent != $channel_parent->ID && $channel_parent->post_parent != $channel_grandparent) {
+        return;
+    }
 
     ?>
     <div class="notice notice-warning">
@@ -814,13 +825,20 @@ function ds_is_front_page_channel(){
     <?php
 }
 
-function ds_set_front_page_to_categories() {
-    if(empty($_GET['dspdev_set_frontpage_to_category']) || $_GET['dspdev_set_frontpage_to_category'] != 1) return;
+function ds_set_front_page_to_categories()
+{
+    if (empty($_GET['dspdev_set_frontpage_to_category']) || $_GET['dspdev_set_frontpage_to_category'] != 1) {
+        return;
+    }
+
     $cats = get_page_by_path('channel-categories');
-    if(!$cats) return;
-    update_option( 'page_on_front', $cats->ID );
-    update_option( 'show_on_front', 'page' );
+    if (!$cats) {
+        return;
+    }
+
+    update_option('page_on_front', $cats->ID);
+    update_option('show_on_front', 'page');
     $url = str_replace('&dspdev_set_frontpage_to_category=1', '', str_replace('dspdev_set_frontpage_to_category=1', '', $_SERVER['HTTP_REFERER']));
-    wp_redirect( $url );
+    wp_redirect($url);
     exit;
 }

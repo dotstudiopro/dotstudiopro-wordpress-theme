@@ -4,10 +4,10 @@
 <div id="main">
 	<ul class='ds-cat nopadding'>
 
-	<?php categories_loop(); ?>
-	
+	<?php categories_loop();?>
+
 	</ul>
-	
+
 </div><!--main-->
 
 <?php get_footer();?>

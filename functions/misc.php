@@ -234,8 +234,8 @@ function ds_templates_exist()
 function ds_template_copy()
 {
 
-    $error = "";
-    $templates = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php", "ds-home.tpl.php");
+    $error                    = "";
+    $templates                = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php", "ds-home.tpl.php");
     $single_channel_templates = array("ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php");
 
     foreach ($templates as $t) {

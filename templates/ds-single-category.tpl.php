@@ -1,10 +1,10 @@
 <?php get_header();?>
 
 <div id="main">
-	<ul class="gridder">
+    <ul class="gridder">
 
 
-	<?php
+    <?php
 
 $category = get_post(get_the_ID());
 
@@ -91,29 +91,29 @@ if ($category->post_parent == $category_parent) {
 
             ?>
 
-			<li class='gridder-list light-theme-shadow' data-griddercontent='#<?php echo $slug ?>'>
-				<a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
-				<i class="fa fa-chevron-down"></i>
-	        	<img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
-	    		<div id='<?php echo $slug ?>' class='gridder-content'>
-	    			<div class='og-expander-inner light-theme-shadow clearfix'>
-			    		<a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo !empty($poster) ? $poster : $thumb_id ?>/1080/610' type='image/png'></object></a>
-			    		<div class="og-mask"></div>
-			    		<div class='ds-details animated fadeInRight'>
-							<h2 class='channel-title'><?php echo $title ?></h2>
-							<ul class='ds-channelmetalist'>
-								<li class='channel-year'><?php echo $year ?></li>
-								<li class='channel-language'><?php echo $language ?></li>
-								<li class='channel-company'><?php echo $company ?></li>
-							</ul>
-							<span class='ds-channel-description'>Description: <?php echo strlen($description) > 300 ? substr($description, 0, 299) . "..." : $description ?></span>
-							<?php if (count($children) < 1) {
+            <li class='gridder-list light-theme-shadow' data-griddercontent='#<?php echo $slug ?>'>
+                <a href='<?php echo home_url("channels/$slug/") ?>' class="gridder-og-play"><i class="fa fa-play-circle-o"></i></a>
+                <i class="fa fa-chevron-down"></i>
+                <img class='channel-spotlight-poster' src='<?php echo $spotlight_poster ?>/400/225'>
+                <div id='<?php echo $slug ?>' class='gridder-content'>
+                    <div class='og-expander-inner light-theme-shadow clearfix'>
+                        <a class='og-fullimg' href='<?php echo home_url("channels/$slug/") ?>'><object class='channel-poster animated fadeIn' data='<?php echo !empty($poster) ? $poster : $thumb_id ?>/1080/610' type='image/png'></object></a>
+                        <div class="og-mask"></div>
+                        <div class='ds-details animated fadeInRight'>
+                            <h2 class='channel-title'><?php echo $title ?></h2>
+                            <ul class='ds-channelmetalist'>
+                                <li class='channel-year'><?php echo $year ?></li>
+                                <li class='channel-language'><?php echo $language ?></li>
+                                <li class='channel-company'><?php echo $company ?></li>
+                            </ul>
+                            <span class='ds-channel-description'>Description: <?php echo strlen($description) > 300 ? substr($description, 0, 299) . "..." : $description ?></span>
+                            <?php if (count($children) < 1) {
                 ?>
 
-								<a href= '<?php echo home_url("channels/$slug/") ?>' class='ds-button'>
-									Watch Now
-								</a>
-							<?php
+                                <a href= '<?php echo home_url("channels/$slug/") ?>' class='ds-button'>
+                                    Watch Now
+                                </a>
+                            <?php
 
             } else {
 
@@ -123,14 +123,14 @@ if ($category->post_parent == $category_parent) {
 
             ?>
 
-							</span>
-						</div>
-					</div>
-	    		</div>
-    		</li>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
 
 
-			<?php
+            <?php
 
         }
 
@@ -143,8 +143,8 @@ if ($category->post_parent == $category_parent) {
 }
 
 ?>
-	</ul>
+    </ul>
 
-	</div><!--main-->
+    </div><!--main-->
 
 <?php get_footer();?>
