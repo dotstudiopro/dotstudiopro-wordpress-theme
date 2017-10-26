@@ -1,6 +1,10 @@
 <?php
 
-// Simplify the cURL execution for various API commands within the curl commands class
+/**
+ * Simplify the cURL execution for various API commands within the curl commands class
+ *
+ * @return void
+ */
 function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
 {
     $curl = curl_init();
@@ -24,13 +28,21 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
     return (object) compact('response', 'err');
 }
 
-// Determine if a given variable value is set; used for sanity checks
+/**
+ * Determine if a given variable value is set; used for sanity checks
+ *
+ * @return bool|string|int|obj|null
+ */
 function ds_verify_var($var)
 {
     return isset($var) ? sanitize_text_field($var) : '';
 }
 
-// Sets box shadows based on the plugin style given in the DSP Options
+/**
+ * Sets box shadows based on the plugin style given in the DSP Options
+ *
+ * @return void
+ */
 function ds_light_theme_shadows()
 {
 
@@ -58,14 +70,24 @@ function ds_light_theme_shadows()
 
 }
 
-// Add the video query var to WP
+/**
+ * Add the video query var to WP
+ *
+ * @return void
+ */
 function ds_video_var($public_query_vars)
 {
     $public_query_vars[] = 'video';
     return $public_query_vars;
 }
 
-// TODO: See if this is still necessary
+/**
+ * Replace embedded dsp iframes on templates
+ *
+ * TODO: See if this is still necessary
+ *
+ * @return void
+ */
 function ds_iframe_replace()
 {
     if (is_admin()) {
@@ -75,7 +97,13 @@ function ds_iframe_replace()
     ob_start('ds_iframe_html');
 }
 
-// TODO: See if this is still necessary
+/**
+ * Embedded iframe html for replace
+ *
+ * TODO: See if this is still necessary
+ *
+ * @return void
+ */
 function ds_iframe_html($html)
 {
     // Replace <iframe> code with a div that loads the iframe based on scroll.
@@ -110,13 +138,22 @@ function ds_iframe_html($html)
     return $html;
 }
 
-// Generate a random string for various purposes
+/**
+ * Generate a random string for various purposes
+ *
+ * @return string
+ */
 function generateRandomString($length = 5)
 {
     return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
 }
 
-// Nag the admin if we can't get a country; this generally either means that they need to set up a development mode environment for US, or the API key is bad
+/**
+ * Nag the admin if we can't get a country
+ *
+ * This generally either means that they need to set up a development mode environment for US, or the API key is bad
+ * @return void
+ */
 function ds_no_country()
 {
     $country = ds_get_country();
@@ -130,7 +167,11 @@ function ds_no_country()
     <?php
 }
 
-// Get the video info we are supposed to display on a template
+/**
+ * Get the video info we are supposed to display on a template
+ *
+ * @return void
+ */
 function ds_headliner_video_for_template()
 {
     if (!ds_channel_is_parent() && !ds_channel_is_child()) {
@@ -140,7 +181,13 @@ function ds_headliner_video_for_template()
     }
 }
 
-// Meta tags for SEO purposes so we don't have to depend on plugins or custom implementations to give us the right meta info
+/**
+ * Write the proper meta tags to the header
+ *
+ * This is done so we don't have to depend on plugins or custom implementations to give us the right meta info
+ *
+ * @return void
+ */
 function ds_meta_tags()
 {
 
@@ -188,7 +235,11 @@ function ds_meta_tags()
 
 }
 
-// FB comment code for templates
+/**
+ * Output FB comment code for templates
+ *
+ * @return void
+ */
 function ds_template_fb_code()
 {
 
@@ -210,7 +261,13 @@ function ds_template_fb_code()
 
 }
 
-// Check if our various templates exist to determine if we need to prompt the admin to copy the templates to the currently active
+/**
+ * Determine if we have all of the template files copied over to the theme
+ *
+ * Check if our various templates exist to determine if we need to prompt the admin to copy the templates to the currently active
+ *
+ * @return void
+ */
 function ds_templates_exist()
 {
     $templates = array("ds-all-categories.tpl.php",
@@ -230,7 +287,13 @@ function ds_templates_exist()
     return true;
 }
 
-// Copy the page templates to the current active theme directory for manipulation by the admin without having to edit our specific template files.
+/**
+ * Copy plugin templates to the currently active theme
+ *
+ * Copy the page templates to the current active theme directory for manipulation by the admin without having to edit our specific template files
+ *
+ * @return void
+ */
 function ds_template_copy()
 {
 
@@ -274,14 +337,22 @@ function ds_template_copy()
 
 }
 
-// Stub in the custom CSS from the plugin template menu
+/**
+ * Stub in the custom CSS from the plugin template menu
+ *
+ * @return void
+ */
 function ds_add_custom_css()
 {
     echo "\n<style>" . get_option('ds_plugin_custom_css') . "</style>\n\n";
 
 }
 
-// Set up wp post form to upload files/images/etc
+/**
+ * Set up wp post form to upload files/images/etc
+ *
+ * @return void
+ */
 function add_post_enctype()
 {
     echo ' enctype="multipart/form-data"';

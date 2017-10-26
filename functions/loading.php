@@ -1,6 +1,10 @@
 <?php
 
-// Load our various scripts and ensure that we have a version of jQuery that works with our plugin
+/**
+ * Load our various scripts and ensure that we have a version of jQuery that works with our plugin
+ *
+ * @return void
+ */
 function ds_scripts_load_cdn()
 {
 
@@ -33,7 +37,11 @@ function ds_scripts_load_cdn()
 
 }
 
-// Set css to pull for the plugin based off of the style set in the DSP Options
+/**
+ * Set css to pull for the plugin based off of the style set in the DSP Options
+ *
+ * @return void
+ */
 function ds_plugin_style()
 {
 
@@ -58,7 +66,11 @@ function ds_plugin_style()
 
 }
 
-// Register/enqueue all necessary styles
+/**
+ * Register/enqueue all necessary styles
+ *
+ * @return void
+ */
 function ds_styles()
 {
 

@@ -1,6 +1,10 @@
 <?php
 
-// Determine if the channel we are on is a parent channel
+/**
+ * Determine if the channel we are on is a parent channel
+ *
+ * @return bool
+ */
 function ds_channel_is_parent()
 {
     global $wpdb, $post;
@@ -17,7 +21,11 @@ function ds_channel_is_parent()
     }
 }
 
-// Determine if the channel we are on is a child channel
+/**
+ * Determine if the channel we are on is a child channel
+ *
+ * @return bool
+ */
 function ds_channel_is_child()
 {
     global $post;
@@ -34,7 +42,11 @@ function ds_channel_is_child()
     }
 }
 
-// Completely reprocess/recreate all channel pages; this is done when the admin requests a flush
+/**
+ * Completely reprocess/recreate all channel pages; this is done when the admin requests a flush
+ *
+ * @return void
+ */
 function channels_check()
 {
     // This process can take a moment, so we make sure we have time
@@ -133,7 +145,11 @@ function channels_check()
 
 }
 
-// Loop through the channels within a category to display them
+/**
+ * Loop through the channels within a category to display them
+ *
+ * @return void
+ */
 function channel_loop()
 {
 
@@ -156,7 +172,11 @@ function channel_loop()
 
 }
 
-// Loop through categories on the channel categories page
+/**
+ * Loop through categories on the channel categories page
+ *
+ * @return void
+ */
 function categories_loop()
 {
 
@@ -200,7 +220,11 @@ function categories_loop()
 
 }
 
-// Completely reprocess/recreate all category pages.  This is done when the admin requests a flush.
+/**
+ * Completely reprocess/recreate all category pages.  This is done when the admin requests a flush.
+ *
+ * @return void
+ */
 function categories_check()
 {
 
@@ -261,7 +285,14 @@ function categories_check()
 
 }
 
-// Create the channel category menu; we add this so the admin can set up a menu to go to the categories directly
+/**
+ * Create the channel category menu; we add this so the admin can set up a menu to go to the categories directly
+ *
+ * @param string $video_id The video id we need to base recommended videos off of
+ * @param string $rec_size The number of items we want to get back
+ *
+ * @return void
+ */
 function ds_create_channel_category_menu()
 {
 
@@ -308,7 +339,14 @@ function ds_create_channel_category_menu()
 
 }
 
-// Completely delete and recreate all category and channel pages.  This is necessary when channels are created or deleted in the DSP dashboard, as well as categories.  There are other use cases, but that is the most common.
+// Completely delete and recreate all category and channel pages.
+/**
+ * Completely delete and recreate all category and channel pages.
+ *
+ * This is necessary when channels are created or deleted in the DSP dashboard, as well as categories.  There are other use cases, but that is the most common.
+ *
+ * @return void
+ */
 function ds_site_flush()
 {
 
@@ -367,7 +405,11 @@ function ds_site_flush()
 
 }
 
-// Initialize the necessary functions for extra fields on Category pages
+/**
+ * Initialize the necessary functions for extra fields on Category pages
+ *
+ * @return void
+ */
 function ds_category_images_init()
 {
     if (empty($_GET['post'])) {
@@ -382,7 +424,14 @@ function ds_category_images_init()
     }
 }
 
-// Create the field for uploading custom category images.
+/**
+ * Create the field for uploading custom category images
+ *
+ * @param string $video_id The video id we need to base recommended videos off of
+ * @param string $rec_size The number of items we want to get back
+ *
+ * @return void
+ */
 function ds_category_image_field()
 {
     $post      = get_post($_GET['post']);
@@ -401,13 +450,25 @@ function ds_category_image_field()
     <?php
 }
 
-// Get a random filename for image upload; TODO: see if we even need to/should do this
+/**
+ * Get a random filename for image upload; TODO: see if we even need to/should do this
+ *
+ * @param string $dir The directory for the uploaded file; not used
+ * @param string $name The uploaded filename; not used
+ * @param string $ext The extension of the uploaded file
+ *
+ * @return string
+ */
 function ds_cust_filename($dir, $name, $ext)
 {
     return $_FILES['ds-category-image']['name'] . rand(100, 999) . time() . $ext;
 }
 
-// Save the category image on post save
+/**
+ * Save the category image on post save
+ *
+ * @return void
+ */
 function ds_save_category_image_field()
 {
     if (!isset($_FILES['ds-category-image'])) {
@@ -423,7 +484,11 @@ function ds_save_category_image_field()
     }
 }
 
-// Include the video player template if we have it
+/**
+ * Include the video player template if we have it
+ *
+ * @return void
+ */
 function display_channel_video_player()
 {
     $vidPlayerFile = "channel-video.php";
@@ -434,7 +499,14 @@ function display_channel_video_player()
 
 }
 
-// If we have a channel that is a parent, we redirect to the first child, since we don't have pages for parent channel displays
+//
+/**
+ * Check if the current channel is a parent channel for redirect
+ *
+ * If we have a channel that is a parent, we redirect to the first child, since we don't have pages for parent channel displays
+ *
+ * @return void
+ */
 function ds_is_channel_parent_check()
 {
 
@@ -463,7 +535,11 @@ function ds_is_channel_parent_check()
     }
 }
 
-// Grab a a channel from within a channel page
+/**
+ * Grab a a channel from within a channel page
+ *
+ * @return void
+ */
 function igrab_channel()
 {
 
@@ -551,7 +627,11 @@ function igrab_channel()
 
 }
 
-// Get the headline video for a channel in the video-channel template
+/**
+ * Get the headline video for a channel in the video-channel template
+ *
+ * @return void
+ */
 function channel_headline_video()
 {
 
@@ -745,7 +825,11 @@ function channel_headline_video()
 
 }
 
-// Get the siblings of a child channel for displaying in templates
+/**
+ * Get the siblings of a child channel for displaying in templates
+ *
+ * @return void
+ */
 function get_child_siblings()
 {
 
@@ -788,7 +872,11 @@ function get_child_siblings()
 
 }
 
-// Check if the front page is a channel, and nag the admin to tell them that will break the channel
+/**
+ * Check if the front page is a channel, and nag the admin to tell them that will break the channel
+ *
+ * @return void
+ */
 function ds_is_front_page_channel()
 {
     $frontpage_id = (int) get_option('page_on_front');
@@ -825,6 +913,11 @@ function ds_is_front_page_channel()
     <?php
 }
 
+/**
+ * Set the front page to the channel-categories page
+ *
+ * @return void
+ */
 function ds_set_front_page_to_categories()
 {
     if (empty($_GET['dspdev_set_frontpage_to_category']) || $_GET['dspdev_set_frontpage_to_category'] != 1) {

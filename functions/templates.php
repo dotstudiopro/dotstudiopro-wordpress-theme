@@ -1,6 +1,12 @@
 <?php
 
-// Get the template to display all categories
+/**
+ * Get the template to display all categories
+ *
+ * @param string $single_template The template filename/location
+ *
+ * @return void
+ */
 function ds_all_categories_template($single_template)
 {
 
@@ -21,7 +27,13 @@ function ds_all_categories_template($single_template)
     return $single_template;
 }
 
-// Get the template to display one category
+/**
+ * Get the template to display one category
+ *
+ * @param string $single_template The template filename/location
+ *
+ * @return void
+ */
 function ds_get_category_template($single_template)
 {
 
@@ -50,7 +62,13 @@ function ds_get_category_template($single_template)
     return $single_template;
 }
 
-// Get the template to display a channel
+/**
+ * Get the template to display a channel
+ *
+ * @param string $single_template The template filename/location
+ *
+ * @return void
+ */
 function ds_get_channel_template($single_template)
 {
 
@@ -90,7 +108,13 @@ function ds_get_channel_template($single_template)
     return $single_template;
 }
 
-// Get the home template
+/**
+ * Get the home template
+ *
+ * @param string $single_template The template filename/location
+ *
+ * @return void
+ */
 function ds_home_template($single_template)
 {
 

@@ -1,6 +1,10 @@
 <?php
 
-// Save the various admin options so we can use them within the plugin
+ /**
+  * Save the various admin options so we can use them within the plugin
+  *
+  * @return void
+  */
 function ds_save_admin_options()
 {
 

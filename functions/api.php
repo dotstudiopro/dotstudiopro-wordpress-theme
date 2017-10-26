@@ -3,7 +3,11 @@
 // Set up our class to connect with the DSP API
 $ds_curl = new DotStudioz_Commands;
 
-// Nag the admin if we don't have an API key, since we need one to use the plugin
+/**
+ * Nag the admin if we don't have an API key, since we need one to use the plugin
+ *
+ * @return void
+ */
 function ds_check_api_key_set()
 {
 
@@ -19,7 +23,11 @@ function ds_check_api_key_set()
     <?php
 }
 
-// Get a new token from the API key we have
+/**
+ * Get a new token from the API key we have
+ *
+ * @return void
+ */
 function ds_new_token()
 {
     // Acquire an API token and save it for later use.
@@ -29,7 +37,11 @@ function ds_new_token()
     update_option('ds_curl_token_time', time());
 }
 
-// Get the current user's country based on IP
+/**
+ * Get the current user's country based on IP
+ *
+ * @return void
+ */
 function ds_get_country()
 {
     global $ds_curl;
@@ -37,7 +49,14 @@ function ds_get_country()
     return $country;
 }
 
-// Get a list of recommended videos from the API for displaying next to playing videos
+/**
+ * Get a list of recommended videos from the API for displaying next to playing videos
+ *
+ * @param string $video_id The video id we need to base recommended videos off of
+ * @param string $rec_size The number of items we want to get back
+ *
+ * @return void
+ */
 function list_recommended($video_id = '', $rec_size = 8)
 {
     global $ds_curl;
@@ -45,7 +64,11 @@ function list_recommended($video_id = '', $rec_size = 8)
     return $result;
 }
 
-// Get a list of all of the channels in the client's dashboard
+/**
+ * Get a list of all of the channels in the client's dashboard
+ *
+ * @return void
+ */
 function list_channels()
 {
     global $ds_curl;
@@ -53,7 +76,11 @@ function list_channels()
     return $channels;
 }
 
-// Get a list of all of the categories in the client's dashboard
+/**
+ * Get a list of all of the categories in the client's dashboard
+ *
+ * @return void
+ */
 function list_categories()
 {
     global $ds_curl;
@@ -68,7 +95,11 @@ function list_categories()
     return $categories_filtered;
 }
 
-// Check if the channel has been revised at all; TODO: need to determine if this is still necessary
+/**
+ * Check if the channel has been revised at all; TODO: need to determine if this is still necessary
+ *
+ * @return void
+ */
 function channel_revision_check()
 {
     // Check if we have revisions to the current channel page
@@ -81,7 +112,11 @@ function channel_revision_check()
     }
 }
 
-// Get a single channel
+/**
+ * Get a single channel
+ *
+ * @return void
+ */
 function grab_channel()
 {
     global $ds_curl;
@@ -89,7 +124,11 @@ function grab_channel()
     return $channels;
 }
 
-// Get a parent channel
+/**
+ * Get a parent channel
+ *
+ * @return void
+ */
 function grab_parent_channel()
 {
     global $ds_curl;
@@ -97,7 +136,11 @@ function grab_parent_channel()
     return $channels;
 }
 
-// Get a category
+/**
+ * Get a category
+ *
+ * @return void
+ */
 function grab_category($category)
 {
     global $ds_curl;
@@ -105,7 +148,11 @@ function grab_category($category)
     return $category;
 }
 
-// Get the information for a video
+/**
+ * Get the information for a video
+ *
+ * @return void
+ */
 function grab_video($video)
 {
     global $ds_curl;
@@ -113,7 +160,11 @@ function grab_video($video)
     return $videoObj;
 }
 
-// Check if we need to get a new token, and if we do, get one
+/**
+ * Check if we need to get a new token, and if we do, get one
+ *
+ * @return void
+ */
 function ds_check()
 {
     global $ds_curl;
@@ -125,7 +176,11 @@ function ds_check()
     }
 }
 
-// If the API key changes in any way, we need to delete the existing pages and grab new ones; this is a fairly intensive action once the key changes.
+/**
+ * If the API key changes in any way, we need to delete the existing pages and grab new ones; this is a fairly intensive action once the key changes.
+ *
+ * @return void
+ */
 function ds_api_key_change()
 {
 
