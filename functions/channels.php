@@ -47,6 +47,11 @@ function ds_channel_is_child()
     }
 }
 
+/**
+ * Display admin nag for not finding any channels on a resync
+ *
+ * @return void
+ */
 function dspdev_no_channels_on_check_nag() {
     ?>
     <div class="notice notice-warning">
