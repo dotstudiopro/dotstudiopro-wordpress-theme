@@ -1,7 +1,17 @@
 <?php
 
 /**
+ * Misc functions used for various purposes
+ *
+ */
+
+/**
  * Simplify the cURL execution for various API commands within the curl commands class
+ *
+ * @param string $curl_url The URL to do the cUrl request to
+ * @param string $curl_request_type The type of request, generally POST or GET
+ * @param string $curl_post_fields The fields we want to POST, if it's a POST request
+ * @param object $curl_header Any necessary header values, like an API token
  *
  * @return void
  */
@@ -31,7 +41,9 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
 /**
  * Determine if a given variable value is set; used for sanity checks
  *
- * @return bool|string|int|obj|null
+ * @param string $var The variable to evaluate
+ *
+ * @return bool|string|int|object|array|null
  */
 function ds_verify_var($var)
 {
@@ -73,6 +85,8 @@ function ds_light_theme_shadows()
 /**
  * Add the video query var to WP
  *
+ * @param array $public_query_vars WP's query vars
+ *
  * @return void
  */
 function ds_video_var($public_query_vars)
@@ -101,6 +115,8 @@ function ds_iframe_replace()
  * Embedded iframe html for replace
  *
  * TODO: See if this is still necessary
+ *
+ * @param string $html The HTML for the current iframe we are switching out
  *
  * @return void
  */
@@ -140,6 +156,8 @@ function ds_iframe_html($html)
 
 /**
  * Generate a random string for various purposes
+ *
+ * @param int $length The length of the random string
  *
  * @return string
  */

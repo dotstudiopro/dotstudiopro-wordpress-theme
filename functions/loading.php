@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Script and style loading/enqueing
+ *
+ */
+
+/**
  * Load our various scripts and ensure that we have a version of jQuery that works with our plugin
  *
  * @return void

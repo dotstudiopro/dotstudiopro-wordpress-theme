@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Functions dealing with the Owl Carousel plugin and instantiation
+ *
+ */
+
+/**
+ * Retrieve and display the theater mode playlist from the given videoId
+ *
+ * @param string $videoId The video id we need to base recommended videos off of
+ *
+ * @return string
+ */
 function ds_theater_mode_playlist($videoId)
 {
     $strOut = "";
@@ -21,12 +33,17 @@ function ds_theater_mode_playlist($videoId)
     return $strOut;
 }
 
+/**
+ * Display the nag message if the dotStudioPRO plugin is not installed
+ *
+ * @return void
+ */
 function ds_owl_carousel_check_main_plugin()
 {
 
     ?>
 
-    <div class="notice notice-warning">
+    <div class="update-nag">
         <p>dotstudioPRO Premium Video plugin is not installed, is inactive, or the version is too low for this add-on.  The dotstudioPRO Premium Owl Carousel plugin has been deactivated.</p>
     </div>
 
@@ -34,6 +51,14 @@ function ds_owl_carousel_check_main_plugin()
 
 }
 
+/**
+ * Display a select box of available animation effects for the owl carousel plugin display
+ *
+ * @param string $name The name and ID of the select field
+ * @param string $className The class for the select field
+ *
+ * @return string
+ */
 function ds_owl_admin_animation_select($name, $className = '')
 {
     $aryAnimations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble', 'jello', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight', 'bounceOutUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flipInX', 'flipInY', 'flipOutX', 'flipOutY', 'lightSpeedIn', 'lightSpeedOut', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft', 'rotateOutUpRight', 'hinge', 'rollIn', 'rollOut', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideInDown', 'slideInLeft', 'slideInRight', 'slideInUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp'];
@@ -47,16 +72,28 @@ function ds_owl_admin_animation_select($name, $className = '')
 
 }
 
+/**
+ * Enqueue scripts and styles for the owl carousel plugin
+ *
+ * @return void
+ */
 function ds_owl_carousel()
 {
 
-    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../js/owl.carousel.min.js', array('jquery'));
+    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . 'js/owl.carousel.min.js', array('jquery'));
     //wp_enqueue_script( 'owl-carousel-custom', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.custom.min.js' );
-    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . '../css/owl.carousel.min.css');
+    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . 'css/owl.carousel.min.css');
     wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }
 
+/**
+ * Renders the appropriate html for the owl carousel based on whether a channel or category is being displayed
+ *
+ * @param string $args The arguments for the Owl Carousel
+ *
+ * @return string
+ */
 function ds_owl_carousel_html($args)
 {
 
@@ -70,10 +107,15 @@ function ds_owl_carousel_html($args)
     }
 }
 
+/**
+ * Renders the recommended videos playlist for the channel video player
+ *
+ * @param string $args The arguments for the Owl Carousel
+ *
+ * @return string
+ */
 function ds_owl_recommended_videos_html($args)
 {
-    // renders the recommended videos playlist for the channel video player
-
     $video_id = $args['video_id'];
     $rec_size = $args['rec_size'];
 
@@ -130,6 +172,13 @@ function ds_owl_recommended_videos_html($args)
 
 }
 
+/**
+ * Renders the owl carousel based on category slug
+ *
+ * @param string $args The arguments for the Owl Carousel
+ *
+ * @return string
+ */
 function ds_owl_category_html($args)
 {
 
@@ -172,6 +221,13 @@ function ds_owl_category_html($args)
     return $carousel;
 }
 
+/**
+ * Renders the owl carousel based on channel slug
+ *
+ * @param string $args The arguments for the Owl Carousel
+ *
+ * @return string
+ */
 function ds_owl_channel_html($args)
 {
 
@@ -216,14 +272,20 @@ function ds_owl_channel_html($args)
     return $carousel;
 }
 
+/**
+ * Formats the carousel options in a way that the plugin can process
+ *
+ * @param string $args The arguments for the Owl Carousel
+ *
+ * @return array
+ */
 function ds_owl_create_opts($args)
 {
     unset($args['channels']);
     unset($args['category']);
     unset($args['title']);
 
-    $opts = implode(', ', array_map(
-        function ($v, $k) {return sprintf("%s=%s", trim($k), trim($v));},
+    $opts = implode(', ', array_map(function ($v, $k) {return sprintf("%s=%s", trim($k), trim($v));},
         $args,
         array_keys($args)
     ));
@@ -231,6 +293,13 @@ function ds_owl_create_opts($args)
     return $opts;
 }
 
+/**
+ * Generate a random id for each owl carousel item
+ *
+ * @param int $length The length of the random id
+ *
+ * @return string
+ */
 function ds_owl_carousel_rnd_id($length = 10)
 {
     $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -242,6 +311,13 @@ function ds_owl_carousel_rnd_id($length = 10)
     return $randomString;
 }
 
+/**
+ * Returns an array of objects used by owl carousel based off of the array of ids
+ *
+ * @param array $ids The ids of the channels to build the carousel with
+ *
+ * @return array
+ */
 function ds_owl_carousel_build_objects($ids = array())
 {
     $objs = array();
@@ -252,6 +328,13 @@ function ds_owl_carousel_build_objects($ids = array())
     return $objs;
 }
 
+/**
+ * Returns channel information based channel id via curl command
+ *
+ * @param string $id The id of the channel
+ *
+ * @return object
+ */
 function ds_owl_grab_channel_by_id($id)
 {
     global $ds_curl;
@@ -260,6 +343,11 @@ function ds_owl_grab_channel_by_id($id)
 
 }
 
+/**
+ * Returns a list of channels for use in the owl carousel admin area
+ *
+ * @return string
+ */
 function ds_owl_carousel_local_channels_list()
 {
 
@@ -281,6 +369,13 @@ function ds_owl_carousel_local_channels_list()
 
 }
 
+/**
+ * Renders an owl carousel from the shortcode input thru the wordpress admin
+ *
+ * @param array $atts The arguments passed to the shortcode
+ *
+ * @return string
+ */
 function ds_owl_carousel_display_shortcode($atts)
 {
 

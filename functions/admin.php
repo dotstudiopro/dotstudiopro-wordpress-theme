@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Admin-related functions; currently only the option save
+ *
+ */
+
  /**
   * Save the various admin options so we can use them within the plugin
   *

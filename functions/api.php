@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * All functions whose sole purpose is to interact with the dotstudioPRO API
+ *
+ */
+
 // Set up our class to connect with the DSP API
 $ds_curl = new DotStudioz_Commands;
 
@@ -139,6 +144,8 @@ function grab_parent_channel()
 /**
  * Get a category
  *
+ * @param $category The slug of the category we are getting
+ *
  * @return void
  */
 function grab_category($category)
@@ -150,6 +157,8 @@ function grab_category($category)
 
 /**
  * Get the information for a video
+ *
+ * @param $video The id of the video we are getting
  *
  * @return void
  */

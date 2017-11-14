@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * All of the actions and filters used within the plugin.
+ *
+ */
+
 if (isset($_GET['page']) && $_GET['page'] == 'dot-studioz-options' && isset($_GET['flush']) && $_GET['flush'] == 1) {
     add_action('init', 'ds_site_flush');
 }

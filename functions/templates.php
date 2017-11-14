@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Template serving functions
+ *
+ */
+
+/**
  * Get the template to display all categories
  *
  * @param string $single_template The template filename/location

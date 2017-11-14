@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Functions whose sole purpose involves channels; checking, displaying, formatting, etc.
+ *
+ */
+
+/**
  * Determine if the channel we are on is a parent channel
  *
  * @return bool
