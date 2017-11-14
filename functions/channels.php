@@ -47,6 +47,14 @@ function ds_channel_is_child()
     }
 }
 
+function dspdev_no_channels_on_check_nag() {
+    ?>
+    <div class="notice notice-warning">
+        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> We were unable to recreate channel pages.  It appears that no channels were returned when we requested them from our API.  Please <a href='mailto:support@dotstudiopro.com'>contact us</a> immediately.</p>
+    </div>
+    <?php
+}
+
 /**
  * Completely reprocess/recreate all channel pages; this is done when the admin requests a flush
  *
@@ -78,6 +86,11 @@ function channels_check()
 
         $channel_check_page_id = $channel_check->ID;
 
+    }
+
+    if(!is_array($channels)) {
+        add_action('admin_notices', 'dspdev_no_channels_on_check_nag');
+        return;
     }
 
     foreach ($channels as $c) {
