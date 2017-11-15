@@ -33,17 +33,17 @@ module.exports = function(grunt) {
 				uglify: {
 						my_target: {
 								files: [{
-										'js/owl.carousel.admin.min.js': ['src/js/owl.carousel.admin.js']
+										'js/owl.carousel.admin.min.js': ['js/original/owl.carousel.admin.js']
 								}, {
-										'js/jquery.gridder.min.js': ['src/js/jquery.gridder.js']
+										'js/jquery.gridder.min.js': ['js/original/jquery.gridder.js']
 								}, {
-										'js/owl.carousel.min.js': ['src/js/owl.carousel.js']
+										'js/owl.carousel.min.js': ['js/original/owl.carousel.js']
 								}, {
-										'js/channel.functions.min.js': ['src/js/channel.functions.js']
+										'js/channel.functions.min.js': ['js/original/channel.functions.js']
 								}, {
-										'js/channel.video.functions.min.js': ['src/js/channel.video.functions.js']
+										'js/channel.video.functions.min.js': ['js/original/channel.video.functions.js']
 								}, {
-										'js/channel.display.functions.min.js': ['src/js/channel.display.functions.js']
+										'js/channel.display.functions.min.js': ['js/original/channel.display.functions.js']
 								}, ]
 						}
 				}
