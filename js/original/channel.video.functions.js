@@ -337,7 +337,7 @@ $(document).ready(function() {
 
       // resize the poster image
       var poster = $('.vjs-poster');
-      var posterBkg = poster.css('background-image').replace('")', '/1000/562")');
+      var posterBkg = $(poster).css('background-image').replace('")', '/1000/562")');
       poster.css('background-image', posterBkg);
 
 
