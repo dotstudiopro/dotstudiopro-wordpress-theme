@@ -579,7 +579,12 @@ function igrab_channel()
 
     $title = $is_child ? $videos[0]->childchannels[0]->title : $videos[0]->title;
 
-    $description = $videos[0]->description;
+    $description = "";
+    if($is_child && !empty($videos[0]->childchannels[0]) && !empty($videos[0]->childchannels[0]->description)) {
+        $description = $videos[0]->childchannels[0]->description;
+    } else if(!empty($videos[0]->description)) {
+        $videos[0]->description;
+    }
 
     $actors = $videos[0]->actors;
 
@@ -587,13 +592,23 @@ function igrab_channel()
 
     $directors = $videos[0]->directors;
 
-    $image_id = $is_child ? "http://image.myspotlight.tv/" . $playlist[0]->thumb : "http://image.myspotlight.tv/" . (!empty($videos[0]->playlist[0]->thumb) ? $videos[0]->playlist[0]->thumb : $videos[0]->video->thumb);
+    $playlist = $is_child ? $videos[0]->childchannels[0]->playlist : $videos[0]->playlist;
+
+    $image_id = "";
+
+    if($is_child && !empty($playlist[0]->thumb)) {
+        $image_id = "https://image.myspotlight.tv/" . $playlist[0]->thumb;
+    } else if(!empty($videos[0]->playlist) && !empty($videos[0]->playlist[0]->thumb)) {
+        $image_id = "https://image.myspotlight.tv/" . $videos[0]->playlist[0]->thumb;
+    } else if(!empty($videos[0]->video) && !empty($videos[0]->video->thumb)) {
+        $image_id = "https://image.myspotlight.tv/" . $videos[0]->video->thumb;
+    }
 
     $playlist = $is_child ? $videos[0]->childchannels[0]->playlist : $videos[0]->playlist;
 
     $channel_parent = get_post($post->post_parent);
 
-    $poster = $videos[0]->poster;
+    $poster = !empty($videos[0]->poster) ? $videos[0]->poster : "";
 
     $to_return['playlist'] = $playlist;
 
@@ -665,13 +680,21 @@ function channel_headline_video()
 
         }
 
-        $playlist = $videos[0]->childchannels[0]->playlist[0];
+        $playlist = new stdClass;
+        if(!empty($videos[0]->childchannels[0]) && !empty($videos[0]->childchannels[0]->playlist)) {
+            $playlist = $videos[0]->childchannels[0]->playlist;
+        } else if(!empty($videos[0]->playlist)) {
+            $playlist = $videos[0]->playlist;
+        }
 
-        $id = $playlist->_id;
+        print_r($videos[0]);
+        die();
 
-        $title = $playlist->title;
+        $id = !empty($playlist->_id) ? $playlist->_id : "";
 
-        $duration = round($playlist->duration / 60);
+        $title = !empty($playlist->title) ? $playlist->title : "";
+
+        $duration = !empty($playlist->duration) ? round($playlist->duration / 60) : 0;
 
         $description = isset($videos[0]->description) ? $videos[0]->description : '';
 
@@ -873,10 +896,12 @@ function get_child_siblings()
 
         }
 
+        $sibling_thumb = !empty($ch) && !empty($ch->playlist[0]) ? $ch->playlist[0]->thumb : "";
+
         $siblings .= "
 
         <a href='" . home_url("channels/" . $parent->slug . "/" . $ch->slug . "/") . "' class='$selected'>
-            <img src='http://image.myspotlight.tv/" . $ch->playlist[0]->thumb . "/400/225' />
+            <img src='http://image.myspotlight.tv/" . $sibling_thumb . "/400/225' />
             <h3>" . $ch->title . "</h3>
         </a>";
 

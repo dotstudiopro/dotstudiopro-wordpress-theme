@@ -16,6 +16,8 @@ add_action('wp_head', 'ds_meta_tags');
 
 get_header();
 
+global $post;
+
 ?>
 <div id="main" class="container">
 
@@ -35,7 +37,9 @@ if (is_array($channel) && count($channel) > 0) {
 		        <?php if ($siblings && strlen($siblings) > 0) {?>
 		            <li class='ds-tab-link' data-tab='ds-tab-3'>Seasons</li>
 		        <?php }?>
-		        <li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
+		        <?php if (!empty($post->post_content)) {?>
+		            <li class='ds-tab-link' data-tab='ds-tab-4'>Additional Info</li>
+		        <?php }?>
 
 		        <li class='ds-tab-link'><a href='#ds-comments'>Comments</a></li>
 		    </ul>

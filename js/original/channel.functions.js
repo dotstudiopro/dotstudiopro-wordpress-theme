@@ -1,11 +1,14 @@
 ﻿//Tabs
 jQuery(function($) {
 
-    $('ul.dot-studioz-tabs li').click(function() {
+    $('ul.ds-tabs li').click(function() {
       var tab_id = $(this).attr('data-tab');
 
-      $('ul.dot-studioz-tabs li').removeClass('current animated fadeIn');
-      $('.dot-studioz-tab-content').removeClass('current animated fadeIn');
+      console.log("tab_id", tab_id);
+
+      $('ul.ds-tabs li').removeClass('current animated fadeIn');
+      $('.ds-tab-link').removeClass('current animated fadeIn');
+      $('.ds-tab-content.current').removeClass('current animated fadeIn');
 
       $(this).addClass('current animated fadeIn');
       $("#" + tab_id).addClass('current animated fadeIn');

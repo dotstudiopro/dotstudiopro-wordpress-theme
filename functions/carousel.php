@@ -80,9 +80,9 @@ function ds_owl_admin_animation_select($name, $className = '')
 function ds_owl_carousel()
 {
 
-    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . 'js/owl.carousel.min.js', array('jquery'));
+    wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../js/owl.carousel.min.js', array('jquery'));
     //wp_enqueue_script( 'owl-carousel-custom', plugin_dir_url( __FILE__ ) . 'js/owl.carousel.custom.min.js' );
-    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . 'css/owl.carousel.min.css');
+    wp_enqueue_style('owl-carousel-min', plugin_dir_url(__FILE__) . '../css/owl.carousel.min.css');
     wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }
@@ -122,7 +122,7 @@ function ds_owl_recommended_videos_html($args)
     $recommended = list_recommended($video_id, $rec_size);
 
     // error checking
-    if ($recommended[0] === false) {
+    if (!empty($recommended) && $recommended[0] === false) {
         $strOut = $recommended[1];
     } else {
         $opts = ds_owl_create_opts(array(
