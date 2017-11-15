@@ -48,19 +48,6 @@ function ds_channel_is_child()
 }
 
 /**
- * Display admin nag for not finding any channels on a resync
- *
- * @return void
- */
-function dspdev_no_channels_on_check_nag() {
-    ?>
-    <div class="notice notice-warning">
-        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> We were unable to recreate channel pages.  It appears that no channels were returned when we requested them from our API.  Please <a href='mailto:support@dotstudiopro.com'>contact us</a> immediately.</p>
-    </div>
-    <?php
-}
-
-/**
  * Completely reprocess/recreate all channel pages; this is done when the admin requests a flush
  *
  * @return void
@@ -93,10 +80,8 @@ function channels_check()
 
     }
 
-    if(!is_array($channels)) {
-        add_action('admin_notices', 'dspdev_no_channels_on_check_nag');
-        return;
-    }
+    // If we don't have any channels, no need to try to process a non-existent array
+    if(!is_array($channels)) return;
 
     foreach ($channels as $c) {
 
@@ -112,9 +97,15 @@ function channels_check()
             continue;
         }
 
-        $channel_info = !empty($c->description) ? $c->description : !empty($c->video->description) ? $c->video->description : $c->title;
+        $channel_info = "";
 
-        if (empty($channel_info)) {
+        if(!empty($c->description)) {
+            $channel_info = $c->description;
+        } else if(!empty($c->video->description)) {
+            $channel_info = $c->video->description;
+        } else if(!empty($c->title)) {
+            $channel_info = $c->title;
+        } else {
             $channel_info = "No description.";
         }
 
@@ -423,7 +414,7 @@ function ds_site_flush()
 
     ds_create_channel_category_menu();
 
-    wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options");
+    wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options&resynced=1");
     exit;
 
 }
@@ -957,4 +948,38 @@ function ds_set_front_page_to_categories()
     $url = str_replace('&dspdev_set_frontpage_to_category=1', '', str_replace('dspdev_set_frontpage_to_category=1', '', $_SERVER['HTTP_REFERER']));
     wp_redirect($url);
     exit;
+}
+
+/**
+ * Display admin nag for not finding any channels on a resync
+ *
+ * @return void
+ */
+function dspdev_no_channels_check_nag() {
+    ?>
+    <div class="notice notice-warning">
+        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> We were unable to recreate channel pages.  It appears that no channels were returned when we requested them from our API.  Please <a href='mailto:support@dotstudiopro.com'>contact us</a> immediately.</p>
+    </div>
+    <?php
+}
+
+/**
+ * Get the number of channel pages we have as children of the All Channels page
+ *
+ * @return integer The count of the child pages
+ */
+function dspdev_get_channel_page_children_count() {
+    $channel_parent = get_page_by_path('channels');
+    if(!$channel_parent) return 0;
+    $args = array(
+        'post_parent' => $channel_parent->ID,
+        'post_type'   => 'any',
+        'numberposts' => -1,
+        'post_status' => 'any'
+    );
+    $children = get_children( $args );
+    // If the children var isn't an array, we assume we have no child pages
+    if(!is_array($children)) return 0;
+    // We only need the count, so we return said count
+    return count($children);
 }

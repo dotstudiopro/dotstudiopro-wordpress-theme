@@ -102,6 +102,11 @@ function ds_get_channel_template($single_template)
 
             }
 
+            if($template_option === "ds-all-categories") {
+                // We should not have all-categories as a single channel template
+                $template_option = "ds-single-channel";
+            }
+
             $single_template = dirname(__FILE__) . '/../templates/channel/' . $template_option . '.tpl.php';
 
         }

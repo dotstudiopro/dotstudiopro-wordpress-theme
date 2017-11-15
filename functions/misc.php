@@ -51,6 +51,18 @@ function ds_verify_var($var)
 }
 
 /**
+ * Determine if a given $_POST value is set; used for sanity checks
+ *
+ * @param string $var The variable to evaluate
+ *
+ * @return bool|string|int|object|array|null
+ */
+function ds_verify_post_var($var)
+{
+    return isset($_POST[$var]) ? sanitize_text_field($_POST[$var]) : '';
+}
+
+/**
  * Sets box shadows based on the plugin style given in the DSP Options
  *
  * @return void

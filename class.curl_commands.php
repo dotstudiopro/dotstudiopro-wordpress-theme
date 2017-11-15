@@ -189,7 +189,7 @@ function curl_command($command, $args = array()){
 
 			if($r->success){
 
-				set_transient('all-channels', $r->channels, 600);
+				// set_transient('all-channels', $r->channels, 600);
 
 				return $r->channels;
 

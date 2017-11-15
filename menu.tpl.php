@@ -85,6 +85,14 @@
 
    /** End Fancy **/
 
+   $resynced = isset($_GET['resynced'])  && $_GET['resynced'] == 1;
+
+   $channels = dspdev_get_channel_page_children_count();
+
+   if ($resynced && empty($channels)) {
+      dspdev_no_channels_check_nag();
+   }
+
    ?>
 <div class='container'>
    <h2>dotstudioPRO Plugin Options</h2>
