@@ -93,8 +93,8 @@ function dot_studioz_menu_page()
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
 
-    wp_enqueue_style( 'ds-admin-css', plugin_dir_url( __FILE__ ) . '../css/owl.carousel.admin.min.css' );
-    wp_enqueue_script( 'ds-admin-js', plugin_dir_url( __FILE__ ) . '../js/owl.carousel.admin.min.js' );
+    wp_enqueue_style( 'ds-admin-css', plugins_url( 'css/owl.carousel.admin.min.css', __FILE__ ));
+    wp_enqueue_script( 'ds-admin-js', plugins_url( 'js/owl.carousel.admin.min.js', __FILE__ ));
 
 
     echo "<div class='wrap'>";

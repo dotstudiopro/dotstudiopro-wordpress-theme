@@ -687,9 +687,6 @@ function channel_headline_video()
             $playlist = $videos[0]->playlist;
         }
 
-        print_r($videos[0]);
-        die();
-
         $id = !empty($playlist->_id) ? $playlist->_id : "";
 
         $title = !empty($playlist->title) ? $playlist->title : "";
@@ -842,7 +839,7 @@ function channel_headline_video()
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-display-functions');
 
-        wp_enqueue_style('video-playlist', plugins_url('dotstudiopro-wordpress/css/video-playlist.css'));
+        wp_enqueue_style('video-playlist', plugins_url( 'css/video-playlist.css', __FILE__ ));
 
         $video_custom_css = locate_template('video.channel.customization.css');
 
