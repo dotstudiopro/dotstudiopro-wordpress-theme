@@ -839,7 +839,7 @@ function channel_headline_video()
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('channel-display-functions');
 
-        wp_enqueue_style('video-playlist', plugins_url( 'css/video-playlist.css', __FILE__ ));
+        wp_enqueue_style('video-playlist', plugins_url( 'css/video-playlist.css', __DIR__ ));
 
         $video_custom_css = locate_template('video.channel.customization.css');
 
