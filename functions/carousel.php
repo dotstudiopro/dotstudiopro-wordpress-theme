@@ -79,9 +79,8 @@ function ds_owl_admin_animation_select($name, $className = '')
  */
 function ds_owl_carousel()
 {
-
-    wp_enqueue_script('owl-carousel', plugins_url( 'js/owl.carousel.min.js', __FILE__ ), array('jquery'));
-    wp_enqueue_style('owl-carousel-min', plugins_url( 'css/owl.carousel.min.css', __FILE__ ));
+    wp_enqueue_script('owl-carousel', plugins_url( 'js/owl.carousel.min.js', __DIR__ ), array('jquery'));
+    wp_enqueue_style('owl-carousel-min', plugins_url( 'css/owl.carousel.min.css', __DIR__ ));
     wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }

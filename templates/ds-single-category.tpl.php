@@ -63,6 +63,8 @@ if ($category->post_parent == $category_parent) {
 
             $poster = isset($ch->poster) ? $ch->poster : '';
 
+            if(empty($poster) && !empty($spotlight_poster)) $poster = $spotlight_poster;
+
             $year = isset($ch->year) ? $ch->year : '';
 
             $language = isset($ch->language) ? $ch->language : '';
@@ -71,7 +73,13 @@ if ($category->post_parent == $category_parent) {
 
             $company = $ch->company;
 
-            $description = isset($ch->description) ? $ch->description : $ch->video->description;
+            $description = "";
+
+            if(isset($ch->description)) {
+                $description = $ch->description;
+            } else if(isset($ch->video) && isset($ch->video->description)) {
+                $description = $ch->video->description;
+            }
 
             $children = $ch->childchannels;
 
@@ -85,7 +93,7 @@ if ($category->post_parent == $category_parent) {
 
                 }
 
-                $description = $ch->description;
+                $description = !empty($ch->description) ? $ch->description : "";
 
             }
 
@@ -107,21 +115,20 @@ if ($category->post_parent == $category_parent) {
                                 <li class='channel-company'><?php echo $company ?></li>
                             </ul>
                             <span class='ds-channel-description'>Description: <?php echo strlen($description) > 300 ? substr($description, 0, 299) . "..." : $description ?></span>
-                            <?php if (count($children) < 1) {
-                ?>
+                            <?php if (count($children) < 1) {?>
 
                                 <a href= '<?php echo home_url("channels/$slug/") ?>' class='ds-button'>
                                     Watch Now
                                 </a>
                             <?php
 
-            } else {
+                            } else {
 
-                echo $child_urls;
+                                echo $child_urls;
 
-            }
+                            }
 
-            ?>
+                            ?>
 
                             </span>
                         </div>
@@ -145,6 +152,6 @@ if ($category->post_parent == $category_parent) {
 ?>
     </ul>
 
-    </div><!--main-->
+</div><!--main-->
 
 <?php get_footer();?>

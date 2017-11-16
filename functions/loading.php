@@ -21,7 +21,7 @@ function ds_scripts_load_cdn()
     wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', array(), null, false);
 
     // Register the script like this for a plugin:
-    wp_register_script('dspdev-premvid-channel-functions', plugins_url('/../js/channel.functions.min.js', __FILE__), array('jquery'));
+    wp_register_script('dspdev-premvid-channel-functions', plugins_url('/../js/original/channel.functions.js', __FILE__), array('jquery'));
     // For either a plugin or a theme, you can then enqueue the script:
     wp_enqueue_script('dspdev-premvid-channel-functions');
 
@@ -34,7 +34,7 @@ function ds_scripts_load_cdn()
     if ($post->post_parent == $categories->ID || $parent->post_parent == $channels->ID || $parent->post_parent == $categories->ID || $channels->ID == $post->ID || $categories->ID == $post->ID) {
 
         // Register the script like this for a plugin:
-        wp_register_script('grid-script', plugins_url('/../js/jquery.gridder.min.js', __FILE__), array('jquery'));
+        wp_register_script('grid-script', plugins_url('js/jquery.gridder.min.js', __DIR__), array('jquery'));
         // For either a plugin or a theme, you can then enqueue the script:
         wp_enqueue_script('grid-script');
 
