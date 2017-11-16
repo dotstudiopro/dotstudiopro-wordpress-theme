@@ -17,7 +17,6 @@ add_filter('query_vars', 'ds_video_var');
 add_filter('page_template', 'ds_get_channel_template', 11);
 add_filter('page_template', 'ds_get_category_template', 11);
 add_filter('page_template', 'ds_all_categories_template', 11);
-add_filter('page_template', 'ds_home_template', 11);
 
 add_action('admin_notices', 'ds_no_country');
 add_action('admin_notices', 'ds_is_front_page_channel');
