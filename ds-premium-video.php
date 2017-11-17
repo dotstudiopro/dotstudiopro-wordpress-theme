@@ -60,7 +60,7 @@ add_action( 'wp_enqueue_scripts', 'ds_owl_carousel' );
 function dot_studioz_menu()
 {
 
-    add_menu_page('dotstudioPRO Options', 'dotstudioPRO Options', 'manage_options', 'dot-studioz-options', 'dot_studioz_menu_page', plugins_url( 'images/dsp.jpg', __FILE__ ));
+    add_menu_page('dotstudioPRO Options', 'dotstudioPRO Options', 'manage_options', 'dot-studioz-options', 'dot_studioz_menu_page', plugins_url( 'images/dsp.png', __FILE__ ));
 
 }
 
