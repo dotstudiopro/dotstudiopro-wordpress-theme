@@ -55,32 +55,12 @@ if (strpos($uri, 'wp-admin') === false) {
 
 add_action('wp_enqueue_scripts', 'ds_plugin_style');
 add_action( 'wp_enqueue_scripts', 'ds_owl_carousel' );
-// function dot_studioz_deactivate() {
-
-//     $plugins = get_option('active_plugins');
-
-// foreach($plugins as $k => $v){
-
-//     if(strpos($v, "ds-premium-carousel")){
-
-//         unset($plugins[$k]);
-
-//         update_option('active_plugins', $plugins);
-
-//         break;
-
-//     }
-
-//     }
-
-// }
-// register_deactivation_hook( __FILE__, 'dot_studioz_deactivate' );
 
 /** Add Menu Entry **/
 function dot_studioz_menu()
 {
 
-    add_menu_page('dotstudioPRO Options', 'dotstudioPRO Options', 'manage_options', 'dot-studioz-options', 'dot_studioz_menu_page', 'dashicons-video-alt');
+    add_menu_page('dotstudioPRO Options', 'dotstudioPRO Options', 'manage_options', 'dot-studioz-options', 'dot_studioz_menu_page', plugins_url( 'images/dsp.jpg', __FILE__ ));
 
 }
 
