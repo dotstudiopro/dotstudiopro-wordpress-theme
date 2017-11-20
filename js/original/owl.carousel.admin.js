@@ -3,6 +3,7 @@ jQuery(function ($) {
 		var channels, category, title;
 		$('#carousel-type').change(function() {
 				$('.carousel-list').css('display', 'none');
+				$('#ds-carousel-built-shortcode').text('');
 				//var which = '#' + $(this).val() + '-carousel-list';
 				var which = $(this).val();
 				$('#' + which + '-carousel-list').css('display', 'block');
@@ -116,6 +117,6 @@ jQuery(function ($) {
 						strOut = '[dot_studioz_owl_carousel ' + category + channels + getOptions() + ']'
 
 				}
-				$('#dot-studioz-carousel-built-shortcode').text(strOut);
+				$('#ds-carousel-built-shortcode').text(strOut);
 		}
 });
