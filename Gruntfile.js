@@ -3,18 +3,18 @@ module.exports = function(grunt) {
 				pkg: grunt.file.readJSON('package.json'),
 				watch: {
 						sass: {
-								files: ['src/scss/**/*.{scss,sass}'],
+								files: ['scss/**/*.{scss,sass}'],
 								tasks: ['sass:dist']
+						},
+						uglify: {
+								files: ['js/original/owl.carousel.admin.js', 'js/original/jquery.gridder.js', 'js/original/owl.carousel.js', 'js/original/channel.functions.js', 'js/original/channel.video.functions.js', 'js/original/channel.display.functions.js'],
+								tasks: ['uglify']
 						},
 						livereload: {
 								files: ['*.html', '*.php', 'js/**/*.{js,json}', 'css/*.css', 'img/**/*.{png,jpg,jpeg,gif,webp,svg}'],
 								options: {
 										livereload: true
 								}
-						},
-						uglify: {
-								files: ['src/js/**/*.js'],
-								tasks: ['uglify']
 						}
 				},
 				sass: {
