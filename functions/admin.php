@@ -10,12 +10,12 @@
   *
   * @return void
   */
-function ds_save_admin_options()
+function dsppremium_save_admin_options()
 {
 
     if (isset($_POST['ds-save-admin-options'])) {
 
-        ds_api_key_change();
+        dsppremium_api_key_change();
 
         update_option('ds_fb_app_id', ds_verify_post_var('ds_fb_app_id'));
 

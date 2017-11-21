@@ -1,10 +1,8 @@
-<?php get_header();
-
-?>
+<?php get_header(); ?>
 <div id="main">
 	<ul class='ds-cat nopadding'>
 
-	<?php categories_loop();?>
+	<?php dsppremium_categories_loop();?>
 
 	</ul>
 

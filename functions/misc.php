@@ -15,7 +15,7 @@
  *
  * @return void
  */
-function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
+function dsppremium_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $curl_header)
 {
     $curl = curl_init();
 
@@ -45,7 +45,7 @@ function ds_run_curl_command($curl_url, $curl_request_type, $curl_post_fields, $
  *
  * @return bool|string|int|object|array|null
  */
-function ds_verify_var($var)
+function dsppremium_verify_var($var)
 {
     return isset($var) ? sanitize_text_field($var) : '';
 }
@@ -57,7 +57,7 @@ function ds_verify_var($var)
  *
  * @return bool|string|int|object|array|null
  */
-function ds_verify_post_var($var)
+function dsppremium_verify_post_var($var)
 {
     return isset($_POST[$var]) ? sanitize_text_field($_POST[$var]) : '';
 }
@@ -67,10 +67,10 @@ function ds_verify_post_var($var)
  *
  * @return void
  */
-function ds_light_theme_shadows()
+function dsppremium_light_theme_shadows()
 {
 
-    if (get_option('ds_plugin_style') != 'light-style' || get_option('ds_light_theme_shadow') == 0) {
+    if (get_option('dsppremium_plugin_style') != 'light-style' || get_option('dsppremium_light_theme_shadow') == 0) {
         return;
     }
 
@@ -101,7 +101,7 @@ function ds_light_theme_shadows()
  *
  * @return void
  */
-function ds_video_var($public_query_vars)
+function dsppremium_video_var($public_query_vars)
 {
     $public_query_vars[] = 'video';
     return $public_query_vars;
@@ -114,13 +114,13 @@ function ds_video_var($public_query_vars)
  *
  * @return void
  */
-function ds_iframe_replace()
+function dsppremium_iframe_replace()
 {
     if (is_admin()) {
         return;
     }
     // Start output and check HTML
-    ob_start('ds_iframe_html');
+    ob_start('dsppremium_iframe_html');
 }
 
 /**
@@ -132,7 +132,7 @@ function ds_iframe_replace()
  *
  * @return void
  */
-function ds_iframe_html($html)
+function dsppremium_iframe_html($html)
 {
     // Replace <iframe> code with a div that loads the iframe based on scroll.
     $iframe_split = explode('<iframe', $html);
@@ -184,9 +184,9 @@ function generateRandomString($length = 5)
  * This generally either means that they need to set up a development mode environment for US, or the API key is bad
  * @return void
  */
-function ds_no_country()
+function dsppremium_no_country()
 {
-    $country = ds_get_country();
+    $country = dsppremium_get_country();
     if ($country) {
         return;
     }
@@ -202,11 +202,11 @@ function ds_no_country()
  *
  * @return void
  */
-function ds_headliner_video_for_template()
+function dsppremium_headliner_video_for_template()
 {
-    if (!ds_channel_is_parent() && !ds_channel_is_child()) {
+    if (!dsppremium_channel_is_parent() && !dsppremium_channel_is_child()) {
         echo get_query_var("video", false) ? channel_selected_video() : channel_first_video();
-    } else if (ds_channel_is_child()) {
+    } else if (dsppremium_channel_is_child()) {
         echo get_query_var("video", false) ? child_channel_selected_video() : child_channel_first_video();
     }
 }
@@ -218,7 +218,7 @@ function ds_headliner_video_for_template()
  *
  * @return void
  */
-function ds_meta_tags()
+function dsppremium_meta_tags()
 {
 
     global $channel;
@@ -246,7 +246,7 @@ function ds_meta_tags()
     }
 
     ?><meta name="description" content="<?php echo $description; ?>">
-    <meta property="fb:app_id" content="<?php echo get_option('ds_fb_app_id'); ?>" >
+    <meta property="fb:app_id" content="<?php echo get_option('dsppremium_fb_app_id'); ?>" >
     <!-- OG meta --><meta property="og:site_name" content="<?php echo $name_site; ?>">
     <meta property="og:description" content="<?php echo $description; ?>">
     <meta property="og:type" content="website" >
@@ -258,8 +258,8 @@ function ds_meta_tags()
     <!-- Twitter Summay Card -->
     <meta name="twitter:card" content="summary_large_image" >
     <meta name="twitter:title" content="<?php echo $name; ?>">
-    <meta name="twitter:site" content="<?php echo get_option('ds_twitter_handle'); ?>">
-    <meta name="twitter:creator" content="<?php echo get_option('ds_twitter_handle'); ?>">
+    <meta name="twitter:site" content="<?php echo get_option('dsppremium_twitter_handle'); ?>">
+    <meta name="twitter:creator" content="<?php echo get_option('dsppremium_twitter_handle'); ?>">
     <meta name="twitter:description" content="<?php echo $description; ?>">
     <meta name="twitter:image" content="<?php echo $meta->image_id; ?>/640/360"><?php
 
@@ -270,7 +270,7 @@ function ds_meta_tags()
  *
  * @return void
  */
-function ds_template_fb_code()
+function dsppremium_template_fb_code()
 {
 
     ?>
@@ -298,7 +298,7 @@ function ds_template_fb_code()
  *
  * @return void
  */
-function ds_templates_exist()
+function dsppremium_templates_exist()
 {
     $templates = array("ds-all-categories.tpl.php",
         "ds-single-category.tpl.php",
@@ -323,7 +323,7 @@ function ds_templates_exist()
  *
  * @return void
  */
-function ds_template_copy()
+function dsppremium_template_copy()
 {
 
     $error                    = "";
@@ -371,9 +371,9 @@ function ds_template_copy()
  *
  * @return void
  */
-function ds_add_custom_css()
+function dsppremium_add_custom_css()
 {
-    echo "\n<style>" . get_option('ds_plugin_custom_css') . "</style>\n\n";
+    echo "\n<style>" . get_option('dsppremium_plugin_custom_css') . "</style>\n\n";
 
 }
 

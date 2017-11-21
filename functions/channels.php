@@ -10,7 +10,7 @@
  *
  * @return bool
  */
-function ds_channel_is_parent()
+function dsppremium_channel_is_parent()
 {
     global $wpdb, $post;
     $channel_check_grab = get_page_by_path('channels');
@@ -31,7 +31,7 @@ function ds_channel_is_parent()
  *
  * @return bool
  */
-function ds_channel_is_child()
+function dsppremium_channel_is_child()
 {
     global $post;
     if ($post->post_parent == 0) {
@@ -52,7 +52,7 @@ function ds_channel_is_child()
  *
  * @return void
  */
-function channels_check()
+function dsppremium_channels_check()
 {
     // This process can take a moment, so we make sure we have time
     set_time_limit(240);
@@ -164,7 +164,7 @@ function channels_check()
  *
  * @return void
  */
-function channel_loop()
+function dsppremium_channel_loop()
 {
 
     $channels = list_channels();
@@ -176,11 +176,23 @@ function channel_loop()
         return;
     }
 
-    foreach ($channels as $c) {
+    foreach ($channels as $ch) {
 
-        echo "Title: " . $c->title . "<br/>";
+        $spotlight_poster = "";
 
-        echo "Image: <img src='" . $c->videos_thumb . "/380/215' /><br/>";
+        if (!empty($ch->spotlight_poster)) {
+            $spotlight_poster = $ch->spotlight_poster;
+        } else if (!empty($ch->poster)) {
+            $spotlight_poster = $ch->poster;
+        } else if (!empty($ch->videos_thumb)) {
+            $spotlight_poster = $ch->videos_thumb;
+        } else if (!empty($ch->channel_logo)) {
+            $spotlight_poster = $ch->channel_logo;
+        }
+
+        echo "Title: " . $ch->title . "<br/>";
+
+        echo "Image: <img src='" . $spotlight_poster . "/380/215' /><br/>";
 
     }
 
@@ -191,7 +203,7 @@ function channel_loop()
  *
  * @return void
  */
-function categories_loop()
+function dsppremium_categories_loop()
 {
 
     set_time_limit(120);
@@ -202,7 +214,7 @@ function categories_loop()
 
         $post = get_page_by_path('channel-categories/' . $c->slug);
 
-        $show_check = get_post_meta($post->ID, 'ds_show_category', true);
+        $show_check = get_post_meta($post->ID, 'dsppremium_show_category', true);
 
         if ($show_check != 1) {
             continue;
@@ -239,7 +251,7 @@ function categories_loop()
  *
  * @return void
  */
-function categories_check()
+function dsppremium_categories_check()
 {
 
     global $wpdb;
@@ -283,11 +295,11 @@ function categories_check()
             'post_parent'  => $category_page_id,
         ));
 
-        update_post_meta($page_id, 'ds_show_category', 1);
+        update_post_meta($page_id, 'dsppremium_show_category', 1);
 
         if ($c->homepage != 1) {
 
-            update_post_meta($page_id, 'ds_show_category', 0);
+            update_post_meta($page_id, 'dsppremium_show_category', 0);
 
         }
 
@@ -307,7 +319,7 @@ function categories_check()
  *
  * @return void
  */
-function ds_create_channel_category_menu()
+function dsppremium_create_channel_category_menu()
 {
 
     // Check if the menu exists
@@ -336,7 +348,7 @@ function ds_create_channel_category_menu()
 
         }
 
-        $auto_assign = get_option('ds_auto_assign_menu');
+        $auto_assign = get_option('dsppremium_auto_assign_menu');
 
         if (empty($auto_assign)) {
             return;
@@ -361,7 +373,7 @@ function ds_create_channel_category_menu()
  *
  * @return void
  */
-function ds_site_flush()
+function dsppremium_site_flush()
 {
 
     global $wpdb;
@@ -407,12 +419,12 @@ function ds_site_flush()
     wp_delete_nav_menu("Browse Channel Categories");
 
     // Rebuild Categories
-    categories_check();
+    dsppremium_categories_check();
 
     // Rebuild Channels
-    channels_check();
+    dsppremium_channels_check();
 
-    ds_create_channel_category_menu();
+    dsppremium_create_channel_category_menu();
 
     wp_redirect(site_url() . "/wp-admin/admin.php?page=dot-studioz-options&resynced=1");
     exit;
@@ -424,7 +436,7 @@ function ds_site_flush()
  *
  * @return void
  */
-function ds_category_images_init()
+function dsppremium_category_images_init()
 {
     if (empty($_GET['post'])) {
         return false;
@@ -434,7 +446,7 @@ function ds_category_images_init()
     $categories = get_page_by_path("channel-categories");
 
     if ((int) $post->post_parent === (int) $categories->ID) {
-        add_meta_box("ds_category_image", "Category Image", "ds_category_image_field", "page", "normal", "high");
+        add_meta_box("dsppremium_category_image", "Category Image", "dsppremium_category_image_field", "page", "normal", "high");
     }
 }
 
@@ -446,7 +458,7 @@ function ds_category_images_init()
  *
  * @return void
  */
-function ds_category_image_field()
+function dsppremium_category_image_field()
 {
     $post      = get_post($_GET['post']);
     $image     = get_option('ds-category-image-' . $post->post_name);
@@ -473,7 +485,7 @@ function ds_category_image_field()
  *
  * @return string
  */
-function ds_cust_filename($dir, $name, $ext)
+function dsppremium_cust_filename($dir, $name, $ext)
 {
     return $_FILES['ds-category-image']['name'] . rand(100, 999) . time() . $ext;
 }
@@ -483,7 +495,7 @@ function ds_cust_filename($dir, $name, $ext)
  *
  * @return void
  */
-function ds_save_category_image_field()
+function dsppremium_save_category_image_field()
 {
     if (!isset($_FILES['ds-category-image'])) {
         return;
@@ -492,7 +504,7 @@ function ds_save_category_image_field()
     global $post;
     $slug         = $post->post_name;
     $uploadedfile = $_FILES['ds-category-image'];
-    $movefile     = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'ds_cust_filename'));
+    $movefile     = wp_handle_upload($uploadedfile, array('test_form' => false, 'unique_filename_callback' => 'dsppremium_cust_filename'));
     if ($movefile && !isset($movefile['error'])) {
         update_option("ds-category-image-$slug", $movefile['url']);
     }
@@ -521,10 +533,10 @@ function display_channel_video_player()
  *
  * @return void
  */
-function ds_is_channel_parent_check()
+function dsppremium_is_channel_parent_check()
 {
 
-    if (ds_channel_is_parent()) {
+    if (dsppremium_channel_is_parent()) {
 
         $videos = grab_channel();
 
@@ -561,7 +573,7 @@ function igrab_channel()
 
     $video = false;
 
-    $is_child = ds_channel_is_child();
+    $is_child = dsppremium_channel_is_child();
 
     $videos = grab_channel();
 
@@ -664,11 +676,11 @@ function igrab_channel()
 function channel_headline_video()
 {
 
-    global $ds_curl;
+    global $dsppremium_curl;
 
     $video = get_query_var("video", false);
 
-    if (ds_channel_is_child()) {
+    if (dsppremium_channel_is_child()) {
 
         $videos = grab_channel();
 
@@ -732,7 +744,7 @@ function channel_headline_video()
 
         }
 
-        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("dsppremium_player_slider_color", "228b22") . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
         $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
@@ -849,7 +861,7 @@ function channel_headline_video()
             wp_enqueue_style('video-custom', plugins_url( 'css/video.channel.customization.css', __DIR__ ));
         }
 
-        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("ds_player_slider_color", "228b22") . "&autostart=" . (get_option("ds_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("dsppremium_player_slider_color", "228b22") . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
         $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
@@ -867,7 +879,7 @@ function channel_headline_video()
 function get_child_siblings()
 {
 
-    if (!ds_channel_is_child()) {
+    if (!dsppremium_channel_is_child()) {
         return false;
     }
 
@@ -913,7 +925,7 @@ function get_child_siblings()
  *
  * @return void
  */
-function ds_is_front_page_channel()
+function dsppremium_is_front_page_channel()
 {
     $frontpage_id = (int) get_option('page_on_front');
     // The ID will be 0 if it's not set, so we can ignore it if so
@@ -944,7 +956,7 @@ function ds_is_front_page_channel()
 
     ?>
     <div class="notice notice-warning">
-        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> It appears you've set a channel as your front page.  <b>DO NOT DO THIS!</b> This will cause that channel to not work properly.  Please change it as soon as possible to a non-channel front page. <a class='button button-primary' href='<?php echo strpos($_SERVER['REQUEST_URI'], '?') !== false ? $_SERVER['REQUEST_URI'] . '&dspdev_set_frontpage_to_category=1' : $_SERVER['REQUEST_URI'] . '?dspdev_set_frontpage_to_category=1'; ?>'>Set Front Page to Channel Categories</a></p>
+        <p><b>dotstudioPRO Premium Video Plugin Notice:</b> It appears you've set a channel as your front page.  <b>DO NOT DO THIS!</b> This will cause that channel to not work properly.  Please change it as soon as possible to a non-channel front page. <a class='button button-primary' href='<?php echo strpos($_SERVER['REQUEST_URI'], '?') !== false ? $_SERVER['REQUEST_URI'] . '&dsppremium_set_frontpage_to_category=1' : $_SERVER['REQUEST_URI'] . '?dsppremium_set_frontpage_to_category=1'; ?>'>Set Front Page to Channel Categories</a></p>
     </div>
     <?php
 }
@@ -954,9 +966,9 @@ function ds_is_front_page_channel()
  *
  * @return void
  */
-function ds_set_front_page_to_categories()
+function dsppremium_set_front_page_to_categories()
 {
-    if (empty($_GET['dspdev_set_frontpage_to_category']) || $_GET['dspdev_set_frontpage_to_category'] != 1) {
+    if (empty($_GET['dsppremium_set_frontpage_to_category']) || $_GET['dsppremium_set_frontpage_to_category'] != 1) {
         return;
     }
 
@@ -967,7 +979,7 @@ function ds_set_front_page_to_categories()
 
     update_option('page_on_front', $cats->ID);
     update_option('show_on_front', 'page');
-    $url = str_replace('&dspdev_set_frontpage_to_category=1', '', str_replace('dspdev_set_frontpage_to_category=1', '', $_SERVER['HTTP_REFERER']));
+    $url = str_replace('&dsppremium_set_frontpage_to_category=1', '', str_replace('dsppremium_set_frontpage_to_category=1', '', $_SERVER['HTTP_REFERER']));
     wp_redirect($url);
     exit;
 }
@@ -977,7 +989,7 @@ function ds_set_front_page_to_categories()
  *
  * @return void
  */
-function dspdev_no_channels_check_nag() {
+function dsppremium_no_channels_check_nag() {
     ?>
     <div class="notice notice-warning">
         <p><b>dotstudioPRO Premium Video Plugin Notice:</b> We were unable to recreate channel pages.  It appears that no channels were returned when we requested them from our API.  Please <a href='mailto:support@dotstudiopro.com'>contact us</a> immediately.</p>
@@ -990,7 +1002,7 @@ function dspdev_no_channels_check_nag() {
  *
  * @return integer The count of the child pages
  */
-function dspdev_get_channel_page_children_count() {
+function dsppremium_get_channel_page_children_count() {
     $channel_parent = get_page_by_path('channels');
     if(!$channel_parent) return 0;
     $args = array(
