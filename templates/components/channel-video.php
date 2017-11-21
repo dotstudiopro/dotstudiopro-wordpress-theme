@@ -28,7 +28,7 @@
 			    </div>
 
 			   <?php if($show_playlist_above_meta) {
-			   		echo ds_theater_mode_playlist($videoId);
+			   		echo dsppremium_theater_mode_playlist($videoId);
 			   	} ?>
 
 			    <div class='row'>
@@ -83,7 +83,7 @@
 			    </div>
 
 			   <?php if(!$show_playlist_above_meta) {
-			   		echo ds_theater_mode_playlist($videoId);
+			   		echo dsppremium_theater_mode_playlist($videoId);
 			   	} ?>
 
 			</div>

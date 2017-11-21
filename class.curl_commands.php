@@ -209,7 +209,7 @@ function curl_command($command, $args = array()){
 
 		$duplicate = get_post_meta($post->ID, "ds-duplicate", false);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -300,7 +300,7 @@ function curl_command($command, $args = array()){
 
 		$category = get_post_meta($channel_check_grab->ID, "ds-category", TRUE);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -362,7 +362,7 @@ function curl_command($command, $args = array()){
 
 		$category = get_post_meta($post->ID, "ds-category", TRUE);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -432,7 +432,7 @@ function curl_command($command, $args = array()){
 
 		$token = get_option('ds_curl_token');
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$token || !$this->country){
 

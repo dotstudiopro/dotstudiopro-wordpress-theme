@@ -1,6 +1,6 @@
 <?php
 
-ds_is_channel_parent_check();
+dsppremium_is_channel_parent_check();
 
 /*********************************************************/
 
@@ -12,7 +12,7 @@ $siblings = get_child_siblings();
 
 $category = get_query_var("channel_category", false);
 remove_action('wp_head', 'swp_add_header_meta', 1);
-add_action('wp_head', 'ds_meta_tags');
+add_action('wp_head', 'dsppremium_meta_tags');
 
 /********************************************/
 
@@ -152,7 +152,7 @@ if (is_array($channel) && count($channel) > 0) {
 
 		    </div>
 		    <div class='ds-commenting-sidebar'>
-		    <?php ds_template_fb_code();?>
+		    <?php dsppremium_template_fb_code();?>
 		    </div>
 		    <?php
 } else {?>
