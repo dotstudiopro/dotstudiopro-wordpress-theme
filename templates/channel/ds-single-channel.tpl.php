@@ -19,7 +19,7 @@ get_header();
 global $post;
 
 ?>
-<div id="main" class="container">
+<div id="main" class="container ds-main-container">
 
 
 	<?php display_channel_video_player();?>
@@ -100,29 +100,27 @@ if (is_array($channel) && count($channel) > 0) {
 			        ?>
 
 		            <li <?php echo $selected; ?>>
-		                <img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />
-		                <div class='ds-overlay animated fadeIn'>
-
-		                <?php if (!$siblings) {?>
-
-		                    <a href='<?php echo home_url("channels/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
-
-		                <?php } else {?>
-
-		                    <a href='<?php echo home_url("channels/" . $channel_parent->post_name . "/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
-
-		                <?php }?>
-
-
-		                 <i class='fa fa-play-circle-o fa-3x'></i>
-		                </a>
-		                <label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
-		                </div>
-		                <h3 class='character-limit-90'><?php echo $title ?></h3>
-		                <span class='ds-video-year animated fadeIn'><small>Year: <?php echo $year ?></small></span>
-		                <span class='ds-video-country animated fadeIn'><small>Country: <?php echo $country ?></small></span>
-		                <span class='ds-video-description character-limit-90 animated fadeIn'><?php echo $description ?></span>
-		            </li>
+									<!-- ds-single-channel.tpl -->
+									<div class='ds-channel-list-item'>
+										<div class='ds-channel-list-img' style='background-image:url(http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215);'>
+												<!--<img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />-->
+												<label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
+					                <?php if (!$siblings) {?>
+					                    <a class='ds-overlay' href='<?php echo home_url("channels/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
+					                <?php } else {?>
+					                    <a href='<?php echo home_url("channels/" . $channel_parent->post_name . "/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
+					                <?php }?>
+					                 <i class='fa fa-play-circle-o fa-3x'></i>
+					                </a>
+										</div>
+										<div class='ds-channel-item-meta'>
+											<h3 class='character-limit-90'><?php echo $title ?></h3>
+			                <span class='ds-video-year animated fadeIn'><small>Year: <?php echo $year ?></small></span>
+			                <span class='ds-video-country animated fadeIn'><small>Country: <?php echo $country ?></small></span>
+			                <span class='ds-video-description character-limit-90 animated fadeIn'><?php echo $description ?></span>
+										</div>
+									</div>
+								</li>
 		            <?php
 
     }

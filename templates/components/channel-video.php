@@ -53,9 +53,9 @@
 						        </div>
 
 						        <!-- METADATA AND SHARING -->
-										<div class='row'>
+										<div class='row ds-metabox'>
 												<!-- meta -->
-												<div class='col-md-8 col-sm-12 col-xs-12'>
+												<div class='ds-videometadata'>
 													<ul class='ds-videometalist'>
 												  			<li><?php echo $headline_video->duration ?> min</li>
 									              <li><?php echo $headline_video->country ?></li>
@@ -66,7 +66,7 @@
 								         	</ul>
 							       	 	</div>
 							       	 	<!-- sharing -->
-							       	 	<div class='col-md-4 col-sm-12 col-xs-12'>
+							       	 	<div class='ds-videosharedata'>
 									        <?php
 													if(is_file( dirname( __FILE__ ) ."/../components/sharing.php" ) ){
 														include( dirname( __FILE__ ) ."/../components/sharing.php" );

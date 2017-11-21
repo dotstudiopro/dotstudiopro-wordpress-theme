@@ -18,6 +18,17 @@ ul.ds-tabs li.current{
 	background: #222;
 	color: #e5e5e5;
 }
+h1, h2, h3, h4, h5, h6,
+span.ds-video-headliner-description,
+h3.character-limit-90,
+.ds-video-description,
+.ds-video-year,
+.ds-video-country,
+.ds-videometalist,
+.ds-sharepad,
+.ds-sharepad i.fa {
+	color: #efefef;
+}
 
 .og-mask {
     position: absolute;
