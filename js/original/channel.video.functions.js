@@ -194,11 +194,14 @@ $(document).ready(function() {
     var scroll_offset = 130;
     anibox.css(getTargetProps());
 
+/*
     $(window).scroll(function(e) {
 
       if ($(window).width() <= 800) {
         return;
       }
+
+      var videoJS = player.find('.video-js');
 
       var vidFull = {
         width: '100%',
@@ -214,7 +217,7 @@ $(document).ready(function() {
       var vidSmall = {
         zIndex: '10',
         width: $(window).width() * 0.2,
-        height: 'auto',
+        height: ($(window).width() * 0.2) *.5625,
         boxShadow: '0 5px 2px rgba(0, 0, 0, 0.4)',
         outline: '3px solid #fff',
         position: 'fixed',
@@ -236,6 +239,7 @@ $(document).ready(function() {
         anibox.animate(targetProps, {
           duration: 500,
           complete: function() {
+            videoJS.css({"width": vidSmall.width, "height": vidSmall.height});
             player.show();
             anibox.hide();
           }
@@ -252,6 +256,7 @@ $(document).ready(function() {
         anibox.animate(targetProps, {
           duration: 500,
           complete: function() {
+            videoJS.css({"width": vidFull.width, "height": vidFull.height});
             player.show();
             anibox.hide();
             if (!$('.active-playlist').hasClass('dot-studioz-playlist-theater-mode')) {
@@ -265,7 +270,7 @@ $(document).ready(function() {
       $(window).trigger('resize');
 
     });
-
+*/
 
     function showPlaylistStandardMode() {
       // show standard mode
@@ -294,29 +299,30 @@ $(document).ready(function() {
     function getTargetProps() {
       var anibox = $('#anibox');
       var props = {};
-      var videoJS = $('.video-js');
+      var vid = $('.player');
 
 
       if (!anibox.hasClass('full-display')) {
         // expanding - return the full-size properties
         anibox.removeClass('mini-display').addClass('full-display');
-        props.width = $('.dot-studioz-video').width();
-        props.height = $('.dot-studioz-video').height();
-        props.left = $('.dot-studioz-video').offset().left;
-        props.top = $('.dot-studioz-video').position().top;
+        props.width = vid.width();
+        props.height = vid.height();
+        props.left = vid.offset().left;
+        props.top = vid.position().top;
         props['z-index'] = '1000';
       } else {
 
         // minifying - return the mini-size properties
         anibox.removeClass('full-display').addClass('mini-display');
         props.width = $(window).width() * 0.2;
-        props.height = $(window).width() * .1125;
+        props.height = props.width * .5625;
         props.top = 100;
         props.left = $(window).width() - ($(window).width() * 0.2);
         props['z-index'] = '1000';
       }
 
       return props;
+
     }
 
   }

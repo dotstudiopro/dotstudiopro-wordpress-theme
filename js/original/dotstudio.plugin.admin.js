@@ -23,7 +23,6 @@ jQuery(function ($) {
 				}
 		})
 
-
 		$('.copy-template-btn').click(function() {
 				var c = confirm('Copy dotstudioPRO templates to your theme directory?');
 				if (c) {
