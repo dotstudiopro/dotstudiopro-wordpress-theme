@@ -74,7 +74,7 @@ function dot_studioz_menu_page()
     }
 
     wp_enqueue_style( 'ds-admin-css', plugins_url( 'css/owl.carousel.admin.min.css', __FILE__ ));
-    wp_enqueue_script( 'ds-admin-js', plugins_url( 'js/owl.carousel.admin.min.js', __FILE__ ));
+    wp_enqueue_script( 'ds-admin-js', plugins_url( 'js/dotstudio.plugin.admin.min.js', __FILE__ ));
 
 
     echo "<div class='wrap'>";

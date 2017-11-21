@@ -1,6 +1,6 @@
 var $ = jQuery;
 $(document).ready(function() {
-  var playerwrap = $('.dot-studioz-video-fluidMedia').first();
+  var playerwrap = $('.ds-video-fluidMedia').first();
   var toggleFocusOn = false;
   var playerToggle = $('.dot-studioz-player-togglemode');
   var playlistMode = sessionStorage.getItem('playlistMode') != '' ? sessionStorage.getItem('playlistMode') : 'std';
@@ -12,17 +12,17 @@ $(document).ready(function() {
   }
 
 
-
-  var minifyVid = player.attr('data-minifyVid') == '1' ? true : false;
-  var autoRedir = player.attr('data-autoRedir') == '1' ? true : false;
-  var autoPlay = player.attr('data-autoPlay') == '1' ? true : false;
-  var enableRecPlaylist = player.attr('data-recPlaylist') == '1' ? true : false;
+  var minifyVid = player.attr('data-minifyvid') == '1' ? true : false;
+  var autoRedir = player.attr('data-autoredir') == '1' ? true : false;
+  var autoPlay = player.attr('data-autoplay') === '1' ? true : false;
+  var enableRecPlaylist = player.attr('data-recplaylist') == '1' ? true : false;
 
   // adjustments to the theater mode playlist carousel and standard mode playlist
 
   $('.dot-studioz-owl-fa').remove(); // don't want the play buttons
   $('.owl-item div:nth-child(2)').remove(); // don't want the titles here
   $('.dot-studioz-playlist-standard-mode').css('height', $('.dot-studioz-playlist-standard-mode').parent().height());
+
 
 
   populatePlaylist();
@@ -343,9 +343,10 @@ $(document).ready(function() {
         $(poster).css('background-image', posterBkg);
       }
 
-
       if (autoPlay) {
         try {
+          console.clear();
+          console.log('I AM PLAYING!');
           vid.play();
         } catch (e) {
           console.log(e);
@@ -356,9 +357,10 @@ $(document).ready(function() {
       // auto redirect functionality
       if (autoRedir) {
         vid.onended = function(e) {
-          var aryVidList = $('ul.dot-studioz-video-thumbnails li');
+          var aryVidList = $('ul.ds-video-thumbnails li');
           var aryURLs = [];
-
+          console.clear();
+          console.log(aryVidList);
           $.each(aryVidList, function(key, val) {
             if ($(this).hasClass('selected')) {
               strToPush = 'selected'

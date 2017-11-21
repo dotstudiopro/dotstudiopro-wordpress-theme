@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 								tasks: ['sass:dist']
 						},
 						uglify: {
-								files: ['js/original/owl.carousel.admin.js', 'js/original/jquery.gridder.js', 'js/original/owl.carousel.js', 'js/original/channel.functions.js', 'js/original/channel.video.functions.js', 'js/original/channel.display.functions.js'],
+								files: ['js/original/dotstudio.plugin.admin.js', 'js/original/jquery.gridder.js', 'js/original/owl.carousel.js', 'js/original/channel.functions.js', 'js/original/channel.video.functions.js', 'js/original/channel.display.functions.js'],
 								tasks: ['uglify']
 						},
 						livereload: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 				uglify: {
 						my_target: {
 								files: [{
-										'js/owl.carousel.admin.min.js': ['js/original/owl.carousel.admin.js']
+										'js/dotstudio.plugin.admin.min.js': ['js/original/dotstudio.plugin.admin.js']
 								}, {
 										'js/jquery.gridder.min.js': ['js/original/jquery.gridder.js']
 								}, {

@@ -302,7 +302,6 @@ function ds_templates_exist()
 {
     $templates = array("ds-all-categories.tpl.php",
         "ds-single-category.tpl.php",
-        "ds-home.tpl.php",
         "ds-single-channel.tpl.php",
         "ds-single-channel-w-sidebar.tpl.php",
         "video.channel.customization.css",
@@ -328,7 +327,7 @@ function ds_template_copy()
 {
 
     $error                    = "";
-    $templates                = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php", "ds-home.tpl.php");
+    $templates                = array("ds-all-categories.tpl.php", "ds-single-category.tpl.php");
     $single_channel_templates = array("ds-single-channel.tpl.php", "ds-single-channel-w-sidebar.tpl.php");
 
     foreach ($templates as $t) {
@@ -341,7 +340,7 @@ function ds_template_copy()
     }
 
     foreach ($single_channel_templates as $t) {
-        $plugin_dir = plugin_dir_path(__FILE__) . '../templates/' . $t;
+        $plugin_dir = plugin_dir_path(__FILE__) . '../templates/channel/' . $t;
         $theme_dir  = get_stylesheet_directory() . '/' . $t;
 
         if (!copy($plugin_dir, $theme_dir)) {

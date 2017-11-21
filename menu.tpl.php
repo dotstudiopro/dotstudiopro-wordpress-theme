@@ -78,7 +78,7 @@
    /** Fancy load **/
 
    $fancy_load_option = get_option("ds_fancy_load");
-
+   $copy_btn_class = ds_templates_exist() ? 'warn-templates-exist' : 'copy-template-btn';
    $sel_yes = $fancy_load_option ? 'selected' : '';
    $sel_no = !$fancy_load_option ? 'selected' : '';
    $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>No</option>";
@@ -198,7 +198,7 @@
                </tr>
                <tr <?php if(ds_templates_exist()) { ?>style='background-color:yellow;' <?php } ?>>
                   <td>Copy plugin template files to my theme folder <?php if(ds_templates_exist()) { ?>(USE WITH CAUTION)<?php } ?></b><br/><span class='description'>For custom template changes.</span></td>
-                  <td><a class='button <?php if(ds_templates_exist()) { ?>warn-templates-exist <?php } ?>'  data-href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td>
+                  <td><a class='button <?php echo $copy_btn_class ?>'  data-href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td>
                </tr>
                <tr>
                   <td>Custom CSS</td>
