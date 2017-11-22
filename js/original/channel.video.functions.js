@@ -275,31 +275,6 @@ $(document).ready(function() {
 
     });
 
-
-    function showPlaylistStandardMode() {
-      // show standard mode
-      $('.dot-studioz-video').removeClass('col-md-12').addClass('col-md-8');
-      $('.dot-studioz-playlist-standard-mode').addClass('col-md-4').addClass('active-playlist').show();
-      $('.dot-studioz-playlist-theater-mode').removeClass('active-playlist').css({
-        'width': '0',
-        'display': 'none'
-      });
-      sessionStorage.setItem('playlistMode', 'std');
-    }
-
-    function showPlaylistTheaterMode() {
-      // show theater mode
-      $('.dot-studioz-video').removeClass('col-md-8').addClass('col-md-12');
-      $('.dot-studioz-playlist-standard-mode').removeClass('col-md-4').removeClass('active-playlist').hide();
-      $('.dot-studioz-playlist-theater-mode').addClass('active-playlist').css({
-        'width': '100%',
-        'display': 'block'
-      });
-      $('.owl-carousel').trigger('refresh.owl.carousel');
-      sessionStorage.setItem('playlistMode', 'theater');
-    }
-
-
     function getTargetProps() {
       var anibox = $('#anibox');
       var props = {};
@@ -330,10 +305,83 @@ $(document).ready(function() {
 
     }
 
+    function showPlaylistStandardMode() {
+      // show standard mode
+      $('.dot-studioz-video').removeClass('col-md-12').addClass('col-md-8');
+      $('.dot-studioz-playlist-standard-mode').addClass('col-md-4').addClass('active-playlist').show();
+      $('.dot-studioz-playlist-theater-mode').removeClass('active-playlist').css({
+        'width': '0',
+        'display': 'none'
+      });
+      sessionStorage.setItem('playlistMode', 'std');
+    }
+
+    function showPlaylistTheaterMode() {
+      // show theater mode
+      $('.dot-studioz-video').removeClass('col-md-8').addClass('col-md-12');
+      $('.dot-studioz-playlist-standard-mode').removeClass('col-md-4').removeClass('active-playlist').hide();
+      $('.dot-studioz-playlist-theater-mode').addClass('active-playlist').css({
+        'width': '100%',
+        'display': 'block'
+      });
+      $('.owl-carousel').trigger('refresh.owl.carousel');
+      sessionStorage.setItem('playlistMode', 'theater');
+    }
+
+
+
+
   }
 
   var i = 0;
   checkVidLoaded();
+
+
+
+  function populatePlaylist() {
+
+    // populate the right-hand side playlist with items from the Owl Carousel
+
+    var carouselItems = $('.related-videos-carousel').find('a');
+
+    if (carouselItems.length == 0) {
+      enableRecPlaylist = false;
+    } else {
+      var strItemList = '';
+      var strPlaylist = '<div><label>RELATED VIDEOS</label></div><ul>'
+      $.each(carouselItems, function(key, val) {
+        var itemName = $(this).attr('data-title');
+        var itemDesc = $(this).attr('data-desc') != '' ? $(this).attr('data-desc') : 'No Description Currently Available';
+        var videoId = $(this).attr('href');
+        var imgSrc = $(this).find('img').attr('src');
+
+        if (strItemList.indexOf(itemName) === -1) {
+          // to make sure all list items are unique
+          strItemList += itemName + ','
+
+          strPlaylist += '<li>';
+          strPlaylist += ' <a href="' + videoId + '" class="rec-list-item" data-title="' + itemName + '">' + '   <div class="playlist-item">';
+          strPlaylist += '     <div class="playlist-img"><img src="' + imgSrc + '" /></div>';
+          strPlaylist += '     <div class="playlist-info">';
+          strPlaylist += '       <div class="playlist-title">' + itemName + '</div>';
+          strPlaylist += '     </div>';
+          strPlaylist += '   </div>';
+          strPlaylist += ' </a>';
+          strPlaylist += '</li>';
+        }
+      });
+
+      strPlaylist += '</ul>';
+      $('.dot-studioz-playlist-standard-mode').append(strPlaylist);
+    }
+
+    $('.dot-studioz-playlist-theater-mode').css({
+      'width': '0',
+      'display': 'none'
+    });
+
+  }
+
 
   function checkVidLoaded() {
     var max = 10;
@@ -392,51 +440,6 @@ $(document).ready(function() {
       }
 
     }
-
-  }
-
-
-  function populatePlaylist() {
-
-    // populate the right-hand side playlist with items from the Owl Carousel
-
-    var carouselItems = $('.related-videos-carousel').find('a');
-
-    if (carouselItems.length == 0) {
-      enableRecPlaylist = false;
-    } else {
-      var strItemList = '';
-      var strPlaylist = '<div><label>RELATED VIDEOS</label></div><ul>'
-      $.each(carouselItems, function(key, val) {
-        var itemName = $(this).attr('data-title');
-        var itemDesc = $(this).attr('data-desc') != '' ? $(this).attr('data-desc') : 'No Description Currently Available';
-        var videoId = $(this).attr('href');
-        var imgSrc = $(this).find('img').attr('src');
-
-        if (strItemList.indexOf(itemName) === -1) {
-          // to make sure all list items are unique
-          strItemList += itemName + ','
-
-          strPlaylist += '<li>';
-          strPlaylist += ' <a href="' + videoId + '" class="rec-list-item" data-title="' + itemName + '">' + '   <div class="playlist-item">';
-          strPlaylist += '     <div class="playlist-img"><img src="' + imgSrc + '" /></div>';
-          strPlaylist += '     <div class="playlist-info">';
-          strPlaylist += '       <div class="playlist-title">' + itemName + '</div>';
-          strPlaylist += '     </div>';
-          strPlaylist += '   </div>';
-          strPlaylist += ' </a>';
-          strPlaylist += '</li>';
-        }
-      });
-
-      strPlaylist += '</ul>';
-      $('.dot-studioz-playlist-standard-mode').append(strPlaylist);
-    }
-
-    $('.dot-studioz-playlist-theater-mode').css({
-      'width': '0',
-      'display': 'none'
-    });
 
   }
 
