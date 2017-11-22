@@ -156,15 +156,6 @@
                   <td><select name='ds_plugin_style'><?php echo $template_styles ?></select></td>
                </tr>
                <tr>
-                  <td>Light Theme Shadow</td>
-                  <td>
-                     <select name='ds_light_theme_shadow'>
-                        <option value='1' <?php echo get_option('ds_light_theme_shadow') == 1 ? 'selected="selected"' : ''; ?>>On</option>
-                        <option value='0' <?php echo get_option('ds_light_theme_shadow') == 0 ? 'selected="selected"' : ''; ?>>Off</option>
-                     </select>
-                  </td>
-               </tr>
-               <tr>
                   <td>Use FancyLoad Iframe Loader</td>
                   <td><select name='ds_fancy_load'><?php echo $fancy_load ?></select></td>
                </tr>

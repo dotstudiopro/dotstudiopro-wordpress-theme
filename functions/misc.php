@@ -67,32 +67,6 @@ function ds_verify_post_var($var)
  *
  * @return void
  */
-function ds_light_theme_shadows()
-{
-
-    if (get_option('ds_plugin_style') != 'light-style' || get_option('ds_light_theme_shadow') == 0) {
-        return;
-    }
-
-    echo '
-        <style>
-            /* Box shadows for light theme. Comment these to remove on grid */
-            .og-expander-inner.light-theme-shadow{
-                -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-                -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-                box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
-
-            }
-
-            .gridder-list.light-theme-shadow img{
-                -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-                -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-                box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
-            }
-        </style>
-    ';
-
-}
 
 /**
  * Add the video query var to WP

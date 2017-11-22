@@ -21,7 +21,6 @@ add_filter('page_template', 'ds_all_categories_template', 11);
 add_action('admin_notices', 'ds_no_country');
 add_action('admin_notices', 'ds_is_front_page_channel');
 add_action('wp_enqueue_scripts', 'ds_scripts_load_cdn');
-add_action('wp_head', 'ds_light_theme_shadows', 990);
 add_action('wp_enqueue_scripts', 'ds_styles');
 add_action('admin_notices', 'ds_check_api_key_set');
 add_action('init', 'ds_get_country');
