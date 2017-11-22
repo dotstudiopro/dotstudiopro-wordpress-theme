@@ -48,7 +48,7 @@
 						        		<div class='col-md-12 col-sm-12 col-xs-12 ds-metabox'>
 								      		<span class='ds-video-headliner-description'><?php echo $headline_video->description ?></span>
 								      		<hr>
-													<a class='ds-more'>Show More</a>
+													<!-- <a class='ds-more' href='#primary'>Show More</a> -->
 						        		</div>
 						        </div>
 
