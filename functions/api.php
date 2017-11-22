@@ -20,7 +20,7 @@ function dsppremium_check_api_key_set()
     $new_api_key = $api_key = get_option('dspdev_api_key');
     if($old_api_key && !$new_api_key) {
         $api_key = $old_api_key;
-        set_option('dspdev_api_key', $old_api_key);
+        update_option('dspdev_api_key', $old_api_key);
     }
 
     if ($api_key && strlen($api_key) > 0) {

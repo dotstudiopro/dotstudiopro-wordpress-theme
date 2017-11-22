@@ -78,7 +78,7 @@
    /** Fancy load **/
 
    $fancy_load_option = get_option("ds_fancy_load");
-   $copy_btn_class = ds_templates_exist() ? 'warn-templates-exist' : 'copy-template-btn';
+   $copy_btn_class = dsppremium_templates_exist() ? 'warn-templates-exist' : 'copy-template-btn';
    $sel_yes = $fancy_load_option ? 'selected' : '';
    $sel_no = !$fancy_load_option ? 'selected' : '';
    $fancy_load = "<option value='1' $sel_yes>Yes</option><option value='0' $sel_no>No</option>";
@@ -87,7 +87,7 @@
 
    $resynced = isset($_GET['resynced'])  && $_GET['resynced'] == 1;
 
-   $channels = dspdev_get_channel_page_children_count();
+   $channels = dsppremium_get_channel_page_children_count();
 
    if ($resynced && empty($channels)) {
       dspdev_no_channels_check_nag();
@@ -187,8 +187,8 @@
                   <td>Auto-assign 'Browse' Menu on Flush<br/><span class='description'>Set the 'Browse Channel Categories' menu as the main nav on flush.</span></td>
                   <td><input type='checkbox' name='ds_auto_assign_menu' value='1' <?php echo get_option("ds_auto_assign_menu") == 1 ? 'checked="checked"' : '' ?> /></td>
                </tr>
-               <tr <?php if(ds_templates_exist()) { ?>style='background-color:yellow;' <?php } ?>>
-                  <td>Copy plugin template files to my theme folder <?php if(ds_templates_exist()) { ?>(USE WITH CAUTION)<?php } ?></b><br/><span class='description'>For custom template changes.</span></td>
+               <tr <?php if(dsppremium_templates_exist()) { ?>style='background-color:yellow;' <?php } ?>>
+                  <td>Copy plugin template files to my theme folder <?php if(dsppremium_templates_exist()) { ?>(USE WITH CAUTION)<?php } ?></b><br/><span class='description'>For custom template changes.</span></td>
                   <td><a class='button <?php echo $copy_btn_class ?>'  data-href='<?php echo site_url().'/wp-admin/admin.php?page=dot-studioz-options&templatecopy=1'; ?>'>Copy</a></td>
                </tr>
                <tr>

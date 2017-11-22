@@ -25,7 +25,7 @@ function dsppremium_save_admin_options()
 
         update_option('ds_plugin_style', dsppremium_verify_post_var('ds_plugin_style'));
 
-        update_option('ds_channel_template', ds_verify_post_var('ds_channel_template'));
+        update_option('ds_channel_template', dsppremium_verify_post_var('ds_channel_template'));
 
         update_option('ds_development_check', dsppremium_verify_post_var('ds_development_check'));
 
