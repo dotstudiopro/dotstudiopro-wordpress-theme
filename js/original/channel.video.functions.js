@@ -194,7 +194,7 @@ $(document).ready(function() {
     var scroll_offset = 130;
     anibox.css(getTargetProps());
 
-/*
+
     $(window).scroll(function(e) {
 
       if ($(window).width() <= 800) {
@@ -202,10 +202,14 @@ $(document).ready(function() {
       }
 
       var videoJS = player.find('.video-js');
+      var vidObj = player.find('#dsp-vid-js-player_html5_api');
+      var fullContainer = player.parent();
+      var wFull = fullContainer.width();
+      var wSmall = $(window).width() * 0.2;
 
       var vidFull = {
-        width: '100%',
-        height: '100%',
+        width: wFull,
+        height: wFull * .5625,
         boxShadow: 'none',
         outline: 0,
         position: 'inherit',
@@ -213,24 +217,22 @@ $(document).ready(function() {
         top: 0,
         borderTop: 'inherit'
       };
-
+      console.log(vidFull);
       var vidSmall = {
         zIndex: '10',
-        width: $(window).width() * 0.2,
-        height: ($(window).width() * 0.2) *.5625,
+        width: wSmall,
+        height: wSmall *.5625,
         boxShadow: '0 5px 2px rgba(0, 0, 0, 0.4)',
         outline: '3px solid #fff',
         position: 'fixed',
         top: 100,
         right: $(window).width() * 0.02
       };
-
+      console.log(vidSmall);
 
       var scroll_top = $(this).scrollTop();
       if (scroll_top > (playerwrap.offset().top + scroll_offset) && !player.hasClass('onsidebar')) {
         player.hide();
-
-
         if (!$('.active-playlist').hasClass('dot-studioz-playlist-theater-mode')) {
           $('.active-playlist').hide();
         }
@@ -240,6 +242,7 @@ $(document).ready(function() {
           duration: 500,
           complete: function() {
             videoJS.css({"width": vidSmall.width, "height": vidSmall.height});
+            vidObj.css({"width": vidSmall.width, "height": vidSmall.height});
             player.show();
             anibox.hide();
           }
@@ -257,6 +260,7 @@ $(document).ready(function() {
           duration: 500,
           complete: function() {
             videoJS.css({"width": vidFull.width, "height": vidFull.height});
+            vidObj.css({"width": vidFull.width, "height": vidFull.height});
             player.show();
             anibox.hide();
             if (!$('.active-playlist').hasClass('dot-studioz-playlist-theater-mode')) {
@@ -267,10 +271,10 @@ $(document).ready(function() {
         player.removeClass('onsidebar').css(vidFull);
       }
 
-      $(window).trigger('resize');
+      //$(window).trigger('resize');
 
     });
-*/
+
 
     function showPlaylistStandardMode() {
       // show standard mode
@@ -300,6 +304,7 @@ $(document).ready(function() {
       var anibox = $('#anibox');
       var props = {};
       var vid = $('.player');
+      var fullContainer = vid.parent();
 
 
       if (!anibox.hasClass('full-display')) {
@@ -307,8 +312,8 @@ $(document).ready(function() {
         anibox.removeClass('mini-display').addClass('full-display');
         props.width = vid.width();
         props.height = vid.height();
-        props.left = vid.offset().left;
-        props.top = vid.position().top;
+        props.left = fullContainer.position().left;
+        props.top = fullContainer.position().top;
         props['z-index'] = '1000';
       } else {
 
