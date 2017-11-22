@@ -12,7 +12,7 @@
  *
  * @return void
  */
-function ds_all_categories_template($single_template)
+function dsppremium_all_categories_template($single_template)
 {
 
     global $post;
@@ -39,7 +39,7 @@ function ds_all_categories_template($single_template)
  *
  * @return void
  */
-function ds_get_category_template($single_template)
+function dsppremium_get_category_template($single_template)
 {
 
     global $post;
@@ -74,7 +74,7 @@ function ds_get_category_template($single_template)
  *
  * @return void
  */
-function ds_get_channel_template($single_template)
+function dsppremium_get_channel_template($single_template)
 {
 
     global $post;
@@ -87,7 +87,7 @@ function ds_get_channel_template($single_template)
 
     if ($post->post_parent == $channel_parent || $channel_grandparent == $channel_parent) {
 
-        $template_option = get_option('ds_channel_template');
+        $template_option = get_option('dsppremium_channel_template');
 
         $single_template = locate_template($template_option . '.tpl.php');
 
@@ -119,27 +119,23 @@ function ds_get_channel_template($single_template)
 }
 
 /**
- * Get the home template
+ * Get the channels template
  *
  * @param string $single_template The template filename/location
  *
  * @return void
  */
-function ds_home_template($single_template)
-{
+function dsppremium_redirect_all_channels() {
+    // No need to check post name if it's an admin page
+    if(is_admin()) return;
 
     global $post;
 
-    if ($post->post_name == 'home') {
-
-        $single_template = locate_template('ds-home.tpl.php');
-
-        // Set the template...
-        if (empty($single_template) !== false) {
-            // If we can't locate a file named ds-home.tpl.php that should be the template file, we use our own template...
-            $single_template = dirname(__FILE__) . '/../templates/ds-home.tpl.php';
-        }
+    if($post->post_name == 'channels') {
+        $url = get_permalink( get_page_by_path('channel-categories') );
+        wp_redirect( $url );
+        exit;
     }
-    // Return either the template we made, or the template in the theme folders.
-    return $single_template;
 }
+
+

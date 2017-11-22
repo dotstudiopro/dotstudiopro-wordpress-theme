@@ -6,17 +6,22 @@
  */
 
 // Set up our class to connect with the DSP API
-$ds_curl = new DotStudioz_Commands;
+$dsppremium_curl = new DotStudioz_Commands;
 
 /**
  * Nag the admin if we don't have an API key, since we need one to use the plugin
  *
  * @return void
  */
-function ds_check_api_key_set()
+function dsppremium_check_api_key_set()
 {
 
-    $api_key = get_option('ds_api_key');
+    $old_api_key = get_option('ds_api_key');
+    $new_api_key = $api_key = get_option('dspdev_api_key');
+    if($old_api_key && !$new_api_key) {
+        $api_key = $old_api_key;
+        set_option('dspdev_api_key', $old_api_key);
+    }
 
     if ($api_key && strlen($api_key) > 0) {
         return false;
@@ -33,11 +38,11 @@ function ds_check_api_key_set()
  *
  * @return void
  */
-function ds_new_token()
+function dsppremium_new_token()
 {
     // Acquire an API token and save it for later use.
-    global $ds_curl;
-    $token = $ds_curl->curl_command('token');
+    global $dsppremium_curl;
+    $token = $dsppremium_curl->curl_command('token');
     update_option('ds_curl_token', $token);
     update_option('ds_curl_token_time', time());
 }
@@ -47,10 +52,10 @@ function ds_new_token()
  *
  * @return void
  */
-function ds_get_country()
+function dsppremium_get_country()
 {
-    global $ds_curl;
-    $country = $ds_curl->curl_command('country');
+    global $dsppremium_curl;
+    $country = $dsppremium_curl->curl_command('country');
     return $country;
 }
 
@@ -64,8 +69,8 @@ function ds_get_country()
  */
 function list_recommended($video_id = '', $rec_size = 8)
 {
-    global $ds_curl;
-    $result = $ds_curl->curl_command('recommended', array("rec_size" => $rec_size, "video_id" => $video_id));
+    global $dsppremium_curl;
+    $result = $dsppremium_curl->curl_command('recommended', array("rec_size" => $rec_size, "video_id" => $video_id));
     return $result;
 }
 
@@ -76,8 +81,8 @@ function list_recommended($video_id = '', $rec_size = 8)
  */
 function list_channels()
 {
-    global $ds_curl;
-    $channels = $ds_curl->curl_command('all-channels');
+    global $dsppremium_curl;
+    $channels = $dsppremium_curl->curl_command('all-channels');
     return $channels;
 }
 
@@ -88,8 +93,8 @@ function list_channels()
  */
 function list_categories()
 {
-    global $ds_curl;
-    $categories          = $ds_curl->curl_command('all-categories');
+    global $dsppremium_curl;
+    $categories          = $dsppremium_curl->curl_command('all-categories');
     $categories_filtered = array();
     foreach ($categories as $cat) {
         if (!empty($cat->platforms) && !empty($cat->platforms[0]) && isset($cat->platforms[0]->website) && (string) $cat->platforms[0]->website === 'false' || !isset($cat->platforms[0]->website)) {
@@ -124,8 +129,8 @@ function channel_revision_check()
  */
 function grab_channel()
 {
-    global $ds_curl;
-    $channels = $ds_curl->curl_command('single-channel');
+    global $dsppremium_curl;
+    $channels = $dsppremium_curl->curl_command('single-channel');
     return $channels;
 }
 
@@ -136,8 +141,8 @@ function grab_channel()
  */
 function grab_parent_channel()
 {
-    global $ds_curl;
-    $channels = $ds_curl->curl_command('parent-channel');
+    global $dsppremium_curl;
+    $channels = $dsppremium_curl->curl_command('parent-channel');
     return $channels;
 }
 
@@ -150,8 +155,8 @@ function grab_parent_channel()
  */
 function grab_category($category)
 {
-    global $ds_curl;
-    $category = $ds_curl->curl_command('single-category', array("category" => $category));
+    global $dsppremium_curl;
+    $category = $dsppremium_curl->curl_command('single-category', array("category" => $category));
     return $category;
 }
 
@@ -164,8 +169,8 @@ function grab_category($category)
  */
 function grab_video($video)
 {
-    global $ds_curl;
-    $videoObj = $ds_curl->curl_command('play', array("video" => $video));
+    global $dsppremium_curl;
+    $videoObj = $dsppremium_curl->curl_command('play', array("video" => $video));
     return $videoObj;
 }
 
@@ -174,14 +179,14 @@ function grab_video($video)
  *
  * @return void
  */
-function ds_check()
+function dsppremium_check()
 {
-    global $ds_curl;
+    global $dsppremium_curl;
     $token      = get_option('ds_curl_token');
     $token_time = !$token ? 0 : get_option('ds_curl_token_time');
     $difference = floor((time() - $token_time) / 84600);
     if (!$token || $difference >= 25) {
-        ds_new_token();
+        dsppremium_new_token();
     }
 }
 
@@ -190,39 +195,39 @@ function ds_check()
  *
  * @return void
  */
-function ds_api_key_change()
+function dsppremium_api_key_change()
 {
 
     set_time_limit(120);
 
-    global $wpdb, $ds_curl;
+    global $wpdb, $dsppremium_curl;
 
     // If the api key isn't posted, nothing to do here.
-    if (!isset($_POST['ds_api_key'])) {
+    if (!isset($_POST['dspdev_api_key'])) {
 
         return;
 
     }
 
-    $api = get_option('ds_api_key');
+    $api = get_option('dspdev_api_key');
 
     // If the api key is posted, but hasn't changed, nothing to do here.
-    if ($api == $_POST['ds_api_key'] && !isset($_POST['ds_token_reset'])) {
+    if ($api == $_POST['dspdev_api_key'] && !isset($_POST['dspdev_token_reset'])) {
 
         return;
 
     }
 
-    update_option('ds_api_key', sanitize_text_field($_POST['ds_api_key'])); // Force early API key update, in case we haven't updated it yet, so we get a valid token.
+    update_option('dspdev_api_key', sanitize_text_field($_POST['dspdev_api_key'])); // Force early API key update, in case we haven't updated it yet, so we get a valid token.
 
-    $token = $ds_curl->curl_command('token'); // Since we determined the API has changed, update token, since the new API key is being stored.
+    $token = $dsppremium_curl->curl_command('token'); // Since we determined the API has changed, update token, since the new API key is being stored.
 
     update_option('ds_curl_token', $token);
 
     update_option('ds_curl_token_time', time());
 
     // If we have an API key change, we get to delete all of the pages we've created.
-    // Please note that, because this function will be ran within ds_check(), we don't
+    // Please note that, because this function will be ran within dsppremium_check(), we don't
     // need to do the re-creation.
 
     $all_cat_page = get_page_by_path('channel-categories');
@@ -266,11 +271,11 @@ function ds_api_key_change()
     wp_delete_nav_menu("Browse Channel Categories");
 
     // Rebuild Categories
-    categories_check();
+    dsppremium_categories_check();
 
     // Rebuild Channels
-    channels_check();
+    dsppremium_channels_check();
 
-    ds_create_channel_category_menu();
+    dsppremium_create_channel_category_menu();
 
 }

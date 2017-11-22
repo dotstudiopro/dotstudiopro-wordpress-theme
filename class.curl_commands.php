@@ -20,7 +20,7 @@ function curl_command($command, $args = array()){
 	if($command == "token"){
 
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/token",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/token",
 			"POST", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"key\"\r\n\r\n".$api_key."\r\n-----011000010111000001101001--",
 			array(
 				"cache-control: no-cache",
@@ -80,7 +80,7 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/country",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/country",
 			"POST", "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"ip\"\r\n\r\n".$this->get_ip()."\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"token\"\r\n\r\n\r\n-----011000010111000001101001--",
 			array(
 				"cache-control: no-cache",
@@ -131,7 +131,7 @@ function curl_command($command, $args = array()){
 
 		$curl = curl_init();
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/search/recommendation?q=".$video_id."&size=".$rec_size."&from=0",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/search/recommendation?q=".$video_id."&size=".$rec_size."&from=0",
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -161,7 +161,7 @@ function curl_command($command, $args = array()){
 
 		$token = get_option('ds_curl_token');
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$token || !$this->country){
 
@@ -169,7 +169,7 @@ function curl_command($command, $args = array()){
 
 		}
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."?detail=partial",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."?detail=partial",
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -209,7 +209,7 @@ function curl_command($command, $args = array()){
 
 		$duplicate = get_post_meta($post->ID, "ds-duplicate", false);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -261,7 +261,7 @@ function curl_command($command, $args = array()){
 
 		$channel_name = $post->post_name;
 
-		$result = ds_run_curl_command($url,
+		$result = dsppremium_run_curl_command($url,
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -300,7 +300,7 @@ function curl_command($command, $args = array()){
 
 		$category = get_post_meta($channel_check_grab->ID, "ds-category", TRUE);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -325,7 +325,7 @@ function curl_command($command, $args = array()){
 
 		$channel_name = $post->post_name;
 
-		$result = ds_run_curl_command($url,
+		$result = dsppremium_run_curl_command($url,
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -362,7 +362,7 @@ function curl_command($command, $args = array()){
 
 		$category = get_post_meta($post->ID, "ds-category", TRUE);
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$category){
 
@@ -398,7 +398,7 @@ function curl_command($command, $args = array()){
 
 		$channel_name = $post->post_name;
 
-		$result = ds_run_curl_command($url,
+		$result = dsppremium_run_curl_command($url,
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -432,7 +432,7 @@ function curl_command($command, $args = array()){
 
 		$token = get_option('ds_curl_token');
 
-		ds_get_country();
+		dsppremium_get_country();
 
 		if(!$token || !$this->country){
 
@@ -442,7 +442,7 @@ function curl_command($command, $args = array()){
 
 		$curl = curl_init();
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/categories/".$this->country,
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/categories/".$this->country,
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -483,7 +483,7 @@ function curl_command($command, $args = array()){
 
 		}
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."/".$cat."?detail=partial",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/channels/".$this->country."/".$cat."?detail=partial",
 			"GET", "",
 			array(
 				"cache-control: no-cache",
@@ -552,7 +552,7 @@ function curl_command($command, $args = array()){
 		$curl = curl_init();
 
 
-		$result = ds_run_curl_command("http://api.myspotlight.tv/video/play2/$video",
+		$result = dsppremium_run_curl_command("http://api.myspotlight.tv/video/play2/$video",
 			"GET", "",
 			array(
 				"cache-control: no-cache",

@@ -10,7 +10,7 @@
  *
  * @return void
  */
-function ds_scripts_load_cdn()
+function dsppremium_scripts_load_cdn()
 {
 
     global $wpdb, $post;
@@ -47,11 +47,11 @@ function ds_scripts_load_cdn()
  *
  * @return void
  */
-function ds_plugin_style()
+function dsppremium_plugin_style()
 {
 
     // Check the style option and set up light or dark, depending
-    $admin_option = get_option('ds_plugin_style');
+    $admin_option = get_option('dsppremium_plugin_style');
 
     if (!$admin_option) {
 
@@ -76,7 +76,7 @@ function ds_plugin_style()
  *
  * @return void
  */
-function ds_styles()
+function dsppremium_styles()
 {
 
     wp_register_style('dspdev-premvid-font-awesome-style', plugins_url('/../css/font-awesome.min.css?v=1234', __FILE__), array(), '20120208', 'all');

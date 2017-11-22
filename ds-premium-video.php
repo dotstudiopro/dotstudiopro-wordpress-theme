@@ -49,12 +49,12 @@ $uri = $_SERVER['REQUEST_URI'];
 
 if (strpos($uri, 'wp-admin') === false) {
 
-    add_action('init', 'ds_check');
+    add_action('init', 'dsppremium_check');
 
 }
 
-add_action('wp_enqueue_scripts', 'ds_plugin_style');
-add_action( 'wp_enqueue_scripts', 'ds_owl_carousel' );
+add_action('wp_enqueue_scripts', 'dsppremium_plugin_style');
+add_action( 'wp_enqueue_scripts', 'dsppremium_owl_carousel' );
 
 /** Add Menu Entry **/
 function dot_studioz_menu()
@@ -88,6 +88,6 @@ function dot_studioz_menu_page()
 
 /** Save Admin Menu Options **/
 
-add_action("init", "ds_save_admin_options");
+add_action("init", "dsppremium_save_admin_options");
 
 /** End Save Admin Menu Options **/
