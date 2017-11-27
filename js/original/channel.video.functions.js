@@ -2,7 +2,7 @@ var $ = jQuery;
 $(document).ready(function() {
   var playerwrap = $('.ds-video-fluidMedia').first();
   var toggleFocusOn = false;
-  var playerToggle = $('.dot-studioz-player-togglemode');
+  var playerToggle = $('.ds-player-togglemode');
   var playlistMode = sessionStorage.getItem('playlistMode') != '' ? sessionStorage.getItem('playlistMode') : 'std';
 
 
@@ -19,9 +19,9 @@ $(document).ready(function() {
 
   // adjustments to the theater mode playlist carousel and standard mode playlist
 
-  $('.dot-studioz-owl-fa').remove(); // don't want the play buttons
+  $('.ds-owl-fa').remove(); // don't want the play buttons
   $('.owl-item div:nth-child(2)').remove(); // don't want the titles here
-  $('.dot-studioz-playlist-standard-mode').css('height', $('.dot-studioz-playlist-standard-mode').parent().height());
+  $('.ds-playlist-standard-mode').css('height', $('.ds-playlist-standard-mode').parent().height());
 
 
 
@@ -29,9 +29,9 @@ $(document).ready(function() {
 
 
   if (!enableRecPlaylist) {
-    $('.dot-studioz-playlist-theater-mode').html('');
-    $('.dot-studioz-video').removeClass('col-md-8').addClass('col-md-12');
-    $('.dot-studioz-playlist-standard-mode').remove();
+    $('.ds-playlist-theater-mode').html('');
+    $('.ds-video').removeClass('ds-col-8').addClass('ds-col-12');
+    $('.ds-playlist-standard-mode').remove();
     playerToggle.remove();
   } else {
     if (playlistMode == 'theater') {
@@ -72,18 +72,18 @@ $(document).ready(function() {
   $('.owl-item').hover(
     function() {
       // setup
-      if ($('.dot-studioz-playlist-theater-mode .carousel-tooltip').length == 0) {
-        $('.dot-studioz-playlist-theater-mode').append('<div class="carousel-tooltip"></div>');
+      if ($('.ds-playlist-theater-mode .carousel-tooltip').length == 0) {
+        $('.ds-playlist-theater-mode').append('<div class="carousel-tooltip"></div>');
       }
       var tooltip = $('.carousel-tooltip');
-      var parentContainer = $('.dot-studioz-playlist-theater-mode');
+      var parentContainer = $('.ds-playlist-theater-mode');
       var posX = $(this).offset().left - $(this).width();
       var posY = 20;
       var parentX = parentContainer.offset().left - $(this).width();
       var parentWidth = parentContainer.width();
       var maxRight = parentWidth - parentX;
       var tipWidth = $(this).width();
-      var parentWidth = $('.dot-studioz-playlist-theater-mode').width();
+      var parentWidth = $('.ds-playlist-theater-mode').width();
 
       if (parentX >= posX) {
         posX = parentX + 20;
@@ -131,17 +131,34 @@ $(document).ready(function() {
       thumb.find('.owl-thumb').css('opacity', '0.7');
     }
 
-    /*
-    thumb.animate(props, {
-      duration: 200,
-    });
-    */
   }
 
 
+  function resizePlayer() {
+    var container = $('.ds-video-headliner');
+    var dsVideofluidMedia = $('.ds-video-fluidMedia');
+    var player = dsVideofluidMedia.find('.player');
+    var videoJS = player.find('.video-js');
+    var dspVidJsPlayerHtml5Api = videoJS.find('#dsp-vid-js-player_html5_api');
+    var playlistContainer = $('.ds-vid-playlist');
+
+    var wContainer = container.outerWidth();
+    var playerWidth = wContainer;
+    if(sessionStorage.getItem('playlistMode') === 'std') {
+      playerWidth = playerWidth * 0.75;
+    }
+    var playerHeight = playerWidth * 0.5625;
+    var playerSizeCSS = {'width': playerWidth, 'height':  playerHeight};
+    dsVideofluidMedia.css(playerSizeCSS);
+    player.css(playerSizeCSS);
+    videoJS.css(playerSizeCSS);
+    dspVidJsPlayerHtml5Api.css(playerSizeCSS);
+  }
+
 
   $(window).resize(function() {
-    $('.dot-studioz-playlist-standard-mode').css('height', $('.video-js').height());
+    $('.ds-playlist-standard-mode').css('height', $('.video-js').height());
+    resizePlayer();
   });
 
   player.mouseenter(function() {
@@ -169,16 +186,13 @@ $(document).ready(function() {
   });
 
   playerToggle.click(function() {
-    if ($('.dot-studioz-playlist-standard-mode').hasClass('active-playlist')) {
+    if ($('.ds-playlist-standard-mode').hasClass('active-playlist')) {
       showPlaylistTheaterMode();
     } else {
       showPlaylistStandardMode();
     }
 
-    setTimeout(function() {
-      $(window).trigger('resize');
-      $('.dot-studioz-playlist-standard-mode').css('height', $('.video-js').height());
-    }, 100);
+    resizePlayer();
   });
 
 
@@ -217,7 +231,7 @@ $(document).ready(function() {
         top: 0,
         borderTop: 'inherit'
       };
-      console.log(vidFull);
+
       var vidSmall = {
         zIndex: '10',
         width: wSmall,
@@ -228,12 +242,12 @@ $(document).ready(function() {
         top: 100,
         right: $(window).width() * 0.02
       };
-      console.log(vidSmall);
+
 
       var scroll_top = $(this).scrollTop();
       if (scroll_top > (playerwrap.offset().top + scroll_offset) && !player.hasClass('onsidebar')) {
         player.hide();
-        if (!$('.active-playlist').hasClass('dot-studioz-playlist-theater-mode')) {
+        if (!$('.active-playlist').hasClass('ds-playlist-theater-mode')) {
           $('.active-playlist').hide();
         }
         anibox.show();
@@ -263,7 +277,7 @@ $(document).ready(function() {
             vidObj.css({"width": vidFull.width, "height": vidFull.height});
             player.show();
             anibox.hide();
-            if (!$('.active-playlist').hasClass('dot-studioz-playlist-theater-mode')) {
+            if (!$('.active-playlist').hasClass('ds-playlist-theater-mode')) {
               $('.active-playlist').show();
             }
           }
@@ -307,9 +321,9 @@ $(document).ready(function() {
 
     function showPlaylistStandardMode() {
       // show standard mode
-      $('.dot-studioz-video').removeClass('col-md-12').addClass('col-md-8');
-      $('.dot-studioz-playlist-standard-mode').addClass('col-md-4').addClass('active-playlist').show();
-      $('.dot-studioz-playlist-theater-mode').removeClass('active-playlist').css({
+      $('.ds-video').removeClass('ds-col-12').addClass('ds-col-9');
+      $('.ds-playlist-standard-mode').addClass('active-playlist').css({'display': 'block'});
+      $('.ds-playlist-theater-mode').removeClass('active-playlist').css({
         'width': '0',
         'display': 'none'
       });
@@ -318,18 +332,15 @@ $(document).ready(function() {
 
     function showPlaylistTheaterMode() {
       // show theater mode
-      $('.dot-studioz-video').removeClass('col-md-8').addClass('col-md-12');
-      $('.dot-studioz-playlist-standard-mode').removeClass('col-md-4').removeClass('active-playlist').hide();
-      $('.dot-studioz-playlist-theater-mode').addClass('active-playlist').css({
+      $('.ds-video').removeClass('ds-col-9').addClass('ds-col-12');
+      $('.ds-playlist-standard-mode').removeClass('active-playlist').css({'display': 'none'});
+      $('.ds-playlist-theater-mode').addClass('active-playlist').css({
         'width': '100%',
         'display': 'block'
       });
       $('.owl-carousel').trigger('refresh.owl.carousel');
       sessionStorage.setItem('playlistMode', 'theater');
     }
-
-
-
 
   }
 
@@ -372,10 +383,10 @@ $(document).ready(function() {
       });
 
       strPlaylist += '</ul>';
-      $('.dot-studioz-playlist-standard-mode').append(strPlaylist);
+      $('.ds-playlist-standard-mode').append(strPlaylist);
     }
 
-    $('.dot-studioz-playlist-theater-mode').css({
+    $('.ds-playlist-theater-mode').css({
       'width': '0',
       'display': 'none'
     });
@@ -404,8 +415,6 @@ $(document).ready(function() {
 
       if (autoPlay) {
         try {
-          console.clear();
-          console.log('I AM PLAYING!');
           vid.play();
         } catch (e) {
           console.log(e);

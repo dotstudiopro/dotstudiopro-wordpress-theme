@@ -13,8 +13,8 @@
 	    <!-- VIDEO PLAYER -->
 			<div class='ds-video-headliner'>
 					<div id="anibox">&nbsp;</div>
-			    <div class='row'>
-			    		<div class='col-md-8 ds-video'>
+			    <div class='ds-row ds-video-row-container'>
+			    		<div class='ds-col-9 ds-video'>
 									<div class='ds-video-fluidMedia'>
 											<?php if($recPlaylist === '1'): ?><div class='ds-player-togglemode'><i class='fa fa-arrows-alt fa-2x'>&nbsp;</i></div><?php endif;?>
 											<div class="player" data-minifyvid='<?php echo $minifyVid;?>' data-autoredir='<?php echo $autoRedir;?>' data-autoplay='<?php echo $autoPlay;?>' data-recplaylist='<?php echo $recPlaylist ?>'></div>
@@ -22,7 +22,7 @@
 									</div>
 			    		</div>
 			    		<!-- STANDARD MODE PLAYLIST -->
-			    		<div class='col-md-4 ds-vid-playlist ds-playlist-standard-mode active-playlist'>
+			    		<div class='ds-col-3 ds-vid-playlist ds-playlist-standard-mode active-playlist'>
 
 			    		</div>
 			    </div>
@@ -31,56 +31,50 @@
 			   		echo dsppremium_theater_mode_playlist($videoId);
 			   	} ?>
 
-			    <div class='row'>
-			    		<div class='col-md-12 col-sm-12 col-xs-12'>
-
-								<div class='ds-metabox'>
-
-										<!-- TITLE -->
-										<div class='row'>
-												<div class='col-md-12 col-sm-12 col-xs-12'>
-													<h1 class='ds-video-headliner-title'><?php echo $headline_video->title ?></h1>
-												</div>
-										</div>
-
-										<!-- DESCRIPTION -->
-						        <div class="row">
-						        		<div class='col-md-12 col-sm-12 col-xs-12 ds-metabox'>
-								      		<span class='ds-video-headliner-description'><?php echo $headline_video->description ?></span>
-								      		<hr>
-													<!-- <a class='ds-more' href='#primary'>Show More</a> -->
-						        		</div>
-						        </div>
-
-						        <!-- METADATA AND SHARING -->
-										<div class='row ds-metabox'>
-												<!-- meta -->
-												<div class='ds-videometadata'>
-													<ul class='ds-videometalist'>
-												  			<li><?php echo $headline_video->duration ?> min</li>
-									              <li><?php echo $headline_video->country ?></li>
-									              <li>Rating:<?php echo $headline_video->rating ?></li>
-									              <li><?php echo $headline_video->language ?></li>
-									              <li><?php echo $headline_video->year ?></li>
-								              	<li><?php echo $headline_video->company ?></li>
-								         	</ul>
-							       	 	</div>
-							       	 	<!-- sharing -->
-							       	 	<div class='ds-videosharedata'>
-									        <?php
-													if(is_file( dirname( __FILE__ ) ."/../components/sharing.php" ) ){
-														include( dirname( __FILE__ ) ."/../components/sharing.php" );
-													} else if( is_file( dirname( __FILE__ ) . "/ds-sharing.php" ) ){
-														include( dirname( __FILE__ ) . "/ds-sharing.php" );
-													}
-													?>
-							       	 	</div>
-						        </div>
-						    </div>
 
 
-			    		</div>
-			    </div>
+							<!-- TITLE -->
+							<div class='ds-row ds-metabox'>
+									<div class='ds-col-12'>
+										<h1 class='ds-video-headliner-title'><?php echo $headline_video->title ?></h1>
+									</div>
+							</div>
+
+							<!-- DESCRIPTION -->
+			        <div class="ds-row">
+			        		<div class='ds-col-12 ds-metabox'>
+					      		<span class='ds-video-headliner-description'><?php echo $headline_video->description ?></span>
+					      		<hr>
+										<!-- <a class='ds-more' href='#primary'>Show More</a> -->
+			        		</div>
+			        </div>
+
+			        <!-- METADATA AND SHARING -->
+							<div class='ds-row ds-metabox'>
+									<!-- meta -->
+									<div class='ds-videometadata'>
+										<ul class='ds-videometalist'>
+									  			<li><?php echo $headline_video->duration ?> min</li>
+						              <li><?php echo $headline_video->country ?></li>
+						              <li>Rating:<?php echo $headline_video->rating ?></li>
+						              <li><?php echo $headline_video->language ?></li>
+						              <li><?php echo $headline_video->year ?></li>
+					              	<li><?php echo $headline_video->company ?></li>
+					         	</ul>
+				       	 	</div>
+				       	 	<!-- sharing -->
+				       	 	<div class='ds-videosharedata'>
+						        <?php
+										if(is_file( dirname( __FILE__ ) ."/../components/sharing.php" ) ){
+											include( dirname( __FILE__ ) ."/../components/sharing.php" );
+										} else if( is_file( dirname( __FILE__ ) . "/ds-sharing.php" ) ){
+											include( dirname( __FILE__ ) . "/ds-sharing.php" );
+										}
+										?>
+				       	 	</div>
+			        </div>
+
+
 
 			   <?php if(!$show_playlist_above_meta) {
 			   		echo dsppremium_theater_mode_playlist($videoId);

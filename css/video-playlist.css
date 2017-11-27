@@ -25,7 +25,7 @@
 }
 
 .ds-vid-playlist {
-	position:absolute; 
+	position:absolute;
 	z-index:-100;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .ds-playlist-standard-mode .playlist-info {
-	width:65%;
+	width:63%;
 	position:relative;
 	float:left;
 }
@@ -88,7 +88,7 @@
 .ds-playlist-standard-mode .playlist-img img {
 	width:100%;
 	height:auto;
-}	
+}
 
 .ds-playlist-standard-mode .playlist-desc {
 	font-weight:normal;
@@ -105,12 +105,12 @@
 
 .ds-player-togglemode {
 	  border: 1px solid #c0c0c0;
-    background: black;	
+    background: black;
 }
 
 .ds-player-togglemode i {
 	color:white;
-}	
+}
 
 .ds-playlist-standard-mode label {
 		font-weight: normal;
@@ -127,7 +127,7 @@
 
 .ds-playlist-standard-mode .playlist-title {
     color: #FFF;
-    font-size: 2.0rem;
+    font-size: 1.0vw;
     font-weight: normal;
 }
 
@@ -161,17 +161,4 @@
 }
 .owl-thumb {
 	opacity: 0.7;
-}
-
-
-
-@media (max-width: 1000px) {
-	.ds-playlist-standard-mode,
-	.ds-player-togglemode {
-		display:none!important;
-	}
-	.ds-playlist-theater-mode {
-		z-index:1;
-		position:relative;
-	}
 }

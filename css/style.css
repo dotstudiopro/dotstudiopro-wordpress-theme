@@ -17,23 +17,66 @@
 
 .ds-row {
 	display: flex;
+  position: relative;
+  float: left;
+  width:100%;
 }
-.ds-col-8 {
-    width: 66.66666667%;
-    position: relative;
-    min-height: 1px;
-    /* padding-left: 15px; */
-    padding-right: 15px;
-    float: left;
- }
+
+div[class^="ds-col-"] {
+  position: relative;
+  min-height: 1px;
+  float: left;
+}
+
+.ds-col-1 {
+  width: 8.33333333%;
+}
+
+ .ds-col-2 {
+     width: 16.66666666%;
+  }
+
+  .ds-col-3 {
+      width: 25%;
+}
+
 .ds-col-4 {
     width: 33.33333333%;
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    /* padding-right: 15px; */
-    float: left;
+}
+
+ .ds-col-5 {
+     width: 41.6666666%;
+}
+
+  .ds-col-6 {
+      width: 50%;
+}
+
+.ds-col-7 {
+     width: 58.33333333%;
+  }
+
+.ds-col-8 {
+    width: 66.66666667%;
  }
+
+ .ds-col-9 {
+     width: 75%;
+  }
+
+  .ds-col-10 {
+      width: 83.33333333%;
+   }
+
+   .ds-col-11 {
+       width: 91.6666667%;
+    }
+
+    .ds-col-12 {
+        width: 100%;
+     }
+
+
 
 @media screen and (max-width:1620px){
     .og-fullimg .channel-poster{
@@ -234,17 +277,18 @@
 }
 .ds-video-headliner {
 	margin-bottom: 24px;
+  position:relative;
+  float:left;
+  width:100%;
 }
 
-.ds-metabox {
-	padding: 15px 15px 15px 15px;
-}
 
 /*===========Tabs==========================*/
 ul.ds-tabs{
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
+  width:100%;
 }
 ul.ds-tabs li{
 	background: none;
@@ -273,14 +317,14 @@ ul.ds-tabs li.current{
   position: relative;
   float:left;
   width:80%;
-  margin-top: -15px;
+  padding: 15px;
 }
 
 .ds-videosharedata {
   position: relative;
   float:right;
   width: 20%;
-  margin-top: -15px;
+  padding: 15px;
 }
 
 .ds-videometalist {
@@ -309,7 +353,7 @@ ul.ds-tabs li.current{
     overflow:hidden;
 }
 .ds-video-headliner-title {
-	line-height: 1;
+  padding: 15px;
 }
 .ds-video-thumbnails {
 	display: flex;
@@ -344,7 +388,10 @@ ul.ds-tabs li.current{
     opacity: 0.4;
 }
 .ds-video-thumbnails .selected a {
-    display: none;
+    background: rgba(0, 0, 0, 0.5)
+}
+.ds-video-thumbnails .selected .fa {
+  display:none!important;
 }
 .ds-video-thumbnails .selected label {
     opacity: 0;
@@ -416,8 +463,9 @@ a.ds-overlay:hover {
 }
 
 #primary {
-  margin-top: -75px;
-  padding-top: 75px;
+  position: relative;
+  float: left;
+  width:100%;
 }
 
 @media (max-width: 1100px) {

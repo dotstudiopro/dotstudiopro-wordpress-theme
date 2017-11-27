@@ -98,15 +98,18 @@ if (is_array($channel) && count($channel) > 0) {
 		            <li <?php echo $selected; ?>>
                   <div class='ds-channel-list-item'>
 										<div class='ds-channel-list-img' style='background-image:url(http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215);'>
-												<!--<img class="img img-responsive lazy" data-original='http://image.myspotlight.tv/<?php echo $thumb_id ?>/380/215' />-->
 												<label class='delay' style='display: inline-block;'><small><?php echo $duration ?> min</small></label>
-					                <?php if (!$siblings) {?>
-					                    <a class='ds-overlay' href='<?php echo home_url("channels/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
-					                <?php } else {?>
-					                    <a href='<?php echo home_url("channels/" . $channel_parent->post_name . "/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
-					                <?php }?>
-					                 <i class='fa fa-play-circle-o fa-3x'></i>
-					                </a>
+                          <?php if($selected) {?>
+                            <a class='ds-overlay' nohref></a>
+                          <?php } else {?>
+  					                <?php if (!$siblings) {?>
+  					                    <a class='ds-overlay' href='<?php echo home_url("channels/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
+  					                <?php } else {?>
+  					                    <a href='<?php echo home_url("channels/" . $channel_parent->post_name . "/" . $this_post->post_name . "/?video=$id&channel_category=$category") ?>'>
+  					                <?php }?>
+  					                 <i class='fa fa-play-circle-o fa-3x'></i>
+  					                </a>
+                          <?php }?>
 										</div>
 										<div class='ds-channel-item-meta'>
 											<h3 class='character-limit-90'><?php echo $title ?></h3>
