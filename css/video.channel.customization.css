@@ -1,8 +1,8 @@
 /*
 video.channel.customization.css
 
-USAGE: use this file to customize the video player, playlist, and channel 
-page styles 
+USAGE: use this file to customize the video player, playlist, and channel
+page styles
 
 */
 
@@ -17,33 +17,178 @@ page styles
   width: 0px;
   height: 0px;
 }
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb {
-  background: #002e66;
-  border: 0px none #ffffff;
-  border-radius: 50px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb:hover {
-  background: #005bcc;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-thumb:active {
-  background: #e0e0e0;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track {
-  background: #0080ff;
-  border: 0px none #ffffff;
-  border-radius: 50px;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track:hover {
-  background: #0c30c0;
-}
-.ds-playlist-standard-mode::-webkit-scrollbar-track:active {
-  background: #0080ff;
-}
 .ds-playlist-standard-mode::-webkit-scrollbar-corner {
   background: transparent;
 }
 
+/*  blue (default) */
+.ds-playlist-blue::-webkit-scrollbar-thumb {
+  background: #002e66;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-blue::-webkit-scrollbar-thumb:hover {
+  background: #005bcc;
+}
+.ds-playlist-blue::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-blue::-webkit-scrollbar-track {
+  background: #0080ff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-blue::-webkit-scrollbar-track:hover {
+  background: #0c30c0;
+}
+.ds-playlist-blue::-webkit-scrollbar-track:active {
+  background: #0080ff;
+}
 
+/*  pink */
+.ds-playlist-pink::-webkit-scrollbar-thumb {
+  background: #ff5bff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-pink::-webkit-scrollbar-thumb:hover{
+  background: #ff5bff;
+}
+.ds-playlist-pink::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-pink::-webkit-scrollbar-track {
+  background: #ff80ff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-pink::-webkit-scrollbar-track:hover {
+  background: #ff30ff;
+}
+.ds-playlist-pink::-webkit-scrollbar-track:active {
+  background: #ff80ff;
+}
+
+/*  red */
+.ds-playlist-red::-webkit-scrollbar-thumb {
+  background: #800101;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-red::-webkit-scrollbar-thumb:hover {
+  background: #ff0000;
+}
+.ds-playlist-red::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-red::-webkit-scrollbar-track {
+  background: #ff2929;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-red::-webkit-scrollbar-track:hover {
+  background: #b20101;
+}
+.ds-playlist-red::-webkit-scrollbar-track:active {
+  background: #ff2929;
+}
+
+/*  purple */
+.ds-playlist-purple::-webkit-scrollbar-thumb {
+  background: #5c015d;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-purple::-webkit-scrollbar-thumb:hover {
+  background: #9e12a0;
+}
+.ds-playlist-purple::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-purple::-webkit-scrollbar-track {
+  background: #ba2ebc;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-purple::-webkit-scrollbar-track:hover {
+  background: #800182;
+}
+.ds-playlist-purple::-webkit-scrollbar-track:active {
+  background: #ba2ebc;
+}
+
+/*  orange */
+.ds-playlist-orange::-webkit-scrollbar-thumb {
+  background: #ff5000;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-orange::-webkit-scrollbar-thumb:hover {
+  background: #ff5b00;
+}
+.ds-playlist-orange::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-orange::-webkit-scrollbar-track {
+  background: #ff8000;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-orange::-webkit-scrollbar-track:hover {
+  background: #ff5000;
+}
+.ds-playlist-orange::-webkit-scrollbar-track:active {
+  background: #ff8000;
+}
+
+/*  yellow */
+.ds-playlist-yellow::-webkit-scrollbar-thumb {
+  background: #feab00;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-yellow::-webkit-scrollbar-thumb:hover {
+  background: #febd00;
+}
+.ds-playlist-yellow::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-yellow::-webkit-scrollbar-track {
+  background: #fecc00;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-yellow::-webkit-scrollbar-track:hover {
+  background: #feab00;
+}
+.ds-playlist-yellow::-webkit-scrollbar-track:active {
+  background: #fecc00;
+}
+
+
+/*  green */
+.ds-playlist-green::-webkit-scrollbar-thumb {
+  background: #014101;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-green::-webkit-scrollbar-thumb:hover {
+  background: #018101;
+}
+.ds-playlist-green::-webkit-scrollbar-thumb:active {
+  background: #e0e0e0;
+}
+.ds-playlist-green::-webkit-scrollbar-track {
+  background: #01b101;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.ds-playlist-green::-webkit-scrollbar-track:hover {
+  background: #015a01;
+}
+.ds-playlist-green::-webkit-scrollbar-track:active {
+  background: #015a01;
+}
 
 .ds-playlist-theater-outer-container {
 	margin:15px;
@@ -77,7 +222,7 @@ page styles
 }
 
 
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
 	h1.ds-video-headliner-title {
 		font-size:18px;
 	}
@@ -95,7 +240,7 @@ page styles
 
 }
 
-@media (min-width: 600px) and (max-width: 900px) { 
+@media (min-width: 600px) and (max-width: 900px) {
 	h1.ds-video-headliner-title {
 		font-size:28px;
 	}

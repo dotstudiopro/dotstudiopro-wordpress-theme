@@ -21,7 +21,7 @@ function dsppremium_save_admin_options()
 
         update_option('ds_twitter_handle', dsppremium_verify_post_var('ds_twitter_handle'));
 
-        update_option('ds_player_slider_color', dsppremium_verify_post_var('ds_player_slider_color'));
+        update_option('dspremium_player_slider_color', dsppremium_verify_post_var('dspremium_player_slider_color'));
 
         update_option('ds_plugin_style', dsppremium_verify_post_var('ds_plugin_style'));
 

@@ -21,9 +21,6 @@ $(document).ready(function() {
 
   $('.ds-owl-fa').remove(); // don't want the play buttons
   $('.owl-item div:nth-child(2)').remove(); // don't want the titles here
-  $('.ds-playlist-standard-mode').css('height', $('.ds-playlist-standard-mode').parent().height());
-
-
 
   populatePlaylist();
 
@@ -134,14 +131,12 @@ $(document).ready(function() {
   }
 
 
-  function resizePlayer() {
+  function resizePlayer(scaleTransClass) {
     var container = $('.ds-video-headliner');
-    var dsVideofluidMedia = $('.ds-video-fluidMedia');
-    var player = dsVideofluidMedia.find('.player');
-    var videoJS = player.find('.video-js');
-    var dspVidJsPlayerHtml5Api = videoJS.find('#dsp-vid-js-player_html5_api');
-    var playlistContainer = $('.ds-vid-playlist');
-
+    var dsVideofluidMedia = $('.ds-video-fluidMedia').addClass(scaleTransClass);
+    var player = dsVideofluidMedia.find('.player').addClass(scaleTransClass);
+    var videoJS = player.find('.video-js').addClass(scaleTransClass);
+    var dspVidJsPlayerHtml5Api = videoJS.find('#dsp-vid-js-player_html5_api').addClass(scaleTransClass);
     var wContainer = container.outerWidth();
     var playerWidth = wContainer;
     if(sessionStorage.getItem('playlistMode') === 'std') {
@@ -149,16 +144,22 @@ $(document).ready(function() {
     }
     var playerHeight = playerWidth * 0.5625;
     var playerSizeCSS = {'width': playerWidth, 'height':  playerHeight};
+
     dsVideofluidMedia.css(playerSizeCSS);
     player.css(playerSizeCSS);
     videoJS.css(playerSizeCSS);
     dspVidJsPlayerHtml5Api.css(playerSizeCSS);
+    setTimeout(function() {
+      dsVideofluidMedia.removeClass(scaleTransClass);
+      player.removeClass(scaleTransClass);
+      videoJS.removeClass(scaleTransClass);
+      dspVidJsPlayerHtml5Api.removeClass(scaleTransClass);
+    },1000);
   }
 
 
   $(window).resize(function() {
-    $('.ds-playlist-standard-mode').css('height', $('.video-js').height());
-    resizePlayer();
+    resizePlayer('no-scale-transition');
   });
 
   player.mouseenter(function() {
@@ -192,7 +193,7 @@ $(document).ready(function() {
       showPlaylistStandardMode();
     }
 
-    resizePlayer();
+    resizePlayer('scale-transition');
   });
 
 
@@ -285,8 +286,6 @@ $(document).ready(function() {
         player.removeClass('onsidebar').css(vidFull);
       }
 
-      //$(window).trigger('resize');
-
     });
 
     function getTargetProps() {
@@ -322,24 +321,27 @@ $(document).ready(function() {
     function showPlaylistStandardMode() {
       // show standard mode
       $('.ds-video').removeClass('ds-col-12').addClass('ds-col-9');
-      $('.ds-playlist-standard-mode').addClass('active-playlist').css({'display': 'block'});
-      $('.ds-playlist-theater-mode').removeClass('active-playlist').css({
-        'width': '0',
-        'display': 'none'
-      });
+      $('.ds-playlist-standard-mode').addClass('active-playlist');
+      $('.ds-vid-playlist').addClass('scale-transition').addClass('opacity-transition-full').addClass('ds-col-3').removeClass('ds-col-0');
+      $('.ds-playlist-theater-mode').removeClass('active-playlist');
       sessionStorage.setItem('playlistMode', 'std');
+      setTimeout(function() {
+        $('.ds-vid-playlist').removeClass('scale-transition').removeClass('opacity-transition-full');
+      },1000);
     }
 
     function showPlaylistTheaterMode() {
       // show theater mode
       $('.ds-video').removeClass('ds-col-9').addClass('ds-col-12');
-      $('.ds-playlist-standard-mode').removeClass('active-playlist').css({'display': 'none'});
-      $('.ds-playlist-theater-mode').addClass('active-playlist').css({
-        'width': '100%',
-        'display': 'block'
-      });
+      $('.ds-playlist-standard-mode').removeClass('active-playlist');
+      $('.ds-vid-playlist').addClass('scale-transition').addClass('opacity-transition-none').removeClass('ds-col-3').addClass('ds-col-0');
+      $('.ds-playlist-theater-mode').addClass('active-playlist');
       $('.owl-carousel').trigger('refresh.owl.carousel');
       sessionStorage.setItem('playlistMode', 'theater');
+      setTimeout(function() {
+        $('.ds-vid-playlist').removeClass('scale-transition').removeClass('opacity-transition-none');
+      },1000);
+
     }
 
   }
@@ -359,7 +361,9 @@ $(document).ready(function() {
       enableRecPlaylist = false;
     } else {
       var strItemList = '';
-      var strPlaylist = '<div><label>RELATED VIDEOS</label></div><ul>'
+      var strPlaylist = '<div class="ds-playlist-outer-container">'
+      + '<div class="ds-playlist-inner-container">'
+      + '<div><label>RELATED VIDEOS</label></div><ul>';
       $.each(carouselItems, function(key, val) {
         var itemName = $(this).attr('data-title');
         var itemDesc = $(this).attr('data-desc') != '' ? $(this).attr('data-desc') : 'No Description Currently Available';
@@ -382,14 +386,9 @@ $(document).ready(function() {
         }
       });
 
-      strPlaylist += '</ul>';
+      strPlaylist += '</ul></div></div>';
       $('.ds-playlist-standard-mode').append(strPlaylist);
     }
-
-    $('.ds-playlist-theater-mode').css({
-      'width': '0',
-      'display': 'none'
-    });
 
   }
 

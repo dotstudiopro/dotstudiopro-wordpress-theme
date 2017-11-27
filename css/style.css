@@ -28,6 +28,10 @@ div[class^="ds-col-"] {
   float: left;
 }
 
+.ds-col-0 {
+  width: 0.0%;
+}
+
 .ds-col-1 {
   width: 8.33333333%;
 }
@@ -282,6 +286,20 @@ div[class^="ds-col-"] {
   width:100%;
 }
 
+.scale-transition {
+  transition: all 1.0s ease;
+}
+
+.ds-vid-playlist {
+  transition: all 1.0s ease;
+}
+
+.opacity-transition-full {
+  opacity: 1.0;
+}
+.opacity-transition-none {
+  opacity: 0.0;
+}
 
 /*===========Tabs==========================*/
 ul.ds-tabs{

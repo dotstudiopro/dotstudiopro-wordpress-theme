@@ -679,6 +679,7 @@ function channel_headline_video()
     global $dsppremium_curl;
 
     $video = get_query_var("video", false);
+    $skin = !empty(get_option('dspremium_player_slider_color')) ? get_option('dspremium_player_slider_color') : "blue";
 
     if (dsppremium_channel_is_child()) {
 
@@ -698,6 +699,7 @@ function channel_headline_video()
         } else if(!empty($videos[0]->playlist)) {
             $playlist = $videos[0]->playlist;
         }
+
 
         $id = !empty($playlist->_id) ? $playlist->_id : "";
 
@@ -744,7 +746,7 @@ function channel_headline_video()
 
         }
 
-        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("dsppremium_player_slider_color", "228b22") . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . $skin . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
         $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 
@@ -861,7 +863,7 @@ function channel_headline_video()
             wp_enqueue_style('video-custom', plugins_url( 'css/video.channel.customization.css', __DIR__ ));
         }
 
-        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . get_option("dsppremium_player_slider_color", "228b22") . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . $skin . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
         $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $chdescription, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 

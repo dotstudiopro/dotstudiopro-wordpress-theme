@@ -7,7 +7,7 @@
 
    $colors = array('blue', 'pink', 'purple', 'orange', 'red', 'yellow', 'green');
 
-   $current_slider_color = get_option('ds_player_slider_color');
+   $current_slider_color = get_option('dspremium_player_slider_color');
 
    $styles = array('light-style', 'dark-style');
 
@@ -145,7 +145,7 @@
                </tr>
                <tr>
                   <td>Player Slider Color</td>
-                  <td><select name='ds_player_slider_color'><?php echo $selector_colors ?></select></td>
+                  <td><select name='dspremium_player_slider_color'><?php echo $selector_colors ?></select></td>
                </tr>
                <tr>
                   <td>Template</td>
