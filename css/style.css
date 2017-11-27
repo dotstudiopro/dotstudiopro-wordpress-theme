@@ -29,7 +29,9 @@ div[class^="ds-col-"] {
 }
 
 .ds-col-0 {
-  width: 0.0%;
+  width: 0;
+  height:0;
+  overflow:hidden;
 }
 
 .ds-col-1 {

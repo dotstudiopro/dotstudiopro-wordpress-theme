@@ -679,7 +679,9 @@ function channel_headline_video()
     global $dsppremium_curl;
 
     $video = get_query_var("video", false);
-    $skin = !empty(get_option('dspremium_player_slider_color')) ? get_option('dspremium_player_slider_color') : "blue";
+    $skins = array('blue'=>'005bcc', 'red'=>'FF0000', 'yellow'=>'febd00', 'orange'=>'ff5b00', 'pink'=>'ff5bff', 'green'=>'018101');
+    $selectedSkin = !empty(get_option('dspremium_player_slider_color')) ? get_option('dspremium_player_slider_color') : "blue";
+    $skin = $skins[$selectedSkin];
 
     if (dsppremium_channel_is_child()) {
 

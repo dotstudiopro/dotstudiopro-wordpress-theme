@@ -17,7 +17,7 @@ function dsppremium_theater_mode_playlist($videoId)
     $strOut = "";
     $strOut .= "<div class='ds-row'>";
     $strOut .= "    <!-- THEATER MODE PLAYLIST -->";
-    $strOut .= "    <div class='ds-col-12 ds-vid-playlist ds-playlist-theater-mode'>";
+    $strOut .= "    <div class='ds-vid-playlist ds-col-12 ds-playlist-theater-mode'>";
     $strOut .= "        <div class='ds-playlist-theater-outer-container'>";
     $strOut .= "            <div><label>Related Videos</label></div>";
     $strOut .= "                <div class='ds-playlist-theater-inner-container'>";

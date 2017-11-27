@@ -3,7 +3,6 @@ $(document).ready(function() {
   var playerwrap = $('.ds-video-fluidMedia').first();
   var toggleFocusOn = false;
   var playerToggle = $('.ds-player-togglemode');
-  var playlistMode = sessionStorage.getItem('playlistMode') != '' ? sessionStorage.getItem('playlistMode') : 'std';
 
 
   var player = playerwrap.find('.player');
@@ -27,18 +26,16 @@ $(document).ready(function() {
 
   if (!enableRecPlaylist) {
     $('.ds-playlist-theater-mode').html('');
-    $('.ds-video').removeClass('ds-col-8').addClass('ds-col-12');
+    $('.ds-video').removeClass('ds-col-9').addClass('ds-col-12');
     $('.ds-playlist-standard-mode').remove();
     playerToggle.remove();
   } else {
-    if (playlistMode == 'theater') {
-      showPlaylistTheaterMode();
-    } else {
-      showPlaylistStandardMode();
-    }
-
     playerToggle.trigger('click');
-
+    if(getCurrentPlaylistMode() === 'std') {
+      setTimeout(function() {
+        $('.ds-playlist-theater-mode').css({'display': 'none'});
+      },1000);
+    }
   }
 
 
@@ -139,7 +136,7 @@ $(document).ready(function() {
     var dspVidJsPlayerHtml5Api = videoJS.find('#dsp-vid-js-player_html5_api').addClass(scaleTransClass);
     var wContainer = container.outerWidth();
     var playerWidth = wContainer;
-    if(sessionStorage.getItem('playlistMode') === 'std') {
+    if(getCurrentPlaylistMode() === 'std') {
       playerWidth = playerWidth * 0.75;
     }
     var playerHeight = playerWidth * 0.5625;
@@ -187,12 +184,11 @@ $(document).ready(function() {
   });
 
   playerToggle.click(function() {
-    if ($('.ds-playlist-standard-mode').hasClass('active-playlist')) {
+    if (getCurrentPlaylistMode() === 'std') {
       showPlaylistTheaterMode();
     } else {
       showPlaylistStandardMode();
     }
-
     resizePlayer('scale-transition');
   });
 
@@ -313,33 +309,29 @@ $(document).ready(function() {
         props.left = $(window).width() - ($(window).width() * 0.2);
         props['z-index'] = '1000';
       }
-
       return props;
-
     }
 
     function showPlaylistStandardMode() {
       // show standard mode
       $('.ds-video').removeClass('ds-col-12').addClass('ds-col-9');
-      $('.ds-playlist-standard-mode').addClass('active-playlist');
-      $('.ds-vid-playlist').addClass('scale-transition').addClass('opacity-transition-full').addClass('ds-col-3').removeClass('ds-col-0');
-      $('.ds-playlist-theater-mode').removeClass('active-playlist');
+      $('.ds-playlist-standard-mode').addClass('active-playlist').addClass('scale-transition').addClass('opacity-transition-full').addClass('ds-col-3').removeClass('ds-col-0');
+      $('.ds-playlist-theater-mode').removeClass('active-playlist').css({'display': 'none'});
       sessionStorage.setItem('playlistMode', 'std');
       setTimeout(function() {
-        $('.ds-vid-playlist').removeClass('scale-transition').removeClass('opacity-transition-full');
+        $('.ds-playlist-standard-mode').removeClass('scale-transition').removeClass('opacity-transition-full');
       },1000);
     }
 
     function showPlaylistTheaterMode() {
       // show theater mode
       $('.ds-video').removeClass('ds-col-9').addClass('ds-col-12');
-      $('.ds-playlist-standard-mode').removeClass('active-playlist');
-      $('.ds-vid-playlist').addClass('scale-transition').addClass('opacity-transition-none').removeClass('ds-col-3').addClass('ds-col-0');
-      $('.ds-playlist-theater-mode').addClass('active-playlist');
-      $('.owl-carousel').trigger('refresh.owl.carousel');
+      $('.ds-playlist-standard-mode').removeClass('active-playlist').addClass('scale-transition').addClass('opacity-transition-none').removeClass('ds-col-3').addClass('ds-col-0');
+      $('.ds-playlist-theater-mode').addClass('active-playlist').css({'display': 'block'});
       sessionStorage.setItem('playlistMode', 'theater');
+      $('.owl-carousel').trigger('refresh.owl.carousel');
       setTimeout(function() {
-        $('.ds-vid-playlist').removeClass('scale-transition').removeClass('opacity-transition-none');
+        $('.ds-playlist-standard-mode').removeClass('scale-transition').removeClass('opacity-transition-none');
       },1000);
 
     }
@@ -390,6 +382,11 @@ $(document).ready(function() {
       $('.ds-playlist-standard-mode').append(strPlaylist);
     }
 
+  }
+
+
+  function getCurrentPlaylistMode() {
+    return sessionStorage.getItem('playlistMode') === 'theater' ? 'theater' : 'std'
   }
 
 
