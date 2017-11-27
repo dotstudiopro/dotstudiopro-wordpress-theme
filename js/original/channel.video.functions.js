@@ -3,14 +3,10 @@ $(document).ready(function() {
   var playerwrap = $('.ds-video-fluidMedia').first();
   var toggleFocusOn = false;
   var playerToggle = $('.ds-player-togglemode');
-
-
   var player = playerwrap.find('.player');
   if (player.length === 0) {
     return;
   }
-
-
   var minifyVid = player.attr('data-minifyvid') == '1' ? true : false;
   var autoRedir = player.attr('data-autoredir') == '1' ? true : false;
   var autoPlay = player.attr('data-autoplay') === '1' ? true : false;
@@ -23,6 +19,11 @@ $(document).ready(function() {
 
   populatePlaylist();
 
+  if (getCurrentPlaylistMode() == 'std') {
+    showPlaylistStandardMode();
+  } else {
+    showPlaylistTheaterMode();
+  }
 
   if (!enableRecPlaylist) {
     $('.ds-playlist-theater-mode').html('');
@@ -30,8 +31,8 @@ $(document).ready(function() {
     $('.ds-playlist-standard-mode').remove();
     playerToggle.remove();
   } else {
-    playerToggle.trigger('click');
-    if(getCurrentPlaylistMode() === 'std') {
+    var currentPlaylistMode = getCurrentPlaylistMode();
+    if(currentPlaylistMode == 'std') {
       setTimeout(function() {
         $('.ds-playlist-theater-mode').css({'display': 'none'});
       },1000);
@@ -130,13 +131,14 @@ $(document).ready(function() {
 
   function resizePlayer(scaleTransClass) {
     var container = $('.ds-video-headliner');
+    var currentPlaylistMode = getCurrentPlaylistMode();
     var dsVideofluidMedia = $('.ds-video-fluidMedia').addClass(scaleTransClass);
     var player = dsVideofluidMedia.find('.player').addClass(scaleTransClass);
     var videoJS = player.find('.video-js').addClass(scaleTransClass);
     var dspVidJsPlayerHtml5Api = videoJS.find('#dsp-vid-js-player_html5_api').addClass(scaleTransClass);
     var wContainer = container.outerWidth();
     var playerWidth = wContainer;
-    if(getCurrentPlaylistMode() === 'std') {
+    if(currentPlaylistMode == 'std') {
       playerWidth = playerWidth * 0.75;
     }
     var playerHeight = playerWidth * 0.5625;
@@ -184,13 +186,18 @@ $(document).ready(function() {
   });
 
   playerToggle.click(function() {
-    if (getCurrentPlaylistMode() === 'std') {
+    togglePlaylistMode();
+  });
+
+  function togglePlaylistMode() {
+    var currentPlaylistMode = getCurrentPlaylistMode();
+    if (currentPlaylistMode == 'std') {
       showPlaylistTheaterMode();
     } else {
       showPlaylistStandardMode();
     }
     resizePlayer('scale-transition');
-  });
+  }
 
 
 
@@ -317,7 +324,7 @@ $(document).ready(function() {
       $('.ds-video').removeClass('ds-col-12').addClass('ds-col-9');
       $('.ds-playlist-standard-mode').addClass('active-playlist').addClass('scale-transition').addClass('opacity-transition-full').addClass('ds-col-3').removeClass('ds-col-0');
       $('.ds-playlist-theater-mode').removeClass('active-playlist').css({'display': 'none'});
-      sessionStorage.setItem('playlistMode', 'std');
+      setCurrentPlaylistMode('std');
       setTimeout(function() {
         $('.ds-playlist-standard-mode').removeClass('scale-transition').removeClass('opacity-transition-full');
       },1000);
@@ -328,7 +335,7 @@ $(document).ready(function() {
       $('.ds-video').removeClass('ds-col-9').addClass('ds-col-12');
       $('.ds-playlist-standard-mode').removeClass('active-playlist').addClass('scale-transition').addClass('opacity-transition-none').removeClass('ds-col-3').addClass('ds-col-0');
       $('.ds-playlist-theater-mode').addClass('active-playlist').css({'display': 'block'});
-      sessionStorage.setItem('playlistMode', 'theater');
+      setCurrentPlaylistMode('theater');
       $('.owl-carousel').trigger('refresh.owl.carousel');
       setTimeout(function() {
         $('.ds-playlist-standard-mode').removeClass('scale-transition').removeClass('opacity-transition-none');
@@ -386,7 +393,11 @@ $(document).ready(function() {
 
 
   function getCurrentPlaylistMode() {
-    return sessionStorage.getItem('playlistMode') === 'theater' ? 'theater' : 'std'
+    return sessionStorage.getItem('playlistMode') === 'std' ? 'std' : 'theater';
+  }
+
+  function setCurrentPlaylistMode(val) {
+    sessionStorage.setItem('playlistMode', val);
   }
 
 
