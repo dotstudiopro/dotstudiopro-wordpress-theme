@@ -96,3 +96,15 @@ function dsppremium_styles()
     wp_enqueue_style('dspdev-premvid-fancyframe-style');
 
 }
+
+/**
+ * Register/enqueue necessary admin styles and scripts
+ *
+ * @return void
+ */
+function dsppremium_admin_styles_scripts() {
+    wp_enqueue_style( 'ds-admin-css', plugins_url( 'css/owl.carousel.admin.min.css', __DIR__ ));
+    wp_enqueue_script( 'ds-admin-js', plugins_url( 'js/dotstudio.plugin.admin.min.js', __DIR__ ));
+}
+
+

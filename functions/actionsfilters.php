@@ -31,3 +31,4 @@ add_action('admin_init', 'dsppremium_category_images_init');
 add_action('save_post', 'dsppremium_save_category_image_field');
 add_action('admin_init', 'dsppremium_set_front_page_to_categories');
 add_action('wp', 'dsppremium_redirect_all_channels');
+add_action( 'admin_enqueue_scripts', 'dsppremium_admin_styles_scripts' );
