@@ -1,7 +1,7 @@
 <?php
    if(isset($_GET['ds-admin-action']) && $_GET['ds-admin-action'] == 'flush'){
 
-   	ds_check();
+   	dsppremium_check();
 
    }
 
@@ -90,7 +90,7 @@
    $channels = dsppremium_get_channel_page_children_count();
 
    if ($resynced && empty($channels)) {
-      dspdev_no_channels_check_nag();
+      dsppremium_no_channels_check_nag();
    }
 
    ?>
