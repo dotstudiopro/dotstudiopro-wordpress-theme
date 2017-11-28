@@ -108,7 +108,7 @@ jQuery(function ($) {
 				strOut += $('#opts-slide-by').val() != '1' ? " slide_by='" + $('#opts-slide-by').val() + "'" : '';
 				strOut += $('#opts-rtl').val() == '1' ? " rtl='1'" : '';
 				strOut += $('#opts-notitle').attr('checked') == 'checked' ? " notitle='1'" : '';
-				strOut += $('#opts-nav').attr('checked') == 'checked' ? " nav='1'" : '';
+				strOut += $('#opts-nav').attr('checked') == 'checked' ? " nav='1'" : "nav='0'";
 				strOut += $('#title').val() != '' ? " title='" + $('#title').val() + "'" : '';
 				strOut += $('#titleclass').val() != '' ? " titleclass='" + $('#titleclass').val() + "'" : '';
 				strOut += $('#opts-items').val() != '3' ? " items='" + $('#opts-items').val() + "'" : '';
@@ -121,7 +121,7 @@ jQuery(function ($) {
 		function displayShortcode() {
 				var strOut = '';
 				if ((category != undefined && category != '') || (channels != undefined && channels != '')) {
-						strOut = '[dot_studioz_owl_carousel ' + category + channels + getOptions() + ']'
+						strOut = '[dsppremium_owl_carousel ' + category + channels + getOptions() + ']'
 
 				}
 				$('#ds-carousel-built-shortcode').text(strOut);

@@ -208,7 +208,7 @@ function dsppremium_owl_category_html($args)
             $carousel .= "<div class='center-container item'>";
             $carousel .= "      <div>";
             $carousel .= "          <a href='" . home_url("channels/$slug") . "' class='vert-center'>";
-            $carousel .= "              <img class='owl-thumb' src='$spotlight_poster/1280/720' />";
+            $carousel .= "              <img class='owl-thumb' src='$spotlight_poster/500/281' />";
             $carousel .= "          </a>";
             $carousel .= "      </div>";
             $carousel .= "</div>";
@@ -256,7 +256,7 @@ function dsppremium_owl_channel_html($args)
             $carousel .= "      <div>";
             $carousel .= "          <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
             $carousel .= "          <a href='" . home_url("channels/$o->slug") . "' class='vert-center' data-title='$o->title' data-desc='$description'>";
-            $carousel .= "              <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/1280/720' />";
+            $carousel .= "              <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/500/281' />";
             $carousel .= "          </a>";
             $carousel .= "      </div>";
             $carousel .= "      <div><strong><small class='owl-carousel-subtitle'>$o->title</small></strong></div>";

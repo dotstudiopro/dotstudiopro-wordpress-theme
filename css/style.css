@@ -401,6 +401,10 @@ ul.ds-tabs li.current{
   margin-top: 3vh;
 }
 
+.ds-channel-item-meta span {
+  font-size: 1.5vw;
+}
+
 .ds-video-thumbnails .selected {
     cursor: default;
 }
@@ -416,9 +420,7 @@ ul.ds-tabs li.current{
 .ds-video-thumbnails .selected label {
     opacity: 0;
 }
-.ds-video-thumbnails h3 {
-	line-height: 20px;
-}
+
 .ds-video-thumbnails li {
     position: relative;
 	  width: 33%;
@@ -505,14 +507,19 @@ a.ds-overlay:hover {
     .ds-channel-description {
         display: none;
   }
-  .ds-overlay .fa {
-    top: -100px;
-  }
+
     .ds-commenting {
         width: 100%;
     }
 
 }
+
+@media (min-width: 1800px) {
+  .ds-channel-item-meta span {
+    font-size: 1.0vw;
+  }
+}
+
 @media (max-width: 600px) {
   #primary {
     margin-top: -10px;
@@ -535,9 +542,7 @@ a.ds-overlay:hover {
     .ds-channel-description {
 	   display: none;
 	}
-	.ds-overlay .fa {
-		top: -125px;
-	}
+
 	.ds-cat li {
     width: 100%;
     margin-right:0px;
