@@ -1,7 +1,7 @@
 <?php
    if(isset($_GET['ds-admin-action']) && $_GET['ds-admin-action'] == 'flush'){
 
-   	ds_check();
+   	dsppremium_check();
 
    }
 
@@ -90,7 +90,7 @@
    $channels = dsppremium_get_channel_page_children_count();
 
    if ($resynced && empty($channels)) {
-      dspdev_no_channels_check_nag();
+      dsppremium_no_channels_check_nag();
    }
 
    ?>
@@ -247,7 +247,7 @@
                </td>
                <td>
                   <div  id="channels-carousel-list" class="carousel-list">
-                     <?php echo ds_owl_carousel_local_channels_list(); ?>
+                     <?php echo dsppremium_owl_carousel_local_channels_list(); ?>
                   </div>
                   <div id="category-carousel-list" class="carousel-list" style="display:none;">
                      <?php
@@ -352,11 +352,11 @@
                      </tr>
                      <tr>
                         <td>Animation In:</td>
-                        <td><?php echo ds_owl_admin_animation_select('opts-animate-in','animate-type opt-change'); ?></td>
+                        <td><?php echo dsppremium_owl_admin_animation_select('opts-animate-in','animate-type opt-change'); ?></td>
                      </tr>
                      <tr>
                         <td>Animation Out:</td>
-                        <td><?php echo ds_owl_admin_animation_select('opts-animate-out','animate-type opt-change'); ?></td>
+                        <td><?php echo dsppremium_owl_admin_animation_select('opts-animate-out','animate-type opt-change'); ?></td>
                      </tr>
                   </table>
                </td>
