@@ -80,7 +80,7 @@ function dsppremium_owl_admin_animation_select($name, $className = '')
 function dsppremium_owl_carousel()
 {
     wp_enqueue_script('owl-carousel', plugins_url( 'js/owl.carousel.min.js', __DIR__ ), array('jquery'));
-    wp_enqueue_style('owl-carousel-min', plugins_url( 'css/owl.carousel.min.css', __DIR__ ));
+    wp_enqueue_style('owl-carousel-min', plugins_url( 'css/owl.carousel.css', __DIR__ ));
     wp_enqueue_style('ds-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 
 }
@@ -253,13 +253,12 @@ function dsppremium_owl_channel_html($args)
             $imageexp    = explode("/", $o->poster);
             $image       = $imageexp[3];
             $carousel .= "<div class='center-container item'>";
-            $carousel .= "      <div>";
-            $carousel .= "          <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
-            $carousel .= "          <a href='" . home_url("channels/$o->slug") . "' class='vert-center' data-title='$o->title' data-desc='$description'>";
-            $carousel .= "              <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/500/281' />";
-            $carousel .= "          </a>";
-            $carousel .= "      </div>";
-            $carousel .= "      <div><strong><small class='owl-carousel-subtitle'>$o->title</small></strong></div>";
+            $carousel .= "  <div class='ds-owl-img'  style='background: url(https://image.dotstudiopro.com/$image/500/281);'>";
+            $carousel .= "            <a href='" . home_url("channels/$o->slug") . "' class='vert-center' data-title='$o->title' data-desc='$description'>";
+            $carousel .= "              <img class='ds-owl-playbtn' src='/wp-content/plugins/dotstudiopro-wordpress/images/circplaybtn.png" . "' />";
+            $carousel .= "           </a>";
+            $carousel .= "  </div>";
+            $carousel .= "  <div><small class='owl-carousel-subtitle'>$o->title</small></div>";
             $carousel .= "</div>";
         }
 

@@ -158,7 +158,13 @@ $(document).ready(function() {
 
 
   $(window).resize(function() {
-    resizePlayer('no-scale-transition');
+    var currentPlaylistMode = getCurrentPlaylistMode();
+    if($(window).width() <= 800 && currentPlaylistMode == 'std') {
+      showPlaylistTheaterMode();
+      resizePlayer('scale-transition');
+    } else {
+      resizePlayer('no-scale-transition');
+    }
   });
 
   player.mouseenter(function() {
@@ -389,6 +395,10 @@ $(document).ready(function() {
       $('.ds-playlist-standard-mode').append(strPlaylist);
     }
 
+  }
+
+  function getStayInTheaterMode() {
+       return $(window).width() <= 800;
   }
 
 
