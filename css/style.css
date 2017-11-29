@@ -429,6 +429,7 @@ ul.ds-tabs li.current{
     cursor: pointer;
     float: left;
     list-style-type: none;
+    margin-bottom:3vh;
 }
 
 a.ds-overlay {
