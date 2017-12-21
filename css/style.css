@@ -22,6 +22,18 @@
   width:100%;
 }
 
+.ds-row.ds-video-row-container {
+  display: block;
+}
+
+.ds-playlist-theater-outer-container > div > label {
+  color: #FFF;
+}
+
+.ds-playlist-theater-outer-container {
+  display: none;
+}
+
 div[class^="ds-col-"] {
   position: relative;
   min-height: 1px;

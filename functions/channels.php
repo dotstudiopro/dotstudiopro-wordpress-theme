@@ -702,12 +702,31 @@ function channel_headline_video()
             $playlist = $videos[0]->playlist;
         }
 
+        $id = "";
 
-        $id = !empty($playlist->_id) ? $playlist->_id : "";
+        if (!empty($playlist->_id)) {
+            $id = $playlist->_id;
+        } else if (!empty($playlist[0]) && !empty($playlist[0]->_id)) {
+            $id = $playlist[0]->_id;
+        }
 
-        $title = !empty($playlist->title) ? $playlist->title : "";
+        $title = "";
 
-        $duration = !empty($playlist->duration) ? round($playlist->duration / 60) : 0;
+        if (!empty($playlist->title)) {
+            $title = $playlist->title;
+        } else if (!empty($playlist[0]) && !empty($playlist[0]->title)) {
+            $title = $playlist[0]->title;
+        }
+
+        $duration = "";
+
+        if (!empty($playlist->duration)) {
+            $duration = $playlist->duration;
+        } else if (!empty($playlist[0]) && !empty($playlist[0]->duration)) {
+            $duration = $playlist[0]->duration;
+        }
+
+        if ($duration > 0) $duration = round($duration / 60);
 
         $description = isset($videos[0]->description) ? $videos[0]->description : '';
 
@@ -748,7 +767,7 @@ function channel_headline_video()
 
         }
 
-        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . $skin . "&autostart=" . (get_option("dsppremium_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("dsppremium_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("dsppremium_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("dsppremium_player_disable_controlbar", 0) == 1 ? "true" : "false");
+        $player_url = "https://player.dotstudiopro.com/player/$id?targetelm=.player&companykey=$company_id&skin=" . $skin . "&autostart=" . (get_option("ds_player_autoplay", 0) == 1 ? "true" : "false") . "&sharing=" . (get_option("ds_player_sharing", 0) == 1 ? "true" : "false") . "&muteonstart=" . (get_option("ds_player_mute", 0) == 1 ? "true" : "false") . "&disablecontrolbar=" . (get_option("ds_player_disable_controlbar", 0) == 1 ? "true" : "false");
 
         $to_return = (object) array('_id' => $id, 'title' => $title, 'duration' => $duration, 'description' => $description, 'company' => $company, 'country' => $country, 'language' => $language, 'year' => $year, 'rating' => $rating, 'player' => $player_url);
 

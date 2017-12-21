@@ -19,7 +19,7 @@ get_header();
 global $post;
 
 ?>
-<div id="main" class="container ds-main-container">
+<div id="main" class="ds-main-container">
 
 
 	<?php display_channel_video_player();?>

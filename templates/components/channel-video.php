@@ -1,11 +1,11 @@
 	<?php
 		$headline_video = channel_headline_video();
 		if(isset($headline_video->player)) {
-				$minifyVid = !empty(get_option('ds_player_minivid')) ? get_option('ds_player_minivid') : "0";
-				$autoRedir = !empty(get_option('ds_player_autoredir')) ? get_option('ds_player_autoredir') : "0";
-				$autoPlay = !empty(get_option('ds_player_autoplay')) ? get_option('ds_player_autoplay') : "0";
-				$recPlaylist = !empty(get_option('ds_player_recplaylist')) ? get_option('ds_player_recplaylist') : "0";
-				$playerSliderColor = !empty(get_option('dspremium_player_slider_color')) ? get_option('dspremium_player_slider_color') : "blue";
+				$minifyVid = get_option('ds_player_minivid') ?: "0";
+				$autoRedir = get_option('ds_player_autoredir') ?: "0";
+				$autoPlay = get_option('ds_player_autoplay') ?: "0";
+				$recPlaylist = get_option('ds_player_recplaylist') ?: "0";
+				$playerSliderColor = get_option('dspremium_player_slider_color') ?: "blue";
 				$videoId = $headline_video->_id;
 				$show_playlist_above_meta = get_option('ds_show_playlist_above_meta');
 		?>
@@ -15,7 +15,7 @@
 			<div class='ds-video-headliner'>
 					<div id="anibox">&nbsp;</div>
 			    <div class='ds-row ds-video-row-container'>
-			    		<div class='ds-col-9 ds-video'>
+			    		<div class='<?php echo $recPlaylist === '1' ? 'ds-col-9' : 'ds-col-12'?>  ds-video'>
 									<div class='ds-video-fluidMedia'>
 											<?php if($recPlaylist === '1'): ?><i class='fa fa-arrows-alt fa-2x ds-player-togglemode'></i><?php endif;?>
 											<div class="player" data-minifyvid='<?php echo $minifyVid;?>' data-autoredir='<?php echo $autoRedir;?>' data-autoplay='<?php echo $autoPlay;?>' data-recplaylist='<?php echo $recPlaylist ?>'></div>

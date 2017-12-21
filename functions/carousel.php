@@ -152,8 +152,8 @@ function dsppremium_owl_recommended_videos_html($args)
                 $title       = strlen($title) > 50 ? substr($title, 0, 50) . "..." : $title;
                 $strOut .= "<div class='center-container item'>";
                 $strOut .= "        <div>";
+                $strOut .= "            <a href='?video=$video_id' class='vert-center rec-list-item' data-title='$title' data-desc='$description'>";
                 $strOut .= "            <i class='ds-owl-fa fa fa-play-circle-o fa-3' aria-hidden='true'></i>";
-                $strOut .= "            <a href='#$video_id' class='vert-center rec-list-item' data-title='$title' data-desc='$description'>";
                 $strOut .= "                <img class='owl-thumb' src='https://image.dotstudiopro.com/$image/177/100' />";
                 $strOut .= "            </a>";
                 $strOut .= "        </div>";
