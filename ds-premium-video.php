@@ -4,8 +4,8 @@
 Plugin Name: dotStudioPRO Premium Video
 Plugin URI: http://wordpress.dotstudiopro.com/
 Description: dotstudioPRO is a video monetization CMS used to manage, deploy, and monetize streaming video on devices like Apple TV, Roku, Mobile, Facebook and browsers. This plugin extends dotstudioPRO functionality into Wordpress turning it into a Netflix or Hulu style website. Documentation: http://docs.wordpress.dotstudiopro.com/dspdev-premium-video/
-Version: 2.04
-Author: Scott Lonis, Matt Armstrong, DotStudioz
+Version: 3.00
+Author: dotStudioz
 Text Domain: dotstudiopro-wordpress
 Author URI: http://www.dotstudiopro.com
 License: GPLv2 or later
