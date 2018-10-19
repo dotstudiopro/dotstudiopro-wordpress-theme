@@ -4,7 +4,6 @@
  * Dotstudio Pro Theme options Config File
  * @since 1.0.0
  */
-
 if (!class_exists('Redux')) {
     return;
 }
@@ -107,13 +106,14 @@ Redux::setSection($opt_name, array(
                 '0' => 'Boxed',
                 '1' => 'Full Width'
             ),
-            'default' => '2'
+            'default' => '1'
         ),
         array(
             'id' => 'opt-favicon-url',
             'type' => 'media',
             'title' => __('Favicon icon', 'dotstudio-pro'),
             'subtitle' => __('Favicon for your website at 16px x 16px or 32px x 32px.', 'dotstudio-pro'),
+            'default' => ''
         ),
         array(
             'id' => 'opt-back-to-top',
@@ -147,6 +147,26 @@ Redux::setSection($opt_name, array(
  * Header Options
  * @since 1.0.0
  */
+$options = array();
+$args = array(
+    'post_type' => 'category',
+    'post_status' => 'publish',
+    'posts_per_page' => '-1',
+    'meta_query' => array(
+        array(
+            'key' => 'is_in_cat_menu',
+            'compare' => '=',
+            'value' => 1,
+        ),
+    ),
+);
+$posts = new WP_Query($args);
+if ($posts->have_posts()) {
+    foreach ($posts->posts as $post) {
+        $options[$post->post_name] = stripslashes($post->post_title);
+    }
+}
+
 Redux::setSection($opt_name, array(
     'title' => __('Header', 'dotstudio-pro'),
     'id' => 'header',
@@ -158,6 +178,7 @@ Redux::setSection($opt_name, array(
             'mode' => 'padding',
             'compiler' => array('header'),
             'all' => false,
+            'default' => '',
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
             'units_extended' => 'true', // Allow users to select any type of unit
             'title' => __('Header Padding', 'dotstudio-pro'),
@@ -179,6 +200,7 @@ Redux::setSection($opt_name, array(
             'type' => 'spacing',
             'mode' => 'margin',
             'compiler' => array('.site-logo'),
+            'default' => '',
             'all' => false,
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
             'units_extended' => 'true', // Allow users to select any type of unit
@@ -190,6 +212,7 @@ Redux::setSection($opt_name, array(
             'type' => 'media',
             'title' => __('Default Logo', 'dotstudio-pro'),
             'subtitle' => __('Select an image file for your logo.', 'dotstudio-pro'),
+            'default' => ''
         ),
         array(
             'id' => 'opt-search',
@@ -206,6 +229,51 @@ Redux::setSection($opt_name, array(
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
+        ),
+        array(
+            'id' => 'opt-category-menu',
+            'type' => 'switch',
+            'title' => __('Show Category Menu', 'dotstudio-pro'),
+            'default' => 0,
+            'on' => 'On',
+            'off' => 'Off',
+        ),
+        array(
+            'id' => 'opt-menu-title',
+            'type' => 'text',
+            'title' => 'Menu title',
+            'required' => array('opt-category-menu', '=', '1'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Menu title Display on Header', 'dotstudio-pro'),
+            'default' => 'categories'
+        ),
+        array(
+            'id' => 'opt-menu-link',
+            'type' => 'text',
+            'title' => __('Menu URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Menu URL', 'dotstudio-pro'),
+            'required' => array('opt-category-menu', '=', '1'),
+            'default' => '#'
+        ),
+        array(
+            'title' => __('Menu Position', 'dotstudio-pro'),
+            'desc' => __('Choose the postion to display menu on home-page.', 'dotstudio-pro'),
+            'type' => 'select',
+            'id' => 'opt-menu-position',
+            'required' => array('opt-category-menu', '=', '1'),
+            'options' => range(1, 10),
+            'default' => 0
+        ),
+        array(
+            'id' => 'opt-menu-sorter',
+            'type' => 'sorter',
+            'title' => 'Header category menu order',
+            'required' => array('opt-category-menu', '=', '1'),
+            'options' => array(
+                'enabled' => $options,
+                'disabled' => array(),
+            ),
         ),
     )
 ));
@@ -226,7 +294,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the header (default: #428bca).', 'dotstudio-pro'),
             'default' => '#428bca',
             'validate' => 'color',
-            'compiler' => array('header'),
+            'output' => array('header'),
             'mode' => 'background',
         ),
         array(
@@ -236,17 +304,14 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the header text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('header'),
+            'output' => array('header'),
         ),
         array(
-            'id' => 'opt-bg-color-body',
-            'type' => 'color',
-            'title' => __('Site Body Background  Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the body (default: #ffffff).', 'dotstudio-pro'),
-            'default' => '#ffffff',
-            'validate' => 'color',
-            'compiler' => array('body'),
-            'mode' => 'background',
+            'id' => 'opt-background',
+            'type' => 'background',
+            'output' => array('body'),
+            'title' => __('Body Background', 'redux-framework-demo'),
+            'subtitle' => __('Body background with image, color, etc.', 'redux-framework-demo'),
         ),
         array(
             'id' => 'opt-color-body',
@@ -255,7 +320,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the body text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('body'),
+            'output' => array('body'),
         ),
         array(
             'id' => 'opt-bg-color-footer',
@@ -264,7 +329,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the footer (default: #dd9933).', 'dotstudio-pro'),
             'default' => '#dd9933',
             'validate' => 'color',
-            'compiler' => array('footer'),
+            'output' => array('footer'),
             'mode' => 'background',
         ),
         array(
@@ -274,7 +339,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the footer text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('footer'),
+            'output' => array('footer'),
         ),
     )
 ));
@@ -292,6 +357,7 @@ $args = array(
 );
 $posts = new WP_Query($args);
 if ($posts->have_posts()) {
+    $default_option = $posts->posts[0]->post_name;
     foreach ($posts->posts as $post) {
         $options[$post->post_name] = stripslashes($post->post_title);
     }
@@ -311,7 +377,8 @@ Redux::setSection($opt_name, array(
             'desc' => __('Choose the category to be used for homepage carousel.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-home-carousel',
-            'options' => $options
+            'options' => $options,
+            'default' => $default_option
         ),
     ),
 ));
@@ -506,106 +573,106 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'section-start',
             'type' => 'section',
-            'title' => __('Social icons', 'listings'),
-            'subtitle' => __('Controls the social media pages URLs.', 'listings'),
+            'title' => __('Social icons', 'dotstudio-pro'),
+            'subtitle' => __('Controls the social media pages URLs.', 'dotstudio-pro'),
             'indent' => true
         ),
         array(
             'id' => 'facebook-link',
             'type' => 'text',
-            'title' => __('Facebook Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Facebook Page URL', 'classiera'),
+            'title' => __('Facebook Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Facebook Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'twitter-link',
             'type' => 'text',
-            'title' => __('Twitter Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Twitter Page URL', 'classiera'),
+            'title' => __('Twitter Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Twitter Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'dribbble-link',
             'type' => 'text',
-            'title' => __('Dribbble Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Dribbble Page URL', 'classiera'),
+            'title' => __('Dribbble Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Dribbble Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'flickr-link',
             'type' => 'text',
-            'title' => __('Flickr Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Flickr Page URL', 'classiera'),
+            'title' => __('Flickr Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Flickr Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'github-link',
             'type' => 'text',
-            'title' => __('Github Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Github Page URL', 'classiera'),
+            'title' => __('Github Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Github Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'pinterest-link',
             'type' => 'text',
-            'title' => __('Pinterest Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Pinterest Page URL', 'classiera'),
+            'title' => __('Pinterest Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Pinterest Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'youtube-link',
             'type' => 'text',
-            'title' => __('Youtube Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Youtube Page URL', 'classiera'),
+            'title' => __('Youtube Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Youtube Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'google-plus-link',
             'type' => 'text',
-            'title' => __('Google+ Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Google+ Page URL', 'classiera'),
+            'title' => __('Google+ Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Google+ Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'linkedin-link',
             'type' => 'text',
-            'title' => __('LinkedIn Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('LinkedIn Page URL', 'classiera'),
+            'title' => __('LinkedIn Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('LinkedIn Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'instagram-link',
             'type' => 'text',
-            'title' => __('Instagram Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Instagram Page URL', 'classiera'),
+            'title' => __('Instagram Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Instagram Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'vimeo-link',
             'type' => 'text',
-            'title' => __('Vimeo Page URL', 'classiera'),
-            'subtitle' => __('This must be an URL.', 'classiera'),
-            'desc' => __('Vimeo Page URL', 'classiera'),
+            'title' => __('Vimeo Page URL', 'dotstudio-pro'),
+            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'desc' => __('Vimeo Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),

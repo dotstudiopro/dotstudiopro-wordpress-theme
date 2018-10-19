@@ -75,6 +75,14 @@ h6, .h6 {
     border-bottom: 5px solid;
     border-left: 5px solid transparent;
 }
+#owl-demo .item{
+    margin: 3px;
+}
+#owl-demo .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
 
 /*
  * Blog name and description
