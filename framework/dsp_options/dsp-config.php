@@ -380,6 +380,28 @@ Redux::setSection($opt_name, array(
             'options' => $options,
             'default' => $default_option
         ),
+        array(
+            'id' => 'opt-poster-type',
+            'type' => 'radio',
+            'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
+            'subtitle' => __('Select the channel banner type which you would like to display on all the carousel', 'dotstudio-pro'),
+            'options' => array(
+                '1' => 'Spotlight Poster',
+                '2' => 'Poster',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-play-btn-type',
+            'type' => 'radio',
+            'title' => __('Select Navigate Button Type', 'dotstudio-pro'),
+            'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e: <br/> 1). Play Video Button(it will bnavigate the user to play the first video of the channel) <b>OR</b><br/> 2). Watch Now Button(It will navigate the user to the channel\'s list page)', 'dotstudio-pro'),
+            'options' => array(
+                '1' => 'Play Video Button',
+                '2' => 'Watch Now Button',
+            ),
+            'default' => '2'
+        ),
     ),
 ));
 
