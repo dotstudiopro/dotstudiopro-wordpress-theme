@@ -356,6 +356,7 @@ $args = array(
     )
 );
 $posts = new WP_Query($args);
+$default_option = '';
 if ($posts->have_posts()) {
     $default_option = $posts->posts[0]->post_name;
     foreach ($posts->posts as $post) {
@@ -378,7 +379,7 @@ Redux::setSection($opt_name, array(
             'type' => 'select',
             'id' => 'opt-home-carousel',
             'options' => $options,
-            'default' => $default_option
+            'default' => $default_option,
         ),
         array(
             'id' => 'opt-poster-type',
