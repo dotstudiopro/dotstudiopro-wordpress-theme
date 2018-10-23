@@ -1,6 +1,7 @@
 <?php
 
 require_once (dirname(__FILE__) . '/includes/class-walker-dsp-submenu.php');
+require_once (dirname(__FILE__) . '/includes/class-theme-functions.php');
 
 // Load Redux-Freamwork
 if (!class_exists('ReduxFramework') && file_exists(dirname(__FILE__) . '/framework/ReduxCore/framework.php')) {
@@ -45,7 +46,7 @@ add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('custom','slick.min');
+    $scripts = array('slick.min','slick-init');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -110,7 +111,7 @@ function add_category_menu_links($items, $args) {
 
             $new_links[] = (object) $item; // Add the new menu item to our array
             // insert item
-            $location = $dsp_theme_options['opt-menu-position'];
+            $location = $dsp_theme_options['opt-menu-position'] + 1;
             array_splice($items, $location, 0, $new_links);
         }
     }

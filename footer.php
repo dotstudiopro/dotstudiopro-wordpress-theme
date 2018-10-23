@@ -1,5 +1,3 @@
-        </div><!-- /.row -->
-    </div><!-- /.container -->
 <footer class="blog-footer">
     <p>This is footer</p>
 </footer>

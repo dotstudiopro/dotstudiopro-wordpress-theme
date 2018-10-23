@@ -155,7 +155,20 @@ h6, .h6 {
     margin-bottom: 20px;
     color: #999;
 }
-
+.slick-prev {
+    left: 25px!important;
+    z-index: 9999;
+}
+.slick-next {
+    right: 25px!important;
+    z-index: 9999;
+}
+.slick-prev:before, .slick-next:before{
+    color: #1e73be!important;
+}
+.slick-dots{
+    bottom: 25px !important;
+}
 /*
  * Footer
  */

@@ -262,8 +262,8 @@ Redux::setSection($opt_name, array(
             'type' => 'select',
             'id' => 'opt-menu-position',
             'required' => array('opt-category-menu', '=', '1'),
-            'options' => range(1, 10),
-            'default' => 0
+            'options' => array_combine(range(1, 10), range(1, 10)),
+            'default' => 1
         ),
         array(
             'id' => 'opt-menu-sorter',
@@ -379,7 +379,7 @@ Redux::setSection($opt_name, array(
             'type' => 'select',
             'id' => 'opt-home-carousel',
             'options' => $options,
-            'default' => $default_option,
+            'default' => $default_option
         ),
         array(
             'id' => 'opt-poster-type',
@@ -387,10 +387,10 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type which you would like to display on all the carousel', 'dotstudio-pro'),
             'options' => array(
-                '1' => 'Spotlight Poster',
-                '2' => 'Poster',
+                'spotlight_poster' => 'Spotlight Poster',
+                'poster' => 'Poster',
             ),
-            'default' => '1'
+            'default' => 'spotlight_poster'
         ),
         array(
             'id' => 'opt-play-btn-type',
@@ -398,14 +398,131 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Navigate Button Type', 'dotstudio-pro'),
             'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e: <br/> 1). Play Video Button(it will bnavigate the user to play the first video of the channel) <b>OR</b><br/> 2). Watch Now Button(It will navigate the user to the channel\'s list page)', 'dotstudio-pro'),
             'options' => array(
-                '1' => 'Play Video Button',
-                '2' => 'Watch Now Button',
+                'play_video' => 'Play Video Button',
+                'watch_now' => 'Watch Now Button',
             ),
-            'default' => '2'
+            'default' => 'watch_now'
         ),
     ),
 ));
 
+/**
+ * Slick carousel Settings
+ * @since 1.0.0
+ */
+Redux::setSection($opt_name, array(
+    'title' => __('Slick Carousel Settings', 'dotstudio-pro'),
+    'id' => 'carousels',
+    'icon' => 'el el-th',
+    'fields' => array(
+        array(
+            'id' => 'opt-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'redux-framework-demo'),
+            'desc' => __('You can enable or disable any piece of this field. Width, Height, or Units.', 'redux-framework-demo'),
+            'default' => array(
+                'width' => 200,
+                'height' => 100,
+            )
+        ),
+        array(
+            'id' => 'opt-slick-slidetoshow',
+            'title' => __('Slides to show', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be display in a carousel row', 'dotstudio-pro'),
+            'description' => __('By default set to "3" ie all images. eg. if you want to display only 5 images then select option "5"', 'dotstudio-pro'),
+            'type' => 'select',
+            'options' => array_combine(range(1, 5), range(1, 5)),
+            'default' => 4
+        ),
+        array(
+            'id' => 'opt-slick-slidetoscroll',
+            'title' => __('Slides to scroll', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
+            'description' => __('By default set to "1".', 'dotstudio-pro'),
+            'type' => 'select',
+            'options' => array_combine(range(1, 5), range(1, 5)),
+            'default' => 4
+        ),
+        array(
+            'id' => 'opt-slick-pagination',
+            'title' => __('Enable Pagination', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable/disable the dots navigation under the carousel', 'dotstudio-pro'),
+            'description' => __('By default set to "off".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => false,
+        ),
+        array(
+            'id' => 'opt-slick-navigation',
+            'title' => __('Enable Navigation', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable/disable the navigation arrows', 'dotstudio-pro'),
+            'description' => __('By default set to "on".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-infinite',
+            'title' => __('Enable infinite loop', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
+            'description' => __('By default set to "on".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-autoplay',
+            'title' => __('Autoplay', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
+            'description' => __('By default set to "off".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => false,
+        ),
+        array(
+            'id' => 'opt-slick-autoplayspeed',
+            'title' => __('Autoplay Interval', 'dotstudio-pro'),
+            'subtitle' => __('This option is to set the interval for the autoplay sliding', 'dotstudio-pro'),
+            'description' => __('By default set to  "2000". Please enter the value in miliseconds (ie. in multiples of 100).', 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '2000',
+            'required' => array('opt-slick-autoplay', '=', true),
+        ),
+        array(
+            'id' => 'opt-slick-slidespeed',
+            'title' => __('Slide Speed', 'dotstudio-pro'),
+            'subtitle' => __('This option is to set the speed for the slide', 'dotstudio-pro'),
+            'description' => __('By default set to  "500". Please enter the value in miliseconds (ie. in multiples of 100).', 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '500',
+        ),
+        array(
+            'id' => 'opt-slick-responsive',
+            'title' => __('Responsive Display', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable responsive display mode', 'dotstudio-pro'),
+            'description' => __('By default set "on"', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-tablet-slidetoshow',
+            'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
+            'description' => __('By default set to "2".', 'dotstudio-pro'),
+            'type' => 'select',
+            'options' => array_combine(range(1, 5), range(1, 5)),
+            'default' => 2,
+            'required' => array('opt-slick-responsive', '=', true),
+        ),
+        array(
+            'id' => 'opt-slick-mobile-slidetoshow',
+            'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be displayed in mobile screen', 'dotstudio-pro'),
+            'description' => __('By default set to "1".', 'dotstudio-pro'),
+            'type' => 'select',
+            'options' => array_combine(range(1, 5), range(1, 5)),
+            'default' => 1,
+            'required' => array('opt-slick-responsive', '=', true),
+        ),
+    ),
+));
 /**
  * Typrography
  * @since 1.0.0
@@ -425,7 +542,7 @@ Redux::setSection($opt_name, array(
             'google' => true,
             'default' => array(
                 'color' => '#dd9933',
-                'font-size' => '30px',
+                'font-size' => '12px',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'font-weight' => 'Normal',
             ),
@@ -447,9 +564,9 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
+                'font-size' => '32px',
                 'line-height' => '40px'
             ),
         ),
@@ -470,10 +587,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
-                'line-height' => '40px'
+                'font-size' => '24px',
+                'line-height' => '30px'
             ),
         ),
         array(
@@ -493,10 +610,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
-                'line-height' => '40px'
+                'font-size' => '19px',
+                'line-height' => '22px'
             ),
         ),
         array(
@@ -516,10 +633,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
-                'line-height' => '40px'
+                'font-size' => '16px',
+                'line-height' => '22px'
             ),
         ),
         array(
@@ -539,10 +656,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
-                'line-height' => '40px'
+                'font-size' => '14px',
+                'line-height' => '20px'
             ),
         ),
         array(
@@ -562,10 +679,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Abel',
+                'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '33px',
-                'line-height' => '40px'
+                'font-size' => '13px',
+                'line-height' => '20px'
             ),
         ),
     )

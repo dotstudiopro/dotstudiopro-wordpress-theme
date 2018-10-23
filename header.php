@@ -48,9 +48,3 @@
                 </nav>
             </div>
         </header>
-        <div class="container">
-            <div class="blog-header">
-                <h1 class="blog-title">Dotstudio Pro</h1>
-                <p class="lead blog-description">website for video streaming.</p>
-            </div>
-            <div class="row">
