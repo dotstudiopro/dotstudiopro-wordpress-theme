@@ -46,7 +46,7 @@ add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('slick.min','slick-init');
+    $scripts = array('slick.min','slick-init', 'custom');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
