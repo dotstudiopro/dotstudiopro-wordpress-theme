@@ -182,3 +182,16 @@ h6, .h6 {
 .blog-footer p:last-child {
     margin-bottom: 0;
 }
+.other-categories .slick-slide {
+    margin: 0 5px;
+}
+.other-categories .slick-track{
+    margin: 0;
+}
+/* the parent */
+.other-categories .slick-list {
+    margin: 0 -5px;
+}
+.other-categories .slick-slide img{
+    width: 100%;
+}

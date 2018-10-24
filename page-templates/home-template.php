@@ -15,7 +15,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 <?php foreach ($main_carousel as $slide) { ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img src="https://worldwithouthorizons.com/wp-content/uploads/placeholder.jpg" class="lazy" data-src="<?php echo $slide['image'] . '/1920/600'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img src="<?php echo $slide['image'] . '/1920/600'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container">
@@ -32,74 +32,58 @@ $main_carousel = $theme_function->home_page_main_carousel();
         <?php } ?>
     </div><!-- /.blog-main -->
 </div>
-
-<?php
-$home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'category');
-
-$category_args = array(
-    'post_type' => 'category',
-    'posts_per_page' => -1,
-    'post_not_in' => $home->ID,
-);
-$categories = new WP_Query($category_args);
-
-if ($categories->have_posts()) {
-    $cnt = 1;
-    $class_array = [];
-    foreach ($categories->posts as $category) {
-        $category_slug = $category->post_name;
-        $category_name = $category->post_title;
-        $channels = $theme_function->home_page_other_carousel($category_slug);
-        if ($channels) {
-            ?>
-            <div class="row">
-                <div class="container">
-                    <div class="col-sm-12">
-                        <h2 class="post-title"><?php echo $category_name; ?></h2>
-                        <?php 
-                            $class = 'home-carousel' . $cnt; 
-                            $class_array[] = $class;
-                            $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT) ;
-                            $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT) 
-                        ?>
-                        <div class="<?php echo $class ?>">
-                            <?php foreach ($channels as $channel) { ?>
-                            <div class="slide">
-                                <div class="slide_image">
-                                    <img src="https://worldwithouthorizons.com/wp-content/uploads/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/'.$width.'/'.$height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
-                                </div>
-                                <div class="slide_content">
-                                    <h6><?php echo $channel['title']; ?></h6>
-                                    <p><?php echo wp_trim_words( $channel['description'], 5, '...'); ?></p>
-                                </div>
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="row">
+    <div class="container">
+        <div class="other-categories">
             <?php
-            $cnt++;
-        }
-    }
-}
-?>
+            $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'category');
 
-<?php
-wp_localize_script('slick-init', 'slick_carousel', array(
-    'selector' => $class_array,
-    'slidetoshow' => $dsp_theme_options['opt-slick-slidetoshow'],
-    'slidetoscroll' => $dsp_theme_options['opt-slick-slidetoscroll'],
-    'infinite' => $dsp_theme_options['opt-slick-infinite'],
-    'autoplay' => $dsp_theme_options['opt-slick-autoplay'],
-    'autoplayspeed' => $dsp_theme_options['opt-slick-autoplayspeed'],
-    'slidespeed' => $dsp_theme_options['opt-slick-slidespeed'],
-    'pagination' => $dsp_theme_options['opt-slick-pagination'],
-    'navigation' => $dsp_theme_options['opt-slick-navigation'],
-    'responsive' => $dsp_theme_options['opt-slick-responsive'],
-    'tablet_slidetoshow' => $dsp_theme_options['opt-slick-tablet-slidetoshow'],
-    'mobile_slidetoshow' => $dsp_theme_options['opt-slick-mobile-slidetoshow'],
-        )
-);
-?>
+            $category_args = array(
+                'post_type' => 'category',
+                'posts_per_page' => -1,
+                'post_not_in' => $home->ID,
+            );
+            $categories = new WP_Query($category_args);
+
+            if ($categories->have_posts()) {
+                $cnt = 1;
+                $class_array = [];
+                foreach ($categories->posts as $category) {
+                    $category_slug = $category->post_name;
+                    $category_name = $category->post_title;
+                    $channels = $theme_function->home_page_other_carousel($category_slug);
+                    if ($channels) {
+                        ?>
+                        <div class="col-sm-12">
+                            <h2 class="post-title"><?php echo $category_name; ?></h2>
+                            <?php
+                            $class = 'home-carousel' . $cnt;
+                            $class_array[] = $class;
+                            $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                            $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT)
+                            ?>
+                            <div class="<?php echo $class ?>">
+                                <?php foreach ($channels as $channel) { ?>
+                                    <div class="slide">
+                                        <div class="slide_image">
+                                            <img src="https://worldwithouthorizons.com/wp-content/uploads/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                        </div>
+                                        <div class="slide_content">
+                                            <h6><?php echo $channel['title']; ?></h6>
+                                            <p><?php echo wp_trim_words($channel['description'], 5, '...'); ?></p>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <?php
+                        $cnt++;
+                    }
+                }
+            }
+            $theme_function->slick_init_options($class_array);
+            ?>
+        </div>
+    </div>
+</div>
 <?php get_footer(); ?>
