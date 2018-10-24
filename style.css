@@ -169,19 +169,16 @@ h6, .h6 {
 .slick-dots{
     bottom: 25px !important;
 }
+
+.slick-wrapper{
+   visibility: hidden;
+}
+.slick-initialized {
+   visibility: visible;
+}
 /*
  * Footer
  */
-
-.blog-footer {
-    padding: 40px 0;
-    color: #999;
-    text-align: center;
-    border-top: 1px solid #e5e5e5;
-}
-.blog-footer p:last-child {
-    margin-bottom: 0;
-}
 .other-categories .slick-slide {
     margin: 0 5px;
 }
@@ -194,4 +191,20 @@ h6, .h6 {
 }
 .other-categories .slick-slide img{
     width: 100%;
+}
+.holder
+{
+    position:relative;
+}
+.holder img
+{
+    width: 100%;
+    height: auto;
+}
+.holder h3
+{
+    margin: 0;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
 }

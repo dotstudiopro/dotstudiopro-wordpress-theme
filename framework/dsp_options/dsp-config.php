@@ -215,6 +215,18 @@ Redux::setSection($opt_name, array(
             'default' => ''
         ),
         array(
+            'id' => 'opt-logo-height',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose height for the logo.', 'dotstudio-pro'),
+            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'output' => array('.site-logo img'),
+            'width' => false,
+            'default' => array(
+                'height' => 50,
+            )
+        ),
+        array(
             'id' => 'opt-search',
             'type' => 'switch',
             'title' => __('Enable/disable search bar', 'dotstudio-pro'),
@@ -310,8 +322,8 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-background',
             'type' => 'background',
             'output' => array('body'),
-            'title' => __('Body Background', 'redux-framework-demo'),
-            'subtitle' => __('Body background with image, color, etc.', 'redux-framework-demo'),
+            'title' => __('Body Background', 'dotstudio-pro'),
+            'subtitle' => __('Body background with image, color, etc.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-color-body',
@@ -419,12 +431,30 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'redux-framework-demo'),
-            'desc' => __('You can enable or disable any piece of this field. Width, Height, or Units.', 'redux-framework-demo'),
+            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+            'desc' => __('You can enable or disable any piece of this field. Width, Height, or Units.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 200,
                 'height' => 100,
             )
+        ),
+        array(
+            'id' => 'opt-title-trim-word',
+            'title' => __('Trim title on carousel', 'dotstudio-pro'),
+            'subtitle' => __('Here you can set number of words to be visible on carousel for category title.', 'dotstudio-pro'),
+            'description' => __("By default set to  '5'. Set value 0 if you don't need to trim words.", 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '5',
+            'validate' => 'numeric'
+        ),
+        array(
+            'id' => 'opt-description-trim-word',
+            'title' => __('Trim description on carousel', 'dotstudio-pro'),
+            'subtitle' => __('Here you can set number of words to be visible on carousel for category description.', 'dotstudio-pro'),
+            'description' => __("By default set to  '10'. Set value 0 if you don't need to trim words.", 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '10',
+            'validate' => 'numeric'
         ),
         array(
             'id' => 'opt-slick-slidetoshow',
@@ -711,10 +741,19 @@ Redux::setSection($opt_name, array(
             'default' => '',
         ),
         array(
+            'id' => 'opt-social-icons',
+            'type' => 'switch',
+            'title' => __('Show social icons', 'dotstudio-pro'),
+            'default' => 0,
+            'on' => 'On',
+            'off' => 'Off',
+        ),
+        array(
             'id' => 'section-start',
             'type' => 'section',
             'title' => __('Social icons', 'dotstudio-pro'),
             'subtitle' => __('Controls the social media pages URLs.', 'dotstudio-pro'),
+            'required' => array('opt-social-icons', '=', '1'),
             'indent' => true
         ),
         array(

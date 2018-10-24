@@ -32,6 +32,7 @@ function bootstrapstarter_enqueue_styles() {
     wp_register_style('bootstrap', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css');
     $dependencies = array('bootstrap');
     wp_enqueue_style('bootstrapstarter-style', get_stylesheet_uri(), $dependencies);
+    wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 }
 
 // function to enqueue default scripts
@@ -46,7 +47,7 @@ add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('slick.min','slick-init', 'custom');
+    $scripts = array('slick.min', 'slick-init', 'image-lazy-load');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -57,7 +58,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('slick','slick-theme');
+    $styles = array('slick', 'slick-theme');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');

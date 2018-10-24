@@ -23,6 +23,7 @@
             <div class="container">
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="col-md-4">
+                        <!-- Logo section start -->
                         <div class="header-logo">
                             <?php $logo = isset($dsp_theme_options['opt-logo-url']['url']) ? $dsp_theme_options['opt-logo-url']['url'] : ''; ?>
                             <?php if (!empty($logo)) { ?>
@@ -31,19 +32,24 @@
                                 <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><h1 class="site-logo"><?php bloginfo('name'); ?></h1></a>                            
                             <?php } ?>
                         </div>
+                        <!-- Logo section end -->
                     </div>
                     <div class="col-md-8">
-                        <div class="blog-nav">
-                            <?php
-                            wp_nav_menu(array(
-                                'theme_location' => 'main_menu',
-                                'menu_class' => 'nav navbar-nav navbar-left',
-                                'depth' => 3,
-                                'container' => false,
-                                'walker' => new Walker_DSP_Submenu
-                            ));
-                            ?>
-                        </div>
+                        <!-- Header Menu section start -->
+                        <?php if (has_nav_menu('main_menu')): ?>
+                            <div class="blog-nav">
+                                <?php
+                                wp_nav_menu(array(
+                                    'theme_location' => 'main_menu',
+                                    'menu_class' => 'nav navbar-nav navbar-left',
+                                    'depth' => 3,
+                                    'container' => false,
+                                    'walker' => new Walker_DSP_Submenu
+                                ));
+                                ?>
+                            </div>
+                        <?php endif; ?>
+                        <!-- Header Menu section end -->
                     </div>
                 </nav>
             </div>

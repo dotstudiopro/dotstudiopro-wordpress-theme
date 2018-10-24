@@ -1,6 +1,6 @@
 (function ($) {
+    
     var selector = slick_carousel.selector;
-    console.log(slick_carousel.infinite);
     var responsive_array = [
         {
             breakpoint: 768,
@@ -17,6 +17,10 @@
             }
         }
     ];
+    
+    /*
+     * Global configuration for slick slider.
+     */
     $.each(selector, function (index, value) {
         $("." + value).slick({
             slidesToShow: parseInt(slick_carousel.slidetoshow),
@@ -35,11 +39,14 @@
         $('.slick-prev').hide();
         $('.slick-next').hide();
     }
-
+    
+    /**
+     * Home-page main courosol slick slider option
+     */
+    
     $(".slider").slick({
-        autoplay: true,
-        autoplaySpeed: 2000,
-        infinite: true,
+        autoplay : true,
+        autoplaySpeed : 2000,
+        infinite : true,
     });
-
 })(jQuery);

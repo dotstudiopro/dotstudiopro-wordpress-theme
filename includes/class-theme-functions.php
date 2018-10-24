@@ -71,6 +71,7 @@ class Theme_Functions {
 
         $channels_args = array(
             'post_type' => 'channel',
+            'posts_per_page' => -1,
             'meta_query' => array(
                 array(
                     'key' => 'chnl_catagories',
@@ -106,7 +107,7 @@ class Theme_Functions {
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
             $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-            $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos';
+            $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
 
             if ($dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -151,7 +152,7 @@ class Theme_Functions {
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
                 $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos';
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
 
                 if ($dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                     $response[$key]['url'] = get_the_permalink($channel->ID);
