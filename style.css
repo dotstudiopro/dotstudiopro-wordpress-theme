@@ -171,10 +171,14 @@ h6, .h6 {
 }
 
 .slick-wrapper{
-   visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+    -webkit-transition: opacity 1s ease;
 }
-.slick-initialized {
-   visibility: visible;
+.slick-wrapper.slick-initialized {
+    visibility: visible;
+    opacity: 1;
 }
 /*
  * Footer
@@ -208,3 +212,5 @@ h6, .h6 {
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.tooltip_templates { display: none; }

@@ -439,6 +439,18 @@ Redux::setSection($opt_name, array(
             )
         ),
         array(
+            'id' => 'opt-layout-slider-content',
+            'type' => 'button_set',
+            'title' => __('Content Layout', 'dotstudio-pro'),
+            'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
+            'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Tooltip',
+                '1' => 'Text'
+            ),
+            'default' => '1'
+        ),
+        array(
             'id' => 'opt-title-trim-word',
             'title' => __('Trim title on carousel', 'dotstudio-pro'),
             'subtitle' => __('Here you can set number of words to be visible on carousel for category title.', 'dotstudio-pro'),

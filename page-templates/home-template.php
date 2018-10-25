@@ -46,7 +46,13 @@ $main_carousel = $theme_function->home_page_main_carousel();
             $category_args = array(
                 'post_type' => 'category',
                 'posts_per_page' => -1,
-                'post_not_in' => $home->ID,
+                'post__not_in' => array($home->ID),
+                'meta_query' => array(
+                    array(
+                        'key' => 'is_on_cat_homepage',
+                        'value' => 1
+                    )
+                )
             );
             $categories = new WP_Query($category_args);
 
@@ -68,17 +74,31 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
                             ?>
                             <div class="slick-wrapper <?php echo $class ?>">
+                                <?php $i = 1 ?>
                                 <?php foreach ($channels as $channel) { ?>
                                     <div class="slide">
-                                        <div class="slide_image">
+                                        <div class="slide_image tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                         </div>
-                                        <div class="slide_content">
-                                            <?php $title =($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title']?>
-                                            <h6><?php echo $title; ?></h6>
-                                            <?php $description =($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description']?>
-                                            <p><?php echo $description; ?></p>
-                                        </div>
+                                        <!-- Condition to check display the content on tooltip or below the images-->
+                                        <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
+                                            <div class="slide_content">
+                                                <?php $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'] ?>
+                                                <h6><?php echo $title; ?></h6>
+                                                <?php $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'] ?>
+                                                <p><?php echo $description; ?></p>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="tooltip_templates">
+                                                <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                                                    <h4><?php echo $channel['title']; ?></h4>
+                                                    <p><?php echo $channel['description']; ?></p>
+                                                </span>
+                                            </div>
+                                        <?php
+                                        endif;
+                                        $i++;
+                                        ?>
                                     </div>
                                 <?php } ?>
                             </div>

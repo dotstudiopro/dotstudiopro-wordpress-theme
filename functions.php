@@ -47,7 +47,7 @@ add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('slick.min', 'slick-init', 'image-lazy-load');
+    $scripts = array('tooltipster.bundle.min', 'slick.min', 'slick-init', 'image-lazy-load', 'custom');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -58,7 +58,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('slick', 'slick-theme');
+    $styles = array('tooltipster.bundle.min','slick', 'slick-theme');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');

@@ -49,4 +49,6 @@
         autoplaySpeed : 2000,
         infinite : true,
     });
+    
+    
 })(jQuery);

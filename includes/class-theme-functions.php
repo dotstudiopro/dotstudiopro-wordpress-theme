@@ -118,12 +118,12 @@ class Theme_Functions {
                     $firstChildChannelId = get_page_by_path($child_channels[0], OBJECT, 'channel');
                     $channelVideos = $this->get_channel_videos($firstChildChannelId->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
                 else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
             }
         endforeach;
@@ -160,12 +160,12 @@ class Theme_Functions {
                 else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
             endforeach;
         }
         else {
-            $videoData = $this->get_channel_videos($channel->ID);
+            $videoData = $this->get_channel_videos($channel[0]->ID);
             if ($videoData) {
                 foreach ($videoData as $key => $video):
                     $response[$key]['id'] = $video['_id'];
@@ -173,7 +173,7 @@ class Theme_Functions {
                     $response[$key]['description'] = $video['description'];
                     $response[$key]['image'] = get_option('dsp_cdn_img_url_field') . $video['thumb'];
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
-                    $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
+                    $response[$key]['url'] = get_site_url() . '/channel/' . $channel[0]->post_name . '/video/' . $videoSlug;
                 endforeach;
             }
         }
@@ -228,7 +228,7 @@ class Theme_Functions {
     public function get_channel_videos($channel_id) {
 
         $videoData = maybe_unserialize(get_post_meta($channel_id, 'chnl_videos', TRUE));
-        if ($child_channels)
+        if ($videoData)
             return $videoData;
         else
             return array();
