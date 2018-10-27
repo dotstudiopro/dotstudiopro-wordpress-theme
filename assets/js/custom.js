@@ -1,5 +1,5 @@
 (function ($) {
-    
+
     /**
      * Tooltip options
      */
@@ -8,8 +8,9 @@
         contentCloning: true,
         contentAsHTML: true,
         interactive: true,
-        animation: 'swing',
+        animation: 'fade',
         delay: 200,
-      });
-    
+    });
+
 })(jQuery);
+

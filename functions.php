@@ -119,4 +119,23 @@ function add_category_menu_links($items, $args) {
     return $items;
 }
 
+/**
+ * Display video template when found video in url
+ */
+
+add_filter( 'request', 'display_query_vars', 1 );
+
+function display_query_vars( $query_vars ) {
+    $data = $query_vars;
+    if(isset($data['channel'])){
+        $video_array =  explode('/',$data['channel']);
+        if(isset($video_array[1])){
+        if($video_array[1] == 'video'){
+            locate_template('page-templates/video-player.php', true);
+        }
+        }
+    }
+    return $query_vars;
+}
+
 ?>

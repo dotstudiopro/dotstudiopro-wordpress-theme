@@ -27,9 +27,9 @@ class Theme_Functions {
             $total_channels = count($channels);
 
             if ($total_channels > 1) {
-                return $this->show_channels($channels);
+                return $this->show_channels($channels, 'main_carousel');
             } else {
-                return $this->show_videos($channels);
+                return $this->show_videos($channels[0], 'main_carousel');
             }
         }
     }
@@ -53,9 +53,9 @@ class Theme_Functions {
             $total_channels = count($channels);
 
             if ($total_channels > 1) {
-                return $this->show_channels($channels);
+                return $this->show_channels($channels, 'other_carousel');
             } else {
-                return $this->show_videos($channels);
+                return $this->show_videos($channels[0], 'other_carousel');
             }
         }
     }
@@ -75,7 +75,7 @@ class Theme_Functions {
             'meta_query' => array(
                 array(
                     'key' => 'chnl_catagories',
-                    'value' => $category_name,
+                    'value' => ','.$category_name.',',
                     'compare' => 'LIKE',
                 )
             )
@@ -97,7 +97,7 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels) {
+    public function show_channels($channels, $type) {
 
         global $dsp_theme_options;
 
@@ -108,8 +108,8 @@ class Theme_Functions {
             $response[$key]['description'] = $channel->post_content;
             $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
-
-            if ($dsp_theme_options['opt-play-btn-type'] == 'watch_now')
+           
+            if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
 
             else {
@@ -139,11 +139,11 @@ class Theme_Functions {
      * @param type $channel
      * @return string
      */
-    public function show_videos($channel) {
+    public function show_videos($channel, $type) {
 
         global $dsp_theme_options;
 
-        $child_channels = $this->is_child_channels($channel[0]->ID);
+        $child_channels = $this->is_child_channels($channel->ID);
         if ($child_channels) {
             foreach ($child_channels as $key => $channel_name):
                 $channel = $this->get_channel_by_name($channel_name);
@@ -154,7 +154,7 @@ class Theme_Functions {
                 $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
                 $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
 
-                if ($dsp_theme_options['opt-play-btn-type'] == 'watch_now')
+                if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                     $response[$key]['url'] = get_the_permalink($channel->ID);
 
                 else {
@@ -165,7 +165,7 @@ class Theme_Functions {
             endforeach;
         }
         else {
-            $videoData = $this->get_channel_videos($channel[0]->ID);
+            $videoData = $this->get_channel_videos($channel->ID);
             if ($videoData) {
                 foreach ($videoData as $key => $video):
                     $response[$key]['id'] = $video['_id'];
@@ -173,7 +173,7 @@ class Theme_Functions {
                     $response[$key]['description'] = $video['description'];
                     $response[$key]['image'] = get_option('dsp_cdn_img_url_field') . $video['thumb'];
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
-                    $response[$key]['url'] = get_site_url() . '/channel/' . $channel[0]->post_name . '/video/' . $videoSlug;
+                    $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
                 endforeach;
             }
         }
@@ -240,21 +240,21 @@ class Theme_Functions {
      * 
      * @param type $class_array
      */
-    public function slick_init_options($class_array = null) {
+    public function slick_init_options($class_array = null, $type) {
         global $dsp_theme_options;
         wp_localize_script('slick-init', 'slick_carousel', array(
             'selector' => $class_array,
-            'slidetoshow' => $dsp_theme_options['opt-slick-slidetoshow'],
-            'slidetoscroll' => $dsp_theme_options['opt-slick-slidetoscroll'],
-            'infinite' => $dsp_theme_options['opt-slick-infinite'],
-            'autoplay' => $dsp_theme_options['opt-slick-autoplay'],
-            'autoplayspeed' => $dsp_theme_options['opt-slick-autoplayspeed'],
-            'slidespeed' => $dsp_theme_options['opt-slick-slidespeed'],
-            'pagination' => $dsp_theme_options['opt-slick-pagination'],
-            'navigation' => $dsp_theme_options['opt-slick-navigation'],
-            'responsive' => $dsp_theme_options['opt-slick-responsive'],
-            'tablet_slidetoshow' => $dsp_theme_options['opt-slick-tablet-slidetoshow'],
-            'mobile_slidetoshow' => $dsp_theme_options['opt-slick-mobile-slidetoshow'],
+            'slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-slidetoshow'],
+            'slidetoscroll' => $dsp_theme_options['opt-slick-'.$type.'-slidetoscroll'],
+            'infinite' => $dsp_theme_options['opt-slick-'.$type.'-infinite'],
+            'autoplay' => $dsp_theme_options['opt-slick-'.$type.'-autoplay'],
+            'autoplayspeed' => $dsp_theme_options['opt-slick-'.$type.'-autoplayspeed'],
+            'slidespeed' => $dsp_theme_options['opt-slick-'.$type.'-slidespeed'],
+            'pagination' => $dsp_theme_options['opt-slick-'.$type.'-pagination'],
+            'navigation' => $dsp_theme_options['opt-slick-'.$type.'-navigation'],
+            'responsive' => $dsp_theme_options['opt-slick-'.$type.'-responsive'],
+            'tablet_slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-tablet-slidetoshow'],
+            'mobile_slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-mobile-slidetoshow'],
                 )
         );
     }

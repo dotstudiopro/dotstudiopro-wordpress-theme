@@ -19,7 +19,8 @@
     </head>
 
     <body <?php theme_body_class(); ?>>
-        <header class="blog-masthead">
+        <?php $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'sticky' : ''; ?>
+        <header class="blog-masthead <?php echo $class; ?>">
             <div class="container">
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="col-md-4">
@@ -48,7 +49,11 @@
                                 ));
                                 ?>
                             </div>
-                        <?php endif; ?>
+                            <?php
+                        endif;
+                        if ($dsp_theme_options['opt-search'] == true)
+                            get_search_form();
+                        ?>
                         <!-- Header Menu section end -->
                     </div>
                 </nav>
