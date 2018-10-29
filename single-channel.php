@@ -38,6 +38,7 @@ if (have_posts()) {
                         ?>
                         <!-- Single Channel Video section start -->
                         <div class="col-sm-12 no-gutters">
+                            <h2 class="post-title"><?php echo get_the_title(); ?></h2>
                             <?php
                             $class = 'home-carousel' . $cnt;
                             $class_array[] = $class;

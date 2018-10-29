@@ -25,9 +25,10 @@ class Theme_Functions {
         if ($channels) {
 
             $total_channels = count($channels);
-
+            
+            $poster_type = $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
-                return $this->show_channels($channels, 'main_carousel');
+                return $this->show_channels($channels, 'main_carousel', $poster_type);
             } else {
                 return $this->show_videos($channels[0], 'main_carousel');
             }
@@ -41,7 +42,7 @@ class Theme_Functions {
      * @global type $dsp_theme_options
      * @return type
      */
-    public function home_page_other_carousel($category_name) {
+    public function home_page_other_carousel($category_name, $poster_type = NULL) {
 
         global $dsp_theme_options;
         $response = array();
@@ -51,9 +52,10 @@ class Theme_Functions {
         if ($channels) {
 
             $total_channels = count($channels);
-
+            
+            $poster_type = ($poster_type) ? $poster_type : $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
-                return $this->show_channels($channels, 'other_carousel');
+                return $this->show_channels($channels, 'other_carousel', $poster_type);
             } else {
                 return $this->show_videos($channels[0], 'other_carousel');
             }
@@ -97,7 +99,7 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels, $type) {
+    public function show_channels($channels, $type, $poster_type) {
 
         global $dsp_theme_options;
 
@@ -106,7 +108,7 @@ class Theme_Functions {
             $response[$key]['id'] = $channel_meta['chnl_id'][0];
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
-            $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
            
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
