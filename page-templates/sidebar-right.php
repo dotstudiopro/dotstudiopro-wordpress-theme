@@ -1,4 +1,8 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * Template Name: Right Sidebar
+ */
+get_header(); ?>
 <div class="container">
     <div class="row">
         <div class="col-sm-8 blog-main">
@@ -15,6 +19,7 @@
                 endwhile;
             }
             ?>
+
         </div><!-- /.blog-main -->
         <div class="col-sm-4 sidebar">
             <?php dynamic_sidebar('sidebar') ?>

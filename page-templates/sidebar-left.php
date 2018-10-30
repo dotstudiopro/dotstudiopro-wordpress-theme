@@ -1,6 +1,13 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * Template Name: Left Sidebar
+ */
+get_header(); ?>
 <div class="container">
     <div class="row">
+        <div class="col-sm-4 sidebar">
+            <?php dynamic_sidebar('sidebar') ?>
+        </div>
         <div class="col-sm-8 blog-main">
             <?php
             if (have_posts()) {
@@ -15,10 +22,8 @@
                 endwhile;
             }
             ?>
+
         </div><!-- /.blog-main -->
-        <div class="col-sm-4 sidebar">
-            <?php dynamic_sidebar('sidebar') ?>
-        </div>
     </div>
 </div>
 <?php get_footer(); ?>

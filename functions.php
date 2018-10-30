@@ -58,7 +58,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('tooltipster.bundle.min','slick', 'slick-theme');
+    $styles = array('tooltipster.bundle.min', 'slick', 'slick-theme');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
@@ -122,20 +122,34 @@ function add_category_menu_links($items, $args) {
 /**
  * Display video template when found video in url
  */
+add_filter('request', 'display_query_vars', 1);
 
-add_filter( 'request', 'display_query_vars', 1 );
-
-function display_query_vars( $query_vars ) {
+function display_query_vars($query_vars) {
     $data = $query_vars;
-    if(isset($data['channel'])){
-        $video_array =  explode('/',$data['channel']);
-        if(isset($video_array[1])){
-        if($video_array[1] == 'video'){
-            locate_template('page-templates/video-player.php', true);
-        }
+    if (isset($data['channel'])) {
+        $video_array = explode('/', $data['channel']);
+        if (isset($video_array[1])) {
+            if ($video_array[1] == 'video') {
+                locate_template('page-templates/video-player.php', true);
+            }
         }
     }
     return $query_vars;
 }
 
+/**
+ * Function to register a widget space
+ */
+if (function_exists('register_sidebar')) {
+
+    register_sidebar(array(
+        'name' => 'Sidebar',
+        'id' => 'sidebar',
+        'description' => 'This is a default sidebar',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4>',
+        'after_title' => '</h4>'
+    ));
+}
 ?>
