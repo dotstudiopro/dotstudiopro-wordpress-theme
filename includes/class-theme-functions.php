@@ -25,7 +25,7 @@ class Theme_Functions {
         if ($channels) {
 
             $total_channels = count($channels);
-            
+
             $poster_type = $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'main_carousel', $poster_type);
@@ -52,7 +52,7 @@ class Theme_Functions {
         if ($channels) {
 
             $total_channels = count($channels);
-            
+
             $poster_type = ($poster_type) ? $poster_type : $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'other_carousel', $poster_type);
@@ -77,7 +77,7 @@ class Theme_Functions {
             'meta_query' => array(
                 array(
                     'key' => 'chnl_catagories',
-                    'value' => ','.$category_name.',',
+                    'value' => ',' . $category_name . ',',
                     'compare' => 'LIKE',
                 )
             )
@@ -110,7 +110,7 @@ class Theme_Functions {
             $response[$key]['description'] = $channel->post_content;
             $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
-           
+
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
 
@@ -237,6 +237,101 @@ class Theme_Functions {
     }
 
     /**
+     * Function to get first video of the channel
+     * @since 1.0.0
+     * @global type $dsp_theme_options
+     * @param type $channel_id
+     * @return type
+     */
+    public function first_video_id($channel_id) {
+
+        global $dsp_theme_options;
+        $child_channels = $this->is_child_channels($channel_id);
+        if ($child_channels) {
+            $channel = $this->get_channel_by_name($child_channels[0]);
+            $channelVideos = $this->get_channel_videos($channel->ID);
+            $response = $channelVideos[0]['_id'];
+        } else {
+            $videoData = $this->get_channel_videos($channel->ID);
+            if ($videoData) {
+                $response = $videoData[0]['_id'];
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * function to get channel by channel id
+     * @since 1.0.0
+     * @param type $channel_id
+     * @return type
+     */
+    public function get_channelByChannelId($channel_id) {
+
+        $channels_args = array(
+            'post_type' => 'channel',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'chnl_id',
+                    'value' => $channel_id,
+                    'compare' => '=',
+                )
+            )
+        );
+        $channel = new WP_Query($channels_args);
+        if ($channel->posts[0])
+            return $channel->posts[0];
+        else
+            return array();
+    }
+
+    /**
+     * function to get the recommendation content
+     * @since 1.0.0
+     * @param type $type
+     * @param type $id
+     * @return string
+     */
+    public function get_recommendation_content($type, $id) {
+        
+        global $dsp_theme_options;
+
+        $dsp_external_api = new Dsp_External_Api_Request();
+        $recommendations = $dsp_external_api->get_recommendation($type, $id);
+        $recommendation_content = array();
+        if (is_wp_error($recommendations))
+            return array();
+        else {
+            foreach ($recommendations['data']['hits'] as $key => $recommendation):
+                if ($type == 'channel') {
+                    $channel = $this->get_channelByChannelId($recommendation['_id']);
+                    if (!empty($channel)) {
+                        $recommendation_content[$key]['_id'] = $channel->ID;
+                        $channel_meta = get_post_meta($channel->ID);
+                        $recommendation_content[$key]['title'] = $channel->post_title;
+                        $recommendation_content[$key]['description'] = $channel->post_content;
+                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://picsum.photos/';
+                        $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
+                    }
+                } else {
+                    $video = $dsp_external_api->get_video_by_id($recommendation['_id']);
+                    if (!is_wp_error($video) && !empty($video)) {
+                        $recommendation_content[$key]['_id'] = $video['_id'];
+                        $recommendation_content[$key]['title'] = $video['title'];
+                        $recommendation_content[$key]['description'] = $video['description'];
+                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://picsum.photos/';
+                        $video_url = (isset($video['slug'])) ? $video['slug'] : $video['_id'];
+                        $recommendation_content[$key]['url'] = get_site_url() . '/' . $video_url;
+                    }
+                }
+            endforeach;
+            return $recommendation_content;
+        }
+    }
+
+    /**
      * function to localize the option for the intializtion of slick slider
      * @since 1.0.0
      * 
@@ -246,17 +341,17 @@ class Theme_Functions {
         global $dsp_theme_options;
         wp_localize_script('slick-init', 'slick_carousel', array(
             'selector' => $class_array,
-            'slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-slidetoshow'],
-            'slidetoscroll' => $dsp_theme_options['opt-slick-'.$type.'-slidetoscroll'],
-            'infinite' => $dsp_theme_options['opt-slick-'.$type.'-infinite'],
-            'autoplay' => $dsp_theme_options['opt-slick-'.$type.'-autoplay'],
-            'autoplayspeed' => $dsp_theme_options['opt-slick-'.$type.'-autoplayspeed'],
-            'slidespeed' => $dsp_theme_options['opt-slick-'.$type.'-slidespeed'],
-            'pagination' => $dsp_theme_options['opt-slick-'.$type.'-pagination'],
-            'navigation' => $dsp_theme_options['opt-slick-'.$type.'-navigation'],
-            'responsive' => $dsp_theme_options['opt-slick-'.$type.'-responsive'],
-            'tablet_slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-tablet-slidetoshow'],
-            'mobile_slidetoshow' => $dsp_theme_options['opt-slick-'.$type.'-mobile-slidetoshow'],
+            'slidetoshow' => $dsp_theme_options['opt-slick-' . $type . '-slidetoshow'],
+            'slidetoscroll' => $dsp_theme_options['opt-slick-' . $type . '-slidetoscroll'],
+            'infinite' => $dsp_theme_options['opt-slick-' . $type . '-infinite'],
+            'autoplay' => $dsp_theme_options['opt-slick-' . $type . '-autoplay'],
+            'autoplayspeed' => $dsp_theme_options['opt-slick-' . $type . '-autoplayspeed'],
+            'slidespeed' => $dsp_theme_options['opt-slick-' . $type . '-slidespeed'],
+            'pagination' => $dsp_theme_options['opt-slick-' . $type . '-pagination'],
+            'navigation' => $dsp_theme_options['opt-slick-' . $type . '-navigation'],
+            'responsive' => $dsp_theme_options['opt-slick-' . $type . '-responsive'],
+            'tablet_slidetoshow' => $dsp_theme_options['opt-slick-' . $type . '-tablet-slidetoshow'],
+            'mobile_slidetoshow' => $dsp_theme_options['opt-slick-' . $type . '-mobile-slidetoshow'],
                 )
         );
     }

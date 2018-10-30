@@ -29,7 +29,6 @@ if (have_posts()) {
 
         <div class="container">
             <div class="col-sm-12 other-categories">
-
                 <?php
                 if (!$childchannels) {
                     $videos = $theme_function->show_videos($post, 'other_carousel');
@@ -48,7 +47,7 @@ if (have_posts()) {
                             ?>
 
                         </div>
-                        <!-- Single Channel Video section start -->
+                        <!-- Single Channel Video section end -->
                         <?php
                     }
                 } else {
@@ -58,6 +57,7 @@ if (have_posts()) {
                         $videos = $theme_function->show_videos($single_channel, 'other_carousel');
                         if ($videos) {
                             ?>
+                            <!-- Single Channel Video section start -->
                             <div class="col-sm-12 no-gutters">
                                 <h2 class="post-title"><?php echo $single_channel->post_title; ?></h2>
                                 <?php
@@ -68,15 +68,23 @@ if (have_posts()) {
                                 include(locate_template('page-templates/templates-part/channel-videos.php'));
                                 ?>
                             </div>
+                            <!-- Single Channel Video section end -->
                             <?php
                             $cnt++;
                         }
                     }
                 }
+
+                // Display Recomendation section
+                if ($dsp_theme_options['opt-related-section'] == 1) {
+                    include(locate_template('page-templates/templates-part/related-content.php'));
+                    array_push($class_array, 'related_content');
+                }
+
                 $theme_function->slick_init_options($class_array, 'video');
                 ?>
-            </div>
-        </div>
+            </div> <!-- other-categories -->  
+        </div><!-- container -->
         <?php
     endwhile;
 }
