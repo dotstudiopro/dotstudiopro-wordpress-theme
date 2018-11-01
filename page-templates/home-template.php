@@ -20,7 +20,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 <?php foreach ($main_carousel as $slide) { ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img src="<?php echo $slide['image'] . '/1920/600'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/938'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container">
@@ -40,7 +40,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
 <!-- Home page Main carousal section end-->
 
 <!-- Home page other carousal section start-->
-<div class="container">
+<div class="custom-container container">
     <div class="row no-gutters other-categories">
         <?php
         $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'category');

@@ -112,7 +112,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('main', 'tooltipster.bundle.min');
+    $styles = array('main', 'ds-global', 'tooltipster.bundle.min');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
@@ -161,7 +161,7 @@ function add_category_menu_links($items, $args) {
                 'ID' => 'category_menu',
                 'db_id' => '',
                 'url' => $dsp_theme_options['opt-menu-link'],
-                'classes' => array('menu-item', 'menu-item-type-custom', 'menu-item-object-custom')
+                'classes' => array('menu-item', 'menu-item-type-custom', 'menu-item-object-custom', 'dropdown')
             );
 
             $new_links[] = (object) $item; // Add the new menu item to our array
@@ -206,4 +206,19 @@ if (function_exists('register_sidebar')) {
         'after_title' => '</h4>'
     ));
 }
+
+/**
+ * Custom menu attributes
+ */
+add_filter('nav_menu_link_attributes', 'custom_menu_atts', 10, 3);
+
+function custom_menu_atts($atts, $item, $args) {
+    // inspect $item
+    if ($item->ID == 'category_menu') {
+        $atts['data-toggle'] = 'dropdown';
+        $atts['class'] = 'dropdown-toggle';
+    }
+    return $atts;
+}
+
 ?>

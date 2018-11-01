@@ -20,9 +20,9 @@ class Walker_DSP_Submenu extends Walker_Nav_Menu {
         $posts = $dsp_theme_options['opt-menu-sorter']['enabled'];
         unset($posts['placebo']);
         if ($dsp_theme_options['opt-menu-title'] == $item->title) {
-            $output .= '<ul class="menu-depth-1">';
+            $output .= '<ul class="dropdown-menu position-absolute" role="menu">';
             foreach ($posts as $key => $value):
-                $output .= '<li id="nav-menu-item-category-submenu" class="sub-menu-item menu-item-depth-1 menu-item menu-item-type-category-submenu"><a href="/category/' . $key . '">' . $value . '</a></li>';
+                $output .= '<li><a href="/category/' . $key . '">' . $value . '</a></li>';
             endforeach;
             $output .= '</ul>';
         }

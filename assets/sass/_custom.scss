@@ -1,0 +1,16 @@
+html {
+	font-size: 16px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+a:hover {
+	text-decoration: none;
+}
+:hover, :focus, :visited {
+	outline: 0;
+	border: 0;
+}
+.custom-container {
+	max-width: $custom-container;
+  padding: 0;
+}
