@@ -280,7 +280,7 @@ class Theme_Functions {
             )
         );
         $channel = new WP_Query($channels_args);
-        if ($channel->posts[0])
+        if (isset($channel->posts[0]))
             return $channel->posts[0];
         else
             return array();

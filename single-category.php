@@ -20,7 +20,6 @@ if (have_posts()) {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <h1><?php echo get_the_title(); ?></h1>
                         <p><?php the_content(); ?></p>
-                        <a hred="#" class="btn btn-primary">Play Now</a>
                     </div>
                 </div>
             <?php endif; ?>

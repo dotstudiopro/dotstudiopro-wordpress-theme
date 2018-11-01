@@ -11,18 +11,19 @@ if ($dsp_theme_options['opt-related-option'] == 'channel') {
 }
 
 $recommendation_content = $theme_function->get_recommendation_content($type, $id);
-?>
 
-<div class="related_content_section">
-    <h2><?php echo $dsp_theme_options['opt-related-content-text']; ?></h2>
-    <?php
-    $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+if (!empty($recommendation_content)):
     ?>
-    <div class="slick-wrapper related_content">
+    <div class="related_content_section">
+        <h2><?php echo $dsp_theme_options['opt-related-content-text']; ?></h2>
         <?php
-        $i = 1;
-        if (!empty($recommendation_content)):
+        $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        ?>
+        <div class="slick-wrapper related_content">
+            <?php
+            $i = 1;
+
             foreach ($recommendation_content as $channel):
                 ?>
                 <div class="slide">
@@ -55,10 +56,10 @@ $recommendation_content = $theme_function->get_recommendation_content($type, $id
                 </div> <!-- slide -->
                 <?php
             endforeach;
-        endif;
-        ?>
-    </div><!-- related_content -->
-</div><!-- related_content_section -->
+            ?>
+        </div><!-- related_content -->
+    </div><!-- related_content_section -->
+<?php endif; ?>
 
 
 

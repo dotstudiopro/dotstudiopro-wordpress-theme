@@ -26,28 +26,82 @@ if (function_exists('register_nav_menus')) {
     );
 }
 
-// function to enqueue default stlyes
+// function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
-    wp_register_style('custom-css', get_template_directory_uri() . '/framework/dsp_options/style.css');
-    wp_register_style('bootstrap', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css');
-    $dependencies = array('bootstrap');
-    wp_enqueue_style('bootstrapstarter-style', get_stylesheet_uri(), $dependencies);
+    $bootstrapcdn_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css';
+    $bootstrapcdn = remote_get_url($bootstrapcdn_url);
+    if ($bootstrapcdn !== 200) {
+        $bootstrapcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
+    }
+    wp_enqueue_style('bootstrap', $bootstrapcdn_url);
+
+    $slickcdn_url = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css';
+    $slickcdn = remote_get_url($slickcdn_url);
+    if ($slickcdn !== 200) {
+        $slickcdn_url = get_template_directory_uri() . '/assets/css/slick.css';
+    }
+    wp_enqueue_style('slick', $slickcdn_url);
+
+    $slickthemecdn_url = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css';
+    $slickthemecdn = remote_get_url($slickthemecdn_url);
+    if ($slickthemecdn !== 200) {
+        $slickthemecdn_url = get_template_directory_uri() . '/assets/css/slick-theme.css';
+    }
+    wp_enqueue_style('slick-theme', $slickthemecdn_url);
+
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 }
 
-// function to enqueue default scripts
+// function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_scripts() {
-    $dependencies = array('jquery');
     wp_enqueue_script('jquery');
-    wp_enqueue_script('bootstrap', get_template_directory_uri() . '/bootstrap/js/bootstrap.min.js', $dependencies, false, true);
+
+    $bootstrapcdn_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
+    $bootstrapcdn = remote_get_url($bootstrapcdn_url);
+    if ($bootstrapcdn !== 200) {
+        $bootstrapcdn_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
+    }
+    wp_enqueue_script('bootstrap', $bootstrapcdn_url);
+
+    $poper_url = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js';
+    $popercdn = remote_get_url($poper_url);
+    if ($popercdn !== 200) {
+        $poper_url = 'https://wordpress-assets.dotstudiopro.com/js/popper.min.js';
+    }
+    wp_enqueue_script('popper', $poper_url);
+
+    $slickcdn_url = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js';
+    $slickcdn = remote_get_url($slickcdn_url);
+    if ($slickcdn !== 200) {
+        $slickcdn_url = get_template_directory_uri() . '/assets/js/slick.min.js';
+    }
+    wp_enqueue_script('slick', $slickcdn_url);
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
+/**
+ * Get remote url response
+ * @since 1.0.0
+ * @param type $url
+ * @return int
+ */
+function remote_get_url($url) {
+
+    $responce = wp_remote_get($url, array(
+        'timeout' => 50,
+    ));
+
+    if ($responce)
+        return (int) wp_remote_retrieve_response_code($responce);
+    else
+        return 500;
+}
+
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('tooltipster.bundle.min', 'slick.min', 'slick-init', 'image-lazy-load', 'custom');
+    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min', 'custom.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -58,7 +112,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('tooltipster.bundle.min', 'slick', 'slick-theme');
+    $styles = array('main', 'tooltipster.bundle.min');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');

@@ -64,7 +64,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
             foreach ($categories->posts as $category) {
                 $category_slug = $category->post_name;
                 $category_name = $category->post_title;
-                $channels = $theme_function->home_page_other_carousel($category_slug);
+                $channels = $theme_function->home_page_other_carousel($category_slug, $dsp_theme_options['opt-carousel-poster-type']);
                 if ($channels) {
                     ?>
                     <div class="col-sm-12 no-gutters">
