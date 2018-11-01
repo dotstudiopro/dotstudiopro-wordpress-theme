@@ -1,14 +1,4 @@
 /*
-Theme Name: Dotstudio Pro
-Theme URI: https://www.dotstudiopro.com/
-Author: dotstudio-pro
-Author URI: https://www.dotstudiopro.com/
-Description: A basic theme using the Bootstrap framework.
-Version: 1.0.0
-Text Domain: dotstudio-pro
-*/
-
-/*
  * Globals
  */
 
@@ -29,15 +19,6 @@ h6, .h6 {
     color: #333;
 }
 
-/*
- * Override Bootstrap's default container.
- */
-
-@media (min-width: 1200px) {
-    .container {
-        width: 970px;
-    }
-}
 
 /*
  * Masthead for nav
