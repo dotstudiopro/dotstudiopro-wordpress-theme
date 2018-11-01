@@ -221,4 +221,36 @@ function custom_menu_atts($atts, $item, $args) {
     return $atts;
 }
 
+/*
+ * getting post id by post slug
+ */
+function get_id_by_slug($page_slug) {
+    $page = get_page_by_path($page_slug);
+    if ($page) {
+        return $page->ID;
+    } else {
+        return null;
+    }
+}
+
+/*
+ * adding query vars for routs
+ */
+function add_query_vars($vars) {
+    $vars[] = "channel_slug";
+    $vars[] = "video_slug";
+    return $vars;
+}
+add_filter('query_vars', 'add_query_vars');
+
+
+/*
+ * rewrite ruls for routs
+ */
+function custom_rewrite_basic() {
+    add_rewrite_rule('channel/([^/]*)/video/([^/]*)/?$', 'index.php?page_id='.get_id_by_slug('video').'&channel_slug=$matches[1]&video_slug=$matches[2]', 'top');
+    flush_rewrite_rules();
+}
+add_action('init', 'custom_rewrite_basic', 10, 0);
+
 ?>
