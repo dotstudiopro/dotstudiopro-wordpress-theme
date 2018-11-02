@@ -14,3 +14,46 @@ a:hover {
 	max-width: $custom-container;
   padding: 0;
 }
+h2:before, h3:before {
+    content: "";
+    border-left: 2px solid $green;
+		margin-right: 50px;
+}
+
+/* Home Main Slider */
+
+.home-main-slider .slide_content {
+  background: #000;
+  min-height: 280px;
+  .watch_now {
+    background: rgba(0, 0, 0, 0.5);
+    height: 180px;
+    width: 180px;
+    text-align: center;
+    margin-top: -180px;
+    position: absolute;
+    z-index: 99;
+    padding: 0;
+    a {
+      display: block;
+      height: 180px;
+      width: 180px;
+      &:after {
+        text-indent: -9999em;
+        border-top: 40px solid transparent;
+        border-bottom: 40px solid transparent;
+        border-left: 70px solid $green;
+        display: inline-block;
+        margin-top: 46px;
+        content: "";
+      }
+    }
+  }
+  h2 {
+    color: #fff;
+  }
+  p {
+    color: #fff;
+    padding: 15px 50px;
+  }
+}

@@ -13,8 +13,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
 ?>
 
 <!-- Home page Main carousal section start-->
-<div class="row no-gutters">
-    <div class="col-sm-12 blog-main">
+<div class="row no-gutters home-main-slider claerfix">
+    <div class="col-sm-12 ">
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
                 <?php foreach ($main_carousel as $slide) { ?>
@@ -23,19 +23,20 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/938'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
-                            <div class="container">
+                            <div class="container custom-container">
                                 <div class="watch_now">
-                                    <a href="<?php echo $slide['url']; ?>" class="btn btn-primary"><i class="el el-arrow-right"></i>Play Now</a>
+                                    <a href="<?php echo $slide['url']; ?>" class="right-arrow-btn"></a>
                                 </div>
-                                <h2 class="title"><?php echo $slide['title']; ?></h2>
+                                <div class="inner pt-3"><h2 class="title"><?php echo $slide['title']; ?></h2>
                                 <p class="desc"><?php echo $slide['description']; ?></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
             </div>
         <?php } ?>
-    </div><!-- /.blog-main -->
+    </div>
 </div><!-- no-gutters -->
 <!-- Home page Main carousal section end-->
 
@@ -68,7 +69,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 if ($channels) {
                     ?>
                     <div class="col-sm-12 no-gutters">
-                        <h2 class="post-title"><?php echo $category_name; ?></h2>
+                        <h3 class="post-title"><?php echo $category_name; ?></h3>
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;

@@ -601,11 +601,11 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro')
-            'default' => array(
-                'width' => 200,
-                'height' => 100,
-            )
+            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+			'default' => array(
+               'width' => 200,
+               'height' => 100,
+           )
         ),
         array(
             'id' => 'opt-layout-slider-content',

@@ -60,5 +60,8 @@
     </div>
 </footer>
 <?php wp_footer(); ?>
+<script>
+	new UISearch( document.getElementById( 'sb-search' ) );
+</script>
 </body>
 </html>
