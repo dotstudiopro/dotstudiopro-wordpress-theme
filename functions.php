@@ -50,6 +50,8 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('slick-theme', $slickthemecdn_url);
 
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+    
+    wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 }
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
@@ -166,7 +168,7 @@ function add_category_menu_links($items, $args) {
 
             $new_links[] = (object) $item; // Add the new menu item to our array
             // insert item
-            $location = $dsp_theme_options['opt-menu-position'] + 1;
+            $location = $dsp_theme_options['opt-menu-position'] - 1;
             array_splice($items, $location, 0, $new_links);
         }
     }
