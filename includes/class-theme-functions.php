@@ -135,7 +135,7 @@ class Theme_Functions {
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
             $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-            $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
+            $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -180,7 +180,7 @@ class Theme_Functions {
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
                 $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                 if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                     $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -338,7 +338,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['title'] = $channel->post_title;
                         $recommendation_content[$key]['description'] = $channel->post_content;
                         $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://picsum.photos/';
+                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
                 } else {
@@ -347,7 +347,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['_id'] = $video['_id'];
                         $recommendation_content[$key]['title'] = $video['title'];
                         $recommendation_content[$key]['description'] = $video['description'];
-                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://picsum.photos/';
+                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $video_url = (isset($video['slug'])) ? $video['slug'] : $video['_id'];
                         $recommendation_content[$key]['url'] = get_site_url() . '/' . $video_url;
                     }

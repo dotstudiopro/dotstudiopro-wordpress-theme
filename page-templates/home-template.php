@@ -83,10 +83,9 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             <?php $i = 1 ?>
                             <?php foreach ($channels as $channel) { ?>
                                 <div class="slide">
-                                    <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                                         <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                             <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy" data-src="<?php echo $channel['image'] . 'p/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                                 <div class="overlay">
                                                     <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
                                                 </div>
@@ -113,7 +112,6 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                         endif;
                                         $i++;
                                         ?>
-                                    </a>
                                 </div>
                             <?php } ?>
                         </div>
