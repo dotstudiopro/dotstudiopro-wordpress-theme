@@ -8,7 +8,7 @@ if (have_posts()) {
         $theme_function = new Theme_Functions();
         $category_meta = get_post_meta(get_the_ID());
         $banner_image = ($dsp_theme_options['opt-category-poster-type'] == 'poster') ? $category_meta['cat_poster'][0] : $category_meta['cat_wallpaper'][0];
-        $banner = ($banner_image) ? $banner_image : 'https://picsum.photos/';
+        $banner = ($banner_image) ? $banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
         ?>
 
         <!-- Category Background and Information section start -->
@@ -40,8 +40,8 @@ if (have_posts()) {
                             ?>
                             <div class="col-md-3 p-2 channel-banner">
                                 <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                                    <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' .$i; ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                    <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
+                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                     </div>
                                     <?php
                                     $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'];

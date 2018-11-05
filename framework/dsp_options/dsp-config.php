@@ -124,7 +124,21 @@ Redux::setSection($opt_name, array(
             'on' => 'On',
             'off' => 'Off',
         ),
-				array(
+        array(
+            'id' => 'opt-img-hover',
+            'type' => 'select',
+            'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one hover effect from the different 5 types of effects', 'dotstudio-pro'),
+            'options' => array(
+                1 => 'Hover Effect 1',
+                2 => 'Hover Effect 2',
+                3 => 'Hover Effect 3',
+                4 => 'Hover Effect 4',
+                5 => 'Hover Effect 5',
+            ),
+            'default' => 1
+        ),
+        array(
             'id' => 'opt-img-hover',
             'type' => 'select',
             'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
@@ -205,7 +219,6 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'left' => 'Left',
                 'center' => 'Center',
-                'right' => 'Right'
             ),
             'default' => 'left'
         ),
@@ -616,10 +629,10 @@ Redux::setSection($opt_name, array(
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
-			'default' => array(
-               'width' => 200,
-               'height' => 100,
-           )
+            'default' => array(
+                'width' => 200,
+                'height' => 100,
+            )
         ),
         array(
             'id' => 'opt-layout-slider-content',
@@ -661,7 +674,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-slidetoscroll',
@@ -671,7 +684,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-pagination',
@@ -970,7 +983,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-slidetoscroll',
@@ -981,7 +994,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-pagination',

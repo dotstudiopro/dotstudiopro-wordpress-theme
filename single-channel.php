@@ -10,7 +10,7 @@ if (have_posts()) {
         $channel_meta = get_post_meta(get_the_ID());
         $childchannels = $theme_function->is_child_channels(get_the_ID());
         $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlisgt_poster'][0];
-        $banner = ($channel_banner_image) ? $channel_banner_image : 'https://picsum.photos/';
+        $banner = ($channel_banner_image) ? $channel_banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
         ?>
 
         <!-- Channel Banner image section start -->
@@ -77,6 +77,13 @@ if (have_posts()) {
 
                 // Display Recomendation section
                 if ($dsp_theme_options['opt-related-section'] == 1) {
+                    if ($dsp_theme_options['opt-related-option'] == 'channel') {
+                        $type = 'channel';
+                        $related_id = get_post_meta(get_the_ID(), 'dspro_channel_id', true);
+                    } else {
+                        $type = 'video';
+                        $related_id = $theme_function->first_video_id(get_the_ID());
+                    }
                     include(locate_template('page-templates/templates-part/related-content.php'));
                     array_push($class_array, 'related_content');
                 }

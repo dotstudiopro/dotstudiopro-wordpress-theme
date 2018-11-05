@@ -2,15 +2,8 @@
 $theme_function = new Theme_Functions();
 
 global $dsp_theme_options;
-if ($dsp_theme_options['opt-related-option'] == 'channel') {
-    $type = 'channel';
-    $id = get_post_meta(get_the_ID(), 'dspro_channel_id', true);
-} else {
-    $type = 'video';
-    $id = $theme_function->first_video_id(get_the_ID());
-}
 
-$recommendation_content = $theme_function->get_recommendation_content($type, $id);
+$recommendation_content = $theme_function->get_recommendation_content($type, $related_id);
 
 if (!empty($recommendation_content)):
     ?>
@@ -29,7 +22,7 @@ if (!empty($recommendation_content)):
                 <div class="slide">
                     <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                         <div class="slide_image tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                            <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                         </div>
                         <!-- Condition to check display the content on tool-tip or below the images-->
                         <?php
@@ -60,6 +53,3 @@ if (!empty($recommendation_content)):
         </div><!-- related_content -->
     </div><!-- related_content_section -->
 <?php endif; ?>
-
-
-

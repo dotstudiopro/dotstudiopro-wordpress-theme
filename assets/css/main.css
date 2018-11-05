@@ -65,3 +65,12 @@
 }
 
 .tooltip_templates { display: none; }
+
+.video-content-div{
+   background: #000;
+}
+.video-player{
+   position: relative;
+   padding-top: 60%;
+}
+

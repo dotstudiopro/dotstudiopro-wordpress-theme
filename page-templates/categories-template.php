@@ -25,13 +25,13 @@ get_header();
                 $category_banner = ($dsp_theme_options['opt-categories-poster-type'] == 'wallpaper') ? $category->cat_wallpaper : $category->cat_poster;
                 $width = filter_var($dsp_theme_options['opt-categories-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                 $height = filter_var($dsp_theme_options['opt-categories-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-                $banner = ($category_banner) ? $category_banner : 'https://placehold.it';
+                $banner = ($category_banner) ? $category_banner : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b';
                 $number_of_row = $dsp_theme_options['opt-display-categories-row'];
                 ?>
                 <div class="col-md-<?php echo $number_of_row; ?> p-2">
                     <a href="<?php echo get_permalink($category->ID); ?>" title="<?php echo $category->post_title; ?>">
                         <div class="holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
+                            <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
                             <?php if ($dsp_theme_options['opt-categories-title'] == true): ?>
                                 <h3><?php echo $category->post_title; ?></h3>
                             <?php endif; ?>
