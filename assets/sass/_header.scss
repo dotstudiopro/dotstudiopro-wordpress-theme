@@ -67,6 +67,17 @@ header {
   }
 }
 
+header.center-logo-header.small .main-navigation .navbar-nav > li.dropdown .dropdown-menu{
+  max-width: 450px;
+	left: inherit;
+	right: inherit;
+}
+header.center-logo-header.small .main-navigation .navbar-nav > li.dropdown .dropdown-menu li{
+  float: left;
+  width: 50%;
+}
+
+
 @media screen and (max-width: 767px) {
   .dropdown-menu > li {
     display: block;

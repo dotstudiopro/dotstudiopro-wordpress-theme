@@ -52,6 +52,8 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
     
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
+
+    wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.css');
 }
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
@@ -103,7 +105,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min', 'custom.min', 'modernizr.custom' , 'classie' , 'uisearch');
+    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min', 'custom.min', 'modernizr.custom' , 'classie' , 'uisearch', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);

@@ -1,25 +1,3 @@
-html {
-	font-size: 16px;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-a:hover {
-	text-decoration: none;
-}
-:hover, :focus, :visited {
-	outline: 0;
-	border: 0;
-}
-.custom-container {
-	max-width: $custom-container;
-  padding: 0;
-}
-h2:before, h3:before {
-    content: "";
-    border-left: 2px solid $green;
-		margin-right: 50px;
-}
-
 /* Home Main Slider */
 
 .home-main-slider .slide_content {
@@ -57,3 +35,30 @@ h2:before, h3:before {
     padding: 15px 50px;
   }
 }
+
+.other-categories .slide_content p{
+	font-size: 20px;
+	line-height: 20px;
+}
+.watch_now {
+    background: rgba(0, 0, 0, 0.5);
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    position: absolute;
+    z-index: 99;
+    padding: 0;
+    a {
+      display: block;
+      height: 180px;
+      width: 180px;
+      &:after {
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 25px solid $green;
+        display: inline-block;
+        margin-top: 46px;
+        content: "";
+      }
+    }
+	}

@@ -68,8 +68,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 $channels = $theme_function->home_page_other_carousel($category_slug, $dsp_theme_options['opt-carousel-poster-type']);
                 if ($channels) {
                     ?>
-                    <div class="col-sm-12 no-gutters">
-                        <h3 class="post-title"><?php echo $category_name; ?></h3>
+                    <div class="col-sm-12 no-gutters pt-7">
+                        <h3 class="post-title mb-5"><?php echo $category_name; ?></h3>
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
@@ -81,8 +81,13 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             <?php foreach ($channels as $channel) { ?>
                                 <div class="slide">
                                     <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                                        <div class="slide_image tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                        <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                                            <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
+                                                   <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                   <div class="overlay">
+                                                       <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
+                                                   </div>
+                                               </div>
                                         </div>
                                         <!-- Condition to check display the content on tooltip or below the images-->
                                         <?php
@@ -91,7 +96,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                         ?>
                                         <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
                                             <div class="slide_content">
-                                                <h6><?php echo $title; ?></h6>
+                                                <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                                 <p><?php echo $description; ?></p>
                                             </div>
                                         <?php else: ?>
