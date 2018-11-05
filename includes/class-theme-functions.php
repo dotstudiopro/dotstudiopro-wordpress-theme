@@ -30,7 +30,7 @@ class Theme_Functions {
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'main_carousel', $poster_type);
             } else {
-                return $this->show_videos($channels[0], 'main_carousel');
+                return $this->show_videos(array_values($channels)[0], 'main_carousel');
             }
         }
     }
@@ -57,7 +57,7 @@ class Theme_Functions {
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'other_carousel', $poster_type);
             } else {
-                return $this->show_videos($channels[0], 'other_carousel');
+                return $this->show_videos(array_values($channels)[0], 'other_carousel');
             }
         }
     }
@@ -85,9 +85,35 @@ class Theme_Functions {
 
         $channels = new WP_Query($channels_args);
 
-        if ($channels->have_posts())
-            return $channels->posts;
-        else
+        $category = get_page_by_path($category_name, OBJECT, 'category');
+        $category_meta = get_post_meta($category->ID, 'cat_id');
+        $category_id = $category_meta[0];
+
+        if ($channels->have_posts()) {
+            $channels_array = array();
+            $i = 999;
+            foreach ($channels->posts as $channel):
+                $channel_weightings = get_post_meta($channel->ID, 'chnl_weightings');
+                if (!empty($channel_weightings)) {
+                    $weightings = maybe_unserialize($channel_weightings[0]);
+                    $channel_add = false;
+                    foreach ($weightings as $weighting):
+                        if (array_keys($weighting)[0] == $category_id) {
+                            $channels_array[array_values($weighting)[0]] = $channel;
+                            $channel_add = true;
+                        }
+                    endforeach;
+                    if ($channel_add == false)
+                        $channels_array[$i] = $channel;
+                }
+                else {
+                    $channels_array[$i] = $channel;
+                }
+                $i++;
+            endforeach;
+            ksort($channels_array);
+            return $channels_array;
+        } else
             return array();
     }
 
@@ -294,7 +320,7 @@ class Theme_Functions {
      * @return string
      */
     public function get_recommendation_content($type, $id) {
-        
+
         global $dsp_theme_options;
 
         $dsp_external_api = new Dsp_External_Api_Request();

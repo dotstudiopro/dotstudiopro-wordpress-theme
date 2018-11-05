@@ -49,6 +49,9 @@ $main_carousel = $theme_function->home_page_main_carousel();
             'post_type' => 'category',
             'posts_per_page' => -1,
             'post__not_in' => array($home->ID),
+            'order'     => 'ASC',
+            'meta_key' => 'weight',
+            'orderby'   => 'meta_value_num',
             'meta_query' => array(
                 array(
                     'key' => 'is_on_cat_homepage',
