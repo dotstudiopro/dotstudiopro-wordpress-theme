@@ -278,7 +278,7 @@ class Theme_Functions {
             $channelVideos = $this->get_channel_videos($channel->ID);
             $response = $channelVideos[0]['_id'];
         } else {
-            $videoData = $this->get_channel_videos($channel->ID);
+            $videoData = $this->get_channel_videos($channel_id);
             if ($videoData) {
                 $response = $videoData[0]['_id'];
             }
