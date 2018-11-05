@@ -70,10 +70,10 @@ if ($video) {
     $video_id = $video['_id'];
     $desc = ($video['description']) ? $video['description'] : '';
     $title = ($video['title']) ? $video['title'] : '';
-    $genres = $video['genres'];
-    $duration = $video['duration'];
-    $year = $video['year'];
-    $company_id = $video['company_id'];
+    $genres = isset($video['genres']) ? $video['genres'] : '';
+    $duration = isset($video['duration']) ? $video['duration'] : '';
+    $year = isset($video['year']) ? $video['year'] : '';
+    $company_id = isset($video['company_id']) ? $video['company_id'] : '';
 
     if (!empty($duration)) {
         if ($duration < 60) {

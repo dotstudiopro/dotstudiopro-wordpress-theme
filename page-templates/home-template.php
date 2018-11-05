@@ -13,29 +13,30 @@ $main_carousel = $theme_function->home_page_main_carousel();
 ?>
 
 <!-- Home page Main carousal section start-->
-<div class="row no-gutters">
-    <div class="col-sm-12 blog-main">
+<div class="row no-gutters home-main-slider claerfix">
+    <div class="col-sm-12 ">
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
                 <?php foreach ($main_carousel as $slide) { ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/938'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
-                            <div class="container">
+                            <div class="container custom-container">
                                 <div class="watch_now">
-                                    <a href="<?php echo $slide['url']; ?>" class="btn btn-primary"><i class="el el-arrow-right"></i>Play Now</a>
+                                    <a href="<?php echo $slide['url']; ?>" class="right-arrow-btn"></a>
                                 </div>
-                                <h2 class="title"><?php echo $slide['title']; ?></h2>
-                                <p class="desc"><?php echo $slide['description']; ?></p>
+                                <div class="inner pt-3"><h2 class="title"><?php echo $slide['title']; ?></h2>
+                                    <p class="desc"><?php echo $slide['description']; ?></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
             </div>
         <?php } ?>
-    </div><!-- /.blog-main -->
+    </div>
 </div><!-- no-gutters -->
 <!-- Home page Main carousal section end-->
 
@@ -49,9 +50,9 @@ $main_carousel = $theme_function->home_page_main_carousel();
             'post_type' => 'category',
             'posts_per_page' => -1,
             'post__not_in' => array($home->ID),
-            'order'     => 'ASC',
+            'order' => 'ASC',
             'meta_key' => 'weight',
-            'orderby'   => 'meta_value_num',
+            'orderby' => 'meta_value_num',
             'meta_query' => array(
                 array(
                     'key' => 'is_on_cat_homepage',
@@ -70,8 +71,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 $channels = $theme_function->home_page_other_carousel($category_slug, $dsp_theme_options['opt-carousel-poster-type']);
                 if ($channels) {
                     ?>
-                    <div class="col-sm-12 no-gutters">
-                        <h2 class="post-title"><?php echo $category_name; ?></h2>
+                    <div class="col-sm-12 no-gutters pt-7">
+                        <h3 class="post-title mb-5"><?php echo $category_name; ?></h3>
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
@@ -83,8 +84,13 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             <?php foreach ($channels as $channel) { ?>
                                 <div class="slide">
                                     <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                                        <div class="slide_image tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                        <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                                            <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                <div class="overlay">
+                                                    <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- Condition to check display the content on tooltip or below the images-->
                                         <?php
@@ -93,7 +99,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                         ?>
                                         <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
                                             <div class="slide_content">
-                                                <h6><?php echo $title; ?></h6>
+                                                <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                                 <p><?php echo $description; ?></p>
                                             </div>
                                         <?php else: ?>
@@ -116,8 +122,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
                     $cnt++;
                 }
             }
+            $theme_function->slick_init_options($class_array, 'home');
         }
-        $theme_function->slick_init_options($class_array, 'home');
         ?>
 
     </div><!-- no-gutters -->

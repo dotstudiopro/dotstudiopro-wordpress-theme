@@ -40,8 +40,8 @@ if (have_posts()) {
                             ?>
                             <div class="col-md-3 p-2 channel-banner">
                                 <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                                    <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' .$i; ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                    <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/placeholder.jpg" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                     </div>
                                     <?php
                                     $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'];

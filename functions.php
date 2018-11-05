@@ -50,7 +50,7 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('slick-theme', $slickthemecdn_url);
 
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-    
+
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 }
 
@@ -103,7 +103,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min', 'custom.min');
+    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min','uisearch', 'custom', 'modernizr.custom', 'classie', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -114,7 +114,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('main', 'ds-global', 'tooltipster.bundle.min');
+    $styles = array('main', 'ds-global', 'tooltipster.bundle.min', 'effects');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
@@ -226,6 +226,7 @@ function custom_menu_atts($atts, $item, $args) {
 /*
  * getting post id by post slug
  */
+
 function get_id_by_slug($page_slug) {
     $page = get_page_by_path($page_slug);
     if ($page) {
@@ -238,21 +239,24 @@ function get_id_by_slug($page_slug) {
 /*
  * adding query vars for routs
  */
+
 function add_query_vars($vars) {
     $vars[] = "channel_slug";
     $vars[] = "video_slug";
     return $vars;
 }
+
 add_filter('query_vars', 'add_query_vars');
 
 
 /*
  * rewrite ruls for routs
  */
+
 function custom_rewrite_basic() {
-    add_rewrite_rule('channel/([^/]*)/video/([^/]*)/?$', 'index.php?page_id='.get_id_by_slug('video').'&channel_slug=$matches[1]&video_slug=$matches[2]', 'top');
+    add_rewrite_rule('channel/([^/]*)/video/([^/]*)/?$', 'index.php?page_id=' . get_id_by_slug('video') . '&channel_slug=$matches[1]&video_slug=$matches[2]', 'top');
     flush_rewrite_rules();
 }
-add_action('init', 'custom_rewrite_basic', 10, 0);
 
+add_action('init', 'custom_rewrite_basic', 10, 0);
 ?>
