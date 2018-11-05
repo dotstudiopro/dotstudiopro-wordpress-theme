@@ -103,7 +103,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min','uisearch', 'custom', 'modernizr.custom', 'classie', 'effects.min');
+    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min','uisearch', 'custom.min', 'modernizr.custom', 'classie', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
