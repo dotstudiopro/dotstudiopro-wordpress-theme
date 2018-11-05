@@ -2,15 +2,8 @@
 $theme_function = new Theme_Functions();
 
 global $dsp_theme_options;
-if ($dsp_theme_options['opt-related-option'] == 'channel') {
-    $type = 'channel';
-    $id = get_post_meta(get_the_ID(), 'dspro_channel_id', true);
-} else {
-    $type = 'video';
-    $id = $theme_function->first_video_id(get_the_ID());
-}
 
-$recommendation_content = $theme_function->get_recommendation_content($type, $id);
+$recommendation_content = $theme_function->get_recommendation_content($type, $related_id);
 
 if (!empty($recommendation_content)):
     ?>

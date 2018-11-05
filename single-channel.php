@@ -77,6 +77,13 @@ if (have_posts()) {
 
                 // Display Recomendation section
                 if ($dsp_theme_options['opt-related-section'] == 1) {
+                    if ($dsp_theme_options['opt-related-option'] == 'channel') {
+                        $type = 'channel';
+                        $related_id = get_post_meta(get_the_ID(), 'dspro_channel_id', true);
+                    } else {
+                        $type = 'video';
+                        $related_id = $theme_function->first_video_id(get_the_ID());
+                    }
                     include(locate_template('page-templates/templates-part/related-content.php'));
                     array_push($class_array, 'related_content');
                 }

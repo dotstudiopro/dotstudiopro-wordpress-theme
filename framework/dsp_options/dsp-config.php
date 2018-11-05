@@ -647,7 +647,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-slidetoscroll',
@@ -657,7 +657,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-pagination',
@@ -956,7 +956,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-slidetoscroll',
@@ -967,7 +967,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-pagination',
