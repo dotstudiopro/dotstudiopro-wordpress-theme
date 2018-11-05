@@ -53,6 +53,3 @@ if (!empty($recommendation_content)):
         </div><!-- related_content -->
     </div><!-- related_content_section -->
 <?php endif; ?>
-
-
-

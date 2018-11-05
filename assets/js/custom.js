@@ -11,6 +11,9 @@
         animation: 'fade',
         delay: 200,
     });
-
+    /**
+     * init search
+     */
+    new UISearch(document.getElementById('sb-search'));
 })(jQuery);
 
