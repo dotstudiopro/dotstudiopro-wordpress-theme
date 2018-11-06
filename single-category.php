@@ -35,10 +35,11 @@ if (have_posts()) {
                     if ($channels) {
                         $width = filter_var($dsp_theme_options['opt-channel-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                         $height = filter_var($dsp_theme_options['opt-channel-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                        $number_of_row = $dsp_theme_options['opt-display-row'];
                         $i = 0;
                         foreach ($channels as $channel) {
                             ?>
-                            <div class="col-md-3 p-2 channel-banner">
+                            <div class="col-md-<?php echo $number_of_row; ?> p-2 channel-banner">
                                 <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                                     <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
                                         <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">

@@ -139,6 +139,20 @@ Redux::setSection($opt_name, array(
             'default' => 1
         ),
         array(
+            'id' => 'opt-img-hover',
+            'type' => 'select',
+            'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one hover effect from the different 5 types of effects', 'dotstudio-pro'),
+            'options' => array(
+                1 => 'Hover Effect 1',
+                2 => 'Hover Effect 2',
+                3 => 'Hover Effect 3',
+                4 => 'Hover Effect 4',
+                5 => 'Hover Effect 5',
+            ),
+            'default' => 1
+        ),
+        array(
             'id' => 'opt-google-analytics',
             'type' => 'textarea',
             'title' => __('Google Analytics/Tag Manager Code', 'dotstudio-pro'),
@@ -1334,4 +1348,5 @@ if (!function_exists('compiler_action')) {
             );
         }
     }
+
 }
