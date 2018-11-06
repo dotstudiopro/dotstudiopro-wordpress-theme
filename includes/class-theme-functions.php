@@ -30,7 +30,7 @@ class Theme_Functions {
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'main_carousel', $poster_type);
             } else {
-                return $this->show_videos($channels[0], 'main_carousel');
+                return $this->show_videos(array_values($channels)[0], 'main_carousel');
             }
         }
     }
@@ -57,7 +57,7 @@ class Theme_Functions {
             if ($total_channels > 1) {
                 return $this->show_channels($channels, 'other_carousel', $poster_type);
             } else {
-                return $this->show_videos($channels[0], 'other_carousel');
+                return $this->show_videos(array_values($channels)[0], 'other_carousel');
             }
         }
     }
@@ -85,9 +85,35 @@ class Theme_Functions {
 
         $channels = new WP_Query($channels_args);
 
-        if ($channels->have_posts())
-            return $channels->posts;
-        else
+        $category = get_page_by_path($category_name, OBJECT, 'category');
+        $category_meta = get_post_meta($category->ID, 'cat_id');
+        $category_id = $category_meta[0];
+
+        if ($channels->have_posts()) {
+            $channels_array = array();
+            $i = 999;
+            foreach ($channels->posts as $channel):
+                $channel_weightings = get_post_meta($channel->ID, 'chnl_weightings');
+                if (!empty($channel_weightings)) {
+                    $weightings = maybe_unserialize($channel_weightings[0]);
+                    $channel_add = false;
+                    foreach ($weightings as $weighting):
+                        if (array_keys($weighting)[0] == $category_id) {
+                            $channels_array[array_values($weighting)[0]] = $channel;
+                            $channel_add = true;
+                        }
+                    endforeach;
+                    if ($channel_add == false)
+                        $channels_array[$i] = $channel;
+                }
+                else {
+                    $channels_array[$i] = $channel;
+                }
+                $i++;
+            endforeach;
+            ksort($channels_array);
+            return $channels_array;
+        } else
             return array();
     }
 
@@ -109,7 +135,7 @@ class Theme_Functions {
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
             $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-            $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
+            $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -120,12 +146,12 @@ class Theme_Functions {
                     $firstChildChannelId = get_page_by_path($child_channels[0], OBJECT, 'channel');
                     $channelVideos = $this->get_channel_videos($firstChildChannelId->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
                 else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
             }
         endforeach;
@@ -154,7 +180,7 @@ class Theme_Functions {
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
                 $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://picsum.photos/';
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                 if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                     $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -162,7 +188,7 @@ class Theme_Functions {
                 else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
                     if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
                 }
             endforeach;
         }
@@ -252,7 +278,7 @@ class Theme_Functions {
             $channelVideos = $this->get_channel_videos($channel->ID);
             $response = $channelVideos[0]['_id'];
         } else {
-            $videoData = $this->get_channel_videos($channel->ID);
+            $videoData = $this->get_channel_videos($channel_id);
             if ($videoData) {
                 $response = $videoData[0]['_id'];
             }
@@ -294,7 +320,7 @@ class Theme_Functions {
      * @return string
      */
     public function get_recommendation_content($type, $id) {
-        
+
         global $dsp_theme_options;
 
         $dsp_external_api = new Dsp_External_Api_Request();
@@ -312,7 +338,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['title'] = $channel->post_title;
                         $recommendation_content[$key]['description'] = $channel->post_content;
                         $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
-                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://picsum.photos/';
+                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
                 } else {
@@ -321,7 +347,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['_id'] = $video['_id'];
                         $recommendation_content[$key]['title'] = $video['title'];
                         $recommendation_content[$key]['description'] = $video['description'];
-                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://picsum.photos/';
+                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $video_url = (isset($video['slug'])) ? $video['slug'] : $video['_id'];
                         $recommendation_content[$key]['url'] = get_site_url() . '/' . $video_url;
                     }

@@ -125,6 +125,34 @@ Redux::setSection($opt_name, array(
             'off' => 'Off',
         ),
         array(
+            'id' => 'opt-img-hover',
+            'type' => 'select',
+            'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one hover effect from the different 5 types of effects', 'dotstudio-pro'),
+            'options' => array(
+                1 => 'Hover Effect 1',
+                2 => 'Hover Effect 2',
+                3 => 'Hover Effect 3',
+                4 => 'Hover Effect 4',
+                5 => 'Hover Effect 5',
+            ),
+            'default' => 1
+        ),
+        array(
+            'id' => 'opt-img-hover',
+            'type' => 'select',
+            'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one hover effect from the different 5 types of effects', 'dotstudio-pro'),
+            'options' => array(
+                1 => 'Hover Effect 1',
+                2 => 'Hover Effect 2',
+                3 => 'Hover Effect 3',
+                4 => 'Hover Effect 4',
+                5 => 'Hover Effect 5',
+            ),
+            'default' => 1
+        ),
+        array(
             'id' => 'opt-google-analytics',
             'type' => 'textarea',
             'title' => __('Google Analytics/Tag Manager Code', 'dotstudio-pro'),
@@ -191,7 +219,6 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'left' => 'Left',
                 'center' => 'Center',
-                'right' => 'Right'
             ),
             'default' => 'left'
         ),
@@ -217,9 +244,10 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-logo-height',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Height) Option for the Home Page logo', 'dotstudio-pro'),
-            'subtitle' => __('Choose the height for your site logo', 'dotstudio-pro'),
-            'output' => array('.site-logo img'),
+            'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose height for the logo.', 'dotstudio-pro'),
+            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'compiler' => array('.site-logo img'),
             'width' => false,
             'default' => array(
                 'height' => 50,
@@ -304,7 +332,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the header (default: #428bca).', 'dotstudio-pro'),
             'default' => '#428bca',
             'validate' => 'color',
-            'output' => array('header'),
+            'compiler' => array('header'),
             'mode' => 'background',
         ),
         array(
@@ -314,12 +342,12 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the header text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'output' => array('header'),
+            'compiler' => array('header'),
         ),
         array(
             'id' => 'opt-background',
             'type' => 'background',
-            'output' => array('body'),
+            'compiler' => array('body'),
             'title' => __('Body Background', 'dotstudio-pro'),
             'subtitle' => __('Body background with image, color, etc.', 'dotstudio-pro'),
         ),
@@ -330,7 +358,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the body text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'output' => array('body'),
+            'compiler' => array('body'),
         ),
         array(
             'id' => 'opt-bg-color-footer',
@@ -339,7 +367,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the footer (default: #dd9933).', 'dotstudio-pro'),
             'default' => '#dd9933',
             'validate' => 'color',
-            'output' => array('footer'),
+            'compiler' => array('footer'),
             'mode' => 'background',
         ),
         array(
@@ -349,7 +377,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Pick a background color for the footer text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'output' => array('footer'),
+            'compiler' => array('footer'),
         ),
     )
 ));
@@ -366,7 +394,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-typography-body',
             'type' => 'typography',
-            'output' => array('*'),
+            'compiler' => array('*'),
             'all_styles' => false,
             'title' => __('Body Font', 'dotstudio-pro'),
             'subtitle' => __('Specify the body font properties.', 'dotstudio-pro'),
@@ -384,10 +412,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h1', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h1'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h1'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -407,10 +433,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h2', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h2'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h2'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -430,10 +454,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h3', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h3'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h3'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -453,10 +475,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h4', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h4'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h4'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -476,10 +496,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h5', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h5'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h5'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -499,10 +517,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Typography h6', 'dotstudio-pro'),
             'font-backup' => true,
             'all_styles' => true,
-            // Enable all Google Font style/weight variations to be added to the page
-            'output' => array('h6'),
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('site-description-compiler'),
+            'compiler' => array('h6'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -572,7 +588,7 @@ Redux::setSection($opt_name, array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
             ),
-            'default' => 'spotlight_poster'
+            'default' => 'poster'
         ),
         array(
             'id' => 'opt-play-btn-type',
@@ -612,7 +628,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro')
+            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 200,
                 'height' => 100,
@@ -658,7 +674,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-slidetoscroll',
@@ -668,7 +684,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-home-pagination',
@@ -967,7 +983,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-slidetoscroll',
@@ -977,7 +993,7 @@ Redux::setSection($opt_name, array(
             'default' => '4',
             'min' => '1',
             'step' => '1',
-            'max' => '5',
+            'max' => '7',
         ),
         array(
             'id' => 'opt-slick-video-pagination',
@@ -1312,7 +1328,7 @@ if (!function_exists('compiler_action')) {
     function compiler_action($options, $css, $changed_values) {
         global $wp_filesystem;
 
-        $filename = dirname(__FILE__) . '/style.css';
+        $filename = dirname(__FILE__) . '/redux-global.css';
 
         if (empty($wp_filesystem)) {
             require_once( ABSPATH . '/wp-admin/includes/file.php' );

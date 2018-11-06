@@ -1,16 +1,41 @@
-html {
-	font-size: 16px;
-  max-width: 100%;
-  overflow-x: hidden;
+/* Home Main Slider */
+.watch_now {
+  @include watch_now;
 }
-a:hover {
-	text-decoration: none;
+.home-main-slider .slide_content {
+	padding-bottom:20px;  
+  background: $black;
+  .watch_now {
+			height: 180px;
+    	width: 180px;
+    	margin-top: -180px;
+		  a {
+				height: 180px;
+      	width: 180px;
+      	&:after {
+        	border-top: 40px solid transparent;
+        	border-bottom: 40px solid transparent;
+        	border-left: 70px solid $green;
+       		margin-top: 46px;
+      	}
+    	}
+    }
+    h2 {
+    	color: $white;
+    }
+    p {
+    	color: $white;
+      padding: 15px 50px;
+    }
 }
-:hover, :focus, :visited {
-	outline: 0;
-	border: 0;
-}
-.custom-container {
-	max-width: $custom-container;
-  padding: 0;
+
+.other-categories {
+  .slide_content p {
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+  .watch_now {
+    bottom: 0;
+  }
 }

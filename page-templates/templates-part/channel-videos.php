@@ -6,7 +6,7 @@
         <div class="slide">
             <a href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">
                 <div class="slide_image tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/channel_default_thumbnail.jpg" class="lazy" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
                 </div>
                 <?php
                 $title = ($dsp_theme_options['opt-channel-video-title-trim-word'] != 0) ? wp_trim_words($video['title'], $dsp_theme_options['opt-channel-video-title-trim-word'], '...') : $video['title'];
