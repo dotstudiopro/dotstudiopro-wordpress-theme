@@ -1,65 +1,41 @@
 /* Home Main Slider */
-
+.watch_now {
+  @include watch_now;
+}
 .home-main-slider .slide_content {
-    padding-bottom:20px;  
-    background: #000;
-
-    .watch_now {
-        background: rgba(0, 0, 0, 0.5);
-        height: 180px;
-        width: 180px;
-        text-align: center;
-        margin-top: -180px;
-        position: absolute;
-        z-index: 99;
-        padding: 0;
-        a {
-            display: block;
-            height: 180px;
-            width: 180px;
-            &:after {
-                text-indent: -9999em;
-                border-top: 40px solid transparent;
-                border-bottom: 40px solid transparent;
-                border-left: 70px solid $green;
-                display: inline-block;
-                margin-top: 46px;
-                content: "";
-            }
-        }
+	padding-bottom:20px;  
+  background: $black;
+  .watch_now {
+			height: 180px;
+    	width: 180px;
+    	margin-top: -180px;
+		  a {
+				height: 180px;
+      	width: 180px;
+      	&:after {
+        	border-top: 40px solid transparent;
+        	border-bottom: 40px solid transparent;
+        	border-left: 70px solid $green;
+       		margin-top: 46px;
+      	}
+    	}
     }
     h2 {
-        color: #fff;
+    	color: $white;
     }
     p {
-        color: #fff;
-        padding: 15px 50px;
+    	color: $white;
+      padding: 15px 50px;
     }
 }
 
-.other-categories .slide_content p{
+.other-categories {
+  .slide_content p {
     font-size: 20px;
     line-height: 20px;
-}
-.watch_now {
-    background: rgba(0, 0, 0, 0.5);
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    position: absolute;
-    z-index: 99;
-    padding: 0;
-    a {
-        display: block;
-        height: 180px;
-        width: 180px;
-        &:after {
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            border-left: 25px solid $green;
-            display: inline-block;
-            margin-top: 46px;
-            content: "";
-        }
-    }
+    margin-bottom: 0;
+  }
+  .watch_now {
+    bottom: 0;
+  }
 }

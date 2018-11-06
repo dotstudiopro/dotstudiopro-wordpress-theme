@@ -11,11 +11,11 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'sticky' : '';
                     <?php $logo = isset($dsp_theme_options['opt-logo-url']['url']) ? $dsp_theme_options['opt-logo-url']['url'] : ''; ?>
                     <?php if (!empty($logo)) { ?>
                         <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>">
-                            <h1 class="site-logo m-0"><img src="<?php echo $logo; ?>" title="<?php bloginfo('name'); ?>" alt="<?php bloginfo('name'); ?>" ></h1>
+                            <h1 class="site-logo"><img src="<?php echo $logo; ?>" title="<?php bloginfo('name'); ?>" alt="<?php bloginfo('name'); ?>" ></h1>
                         </a>
                     <?php } else { ?>
                         <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>">
-                            <h1 class="site-logo m-0">
+                            <h1 class="site-logo">
                                 <?php bloginfo('name'); ?>
                             </h1>
                         </a>

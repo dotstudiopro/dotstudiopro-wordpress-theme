@@ -1,7 +1,9 @@
 html {
-	font-size: 16px;
   max-width: 100%;
   overflow-x: hidden;
+}
+body {
+	font-size: 16px;
 }
 body.boxed {
 	max-width: 1170px;
@@ -26,9 +28,12 @@ h2, h3{
 	overflow: hidden;
 }
 h2:before, h3:before {
-    content: "";
-    border-left: 2px solid $green;
-		margin-right: 50px;
+	content: "";
+  border-left: 2px solid $green;
+	margin-right: 50px;
+}
+h3:before {
+	margin-right: 30px;
 }
 .pt-7{
 	padding-top: 70px;
