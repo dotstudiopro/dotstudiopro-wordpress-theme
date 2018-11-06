@@ -973,7 +973,6 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-slidetoscroll',
             'title' => __('Slides to scroll', 'dotstudio-pro'),
             'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
-            'description' => __('By default set to "1".', 'dotstudio-pro'),
             'type' => 'spinner',
             'default' => '4',
             'min' => '1',
@@ -984,7 +983,6 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-pagination',
             'title' => __('Enable Pagination', 'dotstudio-pro'),
             'subtitle' => __('This option is to enable/disable the navigation dots under the carousel', 'dotstudio-pro'),
-            'description' => __('By default set to "off".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
         ),
@@ -992,7 +990,6 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-navigation',
             'title' => __('Enable Navigation', 'dotstudio-pro'),
             'subtitle' => __('This option is to enable/disable the navigation arrows', 'dotstudio-pro'),
-            'description' => __('By default set to "on".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
@@ -1000,7 +997,6 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-infinite',
             'title' => __('Enable infinite loop', 'dotstudio-pro'),
             'subtitle' => __('This option is to enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
-            'description' => __('By default set to "on".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
@@ -1008,7 +1004,6 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-autoplay',
             'title' => __('Autoplay', 'dotstudio-pro'),
             'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
-            'description' => __('By default set to "off".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
         ),
@@ -1016,7 +1011,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-autoplayspeed',
             'title' => __('Autoplay Interval', 'dotstudio-pro'),
             'subtitle' => __('This option is to set the interval for the autoplay sliding', 'dotstudio-pro'),
-            'description' => __('By default set to  "2000". Please enter the value in miliseconds (ie. in multiples of 100).', 'dotstudio-pro'),
+            'description' => __('By default set to  "2000". Please enter the value in miliseconds (ie. in multiples of 1000).', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '2000',
             'required' => array('opt-slick-autoplay', '=', true),
@@ -1050,8 +1045,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-video-mobile-slidetoshow',
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in mobile screen', 'dotstudio-pro'),
-            'description' => __('By default set to "1".', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be displayed in mobile screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-video-responsive', '=', true),
             'default' => '1',
@@ -1091,7 +1085,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Choose the option to display recommendations content', 'dotstudio-pro'),
             'subtitle' => __('Choose the option to display video / channel.', 'dotstudio-pro'),
-            'desc' => __('Select Channel option to show related channels carousel at bottom or select Video to display related videos.', 'dotstudio-pro'),
+            'desc' => __('Select Channel option to show related channels carousel under the content, or select Video to display related videos.', 'dotstudio-pro'),
             'options' => array(
                 'channel' => 'Channel',
                 'video' => 'Video'
@@ -1116,7 +1110,6 @@ Redux::setSection($opt_name, array(
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the recommendations content carousel thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
-            'desc' => __('You can enable or disable any piece of this field. Width, Height, or Units.', 'dotstudio-pro'),
             'required' => array('opt-related-section', '=', 1),
             'default' => array(
                 'width' => 200,
@@ -1128,7 +1121,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Content Layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
-            'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
+            'desc' => __('Select Tooltip option if you need to display description in a tooltip, or select Text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'Tooltip',
                 '1' => 'Text'
@@ -1140,7 +1133,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be visible on carousel for related content title.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of words to be shown for related content titles in the carousel.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -1151,7 +1144,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be visible on carousel for related content description.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of words to be shown for related content descriptions in the carousel.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -1175,7 +1168,7 @@ Redux::setSection($opt_name, array(
             'type' => 'select',
             'data' => 'menus',
             'title' => __('Footer menu', 'dotstudio-pro'),
-            'desc' => __('Select a menu to display in footer section.', 'dotstudio-pro'),
+            'desc' => __('Select a menu to display in the footer section.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-copyright-text',
@@ -1195,7 +1188,7 @@ Redux::setSection($opt_name, array(
             'id' => 'section-start',
             'type' => 'section',
             'title' => __('Social icons', 'dotstudio-pro'),
-            'subtitle' => __('Controls the social media pages URLs.', 'dotstudio-pro'),
+            'subtitle' => __('Controls the social media URLs.', 'dotstudio-pro'),
             'required' => array('opt-social-icons', '=', '1'),
             'indent' => true
         ),
@@ -1203,7 +1196,7 @@ Redux::setSection($opt_name, array(
             'id' => 'facebook-link',
             'type' => 'text',
             'title' => __('Facebook Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Facebook Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1212,7 +1205,7 @@ Redux::setSection($opt_name, array(
             'id' => 'twitter-link',
             'type' => 'text',
             'title' => __('Twitter Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Twitter Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1221,7 +1214,7 @@ Redux::setSection($opt_name, array(
             'id' => 'dribbble-link',
             'type' => 'text',
             'title' => __('Dribbble Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Dribbble Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1230,7 +1223,7 @@ Redux::setSection($opt_name, array(
             'id' => 'flickr-link',
             'type' => 'text',
             'title' => __('Flickr Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Flickr Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1239,7 +1232,7 @@ Redux::setSection($opt_name, array(
             'id' => 'github-link',
             'type' => 'text',
             'title' => __('Github Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Github Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1248,7 +1241,7 @@ Redux::setSection($opt_name, array(
             'id' => 'pinterest-link',
             'type' => 'text',
             'title' => __('Pinterest Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Pinterest Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1257,7 +1250,7 @@ Redux::setSection($opt_name, array(
             'id' => 'youtube-link',
             'type' => 'text',
             'title' => __('Youtube Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Youtube Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1266,7 +1259,7 @@ Redux::setSection($opt_name, array(
             'id' => 'google-plus-link',
             'type' => 'text',
             'title' => __('Google+ Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Google+ Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1275,7 +1268,7 @@ Redux::setSection($opt_name, array(
             'id' => 'linkedin-link',
             'type' => 'text',
             'title' => __('LinkedIn Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('LinkedIn Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1284,7 +1277,7 @@ Redux::setSection($opt_name, array(
             'id' => 'instagram-link',
             'type' => 'text',
             'title' => __('Instagram Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Instagram Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
@@ -1293,7 +1286,7 @@ Redux::setSection($opt_name, array(
             'id' => 'vimeo-link',
             'type' => 'text',
             'title' => __('Vimeo Page URL', 'dotstudio-pro'),
-            'subtitle' => __('This must be an URL.', 'dotstudio-pro'),
+            'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
             'desc' => __('Vimeo Page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
