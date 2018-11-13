@@ -26,10 +26,10 @@ if (!empty($recommendation_content)):
                         </div>
                         <!-- Condition to check display the content on tool-tip or below the images-->
                         <?php
-                        $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'];
-                        $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'];
+                        $title = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-related-title-trim-word'], '...') : $channel['title'];
+                        $description = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-related-description-trim-word'], '...') : $channel['description'];
                         ?>
-                        <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
+                        <?php if ($dsp_theme_options['opt-related-layout-slider-content'] == 1): ?>
                             <div class="slide_content">
                                 <h6><?php echo $title; ?></h6>
                                 <p><?php echo $description; ?></p>

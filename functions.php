@@ -60,12 +60,15 @@ function bootstrapstarter_enqueue_styles() {
 function bootstrapstarter_enqueue_scripts() {
     wp_enqueue_script('jquery');
 
+    wp_enqueue_script('bootstrap', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
+
     $bootstrapcdn_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
     $bootstrapcdn = remote_get_url($bootstrapcdn_url);
     if ($bootstrapcdn !== 200) {
         $bootstrapcdn_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
     }
     wp_enqueue_script('bootstrap', $bootstrapcdn_url);
+
 
     $poper_url = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js';
     $popercdn = remote_get_url($poper_url);
@@ -105,7 +108,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('tooltipster.bundle.min', 'slick-init', 'image-lazy-load.min','uisearch', 'custom.min', 'modernizr.custom', 'classie', 'effects.min');
+    $scripts = array('slick-init', 'image-lazy-load.min', 'uisearch', 'custom.min', 'modernizr.custom', 'classie', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -257,6 +260,7 @@ add_filter('query_vars', 'add_query_vars');
 
 function custom_rewrite_basic() {
     add_rewrite_rule('channel/([^/]*)/video/([^/]*)/?$', 'index.php?page_id=' . get_id_by_slug('video') . '&channel_slug=$matches[1]&video_slug=$matches[2]', 'top');
+    add_rewrite_rule('video/([^/]*)/?$', 'index.php?page_id=' . get_id_by_slug('video') . '&video_slug=$matches[1]', 'top');
     flush_rewrite_rules();
 }
 
