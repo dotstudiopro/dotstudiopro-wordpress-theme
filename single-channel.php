@@ -1,5 +1,6 @@
 <?php
 global $dsp_theme_options;
+$video_slug = '';
 get_header();
 
 if (have_posts()) {

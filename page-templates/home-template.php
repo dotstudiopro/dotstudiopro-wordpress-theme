@@ -83,35 +83,35 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             <?php $i = 1 ?>
                             <?php foreach ($channels as $channel) { ?>
                                 <div class="slide">
-                                        <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                                            <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
-                                                <div class="overlay">
-                                                    <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
-                                                </div>
+                                    <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                                        <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
+                                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                            <div class="overlay">
+                                                <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
                                             </div>
                                         </div>
-                                        <!-- Condition to check display the content on tooltip or below the images-->
-                                        <?php
-                                        $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'];
-                                        $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'];
-                                        ?>
-                                        <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
-                                            <div class="slide_content">
-                                                <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                                    </div>
+                                    <!-- Condition to check display the content on tooltip or below the images-->
+                                    <?php
+                                    $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], '...') : $channel['title'];
+                                    $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'];
+                                    ?>
+                                    <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
+                                        <div class="slide_content">
+                                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                                            <p><?php echo $description; ?></p>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="tooltip_templates">
+                                            <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                                                <h4><?php echo $title; ?></h4>
                                                 <p><?php echo $description; ?></p>
-                                            </div>
-                                        <?php else: ?>
-                                            <div class="tooltip_templates">
-                                                <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                                                    <h4><?php echo $title; ?></h4>
-                                                    <p><?php echo $description; ?></p>
-                                                </span>
-                                            </div>
-                                        <?php
-                                        endif;
-                                        $i++;
-                                        ?>
+                                            </span>
+                                        </div>
+                                    <?php
+                                    endif;
+                                    $i++;
+                                    ?>
                                 </div>
                             <?php } ?>
                         </div>

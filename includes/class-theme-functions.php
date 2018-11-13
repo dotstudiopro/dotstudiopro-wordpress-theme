@@ -145,13 +145,18 @@ class Theme_Functions {
                 if ($child_channels) {
                     $firstChildChannelId = get_page_by_path($child_channels[0], OBJECT, 'channel');
                     $channelVideos = $this->get_channel_videos($firstChildChannelId->ID);
-                    if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
-                }
-                else {
+                    if ($channelVideos) {
+                        $response[$key]['slug'] = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : '';
+                        $videoSlug = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $firstChildChannelId->post_name . '/video/' . $videoSlug;
+                    }
+                } else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
-                    if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
+                    if ($channelVideos) {
+                        $response[$key]['slug'] = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : '';
+                        $videoSlug = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
+                    }
                 }
             }
         endforeach;
@@ -187,12 +192,14 @@ class Theme_Functions {
 
                 else {
                     $channelVideos = $this->get_channel_videos($channel->ID);
-                    if ($channelVideos)
-                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $channelVideos[0]['_id'];
+                    if ($channelVideos) {
+                        $response[$key]['slug'] = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : '';
+                        $videoSlug = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : $channelVideos[0]['_id'];
+                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
+                    }
                 }
             endforeach;
-        }
-        else {
+        } else {
             $videoData = $this->get_channel_videos($channel->ID);
             if ($videoData) {
                 foreach ($videoData as $key => $video):
@@ -200,6 +207,7 @@ class Theme_Functions {
                     $response[$key]['title'] = $video['title'];
                     $response[$key]['description'] = $video['description'];
                     $response[$key]['image'] = get_option('dsp_cdn_img_url_field') . $video['thumb'];
+                    $response[$key]['slug'] = ($video['slug']) ? $video['slug'] : '';
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
                     $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
                 endforeach;
@@ -343,13 +351,12 @@ class Theme_Functions {
                     }
                 } else {
                     $video = $dsp_external_api->get_video_by_id($recommendation['_id']);
-                    if (!is_wp_error($video) && !empty($video)) {
-                        $recommendation_content[$key]['_id'] = $video['_id'];
-                        $recommendation_content[$key]['title'] = $video['title'];
-                        $recommendation_content[$key]['description'] = $video['description'];
-                        $recommendation_content[$key]['image'] = ($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                        $video_url = (isset($video['slug'])) ? $video['slug'] : $video['_id'];
-                        $recommendation_content[$key]['url'] = get_site_url() . '/' . $video_url;
+                    if (!is_wp_error($video) && !empty($video['_id'])) {
+                        $recommendation_content[$key]['_id'] = isset($video['_id']) ? $video['_id'] : '';
+                        $recommendation_content[$key]['title'] = isset($video['title']) ? $video['title'] : '';
+                        $recommendation_content[$key]['description'] = isset($video['description']) ? $video['description'] : '';
+                        $recommendation_content[$key]['image'] = isset($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                        $recommendation_content[$key]['url'] = get_site_url() . '/video/' . $video['_id'];
                     }
                 }
             endforeach;

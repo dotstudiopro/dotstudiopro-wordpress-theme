@@ -1,0 +1,32 @@
+footer {
+  .social-links-menu a {
+    padding: 0 15px;
+    color: #2d2d2d;
+    &:first-of-type {
+      padding-left: 0;
+    }
+  }
+  .copyright {
+    padding-top: 55px;
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+.footer-nav ul {
+  padding: 0;
+  display: inline-block;
+  li {
+    list-style: none;
+    float: left;
+    width: 48%;
+    margin: 3px 2% 3px 0;
+    a {
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+      text-transform: uppercase;
+    }
+  }
+}
