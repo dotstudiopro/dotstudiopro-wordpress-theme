@@ -2,13 +2,21 @@ header {
   height: 144px;
   padding-top: 1.875rem;
   position: relative;
+	.fixed-top {
+    max-width: 90vw;
+    top: inherit;
+    right: inherit;
+    left: inherit;
+    z-index: 9999;
+    width: 100%;
+	}
   &.left-logo-header {
     .site-branding {
       width: $header-left;
     }
     .main-navigation {
       width: $header-right;
-      padding-top: 1.875rem;
+      padding-top: 5rem;
     }
   }
 }
@@ -19,7 +27,7 @@ header {
   > li {
     float: left;
 		position: static;
-		line-height: normal;
+		line-height: 30px;
 		&:after {
       content: "";
       border-right: 2px solid $light-gray;
@@ -54,6 +62,7 @@ header {
       margin: 0 auto;
     	background: $black-2;
 			border: 0;
+			padding: 15px 0;
       > li {
         float: left;
 				> a {
@@ -67,23 +76,28 @@ header {
   }
 }
 
-header.center-logo-header.small .main-navigation .navbar-nav > li.dropdown .dropdown-menu{
-  max-width: 450px;
-	left: inherit;
-	right: inherit;
+/* fixed header */
+header.fixed-top.small-header{
+	height: 100px;
+  padding-top: 1em;
 }
-header.center-logo-header.small .main-navigation .navbar-nav > li.dropdown .dropdown-menu li{
-  float: left;
-  width: 50%;
+header.fixed-top.small-header .site-logo img{
+    height: 62px;
 }
-
-
-@media screen and (max-width: 767px) {
-  .dropdown-menu > li {
-    display: block;
-  }
+header.fixed-top.small-header.left-logo-header .main-navigation {
+    padding-top: 2rem;
+}
+header.fixed-top.small-header .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu{
+top: 90px;
 }
 
+header.fixed-top.small-header.center-logo-header {
+    height: 160px;
+    padding-top: 1em;
+}
+header.fixed-top.small-header.center-logo-header .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
+    top: 140px;
+}
 
 /* center */
 
@@ -93,4 +107,18 @@ header.center-logo-header{
 header.center-logo-header .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu{
   top: 190px;
 }
+header.center-logo-header.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu{
+  max-width: 450px;
+	left: inherit;
+	right: inherit;
+}
+header.center-logo-header.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu li{
+  float: left;
+  width: 50%;
+}
 
+@media screen and (max-width: 767px) {
+  .dropdown-menu > li {
+    display: block;
+  }
+}

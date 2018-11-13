@@ -24,8 +24,10 @@
 jQuery(window).scroll(function () {
     if (jQuery(this).scrollTop() >= 50) {
         jQuery('#return-to-top').fadeIn(200);
+				jQuery('header').addClass('small-header');
     } else {
         jQuery('#return-to-top').fadeOut(200);
+				jQuery('header').removeClass('small-header');
     }
 });
 

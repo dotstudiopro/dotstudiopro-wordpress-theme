@@ -1,6 +1,6 @@
 <?php
 global $dsp_theme_options;
-$class = ($dsp_theme_options['opt-sticky'] == 1) ? 'sticky' : '';
+$class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
 <header class="blog-masthead left-logo-header <?php echo $class; ?>">
     <div class="custom-container container">

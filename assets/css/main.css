@@ -5,7 +5,7 @@
 }
 .slick-next {
     right: 25px!important;
-    z-index: 9999;
+    z-index: 999;
     top: 35%;
 }
 .slick-prev:before, .slick-next:before{
