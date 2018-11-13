@@ -1,8 +1,8 @@
 <?php
 global $dsp_theme_options;
-$class = ($dsp_theme_options['opt-sticky'] == 1) ? 'sticky' : '';
+$class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
-<header class="blog-masthead center-logo-header small <?php echo $class; ?>">
+<header class="blog-masthead center-logo-header small-sub-nav <?php echo $class; ?>">
     <div class="custom-container container">
         <nav class="" role="navigation">
             <div class="site-branding text-center"> 
