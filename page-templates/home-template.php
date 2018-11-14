@@ -41,7 +41,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
 <!-- Home page Main carousal section end-->
 
 <!-- Home page other carousal section start-->
-<div class="custom-container container">
+<div class="custom-container container pb-5">
     <div class="row no-gutters other-categories">
         <?php
         $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'category');

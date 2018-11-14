@@ -1,11 +1,11 @@
 .slick-prev {
-    left: 25px!important;
-    z-index: 9999;
+    left: 25px;
+    z-index: 99;
     top: 35%;
 }
 .slick-next {
-    right: 25px!important;
-    z-index: 999;
+    right: 25px;
+    z-index: 99;
     top: 35%;
 }
 .slick-prev:before, .slick-next:before{
@@ -121,4 +121,24 @@
     padding-top: 60%;
 
 }
+
+.other-categories .slick-prev {
+    right: 70px;
+    top: -60px;
+    left: inherit;
+    background: url(../img/prev-btn.png) no-repeat top left;
+    width: 60px;
+    height: 60px;
+}
+.other-categories .slick-next {
+    right: 0;
+    top: -60px;
+    background: url(../img/next-btn.png) no-repeat top left;
+    width: 60px;
+    height: 60px;
+}
+.other-categories .slick-prev:before, .other-categories .slick-next:before{
+  	content:"";
+}
+  
 

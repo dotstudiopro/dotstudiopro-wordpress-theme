@@ -23,7 +23,7 @@
                 <!-- social icon section start -->
                 <?php if ($dsp_theme_options['opt-social-icons'] == 1): ?>
                     <div class="social-icons">
-                        <div class="social-links-menu pl-3">
+                        <div class="social-links-menu">
                             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                             <?php
                             foreach ($social_icons as $key => $value) {

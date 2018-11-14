@@ -1,15 +1,28 @@
 footer {
-  .social-links-menu a {
+	h3{
+		&:before{
+			border-color: $black;
+		}
+	}
+  .social-links-menu{
+	 	padding-left: 30px;
+		padding-top: 15px;
+	}
+	 a {
     padding: 0 15px;
     color: #2d2d2d;
     &:first-of-type {
       padding-left: 0;
     }
+		&:before {
+			font-size: 38px;
+		}
   }
   .copyright {
     padding-top: 55px;
     p {
       font-size: 20px;
+			margin-left: 2px;
     }
   }
 }
@@ -25,8 +38,23 @@ footer {
     a {
       font-size: 20px;
       font-weight: 700;
-      color: #000;
+      color: $black-1;
       text-transform: uppercase;
+			&:hover {
+				color: $green;
+			}
     }
+  }
+}
+
+.social-links-menu a.fa {
+  &.fa-facebook:hover {
+    color: #4267b2;
+  }
+  &.fa-twitter:hover {
+    color: #38A1F3;
+  }
+  &.fa-instagram:hover {
+    color: #cd486b;
   }
 }

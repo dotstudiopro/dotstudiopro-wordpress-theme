@@ -28,6 +28,7 @@
       padding: 15px 50px;
 			font-size: 30px;
 			line-height: 30px;
+			min-height: 130px;
     }
 }
 
@@ -38,6 +39,16 @@
     margin-bottom: 0;
   }
   .watch_now {
-    bottom: 0;
+		height: 100%;
+    width: 100%;
+		a {
+    	height: 100%;
+    	width: 100%;
+			&:after {
+    		bottom: 15px;
+    		left: 16px;
+				position: absolute;
+			}
+		}
   }
 }
