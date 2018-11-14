@@ -93,8 +93,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                     </div>
                                     <!-- Condition to check display the content on tooltip or below the images-->
                                     <?php
-                                    $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? mb_strimwidth($channel['title'], 0, $dsp_theme_options['opt-title-trim-word'] + 3, "...") : $channel['title'];
-                                    $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? mb_strimwidth($channel['description'], 0, $dsp_theme_options['opt-description-trim-word'] + 3, '...') : $channel['description'];
+                                    $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], "...") : $channel['title'];
+                                    $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'];
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
                                         <div class="slide_content">
