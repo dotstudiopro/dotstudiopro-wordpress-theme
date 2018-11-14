@@ -91,9 +91,9 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                             </div>
                                         </div>
                                     </div>
+                                    <?php echo '<pre>'; print_r('gg'); exit;?>
                                     <!-- Condition to check display the content on tooltip or below the images-->
                                     <?php
-                                    echo '<pre>'; print_r('gg'); exit;
                                     $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word'], "...") : $channel['title'];
                                     $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word'], '...') : $channel['description'];
                                     ?>
