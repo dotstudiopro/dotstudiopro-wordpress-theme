@@ -98,8 +98,10 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
                                         <div class="slide_content">
+                                            <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                                             <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                             <p><?php echo $description; ?></p>
+                                            </a>
                                         </div>
                                     <?php else: ?>
                                         <div class="tooltip_templates">
