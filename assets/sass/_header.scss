@@ -20,6 +20,9 @@ header {
     }
   }
 }
+.padding-fixed-left{
+	padding-top: 144px;
+}
 
 .main-navigation .navbar-nav {
   display: inline-block;
@@ -115,6 +118,9 @@ header.center-logo-header.small-sub-nav .main-navigation .navbar-nav > li.dropdo
 header.center-logo-header.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu li{
   float: left;
   width: 50%;
+}
+.padding-fixed-center{
+	padding-top: 210px;
 }
 
 @media screen and (max-width: 767px) {
