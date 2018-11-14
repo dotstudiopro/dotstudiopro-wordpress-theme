@@ -24,13 +24,15 @@ get_header();
                     </a>
                 </div>
             <?php endwhile; ?>
+            <div class="pagination-links">
             <?php
             the_posts_pagination(array(
-                'prev_text' => twentyseventeen_get_svg(array('icon' => 'arrow-left')) . '<span class="screen-reader-text">' . __('Previous page', 'twentyseventeen') . '</span>',
-                'next_text' => '<span class="screen-reader-text">' . __('Next page', 'twentyseventeen') . '</span>' . twentyseventeen_get_svg(array('icon' => 'arrow-right')),
-                'before_page_number' => '<span class="meta-nav screen-reader-text">' . __('Page', 'twentyseventeen') . ' </span>',
+                'prev_text' => '<span class="screen-reader-text">' . __('Previous page', 'dotstudio-pro') . '</span>',
+                'next_text' => '<span class="screen-reader-text">' . __('Next page', 'dotstudio-pro') . '</span>' ,
+                'before_page_number' => '<span class="meta-nav screen-reader-text"> </span>',
             ));
             ?>
+        </div>
         <?php else : ?>
             <p><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></p>
         <?php endif; ?>
