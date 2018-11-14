@@ -45,8 +45,8 @@ if (have_posts()) {
                                         <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                     </div>
                                     <?php
-                                    $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? mb_strimwidth($channel['title'], 0, $dsp_theme_options['opt-title-trim-word']+3, '...') : $channel['title'];
-                                    $description = ($dsp_theme_options['opt-channel-description-trim-word'] != 0) ? mb_strimwidth($channel['description'], 0, $dsp_theme_options['opt-description-trim-word']+3, '...') : $channel['description'];
+                                    $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? substr($channel['title'], 0, $dsp_theme_options['opt-title-trim-word']). '...' : $channel['title'];
+                                    $description = ($dsp_theme_options['opt-channel-description-trim-word'] != 0) ? substr($channel['description'], 0, $dsp_theme_options['opt-description-trim-word']). '...' : $channel['description'];
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-channel-slider-content'] == 1): ?>
                                         <div class="slide_content">

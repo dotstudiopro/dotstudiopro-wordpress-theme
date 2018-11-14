@@ -26,8 +26,8 @@ if (!empty($recommendation_content)):
                         </div>
                         <!-- Condition to check display the content on tool-tip or below the images-->
                         <?php
-                        $title = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? mb_strimwidth($channel['title'], 0, $dsp_theme_options['opt-related-title-trim-word'] + 3, '...') : $channel['title'];
-                        $description = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? mb_strimwidth($channel['description'], 0, $dsp_theme_options['opt-related-description-trim-word'] + 3, '...') : $channel['description'];
+                        $title = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? substr($channel['title'], 0, $dsp_theme_options['opt-related-title-trim-word']). '...' : $channel['title'];
+                        $description = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? substr($channel['description'], 0, $dsp_theme_options['opt-related-description-trim-word']). '...' : $channel['description'];
                         ?>
                         <?php if ($dsp_theme_options['opt-related-layout-slider-content'] == 1): ?>
                             <div class="slide_content">
