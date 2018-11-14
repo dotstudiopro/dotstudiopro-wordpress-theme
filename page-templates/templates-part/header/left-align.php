@@ -45,3 +45,10 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
         </nav>
     </div>
 </header>
+<?php
+if ($dsp_theme_options['opt-sticky'] == 1):
+   ?>
+   <div class="padding-fixed-left"></div>
+   <?php
+endif;
+?>
