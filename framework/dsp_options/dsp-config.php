@@ -25,7 +25,7 @@ $args = array(
     'page_title' => __('Theme Options', 'dotstudio-pro'),
     'google_api_key' => '',
     'google_update_weekly' => false,
-    'async_typography' => true,
+    'async_typography' => false,
     'admin_bar' => true,
     'admin_bar_icon' => 'dashicons-portfolio',
     'admin_bar_priority' => 50,
@@ -45,7 +45,7 @@ $args = array(
     'default_mark' => '',
     'show_import_export' => true,
     'transient_time' => 60 * MINUTE_IN_SECONDS,
-    'output' => false,
+    'output' => true,
     'output_tag' => true,
     'database' => '',
     'use_cdn' => true,
@@ -394,8 +394,9 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-typography-body',
             'type' => 'typography',
-            'compiler' => array('*'),
-            'all_styles' => false,
+            'output' => array('*'),
+            'all_styles' => true,
+            'font-backup' => true,
             'title' => __('Body Font', 'dotstudio-pro'),
             'font-size' => false,
             'line-height' => false,
@@ -414,9 +415,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h1'),
+            'output' => array('h1'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -424,8 +425,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '32px',
-                'line-height' => '40px'
+                'font-size' => ' 4.9375',
+                'line-height' => ' 4.9375'
             ),
         ),
         array(
@@ -435,9 +436,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h2'),
+            'output' => array('h2'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -445,8 +446,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '24px',
-                'line-height' => '30px'
+                'font-size' => ' 4.9375',
+                'line-height' => ' 4.9375'
             ),
         ),
         array(
@@ -456,9 +457,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h3'),
+            'output' => array('h3'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -466,8 +467,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '19px',
-                'line-height' => '22px'
+                'font-size' => '3.125',
+                'line-height' => '3.125'
             ),
         ),
         array(
@@ -477,9 +478,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h4'),
+            'output' => array('h4'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -487,8 +488,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '16px',
-                'line-height' => '22px'
+                'font-size' => '1.875',
+                'line-height' => '1.875'
             ),
         ),
         array(
@@ -498,9 +499,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h5'),
+            'output' => array('h5'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -508,8 +509,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '14px',
-                'line-height' => '20px'
+                'font-size' => '1.5',
+                'line-height' => '1.5'
             ),
         ),
         array(
@@ -519,9 +520,9 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h6'),
+            'output' => array('h6'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -529,8 +530,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '13px',
-                'line-height' => '20px'
+                'font-size' => '1',
+                'line-height' => '1'
             ),
         ),
     )
@@ -655,7 +656,7 @@ Redux::setSection($opt_name, array(
             'default' => '5',
             'min' => '0',
             'step' => '1',
-            'max' => '20',
+            'max' => '30',
         ),
         array(
             'id' => 'opt-description-trim-word',
@@ -665,7 +666,7 @@ Redux::setSection($opt_name, array(
             'default' => '10',
             'min' => '0',
             'step' => '1',
-            'max' => '30',
+            'max' => '50',
         ),
         array(
             'id' => 'opt-slick-home-slidetoshow',
@@ -891,7 +892,7 @@ Redux::setSection($opt_name, array(
             'default' => '5',
             'min' => '0',
             'step' => '1',
-            'max' => '20',
+            'max' => '30',
         ),
         array(
             'id' => 'opt-channel-description-trim-word',
@@ -901,7 +902,7 @@ Redux::setSection($opt_name, array(
             'default' => '10',
             'min' => '0',
             'step' => '1',
-            'max' => '30',
+            'max' => '50',
         ),
         array(
             'title' => __('Number of category to display in a row', 'dotstudio-pro'),
@@ -960,21 +961,21 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-channel-video-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on video carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown for the Video Title on the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of characters shown for the Video Title on the carousel.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
-            'max' => '20',
+            'max' => '30',
         ),
         array(
             'id' => 'opt-channel-video-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on video carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown for the Video Description on the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of characters shown for the Video Description on the carousel.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
-            'max' => '30',
+            'max' => '50',
         ),
         array(
             'id' => 'opt-slick-video-slidetoshow',
@@ -1150,22 +1151,22 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content titles in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of characters to be shown for related content titles in the carousel.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
-            'max' => '20',
+            'max' => '30',
             'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-related-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content descriptions in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of characters to be shown for related content descriptions in the carousel.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
-            'max' => '30',
+            'max' => '50',
             'required' => array('opt-related-section', '=', 1),
         ),
     ),
