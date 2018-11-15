@@ -417,7 +417,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h1'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -425,8 +425,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '32px',
-                'line-height' => '40px'
+                'font-size' => ' 4.9375',
+                'line-height' => ' 4.9375'
             ),
         ),
         array(
@@ -438,7 +438,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h2'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -446,8 +446,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '24px',
-                'line-height' => '30px'
+                'font-size' => ' 4.9375',
+                'line-height' => ' 4.9375'
             ),
         ),
         array(
@@ -459,7 +459,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h3'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -467,8 +467,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '19px',
-                'line-height' => '22px'
+                'font-size' => '3.125',
+                'line-height' => '3.125'
             ),
         ),
         array(
@@ -480,7 +480,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h4'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -488,8 +488,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '16px',
-                'line-height' => '22px'
+                'font-size' => '1.875',
+                'line-height' => '1.875'
             ),
         ),
         array(
@@ -501,7 +501,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h5'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -509,8 +509,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '14px',
-                'line-height' => '20px'
+                'font-size' => '1.5',
+                'line-height' => '1.5'
             ),
         ),
         array(
@@ -522,7 +522,7 @@ Redux::setSection($opt_name, array(
             // An array of CSS selectors to apply this font style to dynamically
             'output' => array('h6'),
             // An array of CSS selectors to apply this font style to dynamically
-            'units' => 'px',
+            'units' => 'rem',
             // Defaults to px
             'subtitle' => __('Typography option with each property can be called individually.', 'dotstudio-pro'),
             'default' => array(
@@ -530,8 +530,8 @@ Redux::setSection($opt_name, array(
                 'font-style' => '700',
                 'font-family' => 'Arial,Helvetica,sans-serif',
                 'google' => true,
-                'font-size' => '13px',
-                'line-height' => '20px'
+                'font-size' => '1',
+                'line-height' => '1'
             ),
         ),
     )

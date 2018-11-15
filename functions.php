@@ -133,11 +133,23 @@ function bootstrapstarter_wp_setup() {
     add_theme_support('title-tag');
 }
 
-// function to add bosy class
-function theme_body_class($class = '') {
+// Action to add class in html tag
+
+add_filter('language_attributes', 'class_to_html_tag', 10, 2);
+
+function class_to_html_tag($output, $doctype) {
+    if ('html' !== $doctype) {
+        return $output;
+    }
     global $dsp_theme_options;
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
-    echo 'class="' . join(' ', get_body_class($class)) . '"';
+    $output .= ' class="' . $class . '"';
+    return $output;
+}
+
+// function to add bosy class
+function theme_body_class($class = '') {
+    echo 'class="' . join(' ', get_body_class()) . '"';
 }
 
 /**
