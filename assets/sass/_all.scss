@@ -1,13 +1,23 @@
 html {
   max-width: 100%;
   overflow-x: hidden;
+	font-size: 16px;
 }
 body {
-	font-size: 16px;
+	font-size: 16px !important;
+}
+body.boxed {
+	font-size: 12px !important;
 }
 body.boxed {
 	max-width: 1170px;
 	margin: 0 auto;
+	font-size: 12px;
+}
+body.boxed .fixed-top {
+    max-width: 1170px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 body.boxed .custom-container {
  	max-width: 1140px;
