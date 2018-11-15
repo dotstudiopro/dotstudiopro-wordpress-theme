@@ -45,7 +45,7 @@ $args = array(
     'default_mark' => '',
     'show_import_export' => true,
     'transient_time' => 60 * MINUTE_IN_SECONDS,
-    'output' => false,
+    'output' => true,
     'output_tag' => true,
     'database' => '',
     'use_cdn' => true,
@@ -394,7 +394,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-typography-body',
             'type' => 'typography',
-            'compiler' => array('*'),
+            'output' => array('*'),
             'all_styles' => true,
             'font-backup' => true,
             'title' => __('Body Font', 'dotstudio-pro'),
@@ -415,7 +415,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h1'),
+            'output' => array('h1'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -436,7 +436,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h2'),
+            'output' => array('h2'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -457,7 +457,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h3'),
+            'output' => array('h3'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -478,7 +478,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h4'),
+            'output' => array('h4'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -499,7 +499,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h5'),
+            'output' => array('h5'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
@@ -520,7 +520,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'compiler' => array('h6'),
+            'output' => array('h6'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'px',
             // Defaults to px
