@@ -23,7 +23,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                 </div>
                 <!-- Logo section end --> 
             </div>
-            <div class="main-navigation">
+            <div class="main-navigation pt-4">
                 <!-- Header Menu section start -->
                 <?php if (has_nav_menu('main_menu')): ?>
                     <?php
