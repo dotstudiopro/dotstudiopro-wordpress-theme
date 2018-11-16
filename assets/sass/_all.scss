@@ -4,10 +4,10 @@ html {
 	font-size: 16px;
 }
 body {
-	font-size: 16px !important;
+	font-size: 16px;
 }
-body.boxed {
-	font-size: 12px !important;
+html.boxed, body.boxed {
+	font-size: 12px;
 }
 body.boxed {
 	max-width: 1170px;
@@ -16,7 +16,6 @@ body.boxed {
 }
 body.boxed .fixed-top {
     max-width: 1170px;
-    overflow: hidden;
     margin: 0 auto;
 }
 body.boxed .custom-container {
@@ -48,3 +47,8 @@ h3:before {
 .pt-7{
 	padding-top: 70px;
 }
+
+
+@media screen and (max-width:1400px) { 
+}
+

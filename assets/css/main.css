@@ -122,20 +122,26 @@
 
 }
 
-.other-categories .slick-prev {
-    right: 70px;
+.other-categories .slick-arrow {
     top: -60px;
-    left: inherit;
-    background: url(../img/prev-btn.png) no-repeat top left;
+    background: url(../img/slick-arrow.png) no-repeat;
     width: 60px;
     height: 60px;
 }
-.other-categories .slick-next {
-    right: 0;
-    top: -60px;
-    background: url(../img/next-btn.png) no-repeat top left;
-    width: 60px;
-    height: 60px;
+.other-categories .slick-arrow.slick-prev{
+  background-position:top left;
+  right: 70px;
+  left: inherit;
+}
+.other-categories .slick-arrow.slick-prev:hover{
+  background-position:bottom left;
+}
+.other-categories .slick-arrow.slick-next {
+   background-position:top right; 
+   right: 0;
+}
+.other-categories .slick-arrow.slick-next:hover{
+  background-position:bottom right;
 }
 .other-categories .slick-prev:before, .other-categories .slick-next:before{
   	content:"";

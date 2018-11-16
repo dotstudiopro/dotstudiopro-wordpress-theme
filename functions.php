@@ -149,7 +149,9 @@ function class_to_html_tag($output, $doctype) {
 
 // function to add bosy class
 function theme_body_class($class = '') {
-    echo 'class="' . join(' ', get_body_class()) . '"';
+		global $dsp_theme_options;
+    $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
+    echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
 
 /**

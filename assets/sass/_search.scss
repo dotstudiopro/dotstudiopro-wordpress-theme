@@ -1,8 +1,8 @@
 .sb-search {
   position: relative;
   width: 0%;
-  min-width: 60px;
-  height: 50px;
+	@include rem(min-width, 60px);
+	@include rem(height, 50px);
   float: right;
   overflow: hidden;
   -webkit-transition: width 0.3s;
@@ -16,25 +16,25 @@
     border: none;
     outline: none;
     width: 100%;
-    height: 50px;
+    @include rem(height, 50px);
     margin: 0;
     z-index: 10;
-    padding: 10px 50px 10px 10px;
+		@include rem(padding, 10px 50px 10px 10px);
     font-family: inherit;
     font-size: 20px;
     color: #fff;
     background: transparent;
   }
   .sb-icon-search {
-    width: 40px;
-    height: 39px;
+		@include rem(width, 40px);
+		@include rem(height, 39px);
     position: absolute;
     right: 0;
     cursor: pointer;
   }
   .sb-search-submit {
-    width: 40px;
-    height: 39px;
+    @include rem(width, 40px);
+		@include rem(height, 39px);
     position: absolute;
     right: 0;
     cursor: pointer;
@@ -50,7 +50,7 @@
   }
   .sb-icon-search {
     color: #fff;
-    background: url("../img/search-icon.png") no-repeat top right;
+    background: url("../img/search-icon.png") no-repeat top right / cover;
     z-index: 90;
   }
   &.sb-search-open {

@@ -3,39 +3,39 @@
   @include watch_now;
 }
 .home-main-slider .slide_content {
-	padding-bottom:20px;  
+	@include rem(padding-bottom, 20px); 
   background: $black;
   .watch_now {
-			height: 180px;
-    	width: 180px;
-    	margin-top: -180px;
+		@include rem(height, 180px);
+		@include rem(width, 180px);
+		@include rem(margin-top, -180px);
 		  a {
-				height: 180px;
-      	width: 180px;
+				@include rem(height, 180px);
+				@include rem(width, 180px);
       	&:after {
-        	border-top: 40px solid transparent;
-        	border-bottom: 40px solid transparent;
-        	border-left: 70px solid $green;
-       		margin-top: 46px;
+					@include rem(border-top, 40px solid transparent);
+					@include rem(border-bottom, 40px solid transparent);
+					@include rem(border-left, 70px solid $green);
+					@include rem(margin-top, 46px);
       	}
     	}
     }
-    h2 {
-    	color: $white;
-    }
-    p {
-    	color: $white;
-      padding: 15px 50px;
-			font-size: 30px;
-			line-height: 30px;
-			min-height: 130px;
-    }
+	h2 {
+  	color: $white;
+  }
+  p {
+  	color: $white;
+		@include rem(padding, 15px 50px); 
+		@include rem(font-size, 30px); 
+		@include rem(line-height, 30px); 
+		@include rem(min-height, 130px); 
+  }
 }
 
 .other-categories {
   .slide_content p {
-    font-size: 1.25rem;
-    line-height: 1.25rem;
+    @include rem(font-size, 20px); 
+		@include rem(line-height, 22px);
     margin-bottom: 0;
   }
   .watch_now {
@@ -45,8 +45,8 @@
     	height: 100%;
     	width: 100%;
 			&:after {
-    		bottom: 15px;
-    		left: 16px;
+				@include rem(bottom, 15px); 
+				@include rem(left, 16px);
 				position: absolute;
 			}
 		}
