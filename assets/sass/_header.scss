@@ -58,7 +58,7 @@ header {
 		&.dropdown:hover .dropdown-menu {
       display: block;
       left: 0;
-			@include rem(top, 135px);
+			@include rem(top, 105px);
       width: 100%;
       max-width: $custom-container;
       right: 0;
@@ -81,7 +81,7 @@ header {
 
 /* fixed header */
 header.fixed-top.small-header {
-  height: 100px;
+  @include rem(height, 110px);
   padding-top: 1em;
   .site-logo img {
 		@include rem(height, 62px);

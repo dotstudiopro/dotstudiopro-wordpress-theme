@@ -7,12 +7,11 @@ body {
 	font-size: 16px;
 }
 html.boxed, body.boxed {
-	font-size: 12px;
+	font-size: 14px;
 }
 body.boxed {
 	max-width: 1170px;
 	margin: 0 auto;
-	font-size: 12px;
 }
 body.boxed .fixed-top {
     max-width: 1170px;
@@ -50,5 +49,8 @@ h3:before {
 
 
 @media screen and (max-width:1400px) { 
+body {
+	font-size: 14px;
+}
 }
 

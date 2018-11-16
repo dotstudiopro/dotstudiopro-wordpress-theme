@@ -4,7 +4,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
 <header class="blog-masthead left-logo-header <?php echo $class; ?>">
     <div class="custom-container container">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg pt-0">
             <div class="site-branding float-left"> 
                 <!-- Logo section start -->
                 <div class="header-logo">
