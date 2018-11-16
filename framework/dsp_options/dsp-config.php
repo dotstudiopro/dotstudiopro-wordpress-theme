@@ -248,6 +248,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Allow your users to choose height for the logo.', 'dotstudio-pro'),
             'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
             'compiler' => array('.site-logo img'),
+            'units' => array('px', 'rem'),
             'width' => false,
             'default' => array(
                 'height' => 50,
