@@ -4,7 +4,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
 <header class="blog-masthead left-logo-header <?php echo $class; ?>">
     <div class="custom-container container">
-        <nav class="" role="navigation">
+        <nav class="navbar navbar-expand-lg">
             <div class="site-branding float-left"> 
                 <!-- Logo section start -->
                 <div class="header-logo">
@@ -24,31 +24,36 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                 <!-- Logo section end --> 
             </div>
             <div class="main-navigation float-right">
-                <!-- Header Menu section start -->
-                <?php if (has_nav_menu('main_menu')): ?>
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'main_menu',
-                        'menu_class' => 'nav navbar-nav navbar-left',
-                        'depth' => 3,
-                        'container' => false,
-                        'walker' => new Walker_DSP_Submenu
-                    ));
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Header Menu section start -->
+                    <?php if (has_nav_menu('main_menu')): ?>
+                        <?php
+                        wp_nav_menu(array(
+                            'theme_location' => 'main_menu',
+                            'menu_class' => 'navbar-nav mr-auto navbar-left',
+                            'depth' => 3,
+                            'container' => false,
+                            'walker' => new Walker_DSP_Submenu
+                        ));
+                        ?>
+                        <?php
+                    endif;
+                    if ($dsp_theme_options['opt-search'] == true)
+                        get_search_form();
                     ?>
-                    <?php
-                endif;
-                if ($dsp_theme_options['opt-search'] == true)
-                    get_search_form();
-                ?>
-                <!-- Header Menu section end --> 
-        </nav>
+                    <!-- Header Menu section end --> 
+                </div>
+            </div>
         </nav>
     </div>
 </header>
 <?php
 if ($dsp_theme_options['opt-sticky'] == 1):
-   ?>
-   <div class="padding-fixed-left"></div>
-   <?php
+    ?>
+    <div class="padding-fixed-left"></div>
+    <?php
 endif;
 ?>

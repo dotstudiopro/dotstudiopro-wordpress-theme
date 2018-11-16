@@ -60,7 +60,9 @@ function bootstrapstarter_enqueue_styles() {
 function bootstrapstarter_enqueue_scripts() {
     wp_enqueue_script('jquery');
 
-    wp_enqueue_script('bootstrap', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
+    wp_enqueue_script('slim', 'https://code.jquery.com/jquery-3.3.1.slim.min.js');
+
+    wp_enqueue_script('tooltipster', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
 
     $bootstrapcdn_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
     $bootstrapcdn = remote_get_url($bootstrapcdn_url);
@@ -119,7 +121,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('main', 'ds-global', 'tooltipster.bundle.min', 'effects');
+    $styles = array('main', 'ds-global', 'tooltipster.bundle.min');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
