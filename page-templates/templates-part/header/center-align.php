@@ -4,7 +4,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
 <header class="blog-masthead center-logo-header small-sub-nav <?php echo $class; ?>">
     <div class="custom-container container">
-        <nav class="" role="navigation">
+        <nav class="navbar navbar-expand-lg pt-0">
             <div class="site-branding text-center"> 
                 <!-- Logo section start -->
                 <div class="header-logo">
@@ -23,25 +23,30 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                 </div>
                 <!-- Logo section end --> 
             </div>
-            <div class="main-navigation pt-4">
-                <!-- Header Menu section start -->
-                <?php if (has_nav_menu('main_menu')): ?>
-                    <?php
-                    wp_nav_menu(array(
-                        'theme_location' => 'main_menu',
-                        'menu_class' => 'nav navbar-nav navbar-left',
-                        'depth' => 3,
-                        'container' => false,
-                        'walker' => new Walker_DSP_Submenu
-                    ));
+            <div class="main-navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Header Menu section start -->
+                    <?php if (has_nav_menu('main_menu')): ?>
+                        <?php
+                        wp_nav_menu(array(
+                            'theme_location' => 'main_menu',
+                            'menu_class' => 'navbar-nav mr-auto navbar-left',
+                            'depth' => 3,
+                            'container' => false,
+                            'walker' => new Walker_DSP_Submenu
+                        ));
+                        ?>
+                        <?php
+                    endif;
+                    if ($dsp_theme_options['opt-search'] == true)
+                        get_search_form();
                     ?>
-                    <?php
-                endif;
-                if ($dsp_theme_options['opt-search'] == true)
-                    get_search_form();
-                ?>
-                <!-- Header Menu section end --> 
-        </nav>
+                    <!-- Header Menu section end --> 
+                </div>
+            </div>
         </nav>
     </div>
 </header>

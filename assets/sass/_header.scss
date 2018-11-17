@@ -13,6 +13,9 @@ header {
   &.left-logo-header {
     .site-branding {
       width: $header-left;
+			@include media-breakpoint-down(md){
+			width: inherit;
+			}
     }
     .main-navigation {
       width: $header-right;
@@ -47,7 +50,7 @@ header {
       font-family: $font-family-Roboto;
 			@include rem(margin, 35px);
       text-transform: uppercase;
-			@include rem(padding-bottom, 48px);
+			@include rem(padding-bottom, 32px);
 			&:hover {
         color: $green;
     	}
@@ -65,14 +68,14 @@ header {
       margin: 0 auto;
     	background: $black-2;
 			border: 0;
-			padding: 15px 0;
+			@include rem(padding, 15px 0);
       > li {
         float: left;
 				> a {
           display: flex;
           font-size: 1.25rem;
           padding: 0;
-    			margin: 1rem;
+					@include rem(margin, 16px);
         }
       }
     }
@@ -90,7 +93,7 @@ header.fixed-top.small-header {
 		@include rem(padding-top, 32px);
   }
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-		@include rem(top, 90px);
+		@include rem(top, 94px);
   }
   &.center-logo-header {
 		@include rem(height, 180px);
@@ -105,8 +108,11 @@ header.fixed-top.small-header {
 
 header.center-logo-header {
 	@include rem(height, 210px);
+	.navbar {
+		display: block;
+	}
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-    @include rem(top, 190px); 
+    @include rem(top, 170px); 
   }
   &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
     max-width: 450px;
@@ -121,6 +127,13 @@ header.center-logo-header {
 
 .padding-fixed-center {
 	@include rem(padding-top, 210px);
+}
+
+.navbar-toggler-icon {
+    background: url(../img/hamburger-menu.png) no-repeat;
+    width: 40px;
+    height: 26px;
+    background-size: contain;
 }
 
 @media screen and (max-width: 767px) {
