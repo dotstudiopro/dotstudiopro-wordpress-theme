@@ -81,7 +81,7 @@ if (!is_wp_error($video) && !empty($video)):
     <script src="<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>
     <?php
     /**
-     * code to add next and previous video link 
+     * code to add next and previous video link
      */
     if (!$child_channels) {
         $npvideos = $theme_function->show_videos($channel, 'other_carousel');
@@ -122,10 +122,10 @@ if (!is_wp_error($video) && !empty($video)):
                     <a href="<?php echo $prev_video[0]['url']; ?>" title="<?php echo $prev_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
                             <span><i class="fa fa-angle-left pull-left"></i>Previous</span>
-                            <h6><?php echo $prev_video[0]['title']; ?></h6>
+                            <h5><?php echo $prev_video[0]['title']; ?></h5>
                         </div>
                     </a>
-                </div>    
+                </div>
             <?php } ?>
             <div class="col-md-4"></div>
             <?php if (!empty($next_video[0])) { ?>
@@ -133,7 +133,7 @@ if (!is_wp_error($video) && !empty($video)):
                     <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
                             <span>Next<i class="fa fa-angle-right pull-right"></i></span>
-                            <h6><?php echo $next_video[0]['title']; ?></h6>
+                            <h5><?php echo $next_video[0]['title']; ?></h5>
                         </div>
                     </a>
                 </div>

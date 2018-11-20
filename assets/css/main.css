@@ -98,14 +98,14 @@
     top: 0;
     left: 0;
 }
-.player-content-inner > *:first-child, 
-.player-content-inner #player-embed, 
+.player-content-inner > *:first-child,
+.player-content-inner #player-embed,
 .player-content-inner #player-embed > *:first-child,
-.player-content-inner .flowplayer, 
-.player-content-inner .video-js, 
-.player-content-inner .wp-video, 
+.player-content-inner .flowplayer,
+.player-content-inner .video-js,
+.player-content-inner .wp-video,
 .player-content-inner .jwplayer,
-.player-content-inner video, 
+.player-content-inner video,
 .player-content-inner iframe {
     position: absolute;
     top: 0;
@@ -122,7 +122,7 @@
 }
 
 .video-content p {
-    font-size: 16px;
+    font-size: 22px;
 }
 
 @media only screen and (max-width: 767px){
@@ -132,7 +132,7 @@
     }
     .prev_video_link i.pull-left,
     .next_video_link i.pull-right{
-       float: none!important; 
+       float: none!important;
     }
 }
 /** KMT changes - end **/
@@ -199,7 +199,7 @@
   background-position:bottom left;
 }
 .other-categories .slick-arrow.slick-next {
-   background-position:top right; 
+   background-position:top right;
    right: 0;
 }
 .other-categories .slick-arrow.slick-next:hover{
@@ -208,5 +208,5 @@
 .other-categories .slick-prev:before, .other-categories .slick-next:before{
   	content:"";
 }
-  
+
 

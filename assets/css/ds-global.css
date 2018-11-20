@@ -74,6 +74,14 @@ a.page-numbers {
   color: inherit;
 }
 
+.vjs-control-bar {
+  color: #FFF;
+}
+
+.simple-navigation-item-content {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 480px) {
   .page-title {
     text-align: center;
@@ -501,8 +509,8 @@ footer .copyright {
     }*/
 
 }
-@media only screen 
-and (min-device-width : 768px) 
+@media only screen
+and (min-device-width : 768px)
 and (max-device-width : 1023px)  { header.left-logo-header .main-navigation {
                                        width: auto;
 
