@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * A script/plugin that communicates with our WP Updater service to determine theme updates
+ */
+require 'theme-update-checker/theme-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme',
+    __FILE__,
+    'dspdev-main-theme'
+);
+
 require_once (dirname(__FILE__) . '/includes/class-walker-dsp-submenu.php');
 require_once (dirname(__FILE__) . '/includes/class-theme-functions.php');
 
@@ -8,7 +18,7 @@ if (!class_exists('ReduxFramework') && file_exists(dirname(__FILE__) . '/framewo
     require_once( dirname(__FILE__) . '/framework/ReduxCore/framework.php' );
 }
 
-// Load the theme's options 
+// Load the theme's options
 if (!isset($redux_owd) && file_exists(dirname(__FILE__) . '/framework/dsp_options/dsp-config.php')) {
     require_once( dirname(__FILE__) . '/framework/dsp_options/dsp-config.php' );
 }
@@ -155,7 +165,7 @@ function theme_body_class($class = '') {
 /**
  * tgm-plugin activation files
  * Currently we are not use this files. This files are useful to activate the plugin on theme activation.
- * 
+ *
  */
 //require_once('tgm-plugin-activation/class-tgm-plugin-activation.php');
 //require_once('tgm-plugin-activation/required_plugins.php');
