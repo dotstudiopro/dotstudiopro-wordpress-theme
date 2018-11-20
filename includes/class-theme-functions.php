@@ -9,7 +9,7 @@ class Theme_Functions {
     /**
      * home page main carousel function
      * @since 1.0.0
-     * 
+     *
      * @global type $dsp_theme_options
      * @return type
      */
@@ -38,7 +38,7 @@ class Theme_Functions {
     /**
      * home page other carousel function
      * @since 1.0.0
-     * 
+     *
      * @global type $dsp_theme_options
      * @return type
      */
@@ -65,7 +65,7 @@ class Theme_Functions {
     /**
      * Get all the Channels based on the Category Name
      * @since 1.0.0
-     * 
+     *
      * @param type $category_name
      * @return type Array
      */
@@ -76,7 +76,7 @@ class Theme_Functions {
             'posts_per_page' => -1,
             'meta_query' => array(
                 array(
-                    'key' => 'chnl_catagories',
+                    'key' => 'chnl_categories',
                     'value' => ',' . $category_name . ',',
                     'compare' => 'LIKE',
                 )
@@ -120,7 +120,7 @@ class Theme_Functions {
     /**
      * function to show channels when there is multiple channels in category
      * @since 1.0.0
-     * 
+     *
      * @global type $dsp_theme_options
      * @param type $channels
      * return type
@@ -134,7 +134,7 @@ class Theme_Functions {
             $response[$key]['id'] = $channel_meta['chnl_id'][0];
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
-            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -167,7 +167,7 @@ class Theme_Functions {
     /**
      * function to show videos when there is single channels in category
      * @since 1.0.0
-     * 
+     *
      * @global type $dsp_theme_options
      * @param type $channel
      * @return string
@@ -184,7 +184,7 @@ class Theme_Functions {
                 $response[$key]['id'] = $channel_meta['chnl_id'][0];
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
-                $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+                $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
                 $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                 if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -219,7 +219,7 @@ class Theme_Functions {
     /**
      * function to get channel information bt it's name
      * @since 1.0.0
-     * 
+     *
      * @param type $channel_name
      * @return type
      */
@@ -241,7 +241,7 @@ class Theme_Functions {
     /**
      * function to check if channel has any child channels
      * @since 1.0.0
-     * 
+     *
      * @param type $channel_id
      * @return type
      */
@@ -257,7 +257,7 @@ class Theme_Functions {
     /**
      * function to get video information based on channel id
      * @since 1.0.0
-     * 
+     *
      * @param type $channel_id
      * @return type
      */
@@ -345,7 +345,7 @@ class Theme_Functions {
                         $channel_meta = get_post_meta($channel->ID);
                         $recommendation_content[$key]['title'] = $channel->post_title;
                         $recommendation_content[$key]['description'] = $channel->post_content;
-                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
                         $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
@@ -367,7 +367,7 @@ class Theme_Functions {
     /**
      * function to localize the option for the intializtion of slick slider
      * @since 1.0.0
-     * 
+     *
      * @param type $class_array
      */
     public function slick_init_options($class_array = null, $type) {

@@ -10,7 +10,7 @@ if (have_posts()) {
         $theme_function = new Theme_Functions();
         $channel_meta = get_post_meta(get_the_ID());
         $childchannels = $theme_function->is_child_channels(get_the_ID());
-        $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlisgt_poster'][0];
+        $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
         $banner = ($channel_banner_image) ? $channel_banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
         ?>
 
@@ -91,7 +91,7 @@ if (have_posts()) {
 
                 $theme_function->slick_init_options($class_array, 'video');
                 ?>
-            </div> <!-- other-categories -->  
+            </div> <!-- other-categories -->
         </div><!-- container -->
         <?php
     endwhile;

@@ -18,7 +18,7 @@ get_header();
                 <div class="col-md-4 p-2">
                     <a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>">
                         <div class="holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/placeholder.jpg" class="lazy"> 
+                            <img src="<?php echo get_search_image($post->ID); ?>" class="lazy">
                             <h3><?php echo get_the_title(); ?></h3>
                         </div>
                     </a>

@@ -277,7 +277,7 @@ add_filter('query_vars', 'add_query_vars');
 
 
 /*
- * rewrite ruls for routs
+ * rewrite ruls for routes
  */
 
 function custom_rewrite_basic() {
@@ -287,4 +287,27 @@ function custom_rewrite_basic() {
 }
 
 add_action('init', 'custom_rewrite_basic', 10, 0);
+
+/*
+ *
+ */
+
+function get_search_image($post_id) {
+    // Try the Poster first
+    $img = get_post_meta($post_id, 'chnl_poster');
+    if (empty($img[0])) {
+        // If we don't have that, try the Spotlight poster
+        $img = get_post_meta($post_id, 'chnl_spotlight_poster');
+    }
+    if (empty($img[0])) {
+        // If we don't have that, try the logo
+        $img = get_post_meta($post_id, 'chnl_logo');
+    }
+    // If we still have nothing, return a placeholder
+    if (empty($img[0])) return get_template_directory_uri() . "/assets/img/placeholder.jpg";
+    // If we have an image, return it
+    return $img[0];
+}
+
+
 ?>
