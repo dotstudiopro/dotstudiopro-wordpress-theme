@@ -60,7 +60,7 @@ function bootstrapstarter_enqueue_styles() {
 function bootstrapstarter_enqueue_scripts() {
     wp_enqueue_script('jquery');
 
-    wp_enqueue_script('slim', 'https://code.jquery.com/jquery-3.3.1.slim.min.js');
+    //wp_enqueue_script('slim', 'https://code.jquery.com/jquery-3.3.1.slim.min.js');
 
     wp_enqueue_script('tooltipster', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
 

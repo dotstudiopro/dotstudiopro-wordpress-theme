@@ -9,7 +9,7 @@ global $dsp_theme_options;
 get_header();
 ?>
 <div class="container">
-    <div class="row no-gutters">
+    <div class="row no-gutters categories-page">
 
         <?php
         $category_args = array(

@@ -34,14 +34,18 @@ if (!is_wp_error($video) && !empty($video)):
     <div class="video-content-div">
         <div class="custom-container container">
             <div class="video-player">
-                <div class="player"></div>
+                <div class="player-content">
+                    <div class="player-content-inner">
+                        <div class="player"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="custom-container container">
-            <h2><?php echo $title; ?></h2>
-            <p><?php echo $year . ' - ' . $duration; ?></p>
+    <div class="row no-gutters">
+        <div class="custom-container container video-content">
+            <h3 class="post-title mb-5 pt-5"><?php echo $title; ?></h3>
+            <p><?php echo '(' . $year . ') - ' . $duration; ?></p>
             <p>
                 <?php
                 if ($genres) {
@@ -52,9 +56,9 @@ if (!is_wp_error($video) && !empty($video)):
                 ?>
             </p>
             <p><?php echo $desc; ?></p>
+
         </div>
     </div>
-
     <script src="<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>
     <?php
 endif;

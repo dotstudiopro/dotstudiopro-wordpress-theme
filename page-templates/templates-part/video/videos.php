@@ -49,18 +49,21 @@ if (!is_wp_error($video) && !empty($video)):
     $settings[] = 'muteonstart=' . $mute_on_load;
     $player_setting = '?targetelm=.player&' . implode('&', $settings)
     ?>
-
     <div class="video-content-div">
         <div class="custom-container container">
             <div class="video-player">
-                <div class="player"></div>
+                <div class="player-content">
+                    <div class="player-content-inner">
+                        <div class="player"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="custom-container container">
-            <h2><?php echo $title; ?></h2>
-            <p><?php echo $year . ' - ' . $duration; ?></p>
+    <div class="row no-gutters">
+        <div class="custom-container container video-content">
+            <h3 class="post-title mb-5 pt-5"><?php echo $title; ?></h3>
+            <p><?php echo '(' . $year . ') - ' . $duration; ?></p>
             <p>
                 <?php
                 if ($genres) {
@@ -71,6 +74,7 @@ if (!is_wp_error($video) && !empty($video)):
                 ?>
             </p>
             <p><?php echo $desc; ?></p>
+
         </div>
     </div>
 
@@ -110,100 +114,108 @@ if (!is_wp_error($video) && !empty($video)):
         }
     }
     ?>
+    <div class="row no-gutters pt-4">
+        <div class="custom-container container">
+            <?php if (!empty($prev_video[0])) { ?>
 
-    <?php if (!empty($prev_video[0])) { ?>
-        <div class="prev_video_link">
-            <a href="<?php echo $prev_video[0]['url']; ?>" title="<?php echo $prev_video[0]['title']; ?>">
-                <i class="fa fa-angle-left pull-left"></i>
-                <div class="simple-navigation-item-content">
-                    <span>Previous</span>
-                    <h4><?php echo $prev_video[0]['title']; ?></h4>
+                <div class="col-md-4 prev_video_link pull-left text-left">
+                    <a href="<?php echo $prev_video[0]['url']; ?>" title="<?php echo $prev_video[0]['title']; ?>">
+                        <div class="simple-navigation-item-content">
+                            <span><i class="fa fa-angle-left pull-left"></i>Previous</span>
+                            <h6><?php echo $prev_video[0]['title']; ?></h6>
+                        </div>
+                    </a>
+                </div>    
+            <?php } ?>
+            <div class="col-md-4"></div>
+            <?php if (!empty($next_video[0])) { ?>
+                <div class="col-md-4 next_video_link pull-right text-right">
+                    <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
+                        <div class="simple-navigation-item-content">
+                            <span>Next<i class="fa fa-angle-right pull-right"></i></span>
+                            <h6><?php echo $next_video[0]['title']; ?></h6>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>    
-    <?php } ?>
-
-
-
-    <?php if (!empty($next_video[0])) { ?>
-        <div class="next_video_link">
-            <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
-                <i class="fa fa-angle-right pull-right"></i>
-                <div class="simple-navigation-item-content">
-                    <span>Next</span>
-                    <h4><?php echo $next_video[0]['title']; ?></h4>
-                </div>
-            </a>
+            <?php } ?>
         </div>
-    <?php } ?>
-
-
+    </div>
     <?php
 endif;
-
-/**
- * function to display rails of the video in the current channel
- */
-if ($child_channels) {
-    $cnt = 0;
-    foreach ($child_channels as $child_channel) {
-        $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
-        $videos = $theme_function->show_videos($single_channel, 'other_carousel');
-        if ($videos) {
-            ?>
-            <!-- Single Channel Video section start -->
-            <div class="col-sm-12 no-gutters">
-                <h2 class="post-title"><?php echo $single_channel->post_title; ?></h2>
-                <?php
-                $class = 'home-carousel' . $cnt;
-                $class_array[] = $class;
-                $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-                include(locate_template('page-templates/templates-part/channel-videos.php'));
-                ?>
-            </div>
-            <!-- Single Channel Video section end -->
-            <?php
-            $cnt++;
-        }
-    }
-} else {
-    $videos = $theme_function->show_videos($channel, 'other_carousel');
-    $cnt = 0;
-    if ($videos) {
-        ?>
-        <!-- Single Channel Video section start -->
-        <div class="col-sm-12 no-gutters">
-            <h2 class="post-title"><?php echo $channel->post_title; ?></h2>
-            <?php
-            $class = 'home-carousel' . $cnt;
-            $class_array[] = $class;
-            $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-            $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-            include(locate_template('page-templates/templates-part/channel-videos.php'));
-            ?>
-        </div>
-        <!-- Single Channel Video section end -->
-        <?php
-    }
-}
-
-// Display Recomendation section
-if ($dsp_theme_options['opt-related-section'] == 1) {
-    if ($dsp_theme_options['opt-related-option'] == 'channel') {
-        $type = 'channel';
-        $related_id = get_post_meta($channel->ID, 'dspro_channel_id', true);
-    } else {
-        $type = 'video';
-        $related_id = $theme_function->first_video_id($channel->ID);
-    }
-    $cnt = 0;
-    include(locate_template('page-templates/templates-part/related-content.php'));
-    array_push($class_array, 'related_content');
-}
-
-$theme_function->slick_init_options($class_array, 'video');
 ?>
+<div class="row no-gutters">
+    <div class="custom-container container  pt-7 other-categories">
+        <?php
+        /**
+         * function to display rails of the video in the current channel
+         */
+        if ($child_channels) {
+            $cnt = 0;
+            foreach ($child_channels as $child_channel) {
+                $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
+                $videos = $theme_function->show_videos($single_channel, 'other_carousel');
+                if ($videos) {
+                    ?>
+                    <!-- Single Channel Video section start -->
+                    <div class="col-sm-12 no-gutters">
+                        <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
+                        <?php
+                        $class = 'home-carousel' . $cnt;
+                        $class_array[] = $class;
+                        $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                        $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                        include(locate_template('page-templates/templates-part/channel-videos.php'));
+                        ?>
+                    </div>
+                    <!-- Single Channel Video section end -->
+                    <?php
+                    $cnt++;
+                }
+            }
+        } else {
+            $videos = $theme_function->show_videos($channel, 'other_carousel');
+            $cnt = 0;
+            if ($videos) {
+                ?>
+                <!-- Single Channel Video section start -->
+                <div class="col-sm-12 no-gutters">
+                    <h3 class="post-title mb-5"><?php echo $channel->post_title; ?></h3>
+                    <?php
+                    $class = 'home-carousel' . $cnt;
+                    $class_array[] = $class;
+                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                    include(locate_template('page-templates/templates-part/channel-videos.php'));
+                    ?>
+                </div>
+                <!-- Single Channel Video section end -->
+                <?php
+            }
+        }
+        ?>
+    </div>
+</div>
+<div class="row no-gutters">
+    <div class="custom-container container  pt-7 other-categories">
+        <?php
+// Display Recomendation section
+        if ($dsp_theme_options['opt-related-section'] == 1) {
+            if ($dsp_theme_options['opt-related-option'] == 'channel') {
+                $type = 'channel';
+                $related_id = get_post_meta($channel->ID, 'dspro_channel_id', true);
+            } else {
+                $type = 'video';
+                $related_id = $theme_function->first_video_id($channel->ID);
+            }
+            $cnt = 0;
+            include(locate_template('page-templates/templates-part/related-content.php'));
+            array_push($class_array, 'related_content');
+        }
+
+        $theme_function->slick_init_options($class_array, 'video');
+        ?>
+    </div>
+</div>
 <script>
     jQuery(document).ready(function (e) {
         var dspPlayerCheck = setInterval(function () {
