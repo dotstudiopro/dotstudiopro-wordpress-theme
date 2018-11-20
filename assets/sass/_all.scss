@@ -1,13 +1,21 @@
 html {
   max-width: 100%;
   overflow-x: hidden;
+	font-size: 16px;
 }
 body {
 	font-size: 16px;
 }
+html.boxed, body.boxed {
+	font-size: 14px;
+}
 body.boxed {
 	max-width: 1170px;
 	margin: 0 auto;
+}
+body.boxed .fixed-top {
+    max-width: 1170px;
+    margin: 0 auto;
 }
 body.boxed .custom-container {
  	max-width: 1140px;
@@ -38,3 +46,11 @@ h3:before {
 .pt-7{
 	padding-top: 70px;
 }
+
+
+@media screen and (max-width:1400px) { 
+html, body {
+	font-size: 12px;
+}
+}
+

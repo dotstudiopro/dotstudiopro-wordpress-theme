@@ -1,7 +1,5 @@
 // Color system
 
-$white:											#ffffff;
-$black:											#000000;
 $black-1:										#2D2D2D;
 $green: 										#87b145;
 $light-gray:								#5a5a5a;
@@ -14,3 +12,6 @@ $header-right:       				calc(100% - 350px);
 
 // Fonts Family
 $font-family-Roboto: 				'Roboto', sans-serif;
+
+// Based on HTML reset
+$baseFontSize: 16;  

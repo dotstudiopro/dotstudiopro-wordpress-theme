@@ -1,6 +1,6 @@
 header {
-  height: 144px;
-  padding-top: 1.875rem;
+	@include rem(height, 150px);
+	@include rem(padding-top, 28px);
   position: relative;
 	.fixed-top {
     max-width: 90vw;
@@ -13,15 +13,18 @@ header {
   &.left-logo-header {
     .site-branding {
       width: $header-left;
+			@include media-breakpoint-down(md){
+			width: inherit;
+			}
     }
     .main-navigation {
       width: $header-right;
-      padding-top: 2rem;
+      @include rem(padding-top, 32px);
     }
   }
 }
 .padding-fixed-left{
-	padding-top: 144px;
+	@include rem(padding-top, 144px);
 }
 
 .main-navigation .navbar-nav {
@@ -30,7 +33,7 @@ header {
   > li {
     float: left;
 		position: static;
-		line-height: 30px;
+		@include rem(line-height, 30px);
 		&:after {
       content: "";
       border-right: 2px solid $light-gray;
@@ -42,12 +45,12 @@ header {
       color: $green;
     }
     a {
+			@include rem(font-size, 28px);
       color: $white;
-      font-size: 1.75rem;
       font-family: $font-family-Roboto;
-			margin: 0 2.187rem;
+			@include rem(margin, 35px);
       text-transform: uppercase;
-			padding-bottom: 3rem;
+			@include rem(padding-bottom, 32px);
 			&:hover {
         color: $green;
     	}
@@ -58,21 +61,21 @@ header {
 		&.dropdown:hover .dropdown-menu {
       display: block;
       left: 0;
-      top: 135px;
+			@include rem(top, 105px);
       width: 100%;
       max-width: $custom-container;
       right: 0;
       margin: 0 auto;
     	background: $black-2;
 			border: 0;
-			padding: 15px 0;
+			@include rem(padding, 15px 0);
       > li {
         float: left;
 				> a {
           display: flex;
           font-size: 1.25rem;
           padding: 0;
-    			margin: 1rem;
+					@include rem(margin, 16px);
         }
       }
     }
@@ -81,22 +84,22 @@ header {
 
 /* fixed header */
 header.fixed-top.small-header {
-  height: 100px;
+  @include rem(height, 110px);
   padding-top: 1em;
   .site-logo img {
-    height: 62px;
+		@include rem(height, 62px);
   }
   &.left-logo-header .main-navigation {
-    padding-top: 2rem;
+		@include rem(padding-top, 32px);
   }
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-    top: 90px;
+		@include rem(top, 94px);
   }
   &.center-logo-header {
-    height: 170px;
-    padding-top: 1em;
+		@include rem(height, 180px);
+		@include rem(padding-top, 16px);
     .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-      top: 150px;
+			@include rem(top, 150px);
     }
   }
 }
@@ -104,9 +107,12 @@ header.fixed-top.small-header {
 /* center */
 
 header.center-logo-header {
-  height: 210px;
+	@include rem(height, 210px);
+	.navbar {
+		display: block;
+	}
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-    top: 190px;
+    @include rem(top, 170px); 
   }
   &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
     max-width: 450px;
@@ -120,7 +126,14 @@ header.center-logo-header {
 }
 
 .padding-fixed-center {
-  padding-top: 210px;
+	@include rem(padding-top, 210px);
+}
+
+.navbar-toggler-icon {
+    background: url(../img/hamburger-menu.png) no-repeat;
+    width: 40px;
+    height: 26px;
+    background-size: contain;
 }
 
 @media screen and (max-width: 767px) {
