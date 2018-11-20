@@ -129,9 +129,17 @@
     border: 3px solid #87b145;
     padding: 10px;
 } 
-
+.mobile-navigation{
+    display: none !important;
+}
 /* nav */
 @media only screen and (max-width: 991px){
+    .mobile-navigation{
+        display: block !important;
+    }
+    .desktop-navigation{
+        display: none !important;
+    }
     .mobile-navigation{
         width: 100%;
     }
@@ -142,7 +150,7 @@
         float: left;
         width: 100%;
     }
-    .navbar-collapse.show .navbar-nav > li {
+    .navbar-collapse .navbar-nav > li {
         position: static;
         line-height: 30px;
         line-height: 1.875rem;
@@ -162,13 +170,13 @@
         position: static!important;
         background: transparent;
     }
+    .center-logo-header .navbar-toggler{
+        float:right;
+    }
     .searchform{
         width: 90% !important;
         margin-right:5%;
         margin-bottom: 5%;
-    }
-    .center-logo-header .navbar-toggler{
-        float: right;
     }
 }
 
