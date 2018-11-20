@@ -27,6 +27,8 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+            </div>
+            <div class="mobile-navigation">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Header Menu section start -->
                     <?php if (has_nav_menu('main_menu')): ?>
