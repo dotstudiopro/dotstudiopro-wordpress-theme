@@ -125,6 +125,11 @@
     font-size: 22px;
 }
 
+.slide.active .slide_image{
+    border: 3px solid #87b145;
+    padding: 10px;
+} 
+
 @media only screen and (max-width: 767px){
     .prev_video_link,
     .next_video_link{
