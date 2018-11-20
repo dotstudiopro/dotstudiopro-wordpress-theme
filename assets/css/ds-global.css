@@ -96,6 +96,10 @@ a.page-numbers {
   a.page-numbers.prev:after, a.page-numbers.next:before {
     content: ' ';
     display: block;
+  },
+  .title-holder > h3 {
+    font-size: 3.25rem !important;
+    line-height: 3.25rem !important;
   }
 }
 
