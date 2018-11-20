@@ -12,29 +12,33 @@ get_header();
     <div class="row">
         <h1 class="page-title"><?php printf(__('Search Results for: %s', 'twentyfifteen'), get_search_query()); ?></h1>
     </div>
-    <div class="row">
         <?php if (have_posts()) : ?>
+        <div class="row">
             <?php while (have_posts()) : the_post(); ?>
                 <div class="col-md-4 p-2">
                     <a href="<?php echo get_permalink(); ?>" title="<?php echo get_the_title(); ?>">
                         <div class="holder">
                             <img src="<?php echo get_search_image($post->ID); ?>" class="lazy">
-                            <h3><?php echo get_the_title(); ?></h3>
+                            <div class='title-holder'>
+                                <h3><?php echo get_the_title(); ?></h3>
+                            </div>
                         </div>
                     </a>
                 </div>
             <?php endwhile; ?>
-            <div class="pagination-links">
+            </div>
+            <div class="pagination-links row">
             <?php
             the_posts_pagination(array(
                 'prev_text' => '<span class="screen-reader-text">' . __('Previous page', 'dotstudio-pro') . '</span>',
                 'next_text' => '<span class="screen-reader-text">' . __('Next page', 'dotstudio-pro') . '</span>' ,
                 'before_page_number' => '<span class="meta-nav screen-reader-text"> </span>',
+                'screen_reader_text' => ''
             ));
             ?>
         </div>
         <?php else : ?>
-            <p><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></p>
+            <h4><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></h4>
         <?php endif; ?>
     </div>
 </div>
