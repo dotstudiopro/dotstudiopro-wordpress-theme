@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * @since Twenty Fifteen 1.0.0
  */
 
 get_header(); ?>
@@ -24,7 +24,7 @@ get_header(); ?>
 				</div><!-- .page-content -->
                 </div>
 			</section><!-- .error-404 -->
-			
+
 		</main><!-- .site-main -->
 	</div><!-- .content-area -->
 
