@@ -76,7 +76,7 @@ class Theme_Functions {
             'posts_per_page' => -1,
             'meta_query' => array(
                 array(
-                    'key' => 'chnl_catagories',
+                    'key' => 'chnl_categories',
                     'value' => ',' . $category_name . ',',
                     'compare' => 'LIKE',
                 )
@@ -134,7 +134,7 @@ class Theme_Functions {
             $response[$key]['id'] = $channel_meta['chnl_id'][0];
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
-            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -184,7 +184,7 @@ class Theme_Functions {
                 $response[$key]['id'] = $channel_meta['chnl_id'][0];
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
-                $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+                $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
                 $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                 if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -345,7 +345,7 @@ class Theme_Functions {
                         $channel_meta = get_post_meta($channel->ID);
                         $recommendation_content[$key]['title'] = $channel->post_title;
                         $recommendation_content[$key]['description'] = $channel->post_content;
-                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlisgt_poster'][0] : $channel_meta['chnl_poster'][0];
+                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
                         $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
