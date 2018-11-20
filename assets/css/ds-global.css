@@ -82,6 +82,10 @@ a.page-numbers {
   font-size: 20px;
 }
 
+.simple-navigation-item-content > span > .fa.fa-angle-right, .simple-navigation-item-content > span > .fa.fa-angle-left {
+  margin: .3em;
+}
+
 @media screen and (max-width: 480px) {
   .page-title {
     text-align: center;

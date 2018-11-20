@@ -132,7 +132,7 @@ if (!is_wp_error($video) && !empty($video)):
                 <div class="col-md-4 next_video_link pull-right text-right">
                     <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
-                            <span>Next<i class="fa fa-angle-right pull-right"></i></span>
+                            <span>Next<i class="fa fa-angle-right"></i></span>
                             <h5><?php echo $next_video[0]['title']; ?></h5>
                         </div>
                     </a>
