@@ -44,28 +44,32 @@ if (!is_wp_error($result)):
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="pagination-links row">
-                <?php
-                $total_pages = ceil($result['data']['total'] / $dsp_theme_options['opt-search-page-size']);
-                if ($total_pages) {
-                    $paginate_links = paginate_links(array(
-                        'base' => @add_query_arg('page', '%#%'),
-                        'format' => '?page=%#%',
-                        'mid-size' => 1,
-                        'current' => $page,
-                        'total' => $total_pages,
-                        'prev_next' => True,
-                        'prev_text' => __('<< Previous'),
-                        'next_text' => __('Next >>')
-                    ));
-                    echo $paginate_links;
-                }
-                ?>
-            </div>
+
         <?php else : ?>
             <h4><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></h4>
         <?php endif; ?>
-    </div>
+        <div class="pagination-links">
+            <nav class="navigation pagination" role="navigation">
+                <div class="nav-links">
+                    <?php
+                    $total_pages = ceil($result['data']['total'] / $dsp_theme_options['opt-search-page-size']);
+                    if ($total_pages) {
+                        $paginate_links = paginate_links(array(
+                            'base' => @add_query_arg('page', '%#%'),
+                            'format' => '?page=%#%',
+                            'mid-size' => 1,
+                            'current' => $page,
+                            'total' => $total_pages,
+                            'prev_next' => True,
+                            'prev_text' => __('<< Previous'),
+                            'next_text' => __('Next >>')
+                        ));
+                        echo $paginate_links;
+                    }
+                    ?>
+                </div>
+            </nav>
+        </div>
     </div>
 <?php else : ?>
     <h4><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></h4>
