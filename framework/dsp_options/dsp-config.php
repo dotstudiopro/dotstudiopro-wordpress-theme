@@ -653,8 +653,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
-                'width' => 200,
-                'height' => 100,
+                'width' => 320,
+                'height' => 180,
             )
         ),
         array(
@@ -823,8 +823,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Dimensions (Width/Height) Option for the Category Image', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
-                'width' => 250,
-                'height' => 250,
+                'width' => 320,
+                'height' => 180,
             )
         ),
         array(
@@ -889,8 +889,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Dimensions (Width/Height) Option for the Channel Image', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
-                'width' => 240,
-                'height' => 360,
+                'width' => 320,
+                'height' => 180,
             )
         ),
         array(
@@ -962,8 +962,8 @@ Redux::setSection($opt_name, array(
             'title' => __('Dimensions (Width/Height) Option for the video carousel thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
-                'width' => 200,
-                'height' => 100,
+                'width' => 320,
+                'height' => 180,
             )
         ),
         array(
@@ -1096,7 +1096,7 @@ Redux::setSection($opt_name, array(
 ));
 
 /**
- * Channel Page options
+ * Recommendations content options
  * @since 1.0.0
  */
 Redux::setSection($opt_name, array(
@@ -1151,8 +1151,8 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'required' => array('opt-related-section', '=', 1),
             'default' => array(
-                'width' => 200,
-                'height' => 100,
+                'width' => 320,
+                'height' => 180,
             )
         ),
         array(
@@ -1188,6 +1188,68 @@ Redux::setSection($opt_name, array(
             'min' => '0',
             'step' => '1',
             'max' => '50',
+            'required' => array('opt-related-section', '=', 1),
+        ),
+    ),
+));
+
+/**
+ * Search results options
+ * @since 1.0.0
+ */
+Redux::setSection($opt_name, array(
+    'title' => __('Saerch Results  Page ', 'dotstudio-pro'),
+    'id' => 'search-results',
+    'icon' => 'el el-search',
+    'fields' => array(
+        array(
+            'id' => 'opt-search-option',
+            'type' => 'button_set',
+            'title' => __('Choose the option to search for content', 'dotstudio-pro'),
+            'subtitle' => __('Choose the option to search video / channel.', 'dotstudio-pro'),
+            'options' => array(
+                'channel' => 'Channel',
+                'video' => 'Video'
+            ),
+            'default' => 'channel'
+        ),
+        array(
+            'id' => 'opt-search-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the search result content thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width, height for the search result thumbnails.', 'dotstudio-pro'),
+            'required' => array('opt-related-section', '=', 1),
+            'default' => array(
+                'width' => 320,
+                'height' => 180,
+            )
+        ),
+        array(
+            'title' => __('Number of columns to display in a row', 'dotstudio-pro'),
+            'type' => 'select',
+            'id' => 'opt-search-columns-row',
+            'options' => array_combine(array(12, 6, 4, 3, 2), array(1, 2, 3, 4, 6)),
+            'default' => 4
+        ),
+        array(
+            'id' => 'opt-search-page-size',
+            'type' => 'spinner',
+            'title' => __('Select the number of posts to display per page', 'dotstudio-pro'),
+            'default' => '6',
+            'min' => '0',
+            'step' => '1',
+            'max' => '30',
+            'required' => array('opt-related-section', '=', 1),
+        ),
+        array(
+            'id' => 'opt-search-title-trim-word',
+            'type' => 'spinner',
+            'title' => __('Trim title on search results page', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of words to be shown for search results titles.', 'dotstudio-pro'),
+            'default' => '5',
+            'min' => '0',
+            'step' => '1',
+            'max' => '30',
             'required' => array('opt-related-section', '=', 1),
         ),
     ),

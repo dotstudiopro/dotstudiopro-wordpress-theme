@@ -7,6 +7,7 @@
  * @since Twenty Fifteen 1.0
  */
 get_header();
+global $dsp_theme_options;
 ?>
 <div class="custom-container container mb-5 pt-5">
     <div class="row no-gutters">
