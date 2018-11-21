@@ -18,6 +18,10 @@ $main_carousel = $theme_function->home_page_main_carousel();
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
                 <?php foreach ($main_carousel as $slide) { ?>
+                    <?php
+                    $title = ($dsp_theme_options['opt-homepage-main-title-trim-word'] != 0) ? wp_trim_words($slide['title'], $dsp_theme_options['opt-homepage-main-title-trim-word']) : $slide['title'];
+                    $description = ($dsp_theme_options['opt-homepage-main-description-trim-word'] != 0) ? wp_trim_words($slide['description'], $dsp_theme_options['opt-homepage-main-description-trim-word']) : $slide['description'];
+                    ?>
                     <div class="slide">
                         <div class="slide_image">
                             <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
@@ -27,8 +31,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                 <div class="watch_now">
                                     <a href="<?php echo $slide['url']; ?>" class="right-arrow-btn"></a>
                                 </div>
-                                <div class="inner pt-3"><h2 class="title"><?php echo $slide['title']; ?></h2>
-                                    <p class="desc"><?php echo $slide['description']; ?></p>
+                                <div class="inner pt-3"><h2 class="title"><?php echo $title; ?></h2>
+                                    <p class="desc"><?php echo $description; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -82,6 +86,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                         <div class="slick-wrapper <?php echo $class ?>">
                             <?php $i = 1 ?>
                             <?php foreach ($channels as $channel) { ?>
+
                                 <div class="slide">
                                     <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                         <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
@@ -93,14 +98,14 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                     </div>
                                     <!-- Condition to check display the content on tooltip or below the images-->
                                     <?php
-                                    $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? substr($channel['title'], 0, $dsp_theme_options['opt-title-trim-word'])."..." : $channel['title'];
-                                    $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? substr($channel['description'], 0, $dsp_theme_options['opt-description-trim-word']).'...' : $channel['description'];
+                                    $title = ($dsp_theme_options['opt-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word']) : $channel['title'];
+                                    $description = ($dsp_theme_options['opt-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word']) : $channel['description'];
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-slider-content'] == 1): ?>
                                         <div class="slide_content">
                                             <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
-                                            <p><?php echo $description; ?></p>
+                                                <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                                                <p><?php echo $description; ?></p>
                                             </a>
                                         </div>
                                     <?php else: ?>

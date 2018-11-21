@@ -50,8 +50,8 @@ if (have_posts()) {
                                         </div>
                                     </div>
                                     <?php
-                                    $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? substr($channel['title'], 0, $dsp_theme_options['opt-title-trim-word']). '...' : $channel['title'];
-                                    $description = ($dsp_theme_options['opt-channel-description-trim-word'] != 0) ? substr($channel['description'], 0, $dsp_theme_options['opt-description-trim-word']). '...' : $channel['description'];
+                                    $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-title-trim-word']) : $channel['title'];
+                                    $description = ($dsp_theme_options['opt-channel-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-description-trim-word']) : $channel['description'];
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-channel-slider-content'] == 1): ?>
                                         <div class="slide_content">
