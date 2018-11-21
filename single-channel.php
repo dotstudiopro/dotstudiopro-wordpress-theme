@@ -20,7 +20,7 @@ if (have_posts()) {
             <div class="chnl-content row no-gutters">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6"></div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                    <h1><?php echo get_the_title(); ?></h1>
+                    <h2><?php echo get_the_title(); ?></h2>
                     <p><?php the_content(); ?></p>
                 </div>
             </div>
@@ -38,7 +38,7 @@ if (have_posts()) {
                         ?>
                         <!-- Single Channel Video section start -->
                         <div class="col-sm-12 no-gutters">
-                            <h2 class="post-title"><?php echo get_the_title(); ?></h2>
+                            <h3 class="post-title mb-5"><?php echo get_the_title(); ?></h3>
                             <?php
                             $class = 'home-carousel' . $cnt;
                             $class_array[] = $class;
@@ -60,7 +60,7 @@ if (have_posts()) {
                             ?>
                             <!-- Single Channel Video section start -->
                             <div class="col-sm-12 no-gutters">
-                                <h2 class="post-title"><?php echo $single_channel->post_title; ?></h2>
+                                <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
                                 <?php
                                 $class = 'home-carousel' . $cnt;
                                 $class_array[] = $class;

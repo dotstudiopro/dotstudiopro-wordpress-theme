@@ -18,7 +18,7 @@ if (have_posts()) {
                 <div class="chnl-content row no-gutters">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6"></div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <h1><?php echo get_the_title(); ?></h1>
+                        <h2><?php echo get_the_title(); ?></h2>
                         <p><?php the_content(); ?></p>
                     </div>
                 </div>

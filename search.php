@@ -8,9 +8,9 @@
  */
 get_header();
 ?>
-<div class="container">
-    <div class="row">
-        <h1 class="page-title"><?php printf(__('Search Results for: %s', 'twentyfifteen'), get_search_query()); ?></h1>
+<div class="custom-container container mb-5 pt-5">
+    <div class="row no-gutters">
+        <h3 class="page-title"><?php printf(__('Search Results for: %s', 'twentyfifteen'), get_search_query()); ?></h3>
     </div>
         <?php if (have_posts()) : ?>
         <div class="row">
