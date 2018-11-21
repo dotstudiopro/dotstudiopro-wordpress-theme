@@ -25,8 +25,8 @@ global $dsp_theme_options;
             </div>
             <!-- Condition to check display the content on tooltip or below the images-->
             <?php
-            $title = ($dsp_theme_options['opt-channel-video-title-trim-word'] != 0) ? substr($video['title'], 0, $dsp_theme_options['opt-channel-video-title-trim-word']) . "..." : $video['title'];
-            $description = ($dsp_theme_options['opt-channel-video-description-trim-word'] != 0) ? substr($video['description'], 0, $dsp_theme_options['opt-channel-video-description-trim-word']) . '...' : $video['description'];
+            $title = ($dsp_theme_options['opt-channel-video-title-trim-word'] != 0) ? wp_trim_words($video['title'], $dsp_theme_options['opt-channel-video-title-trim-word']) : $video['title'];
+            $description = ($dsp_theme_options['opt-channel-video-description-trim-word'] != 0) ? wp_trim_words($video['description'], $dsp_theme_options['opt-channel-video-description-trim-word']) : $video['description'];
             ?>
             <?php if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1): ?>
                 <div class="slide_content">
