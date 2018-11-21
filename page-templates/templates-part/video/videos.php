@@ -195,7 +195,7 @@ endif;
         ?>
     </div>
 </div>
-<div class="row no-gutters">
+<div class="row no-gutters mb-5">
     <div class="custom-container container  pt-7 other-categories">
         <?php
 // Display Recomendation section

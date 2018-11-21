@@ -62,17 +62,21 @@ if (!is_wp_error($video) && !empty($video)):
     <script src="<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>
     <?php
 endif;
-
-
+?>
+<div class="row no-gutters mb-5">
+    <div class="custom-container container  pt-7 other-categories">
+        <?php
 // Display Recomendation section
-if ($dsp_theme_options['opt-related-section'] == 1) {
-    $type = 'video';
-    $related_id = $video_id;
-    $cnt = 0;
-    include(locate_template('page-templates/templates-part/related-content.php'));
-    $class_array = array();
-    array_push($class_array, 'related_content');
-}
-
+        if ($dsp_theme_options['opt-related-section'] == 1) {
+            $type = 'video';
+            $related_id = $video_id;
+            $cnt = 0;
+            include(locate_template('page-templates/templates-part/related-content.php'));
+            $class_array = array();
+            array_push($class_array, 'related_content');
+        }
+        ?>
+    </div></div>
+<?php
 $theme_function->slick_init_options($class_array, 'video');
 ?>
