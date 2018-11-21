@@ -8,8 +8,8 @@
 global $dsp_theme_options;
 get_header();
 ?>
-<div class="container">
-    <div class="row no-gutters categories-page">
+<div class="custom-container container">
+    <div class="row no-gutters categories-page pt-5 pb-5">
 
         <?php
         $category_args = array(
@@ -28,7 +28,7 @@ get_header();
                 $banner = ($category_banner) ? $category_banner : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b';
                 $number_of_row = $dsp_theme_options['opt-display-categories-row'];
                 ?>
-                <div class="col-md-<?php echo $number_of_row; ?> p-2">
+                <div class="col-md-<?php echo $number_of_row; ?> p-4">
                     <a href="<?php echo get_permalink($category->ID); ?>" title="<?php echo $category->post_title; ?>">
                         <div class="holder">
                             <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
