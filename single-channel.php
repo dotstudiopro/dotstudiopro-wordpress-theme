@@ -28,7 +28,7 @@ if (have_posts()) {
         <!-- Channel Banner image section end -->
 
 
-        <div class="container">
+        <div class="custom-container container pt-5 pb-5">
             <div class="col-sm-12 other-categories">
                 <?php
                 if (!$childchannels) {

@@ -27,7 +27,7 @@ if (have_posts()) {
         <!-- Category Background and Information section start -->
 
         <!-- Channel Information section start -->
-        <div class="container">
+        <div class="custom-container container pt-5 pb-5">
             <div class="col-sm-12 other-categories">
                 <div class="row">
                     <?php
@@ -42,7 +42,12 @@ if (have_posts()) {
                             <div class="col-md-<?php echo $number_of_row; ?> p-2 channel-banner">
                                 <a href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                                     <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
-                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                        <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
+                                            <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                            <div class="overlay">
+                                                <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <?php
                                     $title = ($dsp_theme_options['opt-channel-title-trim-word'] != 0) ? substr($channel['title'], 0, $dsp_theme_options['opt-title-trim-word']). '...' : $channel['title'];
@@ -50,7 +55,7 @@ if (have_posts()) {
                                     ?>
                                     <?php if ($dsp_theme_options['opt-layout-channel-slider-content'] == 1): ?>
                                         <div class="slide_content">
-                                            <h6><?php echo $title; ?></h6>
+                                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                             <p><?php echo $description; ?></p>
                                         </div>
                                     <?php else: ?>
