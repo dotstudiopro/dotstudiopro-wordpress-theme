@@ -19,6 +19,36 @@
         new UISearch(item);
     });
 
+    /**
+     * 
+     * @type jqXHRSerch result autocomplete code
+     */
+
+    var searchRequest;
+    $('.search-autocomplete').autoComplete({
+        minChars: 2,
+        source: function (term, suggest) {
+            try {
+                searchRequest.abort();
+            } catch (e) {
+            }
+            var searchRequest = $.post(
+                    jsVariable.ajaxUrl,
+                    {
+                        'action': 'autocomplete',
+                        'search': term,
+                    }
+            );
+            searchRequest.done(function (response) {
+                console.log(response);
+            });
+            searchRequest.fail(function (response) {
+                console.log(response);
+            })
+
+        }
+    });
+    
 })(jQuery);
 
 /**

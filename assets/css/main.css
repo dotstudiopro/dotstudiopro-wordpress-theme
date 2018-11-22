@@ -321,7 +321,6 @@ footer {
 .prev_video_link h5.pl-4,
 .next_video_link h5.pr-4 {
     clear: both;
-    max-width: 50%;
 }
 .prev_video_link h5.pl-4{
     text-align: left;
@@ -329,3 +328,7 @@ footer {
 .next_video_link h5.pr-4 {
     text-align: right;
 }
+.prev_video_link,
+.next_video_link{
+        width: 50%;
+    }
