@@ -842,6 +842,18 @@ Redux::setSection($opt_name, array(
             'options' => array_combine(array(12, 6, 4, 3, 2), array(1, 2, 3, 4, 6)),
             'default' => 4
         ),
+        array(
+            'id' => 'opt-cateogry-listing-option',
+            'type' => 'button_set',
+            'title' => __('Choose the option to display Category listing page', 'dotstudio-pro'),
+            'subtitle' => __('Choose the option to display Category listing page / IVP page.', 'dotstudio-pro'),
+            'desc' => __('Select Category listing page option to show Channel/video listing by click on category, or select IVP page to play first video in playlist..', 'dotstudio-pro'),
+            'options' => array(
+                'category-listing-page' => 'Category listing page',
+                'ivp-page' => 'IVP page'
+            ),
+            'default' => 'category-listing-page'
+        ),
     )
 ));
 

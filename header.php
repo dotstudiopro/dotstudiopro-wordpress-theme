@@ -26,7 +26,10 @@
             <a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up"></i></a>
             <?php
         }
-        $header_align = $dsp_theme_options['opt-logo-align'];
-        get_template_part('page-templates/templates-part/header/' . $header_align . '-align');
+        ?>
+        <div class="fix-footer-bottom">
+            <?php
+            $header_align = $dsp_theme_options['opt-logo-align'];
+            get_template_part('page-templates/templates-part/header/' . $header_align . '-align');
 
-        
+            

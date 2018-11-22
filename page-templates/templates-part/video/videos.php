@@ -118,22 +118,21 @@ if (!is_wp_error($video) && !empty($video)):
         <div class="custom-container container">
             <?php if (!empty($prev_video[0])) { ?>
 
-                <div class="col-md-4 prev_video_link pull-left text-left">
+                <div class="prev_video_link float-left">
                     <a href="<?php echo $prev_video[0]['url']; ?>" title="<?php echo $prev_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
-                            <span><i class="fa fa-angle-left pull-left"></i>Previous</span>
-                            <h5><?php echo $prev_video[0]['title']; ?></h5>
+                            <span class="pull-left"><i class="fa fa-angle-left pull-left"></i>Previous</span>
+                            <h5 class="pl-4"><?php echo $prev_video[0]['title']; ?></h5>
                         </div>
                     </a>
                 </div>
             <?php } ?>
-            <div class="col-md-4"></div>
             <?php if (!empty($next_video[0])) { ?>
-                <div class="col-md-4 next_video_link pull-right text-right">
+                <div class="next_video_link float-right">
                     <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
-                            <span>Next<i class="fa fa-angle-right"></i></span>
-                            <h5><?php echo $next_video[0]['title']; ?></h5>
+                            <span class="pull-right">Next<i class="fa fa-angle-right"></i></span>
+                            <h5 class="pr-4"><?php echo $next_video[0]['title']; ?></h5>
                         </div>
                     </a>
                 </div>
