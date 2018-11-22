@@ -5,9 +5,7 @@
  */
 require 'theme-update-checker/theme-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-    'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme',
-    __FILE__,
-    'dspdev-main-theme'
+                'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
 
 require_once (dirname(__FILE__) . '/includes/class-walker-dsp-submenu.php');
@@ -64,6 +62,8 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 
     wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.css');
+
+    wp_enqueue_style('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7');
 }
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
@@ -95,6 +95,8 @@ function bootstrapstarter_enqueue_scripts() {
         $slickcdn_url = get_template_directory_uri() . '/assets/js/slick.min.js';
     }
     wp_enqueue_script('slick', $slickcdn_url);
+
+    wp_enqueue_script('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js', array('jquery'), '1.0.7', true);
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
@@ -125,6 +127,7 @@ function register_theme_scripts() {
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
     endforeach;
+    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
@@ -161,7 +164,7 @@ function class_to_html_tag($output, $doctype) {
 
 // function to add bosy class
 function theme_body_class($class = '') {
-		global $dsp_theme_options;
+    global $dsp_theme_options;
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
     echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
@@ -291,5 +294,6 @@ function custom_rewrite_basic() {
 }
 
 add_action('init', 'custom_rewrite_basic', 10, 0);
+
 
 ?>

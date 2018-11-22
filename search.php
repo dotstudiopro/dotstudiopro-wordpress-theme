@@ -27,6 +27,14 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <div class="row no-gutters">
             <h3 class="page-title mb-5"><?php printf(__('Search Results for: %s', 'twentyfifteen'), get_search_query()); ?></h3>
         </div>
+        <div class="row no-gutters mobile-display pb-5">
+            <form role="search" method="get" id="searchform" class="w-100" action="<?php echo esc_url(home_url('/')); ?>">
+                <div>
+                    <input class="search-textbox" type="text" value="<?php echo get_search_query(); ?>" name="s" id="search" />
+                    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
         <?php if ($result && $type == 'video') : ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>

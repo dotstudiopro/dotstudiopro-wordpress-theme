@@ -14,7 +14,11 @@
     /**
      * init search
      */
-    new UISearch(document.getElementById('sb-search'));
+    var searcheelements = document.querySelectorAll('[id=sb-search]');
+    searcheelements.forEach(function (item) {
+        new UISearch(item);
+    });
+
 })(jQuery);
 
 /**
@@ -24,10 +28,10 @@
 jQuery(window).scroll(function () {
     if (jQuery(this).scrollTop() >= 50) {
         jQuery('#return-to-top').fadeIn(200);
-				jQuery('header').addClass('small-header');
+        jQuery('header').addClass('small-header');
     } else {
         jQuery('#return-to-top').fadeOut(200);
-				jQuery('header').removeClass('small-header');
+        jQuery('header').removeClass('small-header');
     }
 });
 

@@ -1,4 +1,5 @@
 </div>
+</div>
 <div class="footer-container">
     <footer class="blog-footer pt-5 pm-5">
         <div class="custom-container container">
