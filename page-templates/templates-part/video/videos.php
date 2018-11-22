@@ -118,7 +118,7 @@ if (!is_wp_error($video) && !empty($video)):
         <div class="custom-container container">
             <?php if (!empty($prev_video[0])) { ?>
 
-                <div class="prev_video_link float-left">
+                <div class="prev_video_link pull-left pr-1">
                     <a href="<?php echo $prev_video[0]['url']; ?>" title="<?php echo $prev_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
                             <span class="pull-left"><i class="fa fa-angle-left pull-left"></i>Previous</span>
@@ -128,7 +128,7 @@ if (!is_wp_error($video) && !empty($video)):
                 </div>
             <?php } ?>
             <?php if (!empty($next_video[0])) { ?>
-                <div class="next_video_link float-right">
+                <div class="next_video_link pull-right pl-1">
                     <a href="<?php echo $next_video[0]['url']; ?>" title="<?php echo $next_video[0]['title']; ?>">
                         <div class="simple-navigation-item-content">
                             <span class="pull-right">Next<i class="fa fa-angle-right"></i></span>
