@@ -318,3 +318,14 @@ footer {
     border: 2px solid #87b145   
 }
 
+.prev_video_link h5.pl-4,
+.next_video_link h5.pr-4 {
+    clear: both;
+    max-width: 50%;
+}
+.prev_video_link h5.pl-4{
+    text-align: left;
+}
+.next_video_link h5.pr-4 {
+    text-align: right;
+}
