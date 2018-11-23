@@ -20,14 +20,15 @@
     });
 
     /**
-     * 
+     * function to display autocomplete result for search page
      * @type jqXHRSerch result autocomplete code
      */
 
-    var searchRequest;
     $('.search-autocomplete').autoComplete({
         minChars: 2,
+        delay: 500,
         source: function (term, suggest) {
+            var nonce = $('.search-autocomplete').data('nonce');
             try {
                 searchRequest.abort();
             } catch (e) {
@@ -37,18 +38,27 @@
                     {
                         'action': 'autocomplete',
                         'search': term,
+                        'nonce': nonce,
                     }
             );
             searchRequest.done(function (response) {
-                console.log(response);
+                suggest(response.data);
             });
             searchRequest.fail(function (response) {
                 console.log(response);
             })
 
+        },
+        renderItem: function (item, search) {
+            return '<div class="autocomplete-suggestion" data-val="' + item['title'] + '"><img src="' + item['image'] + '/10/10"><div class="title">' + item['title'] + '</div></div>';
+        },
+        onSelect: function (e, term, item) {
+            jQuery('.sb-search-input').val(term);
+            jQuery('.search-form').submit();
         }
     });
-    
+
+
 })(jQuery);
 
 /**
@@ -70,3 +80,39 @@ jQuery('#return-to-top').click(function () {
         scrollTop: 0
     }, 500);
 });
+
+/**
+ * function to put cursor at the end for search field
+ * @returns {jQuery.fn@call;each}
+ */
+
+jQuery.fn.putCursorAtEnd = function () {
+
+    return this.each(function () {
+        var $el = jQuery(this),
+                el = this;
+        if (!$el.is(":focus")) {
+            $el.focus();
+        }
+        if (el.setSelectionRange) {
+            var len = $el.val().length * 2;
+            setTimeout(function () {
+                el.setSelectionRange(len, len);
+            }, 1);
+        } else {
+            $el.val($el.val());
+        }
+        this.scrollTop = 999999;
+    });
+
+};
+
+(function () {
+    var searchInput = jQuery(".search-autocomplete");
+    searchInput
+            .putCursorAtEnd() // should be chainable
+            .on("focus", function () { // could be on any event
+                searchInput.putCursorAtEnd()
+            });
+})();
+

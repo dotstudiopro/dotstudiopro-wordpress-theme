@@ -35,7 +35,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                 </div>
             </form>
         </div>
-        <?php if ($result && $type == 'video') : ?>
+        <?php if ($result['data']['hits'] && $type == 'video') : ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
                     <div class="col-md-<?php echo $no_of_row; ?> p-2">
@@ -56,7 +56,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                     </div>
                 <?php endforeach; ?>
             </div>
-        <?php elseif ($result && $type == 'channel'): ?>
+        <?php elseif ($result['data']['hits'] && $type == 'channel'): ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
                     <div class="col-md-<?php echo $no_of_row; ?> p-2">

@@ -127,7 +127,7 @@ function register_theme_scripts() {
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
     endforeach;
-    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
@@ -295,5 +295,33 @@ function custom_rewrite_basic() {
 
 add_action('init', 'custom_rewrite_basic', 10, 0);
 
+/**
+ * Function to display auto-complete result
+ * @global type $dsp_theme_options
+ */
+function autocomplete() {
+    $items = array();
+    if (wp_verify_nonce($_POST['nonce'], 'dsp_autocomplete_search')) {
+        global $dsp_theme_options;
+        $type = $dsp_theme_options['opt-search-option'];
+        $dotstudio_api = new Dsp_External_Api_Request();
+        $q = $_POST['search'];
+        $result = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
+        if (!empty($result) && !is_wp_error($result)) {
+            foreach ($result['data']['hits'] as $key => $data):
+                if ($type == 'channel'):
+                    $image = (isset($data['poster'])) ? $data['poster'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                else:
+                    $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                endif;
+                $items[$key]['title'] = $data['_source']['title'];
+                $items[$key]['image'] = $image;
+            endforeach;
+        }
+    }
+    wp_send_json_success($items);
+}
 
+add_action('wp_ajax_autocomplete', 'autocomplete');
+add_action('wp_ajax_nopriv_autocomplete', 'autocomplete');
 ?>
