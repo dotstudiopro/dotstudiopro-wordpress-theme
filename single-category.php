@@ -58,7 +58,7 @@ if (have_posts()) {
                                             <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                             <p><?php echo $description; ?></p>
                                         </div>
-                                    <?php else: ?>
+                                    <?php elseif ($dsp_theme_options['opt-layout-channel-slider-content'] == 2): ?>
                                         <div class="tooltip_templates">
                                             <span id="<?php echo 'tooltip_content_' . $i; ?>">
                                                 <h4><?php echo $title; ?></h4>
