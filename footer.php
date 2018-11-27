@@ -29,9 +29,10 @@
                             <div class="social-links-menu">
                                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                                 <?php
+                                $target = ($dsp_theme_options['opt-social-links-target'] == 1) ? '_blank' : "";
                                 foreach ($social_icons as $key => $value) {
                                     if ($value) {
-                                        echo '<a href="' . $value . '" class="fa fa-' . $key . '"></a>';
+                                        echo '<a href="' . $value . '" class="fa fa-' . $key . '" target="' . $target . '"></a>';
                                     }
                                 }
                                 ?>

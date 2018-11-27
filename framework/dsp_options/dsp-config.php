@@ -1298,6 +1298,14 @@ Redux::setSection($opt_name, array(
             'off' => 'Off',
         ),
         array(
+            'id' => 'opt-social-links-target',
+            'type' => 'switch',
+            'title' => __('Social icon links: Open in new Tab?', 'dotstudio-pro'),
+            'default' => 1,
+            'on' => 'Enable',
+            'off' => 'Disable',
+        ),
+        array(
             'id' => 'section-start',
             'type' => 'section',
             'title' => __('Social icons', 'dotstudio-pro'),
