@@ -664,8 +664,9 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
             'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
-                '0' => 'Tooltip',
-                '1' => 'Text'
+                '0' => 'None',
+                '1' => 'Text',
+                '2' => 'Tooltip'
             ),
             'default' => '1'
         ),
@@ -912,8 +913,9 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Choose the content layout option for channels.', 'dotstudio-pro'),
             'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
-                '0' => 'Tooltip',
-                '1' => 'Text'
+                '0' => 'None',
+                '1' => 'Text',
+                '2' => 'Tooltip'
             ),
             'default' => '1'
         ),
@@ -985,8 +987,9 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
             'desc' => __('Tooltip will display information in a tooltip, while Text will display information on the thumbnail', 'dotstudio-pro'),
             'options' => array(
-                '0' => 'Tooltip',
-                '1' => 'Text'
+                '0' => 'None',
+                '1' => 'Text',
+                '2' => 'Tooltip'
             ),
             'default' => '1'
         ),
@@ -1174,8 +1177,9 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
             'desc' => __('Select Tooltip option if you need to display description in a tooltip, or select Text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
-                '0' => 'Tooltip',
-                '1' => 'Text'
+                '0' => 'None',
+                '1' => 'Text',
+                '2' => 'Tooltip'
             ),
             'required' => array('opt-related-section', '=', 1),
             'default' => '1'

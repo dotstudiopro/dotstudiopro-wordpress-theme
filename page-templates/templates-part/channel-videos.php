@@ -35,7 +35,7 @@ global $dsp_theme_options;
                         <p><?php echo $description; ?></p>
                     </a>
                 </div>
-            <?php else: ?>
+            <?php elseif ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 2): ?>
                 <div class="tooltip_templates">
                     <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                         <h4><?php echo $title; ?></h4>

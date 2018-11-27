@@ -33,14 +33,14 @@ if (!empty($recommendation_content)):
                     $title = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-related-title-trim-word']) : $channel['title'];
                     $description = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-related-description-trim-word']) : $channel['description'];
                     ?>
-                    <?php if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1): ?>
+                    <?php if ($dsp_theme_options['opt-related-layout-slider-content'] == 1): ?>
                         <div class="slide_content">
                             <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
                                 <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
                                 <p><?php echo $description; ?></p>
                             </a>
                         </div>
-                    <?php else: ?>
+                    <?php elseif ($dsp_theme_options['opt-related-layout-slider-content'] == 2): ?>
                         <div class="tooltip_templates">
                             <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                 <h4><?php echo $title; ?></h4>
