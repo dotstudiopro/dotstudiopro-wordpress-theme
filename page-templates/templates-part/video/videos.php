@@ -78,7 +78,7 @@ if (!is_wp_error($video) && !empty($video)):
         </div>
     </div>
 
-    <script src="<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>
+<!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>-->
     <?php
     /**
      * code to add next and previous video link
@@ -217,6 +217,12 @@ endif;
 </div>
 <script>
     jQuery(document).ready(function (e) {
+        
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
+        document.getElementsByTagName("body")[0].appendChild(script);
+        
         var dspPlayerCheck = setInterval(function () {
             if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
                 clearInterval(dspPlayerCheck);

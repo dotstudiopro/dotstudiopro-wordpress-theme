@@ -59,7 +59,7 @@ if (!is_wp_error($video) && !empty($video)):
 
         </div>
     </div>
-    <script src="<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>
+<!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>"></script>-->
     <?php
 endif;
 ?>
@@ -80,3 +80,13 @@ endif;
 <?php
 $theme_function->slick_init_options($class_array, 'video');
 ?>
+<script>
+    jQuery(document).ready(function (e) {
+        
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
+        document.getElementsByTagName("body")[0].appendChild(script);
+     
+    });
+</script>
