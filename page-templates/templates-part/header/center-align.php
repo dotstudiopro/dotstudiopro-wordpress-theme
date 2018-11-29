@@ -64,7 +64,11 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     endif;
                     if ($dsp_theme_options['opt-search'] == true)
                         get_search_form();
-                    ?>
+                    if ( is_active_sidebar( 'dsp_web_login_area' ) ) { ?>
+                    <div id="primary-login-area" class="primary-login-area widget-area" role="complementary">
+                        <?php dynamic_sidebar( 'dsp_web_login_area' ); ?>
+                    </div><!-- #primary-sidebar -->
+                    <?php } ?>
                     <!-- Header Menu section end -->
                 </div>
             </div>
