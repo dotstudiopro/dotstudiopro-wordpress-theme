@@ -332,4 +332,17 @@ function autocomplete() {
 
 add_action('wp_ajax_autocomplete', 'autocomplete');
 add_action('wp_ajax_nopriv_autocomplete', 'autocomplete');
+
+/**
+ * Remove the admin bar for subscribers
+ */
+function dsp_remove_admin_bar() {
+    if (!current_user_can('administrator') && !is_admin()) {
+      show_admin_bar(false);
+    }
+}
+
+add_action('after_setup_theme', 'dsp_remove_admin_bar');
+
+
 ?>
