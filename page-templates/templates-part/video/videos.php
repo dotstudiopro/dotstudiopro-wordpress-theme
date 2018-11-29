@@ -227,7 +227,7 @@ endif;
             if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
                 clearInterval(dspPlayerCheck);
                 dotstudiozPlayer.player.on("ended", function () {
-                    var nextHref = "<?php echo $next_video[0]['url']; ?>";
+                    var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
                     if (nextHref.length > 0)
                         window.location.href = nextHref;
                 });
