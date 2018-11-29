@@ -86,6 +86,9 @@ class Theme_Functions {
         $channels = new WP_Query($channels_args);
 
         $category = get_page_by_path($category_name, OBJECT, 'category');
+        // Make sure we actually have something here to show, or else this throws an error
+        if (empty($category->ID)) return array();
+
         $category_meta = get_post_meta($category->ID, 'cat_id');
         $category_id = $category_meta[0];
 

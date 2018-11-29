@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Homepage Template
- * 
+ *
  * This template is used to display Home Page of the site.
  * @since 1.0.0
  */
@@ -53,7 +53,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
         $category_args = array(
             'post_type' => 'category',
             'posts_per_page' => -1,
-            'post__not_in' => array($home->ID),
+            'post__not_in' => !empty($home->ID) ? array($home->ID) : array(), // Ensure we have a home here, or else we get errors
             'order' => 'ASC',
             'meta_key' => 'weight',
             'orderby' => 'meta_value_num',

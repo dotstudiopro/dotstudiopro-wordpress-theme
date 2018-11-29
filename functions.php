@@ -241,6 +241,14 @@ if (function_exists('register_sidebar')) {
         'before_title' => '<h4>',
         'after_title' => '</h4>'
     ));
+
+    // Our login area widget
+    register_sidebar( array(
+        'name'          => 'Login Area',
+        'id'            => 'dsp_web_login_area',
+        'before_widget' => '<div>',
+        'after_widget'  => '</div>'
+    ));
 }
 
 /**
