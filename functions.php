@@ -355,7 +355,7 @@ function dsp_add_login_link( $items, $args )
         {
             $items .= '<li><a href="'. wp_logout_url() .'">Log Out</a></li>';
         } else {
-            $items .= '<li><a href="#" data-login_url="'. wp_logout_url() .'" class="dsp-auth0-login-button">Log In</a></li>';
+            $items .= '<li><a href="#" data-login_url="'. wp_logout_url(get_home_url()) .'" class="dsp-auth0-login-button">Log In</a></li>';
         }
     }
     return $items;
