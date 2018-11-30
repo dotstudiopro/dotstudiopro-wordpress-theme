@@ -21,6 +21,9 @@ header {
       width: $header-right;
       @include rem(padding-top, 32px);
     }
+    .primary-login-area {
+      display: none;
+    }
   }
 }
 .padding-fixed-left{
@@ -111,8 +114,11 @@ header.center-logo-header {
 	.navbar {
 		display: block;
 	}
+  .primary-login-area {
+    display: none;
+  }
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-    @include rem(top, 170px); 
+    @include rem(top, 170px);
   }
   &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
     max-width: 450px;

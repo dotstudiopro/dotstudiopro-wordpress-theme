@@ -125,6 +125,12 @@ header .fixed-top {
     width: 100%; }
 header.left-logo-header .site-branding {
     width: 350px; }
+header.left-logo-header .primary-login-area {
+    display: none;
+  }
+header.center-logo-header .primary-login-area {
+    display: none;
+  }
 @media (max-width: 991.98px) {
     header.left-logo-header .site-branding {
         width: inherit; } }

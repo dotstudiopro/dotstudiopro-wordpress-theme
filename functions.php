@@ -345,4 +345,14 @@ function dsp_remove_admin_bar() {
 add_action('after_setup_theme', 'dsp_remove_admin_bar');
 
 
+// Filter wp_nav_menu() to add additional links and other output
+function dsp_login_nav_menu_item($items) {
+    $loginlink = '<li class="dsp-login"><a href="#">' . __('Login') . '</a></li>';
+    // add the home link to the end of the menu
+    $items = $items . $loginlink;
+    return $items;
+}
+
+add_filter( 'wp_nav_menu_main_menu_items', 'dsp_login_nav_menu_item' );
+
 ?>
