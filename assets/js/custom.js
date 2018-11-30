@@ -116,3 +116,15 @@ jQuery.fn.putCursorAtEnd = function () {
             });
 })();
 
+/**
+ * Add functionality to Login button when clicked to trigger auth0 login
+ */
+jQuery('.dsp-auth0-login-button').click(function() {
+    // Make sure we have the auth0 login button before we try triggering events
+    if (jQuery("#a0LoginButton").length > 0) {
+        jQuery("#a0LoginButton").trigger('click');
+    } else {
+        // If we don't have the button, redirect the user to the login
+        window.location.href = jQuery(this).data('login_url');
+    }
+});

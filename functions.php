@@ -345,14 +345,21 @@ function dsp_remove_admin_bar() {
 add_action('after_setup_theme', 'dsp_remove_admin_bar');
 
 
-// Filter wp_nav_menu() to add additional links and other output
-function dsp_login_nav_menu_item($items) {
-    $loginlink = '<li class="dsp-login"><a href="#">' . __('Login') . '</a></li>';
-    // add the home link to the end of the menu
-    $items = $items . $loginlink;
+/**
+ * Add a login link to the main navigation
+ */
+function dsp_add_login_link( $items, $args )
+{
+    if($args->theme_location == 'main_menu') {
+        if(is_user_logged_in())
+        {
+            $items .= '<li><a href="'. wp_logout_url() .'">Log Out</a></li>';
+        } else {
+            $items .= '<li><a href="#" data-login_url="'. wp_logout_url() .'" class="dsp-auth0-login-button">Log In</a></li>';
+        }
+    }
     return $items;
 }
-
-add_filter( 'wp_nav_menu_main_menu_items', 'dsp_login_nav_menu_item' );
+add_filter( 'wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
 
 ?>
