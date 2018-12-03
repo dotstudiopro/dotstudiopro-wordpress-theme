@@ -180,15 +180,21 @@ class Theme_Functions {
         global $dsp_theme_options;
 
         $child_channels = $this->is_child_channels($channel->ID);
+        echo '<pre>'; print_r($child_channels); exit;
         if ($child_channels) {
             foreach ($child_channels as $key => $channel_name):
                 $channel = $this->get_channel_by_name($channel_name);
+                if ($channel):
                 $channel_meta = get_post_meta($channel->ID);
                 $response[$key]['id'] = $channel_meta['chnl_id'][0];
                 $response[$key]['title'] = $channel->post_title;
                 $response[$key]['description'] = $channel->post_content;
                 $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
                 $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+
+                    if ($type == 'categories-template') {
+                        $dsp_theme_options['opt-play-btn-type'] = 'play-video';
+                    }
 
                 if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                     $response[$key]['url'] = get_the_permalink($channel->ID);
@@ -201,15 +207,17 @@ class Theme_Functions {
                         $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
                     }
                 }
+                endif;
             endforeach;
         } else {
             $videoData = $this->get_channel_videos($channel->ID);
+            echo '<pre>'; print_r($videoData); exit;
             if ($videoData) {
                 foreach ($videoData as $key => $video):
                     $response[$key]['id'] = $video['_id'];
                     $response[$key]['title'] = $video['title'];
                     $response[$key]['description'] = $video['description'];
-                    $response[$key]['image'] = get_option('dsp_cdn_img_url_field') . $video['thumb'];
+                    $response[$key]['image'] = $video['thumb'];
                     $response[$key]['slug'] = ($video['slug']) ? $video['slug'] : '';
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
                     $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
@@ -265,12 +273,22 @@ class Theme_Functions {
      * @return type
      */
     public function get_channel_videos($channel_id) {
-
-        $videoData = maybe_unserialize(get_post_meta($channel_id, 'chnl_videos', TRUE));
-        if ($videoData)
+        global $wpdb;
+        $dsp = new Dotstudiopro_Api();
+        $dsp_video_table = $dsp->get_Dotstudiopro_Video_Table();
+        $videos = explode(',', get_post_meta($channel_id, 'chnl_videos', true));
+        $videoData = array();
+        if ($videos) {
+            foreach ($videos as $key => $video):
+                $data = $wpdb->get_results("SELECT * FROM $table_name WHERE video_id = '" . $video . "'");
+                $videoData[$key] = maybe_unserialize(base64_decode($data[0]->video_detail));
+                $videoData[$key]['_id'] = $video;
+            endforeach;
             return $videoData;
-        else
+        }
+        else {
             return array();
+    }
     }
 
     /**
