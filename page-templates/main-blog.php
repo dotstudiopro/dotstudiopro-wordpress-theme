@@ -7,7 +7,7 @@ get_header();
 ?>
 <div class="custom-container container blog-container">
 	<div class="row">
-		<div class="col-md-8 col-sm-12">
+		<div class="col-md-9 col-sm-12">
 				<?php
 					$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 					// Enforce 15 posts per page; will eventually make this a Theme Option choice
@@ -48,7 +48,7 @@ get_header();
 				<?php endif; ?>
 		</div>
 
-		<div class="col-md-4 col-sm-12">
+		<div class="col-md-3 col-sm-12">
 			<div class="blog-categories-container">
 					<h3 class='blog-categories-header'>Categories</h3>
 					<ul>
