@@ -180,7 +180,6 @@ class Theme_Functions {
         global $dsp_theme_options;
 
         $child_channels = $this->is_child_channels($channel->ID);
-        echo '<pre>'; print_r($child_channels); exit;
         if ($child_channels) {
             foreach ($child_channels as $key => $channel_name):
                 $channel = $this->get_channel_by_name($channel_name);
@@ -211,6 +210,7 @@ class Theme_Functions {
             endforeach;
         } else {
             $videoData = $this->get_channel_videos($channel->ID);
+            echo '<pre>'; print_r($channel->ID); 
             echo '<pre>'; print_r($videoData); exit;
             if ($videoData) {
                 foreach ($videoData as $key => $video):
