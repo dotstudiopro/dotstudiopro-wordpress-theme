@@ -210,8 +210,6 @@ class Theme_Functions {
             endforeach;
         } else {
             $videoData = $this->get_channel_videos($channel->ID);
-            echo '<pre>'; print_r($channel->ID); 
-            echo '<pre>'; print_r($videoData); exit;
             if ($videoData) {
                 foreach ($videoData as $key => $video):
                     $response[$key]['id'] = $video['_id'];
@@ -280,7 +278,7 @@ class Theme_Functions {
         $videoData = array();
         if ($videos) {
             foreach ($videos as $key => $video):
-                $data = $wpdb->get_results("SELECT * FROM $table_name WHERE video_id = '" . $video . "'");
+                $data = $wpdb->get_results("SELECT * FROM $dsp_video_table WHERE video_id = '" . $video . "'");
                 $videoData[$key] = maybe_unserialize(base64_decode($data[0]->video_detail));
                 $videoData[$key]['_id'] = $video;
             endforeach;
