@@ -20,20 +20,22 @@ get_header();
 					<?php while ( have_posts() ) : the_post();
 			    	$post_date = strtotime(get_the_date());
 					?>
-			<div class="col-md-6 col-sm-12">
 				<div class='blog-post'>
-					<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail_url('large'); ?>' /></div>
-				    <div class='blog-title'><?php the_title() ; ?></div>
-				    <div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
-				    <div class='blog-date'>
-				    	<div class='blog-two-digit-date'><?php echo date("d", $post_date); ?></div>
-				    		<div class='blog-month'><?php echo date("M", $post_date); ?></div>
-				    	</div>
-				    <div class='blog-excerpt'>
-				    		<?php the_excerpt(); ?>
-				    </div>
+					<div class="col-md-6 col-sm-12">
+						<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail_url('large'); ?>' /></div>
+					</div>
+					<div class="col-md-6 col-sm-12">
+					    <div class='blog-title'><?php the_title() ; ?></div>
+					    <div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
+					    <div class='blog-date'>
+					    	<div class='blog-two-digit-date'><?php echo date("d", $post_date); ?></div>
+					    		<div class='blog-month'><?php echo date("M", $post_date); ?></div>
+					    	</div>
+					    <div class='blog-excerpt'>
+					    		<?php the_excerpt(); ?>
+					    </div>
+					</div>
 			    </div>
-			</div>
 				<?php endwhile; ?>
 
 					<div class="nav-previous alignleft"><?php previous_posts_link( 'Older posts' ); ?></div>
