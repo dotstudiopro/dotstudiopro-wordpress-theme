@@ -33,6 +33,9 @@ if (function_exists('register_nav_menus')) {
             )
     );
 }
+// add title-tag and post-thumbnails
+add_theme_support('title-tag');
+add_theme_support( 'post-thumbnails' );
 
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
@@ -143,11 +146,6 @@ function register_theme_styles() {
 
 add_action('wp_enqueue_scripts', 'register_theme_styles');
 
-// function to add title-tag and post-thumbnails
-function bootstrapstarter_wp_setup() {
-    add_theme_support('title-tag');
-    add_theme_support( 'post-thumbnails' );
-}
 
 // Action to add class in html tag
 
