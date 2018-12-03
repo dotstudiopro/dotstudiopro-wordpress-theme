@@ -26,12 +26,10 @@ get_header();
 
 			<?php while ( have_posts() ) : the_post();
 	    	$post_date = strtotime(get_the_date());
-	    	// $read_more = $excerpt_array['has_elipses'] ? "<div class='blog-read-more'><a href='" . get_permalink() . "'>Read More</a></div>" : "";
 			?>
 
 			<div class='blog-post'>
-	    	<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail('post-thumbnail', ['class' => 'img img-responsive', 'title' => 'Feature image']);
-; ?>' /></div>
+	    	<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail_url('large'); ?>' /></div>
 	    	<div class='blog-title'><?php the_title() ; ?></div>
 	    	<div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
 	    	<div class='blog-date'>
