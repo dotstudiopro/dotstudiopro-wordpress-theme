@@ -143,9 +143,10 @@ function register_theme_styles() {
 
 add_action('wp_enqueue_scripts', 'register_theme_styles');
 
-// function to add title-tag
+// function to add title-tag and post-thumbnails
 function bootstrapstarter_wp_setup() {
     add_theme_support('title-tag');
+    add_theme_support( 'post-thumbnails' );
 }
 
 // Action to add class in html tag
@@ -361,5 +362,69 @@ function dsp_add_login_link( $items, $args )
     return $items;
 }
 add_filter( 'wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
+
+/**
+ * Filter the excerpt "read more" string.
+ *
+ * @param string $more "Read more" excerpt string.
+ * @return string (Maybe) modified "read more" excerpt string.
+ */
+function dsp_excerpt_more( $more ) {
+    if ( ! is_single() ) {
+        $more = sprintf( '<a class="read-more" href="%1$s">%2$s</a>',
+            get_permalink( get_the_ID() ),
+            __( 'Read More', 'textdomain' )
+        );
+    }
+    return $more;
+}
+add_filter( 'excerpt_more', 'dsp_excerpt_more' );
+
+
+/**
+ * Get a list of categories that have posts in them by alphabetical order
+ *
+ * @return array An array of categories, if any of posts in them
+ */
+function dsp_get_categories_list() {
+    return get_categories( array(
+        'orderby' => 'name',
+        'order'   => 'ASC'
+    ) );
+
+}
+
+/**
+ * Get a link to the category with the appropriate alt tag based on description
+ *
+ * @param object $category The category we need a link for
+ * @return string The link to the category, as a string
+ */
+function dsp_get_category_link($category) {
+    return sprintf(
+        '<a class="blog-category-link" href="%1$s" alt="%2$s">%3$s</a>',
+        esc_url( get_category_link( $category->term_id ) ),
+        esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ),
+        esc_html( $category->name )
+    );
+}
+
+/**
+ * Echo out a list of categories with posts in them, with links to the category pages and article counts
+ *
+ * @return null
+ */
+function dsp_get_category_list_lis() {
+    $category_list = dsp_get_categories_list();
+    foreach($category_list as $category) {
+        echo "<li>";
+        $link = dsp_get_category_link($category);
+        $count = $category->count;
+        $articles = "article" . ($count > 1 ? "s" : "");
+        echo "<div class='blog-category-link'>" . $link . "</div>";
+        echo "<div class='blog-category-count'>$count $articles</div>";
+        echo "</li>";
+    }
+}
 
 ?>
