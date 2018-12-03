@@ -354,9 +354,9 @@ function dsp_add_login_link( $items, $args )
     if($args->theme_location == 'main_menu') {
         if(is_user_logged_in())
         {
-            $items .= '<li><a href="'. wp_logout_url() .'">Log Out</a></li>';
+            $items .= '<li><a href="'. wp_logout_url(get_home_url()) .'">Log Out</a></li>';
         } else {
-            $items .= '<li><a href="#" data-login_url="'. wp_logout_url() .'" class="dsp-auth0-login-button">Log In</a></li>';
+            $items .= '<li><a href="#" data-login_url="'. wp_login_url() .'" class="dsp-auth0-login-button">Log In</a></li>';
         }
     }
     return $items;
