@@ -50,7 +50,7 @@ get_header();
 
 		<div class="col-md-4 col-sm-12">
 			<div class="blog-categories-container">
-					<h2 class='blog-categories-header'>Categories</h2>
+					<h3 class='blog-categories-header'>Categories</h3>
 					<ul>
 						<?php dsp_get_category_list_lis() ?>
 					</ul>
