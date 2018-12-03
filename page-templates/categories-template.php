@@ -36,8 +36,12 @@ get_header();
                     $link = get_permalink($category->ID);
                 else:
                     $category_channel = $theme_function->get_category_channels($category->post_name);
-                    $video = $theme_function->show_videos(array_values($category_channel)[0], 'other_carousel');
+                    if (!empty($category_channel)) {
+                        $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template');
                     $link = $video[0]['url'];
+                    } else {
+                        $link = get_permalink($category->ID);
+                    }
                 endif;
                 ?>
                 <div class="col-md-<?php echo $number_of_row; ?> p-4">
