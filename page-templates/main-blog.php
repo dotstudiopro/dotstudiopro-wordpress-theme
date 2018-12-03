@@ -30,7 +30,8 @@ get_header();
 			?>
 
 			<div class='blog-post'>
-	    	<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail('large'); ?>' /></div>
+	    	<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail('post-thumbnail', ['class' => 'img img-responsive', 'title' => 'Feature image']);
+; ?>' /></div>
 	    	<div class='blog-title'><?php the_title() ; ?></div>
 	    	<div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
 	    	<div class='blog-date'>
