@@ -26,7 +26,7 @@ get_header();
 
 			<?php while ( have_posts() ) : the_post();
 
-				$thumb = the_post_thumbnail('medium');
+				$thumb = get_the_post_thumbnail_url(null, 'medium');
 	    	$post_date = strtotime(get_the_date());
 	    	// $read_more = $excerpt_array['has_elipses'] ? "<div class='blog-read-more'><a href='" . get_permalink() . "'>Read More</a></div>" : "";
 			?>
