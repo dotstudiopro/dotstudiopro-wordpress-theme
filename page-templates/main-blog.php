@@ -16,7 +16,7 @@ get_header();
 				// Update the query
 				query_posts($args);
 			?>
-		  <?php if ( have_posts() ) : ?>
+		 	<?php if ( have_posts() ) : ?>
 
 				<?php while ( have_posts() ) : the_post();
 		    	$post_date = strtotime(get_the_date());
@@ -25,16 +25,16 @@ get_header();
 			</div>
 			<div class="col-md-6 col-sm-12">
 				<div class='blog-post'>
-		    	<div class='blog-title'><?php the_title() ; ?></div>
-		    	<div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
-		    	<div class='blog-date'>
-		    		<div class='blog-two-digit-date'><?php echo date("d", $post_date); ?></div>
-		    		<div class='blog-month'><?php echo date("M", $post_date); ?></div>
+			    	<div class='blog-title'><?php the_title() ; ?></div>
+			    	<div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
+			    	<div class='blog-date'>
+			    		<div class='blog-two-digit-date'><?php echo date("d", $post_date); ?></div>
+			    		<div class='blog-month'><?php echo date("M", $post_date); ?></div>
+			    	</div>
+			    	<div class='blog-excerpt'>
+			    		<?php the_excerpt(); ?>
+			    	</div>
 		    	</div>
-		    	<div class='blog-excerpt'>
-		    		<?php the_excerpt(); ?>
-		    	</div>
-		    </div>
 		    </div>
 
 				<?php endwhile; ?>
@@ -47,6 +47,7 @@ get_header();
 			<?php endif; ?>
 
 		</div>
+
 		<div class="col-md-4 col-sm-12">
 			<div class="blog-categories-container">
 					<h2 class='blog-categories-header'>Categories</h2>
