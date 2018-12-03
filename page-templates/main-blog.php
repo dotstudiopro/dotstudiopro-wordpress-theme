@@ -25,14 +25,12 @@ get_header();
 	  <?php if ( have_posts() ) : ?>
 
 			<?php while ( have_posts() ) : the_post();
-
-				$thumb = get_the_post_thumbnail_url(null, 'medium');
 	    	$post_date = strtotime(get_the_date());
 	    	// $read_more = $excerpt_array['has_elipses'] ? "<div class='blog-read-more'><a href='" . get_permalink() . "'>Read More</a></div>" : "";
 			?>
 
 			<div class='blog-post'>
-	    	<div class='blog-image'><img class='img img-responsive' src='<?php echo $thumb; ?>' /></div>
+	    	<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail('large'); ?>' /></div>
 	    	<div class='blog-title'><?php the_title() ; ?></div>
 	    	<div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
 	    	<div class='blog-date'>
