@@ -26,7 +26,7 @@ get_header();
 							<div class='blog-image'><img class='img img-responsive' src='<?php the_post_thumbnail_url('large'); ?>' /></div>
 						</div>
 						<div class="col-md-6 col-sm-12">
-						    <div class='blog-title'><h3><?php the_title() ; ?></h3></div>
+						    <div class='blog-title'><h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></div>
 						    <div class='blog-author'><span class='blog-by'>By</span> <?php the_author_meta('display_name'); ?></div>
 						    <div class='blog-date'>
 						    	<div class='blog-two-digit-date'><?php echo date("d", $post_date); ?></div>

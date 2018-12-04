@@ -369,7 +369,7 @@ add_filter( 'wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
  */
 function dsp_excerpt_more( $more ) {
     if ( ! is_single() ) {
-        $more = sprintf( '<a class="read-more" href="%1$s">%2$s</a>',
+        $more = sprintf( ' [...] <a class="read-more" href="%1$s">%2$s</a>',
             get_permalink( get_the_ID() ),
             __( 'Read More', 'textdomain' )
         );
