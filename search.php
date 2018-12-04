@@ -47,7 +47,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                                 $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
                                 $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
                                 ?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy w-100" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>
                                 </div>
@@ -68,7 +68,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                                 $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
                                 $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
                                 ?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy w-100" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>
                                 </div>

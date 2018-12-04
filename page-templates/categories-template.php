@@ -47,7 +47,7 @@ get_header();
                 <div class="col-md-<?php echo $number_of_row; ?> p-4">
                     <a href="<?php echo $link; ?>" title="<?php echo $category->post_title; ?>">
                         <div class="holder">
-                            <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
+                            <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy w-100" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
                             <?php if ($dsp_theme_options['opt-categories-title'] == true): ?>
                                 <h3><?php echo $category->post_title; ?></h3>
                             <?php endif; ?>
