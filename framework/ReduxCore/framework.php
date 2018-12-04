@@ -180,7 +180,7 @@
             public $omit_admin_items = false;
             public $apiHasRun = false;
             public $transients;
-            
+
             /**
              * Class Constructor. Defines the args for the theme options class
              *
@@ -287,9 +287,9 @@
                             $this->args['page_slug'] = str_replace( '-', '_', $this->args['opt_name'] );
                         }
                     }
-                    
+
                     $this->change_demo_defaults();
-                    
+
                     // Get rid of extra_tabs! Not needed.
                     if ( is_array( $extra_tabs ) && ! empty ( $extra_tabs ) ) {
                         foreach ( $extra_tabs as $tab ) {
@@ -940,7 +940,7 @@
                         $data = array();
                         $args = wp_parse_args( $args, array() );
 
-                        if ( $type == "categories" || $type == "category" ) {
+                        if ( $type == "categories" || $type == "channel-category" ) {
                             $cats = get_categories( $args );
                             if ( ! empty ( $cats ) ) {
                                 foreach ( $cats as $cat ) {
@@ -4030,7 +4030,7 @@
                             'id'        => 'admin_config',
                             'dismiss'   => true
                         );
-                        
+
                         Redux_Admin_Notices::set_notice($data);
                     }
                 }
@@ -4044,7 +4044,7 @@
                             'id'        => 'share_config',
                             'dismiss'   => true
                         );
-                        
+
                         Redux_Admin_Notices::set_notice($data);
                     }
                 }
@@ -4123,7 +4123,7 @@
              */
             public static function user_can( $user, $capabilities, $object_id = null ) {
                 static $depth = 0;
-                
+
                 if ( $depth >= 30 ) {
                     return false;
                 }
@@ -4253,5 +4253,5 @@
          */
         ReduxFramework::init();
         do_action( 'redux/init' );
-        
+
     } // class_exists('ReduxFramework')

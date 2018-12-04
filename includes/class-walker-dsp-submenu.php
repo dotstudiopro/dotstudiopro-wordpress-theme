@@ -8,7 +8,7 @@ class Walker_DSP_Submenu extends Walker_Nav_Menu {
 
     /**
      * Ends the element output.
-     * 
+     *
      * @global type $dsp_theme_options
      * @param type $output
      * @param type $item
@@ -22,7 +22,7 @@ class Walker_DSP_Submenu extends Walker_Nav_Menu {
         if ($dsp_theme_options['opt-menu-title'] == $item->title) {
             $output .= '<ul class="dropdown-menu position-absolute" role="menu">';
             foreach ($posts as $key => $value):
-                $output .= '<li><a href="/category/' . $key . '">' . $value . '</a></li>';
+                $output .= '<li><a href="/channel-category/' . $key . '">' . $value . '</a></li>';
             endforeach;
             $output .= '</ul>';
         }
