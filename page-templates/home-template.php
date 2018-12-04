@@ -48,10 +48,10 @@ $main_carousel = $theme_function->home_page_main_carousel();
 <div class="custom-container container pb-5">
     <div class="row no-gutters other-categories">
         <?php
-        $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'category');
+        $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'channel-category');
 
         $category_args = array(
-            'post_type' => 'category',
+            'post_type' => 'channel-category',
             'posts_per_page' => -1,
             'post__not_in' => !empty($home->ID) ? array($home->ID) : array(), // Ensure we have a home here, or else we get errors
             'order' => 'ASC',

@@ -165,7 +165,7 @@ function class_to_html_tag($output, $doctype) {
 function theme_body_class($class = '') {
     global $dsp_theme_options;
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
-		$fix_class = ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav' : '';
+    $fix_class = ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav' : '';
     echo 'class="' . join(' ', get_body_class($class)) . join(' ', get_body_class($fix_class)) . '"';
 }
 

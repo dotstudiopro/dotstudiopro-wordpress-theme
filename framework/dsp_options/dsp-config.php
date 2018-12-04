@@ -177,7 +177,7 @@ Redux::setSection($opt_name, array(
  */
 $options = array();
 $args = array(
-    'post_type' => 'category',
+    'post_type' => 'channel-category',
     'post_status' => 'publish',
     'posts_per_page' => '-1',
     'meta_query' => array(
@@ -541,7 +541,7 @@ Redux::setSection($opt_name, array(
 $options = array();
 $args = array(
     'post_per_page' => -1,
-    'post_type' => 'category',
+    'post_type' => 'channel-category',
     'meta_query' => array(
         array(
             'key' => 'is_on_cat_homepage',

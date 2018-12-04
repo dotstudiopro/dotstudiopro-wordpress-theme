@@ -15,7 +15,6 @@ get_header();
             query_posts($args);
             ?>
             <?php if (have_posts()) : ?>
-
                 <?php
                 while (have_posts()) : the_post();
                     $post_date = strtotime(get_the_date());
