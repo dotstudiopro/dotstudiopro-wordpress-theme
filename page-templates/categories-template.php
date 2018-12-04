@@ -13,7 +13,7 @@ get_header();
 
         <?php
         $category_args = array(
-            'post_type' => 'category',
+            'post_type' => 'channel-category',
             'posts_per_page' => -1,
             'order' => 'ASC',
             'meta_key' => 'weight',
