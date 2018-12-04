@@ -38,7 +38,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <?php if ($result['data']['hits'] && $type == 'video') : ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
-                    <div class="col-md-<?php echo $no_of_row; ?> p-2">
+                    <div class="col-md-<?php echo $no_of_row; ?> p-2 search-custom-width">
                         <a href="/video/<?php echo $data['_id']; ?>" title="<?php echo $data['_source']['title']; ?>">
                             <div class="holder">
                                 <?php
@@ -59,7 +59,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <?php elseif ($result['data']['hits'] && $type == 'channel'): ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
-                    <div class="col-md-<?php echo $no_of_row; ?> p-2">
+                    <div class="col-md-<?php echo $no_of_row; ?> p-2  search-custom-width">
                         <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['_source']['title']; ?>">
                             <div class="holder">
                                 <?php

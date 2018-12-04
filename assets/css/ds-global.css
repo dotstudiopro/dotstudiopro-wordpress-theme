@@ -391,6 +391,9 @@ header.center-logo-header {
       display: inline-block;
       margin-top: 15px; } }
 
+  .search-custom-width{
+      width:50%;
+  }
 .sb-search {
   position: relative;
   width: 0%;
