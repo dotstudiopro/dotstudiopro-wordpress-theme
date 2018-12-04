@@ -4,7 +4,7 @@
      * Tooltip options
      */
     $('.tooltippp').tooltipster({
-        maxWidth: 200,
+        maxWidth: 300,
         contentCloning: true,
         contentAsHTML: true,
         interactive: true,
@@ -50,7 +50,7 @@
 
         },
         renderItem: function (item, search) {
-            return '<div class="autocomplete-suggestion" data-val="' + item['title'] + '"><img src="' + item['image'] + '/10/10"><div class="title">' + item['title'] + '</div></div>';
+            return '<div class="autocomplete-suggestion" data-val="' + item['title'] + '"><img src="' + item['image'] + '/100/56"><div class="title">' + item['title'] + '</div></div>';
         },
         onSelect: function (e, term, item) {
             jQuery('.sb-search-input').val(term);
@@ -116,10 +116,22 @@ jQuery.fn.putCursorAtEnd = function () {
             });
 })();
 
+(function ($) {
+    $(window).on("load resize", function () {
+        if ($(window).width() < 992) {
+            $("#content-1").mCustomScrollbar({
+                theme: "minimal"
+            });
+        } else {
+            $("#content-1").mCustomScrollbar('destroy');
+        }
+    });
+})(jQuery);
+
 /**
  * Add functionality to Login button when clicked to trigger auth0 login
  */
-jQuery('.dsp-auth0-login-button').click(function() {
+jQuery('.dsp-auth0-login-button').click(function () {
     // Make sure we have the auth0 login button before we try triggering events
     if (jQuery("#a0LoginButton").length > 0) {
         jQuery("#a0LoginButton").trigger('click');

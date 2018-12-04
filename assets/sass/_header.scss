@@ -2,6 +2,7 @@ header {
 	@include rem(height, 150px);
 	@include rem(padding-top, 28px);
   position: relative;
+	z-index: 9;
 	.fixed-top {
     max-width: 90vw;
     top: inherit;
@@ -14,32 +15,87 @@ header {
     .site-branding {
       width: $header-left;
 			@include media-breakpoint-down(md){
-			width: inherit;
+				width: inherit;
+				position: relative;
+    		z-index: 9999999;
+				margin-bottom: 0.5rem;
 			}
     }
     .main-navigation {
       width: $header-right;
       @include rem(padding-top, 32px);
-    }
-    .primary-login-area {
-      display: none;
+			@include media-breakpoint-down(md){
+				width: 100%;
+			}
     }
   }
+	.site-logo img {
+		@include respond-to(handhelds) { 
+			@include rem(height, 87px);
+		}
+  }
+	.custom-container {
+		@include media-breakpoint-down(md){
+			max-width: 100vw;
+		}
+	}	
+	.navbar {
+		@include media-breakpoint-down(md){
+			padding-left: 5%;
+			padding-right: 5%;
+		} 
+	}	
+	.content {
+		width: 100%;
+		@include media-breakpoint-down(md){
+			overflow: auto;
+			position: relative;
+			padding: 20px 0;
+			margin: 0;
+			width: 100%;
+			max-width: 100%;
+			@include rem(height, calc(100vh - 90px));
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			background: #000;
+    z-index: 999999;
+		}
+	}
 }
 .padding-fixed-left{
 	@include rem(padding-top, 144px);
 }
 
-.main-navigation .navbar-nav {
-  display: inline-block;
+.main-navigation {
+	@include media-breakpoint-down(md){
+		position: absolute;
+    right: 0;
+    top: 10px;
+    width: 100%;
+    text-align: right;
+		padding-top: 2rem;
+	}
+ .navbar-nav {
+ 	display: inline-block;
   float: left;
+	@include media-breakpoint-down(md){
+		width:100%;
+	}
   > li {
     float: left;
 		position: static;
 		@include rem(line-height, 30px);
+		@include media-breakpoint-down(md){
+			float: none;
+			text-align: left;
+		}
 		&:after {
       content: "";
       border-right: 2px solid $light-gray;
+			@include media-breakpoint-down(md){
+				border-right: 0;
+			}
     }
 		&:last-child:after {
       border: 0;
@@ -54,6 +110,11 @@ header {
 			@include rem(margin, 35px);
       text-transform: uppercase;
 			@include rem(padding-bottom, 32px);
+			@include media-breakpoint-down(md){
+				@include rem(margin, 0);
+				@include rem(padding, 15px 25px);
+				display: block;
+			}
 			&:hover {
         color: $green;
     	}
@@ -72,15 +133,48 @@ header {
     	background: $black-2;
 			border: 0;
 			@include rem(padding, 15px 0);
-      > li {
-        float: left;
-				> a {
-          display: flex;
-          font-size: 1.25rem;
-          padding: 0;
-					@include rem(margin, 16px);
-        }
-      }
+			@include media-breakpoint-down(md){
+				display: none;
+    		position: inherit !important;
+				background: transparent;
+			}
+    }
+		&.dropdown:hover .dropdown-menu.show {
+			@include media-breakpoint-down(md){
+				display: block;
+			}
+		}
+  	}
+	}
+}
+
+/* submenu */
+.navbar-collapse .navbar-nav .dropdown-menu {
+	@include media-breakpoint-down(md){
+	position: static!important;
+	background: transparent;
+  padding: 0 5%;
+	}
+	&.show{
+		display: block;
+	}
+	> li {
+  	float: left;
+		@include media-breakpoint-down(md){
+			width: 100%;
+		}
+		> a {
+    	display: flex;
+      font-size: 1.25rem;
+      padding: 0;
+			@include rem(margin, 16px);
+			&:before{
+				content: "";
+				@include media-breakpoint-down(md){
+					content: "-";
+    			margin-right: 10px;
+				}	
+			}
     }
   }
 }
@@ -88,9 +182,12 @@ header {
 /* fixed header */
 header.fixed-top.small-header {
   @include rem(height, 110px);
-  padding-top: 1em;
+  padding-top: 0.8rem;
+	@include media-breakpoint-down(md){
+		padding-top: 0;
+	}
   .site-logo img {
-		@include rem(height, 62px);
+		@include rem(height, 60px);
   }
   &.left-logo-header .main-navigation {
 		@include rem(padding-top, 32px);
@@ -101,6 +198,9 @@ header.fixed-top.small-header {
   &.center-logo-header {
 		@include rem(height, 180px);
 		@include rem(padding-top, 16px);
+		@include media-breakpoint-down(md){
+			@include rem(height, 140px); 
+		}
     .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
 			@include rem(top, 150px);
     }
@@ -111,35 +211,70 @@ header.fixed-top.small-header {
 
 header.center-logo-header {
 	@include rem(height, 210px);
+	@include media-breakpoint-down(md){
+		@include rem(height, 170px); 
+	}
 	.navbar {
 		display: block;
 	}
-  .primary-login-area {
-    display: none;
-  }
   .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-    @include rem(top, 170px);
+    @include rem(top, 170px); 
   }
   &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
     max-width: 450px;
     left: inherit;
     right: inherit;
+		@include media-breakpoint-down(md){
+			max-width: 90vw;
+		}
     li {
       float: left;
       width: 50%;
     }
   }
+	.custom-container {
+	@include media-breakpoint-down(md){
+		max-width: 100vw;
+	}
+	}
 }
 
 .padding-fixed-center {
 	@include rem(padding-top, 210px);
+	@include media-breakpoint-down(md){
+		@include rem(padding-top, 170px); 
+	}
 }
 
-.navbar-toggler-icon {
-    background: url(../img/hamburger-menu.png) no-repeat;
-    width: 40px;
-    height: 26px;
-    background-size: contain;
+.logged-in.admin-bar header.fixed-top {
+  top: 32px;
+	@include media-breakpoint-down(md){
+		top: 46px;
+	}
+}
+
+.navbar-toggler {
+	border: 0;
+	@include media-breakpoint-down(md){
+		padding-right: 5%;
+	}
+}
+.navbar-toggler.collapsed .navbar-toggler-icon {
+	background: url(../img/hamburger-menu.png) no-repeat;
+  width: 40px;
+  height: 26px;
+  background-size: contain;
+}
+.navbar-toggler .navbar-toggler-icon {
+	background: url(../img/close.png) no-repeat;
+  width: 40px;
+  height: 26px;
+  background-size: contain;
+}
+.navbar-collapse.show{
+  background: $black;
+  display: inline-block;
+  width: 100%;
 }
 
 @media screen and (max-width: 767px) {

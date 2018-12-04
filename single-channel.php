@@ -15,11 +15,10 @@ if (have_posts()) {
         ?>
 
         <!-- Channel Banner image section start -->
-        <div class="chnl-bg">
-            <img src="<?php echo $banner . '/1920/450'; ?>" alt="<?php echo get_the_title(); ?>">
-            <div class="chnl-content row no-gutters">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6"></div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+        <div class="chnl inner-banner-bg">
+            <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/650'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+            <div class="inner-banner-content_bg">
+                <div class="inner-banner-content row no-gutters">
                     <h2><?php echo get_the_title(); ?></h2>
                     <p><?php the_content(); ?></p>
                 </div>
@@ -28,8 +27,8 @@ if (have_posts()) {
         <!-- Channel Banner image section end -->
 
 
-        <div class="custom-container container pt-5 pb-5">
-            <div class="col-sm-12 other-categories">
+        <div class="custom-container container pb-5">
+            <div class="row no-gutters other-categories">
                 <?php
                 if (!$childchannels) {
                     $videos = $theme_function->show_videos($post, 'other_carousel');
@@ -37,7 +36,7 @@ if (have_posts()) {
                     if ($videos) {
                         ?>
                         <!-- Single Channel Video section start -->
-                        <div class="col-sm-12 no-gutters">
+                        <div class="col-sm-12 no-gutters pt-7">
                             <h3 class="post-title mb-5"><?php echo get_the_title(); ?></h3>
                             <?php
                             $class = 'home-carousel' . $cnt;
@@ -59,7 +58,7 @@ if (have_posts()) {
                         if ($videos) {
                             ?>
                             <!-- Single Channel Video section start -->
-                            <div class="col-sm-12 no-gutters">
+                            <div class="col-sm-12 no-gutters pt-7">
                                 <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
                                 <?php
                                 $class = 'home-carousel' . $cnt;
@@ -85,7 +84,13 @@ if (have_posts()) {
                         $type = 'video';
                         $related_id = $theme_function->first_video_id(get_the_ID());
                     }
-                    include(locate_template('page-templates/templates-part/related-content.php'));
+                    ?>
+                    <div class="col-sm-12 no-gutters pt-7">
+                        <?php
+                        include(locate_template('page-templates/templates-part/related-content.php'));
+                        ?>
+                    </div>
+                    <?php
                     array_push($class_array, 'related_content');
                 }
 

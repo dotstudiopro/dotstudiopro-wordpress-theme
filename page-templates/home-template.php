@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Homepage Template
- *
+ * 
  * This template is used to display Home Page of the site.
  * @since 1.0.0
  */
@@ -80,19 +80,22 @@ $main_carousel = $theme_function->home_page_main_carousel();
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
+                        $slide_text_class = '';
+                        if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
+                            $slide_text_class .= 'slide-text';
+                        }
                         $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                         $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
                         ?>
-                        <div class="slick-wrapper <?php echo $class ?>">
+                        <div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
                             <?php $i = 1 ?>
                             <?php foreach ($channels as $channel) { ?>
-
                                 <div class="slide">
                                     <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                         <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                                             <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                                             <div class="overlay">
-                                                <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;</a></div>
+                                                <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +118,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                                 <p><?php echo $description; ?></p>
                                             </span>
                                         </div>
-                                    <?php
+                                        <?php
                                     endif;
                                     $i++;
                                     ?>

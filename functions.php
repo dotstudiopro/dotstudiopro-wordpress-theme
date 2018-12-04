@@ -35,7 +35,7 @@ if (function_exists('register_nav_menus')) {
 }
 // add title-tag and post-thumbnails
 add_theme_support('title-tag');
-add_theme_support( 'post-thumbnails' );
+add_theme_support('post-thumbnails');
 
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
@@ -125,7 +125,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('slick-init', 'image-lazy-load.min',  'classie', 'uisearch', 'custom.min', 'modernizr.custom', 'effects.min');
+    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'modernizr.custom', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
@@ -165,7 +165,8 @@ function class_to_html_tag($output, $doctype) {
 function theme_body_class($class = '') {
     global $dsp_theme_options;
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
-    echo 'class="' . join(' ', get_body_class($class)) . '"';
+		$fix_class = ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav' : '';
+    echo 'class="' . join(' ', get_body_class($class)) . join(' ', get_body_class($fix_class)) . '"';
 }
 
 /**
@@ -242,11 +243,11 @@ if (function_exists('register_sidebar')) {
     ));
 
     // Our login area widget
-    register_sidebar( array(
-        'name'          => 'Login Area',
-        'id'            => 'dsp_web_login_area',
+    register_sidebar(array(
+        'name' => 'Login Area',
+        'id' => 'dsp_web_login_area',
         'before_widget' => '<div>',
-        'after_widget'  => '</div>'
+        'after_widget' => '</div>'
     ));
 }
 
@@ -337,29 +338,27 @@ add_action('wp_ajax_nopriv_autocomplete', 'autocomplete');
  */
 function dsp_remove_admin_bar() {
     if (!current_user_can('administrator') && !is_admin()) {
-      show_admin_bar(false);
+        show_admin_bar(false);
     }
 }
 
 add_action('after_setup_theme', 'dsp_remove_admin_bar');
 
-
 /**
  * Add a login link to the main navigation
  */
-function dsp_add_login_link( $items, $args )
-{
-    if($args->theme_location == 'main_menu') {
-        if(is_user_logged_in())
-        {
-            $items .= '<li><a href="'. wp_logout_url(get_home_url()) .'">Log Out</a></li>';
+function dsp_add_login_link($items, $args) {
+    if ($args->theme_location == 'main_menu') {
+        if (is_user_logged_in()) {
+            $items .= '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>';
         } else {
-            $items .= '<li><a href="#" data-login_url="'. wp_login_url() .'" class="dsp-auth0-login-button">Log In</a></li>';
+            $items .= '<li><a href="#" data-login_url="' . wp_login_url() . '" class="dsp-auth0-login-button">Log In</a></li>';
         }
     }
     return $items;
 }
-add_filter( 'wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
+
+add_filter('wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
 
 /**
  * Filter the excerpt "read more" string.
@@ -367,17 +366,15 @@ add_filter( 'wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
  * @param string $more "Read more" excerpt string.
  * @return string (Maybe) modified "read more" excerpt string.
  */
-function dsp_excerpt_more( $more ) {
-    if ( ! is_single() ) {
-        $more = sprintf( '<a class="read-more" href="%1$s">%2$s</a>',
-            get_permalink( get_the_ID() ),
-            __( 'Read More', 'textdomain' )
+function dsp_excerpt_more($more) {
+    if (!is_single()) {
+        $more = sprintf('<a class="read-more" href="%1$s">%2$s</a>', get_permalink(get_the_ID()), __('Read More', 'textdomain')
         );
     }
     return $more;
 }
-add_filter( 'excerpt_more', 'dsp_excerpt_more' );
 
+add_filter('excerpt_more', 'dsp_excerpt_more');
 
 /**
  * Get a list of categories that have posts in them by alphabetical order
@@ -385,11 +382,10 @@ add_filter( 'excerpt_more', 'dsp_excerpt_more' );
  * @return array An array of categories, if any of posts in them
  */
 function dsp_get_categories_list() {
-    return get_categories( array(
+    return get_categories(array(
         'orderby' => 'name',
-        'order'   => 'ASC'
-    ) );
-
+        'order' => 'ASC'
+    ));
 }
 
 /**
@@ -400,10 +396,7 @@ function dsp_get_categories_list() {
  */
 function dsp_get_category_link($category) {
     return sprintf(
-        '<a class="blog-category-link" href="%1$s" alt="%2$s">%3$s</a>',
-        esc_url( get_category_link( $category->term_id ) ),
-        esc_attr( sprintf( __( 'View all posts in %s', 'textdomain' ), $category->name ) ),
-        esc_html( $category->name )
+            '<a class="blog-category-link" href="%1$s" alt="%2$s">%3$s</a>', esc_url(get_category_link($category->term_id)), esc_attr(sprintf(__('View all posts in %s', 'textdomain'), $category->name)), esc_html($category->name)
     );
 }
 
@@ -414,7 +407,7 @@ function dsp_get_category_link($category) {
  */
 function dsp_get_category_list_lis() {
     $category_list = dsp_get_categories_list();
-    foreach($category_list as $category) {
+    foreach ($category_list as $category) {
         echo "<li>";
         $link = dsp_get_category_link($category);
         $count = $category->count;

@@ -1,48 +1,84 @@
 html {
   max-width: 100%;
   overflow-x: hidden;
-	font-size: 16px;
 }
-body {
+
+html, body {
 	font-size: 16px;
+	@include respond-to(handhelds) {
+		font-size: 12px;
+	}
+	@include media-breakpoint-down(md){
+		font-size: 11px;
+	}
 }
+
 html.boxed, body.boxed {
-	font-size: 14px;
+	font-size: 12px;
+	@include media-breakpoint-down(md){
+		font-size: 11px;
+	}
 }
-body.boxed {
+
+body.boxed, body.boxed .fixed-top {
 	max-width: 1170px;
-	margin: 0 auto;
+  margin: 0 auto;
+	z-index: 9999;
+	@include media-breakpoint-down(lg){
+		max-width: 100%;
+	}
+	@include media-breakpoint-down(md){
+		max-width: inherit;
+	}	
+	.custom-container {
+		@include media-breakpoint-down(md){
+			max-width: 100%;
+		}	
+	}	
 }
-body.boxed .fixed-top {
-    max-width: 1170px;
-    margin: 0 auto;
-}
+
 body.boxed .custom-container {
  	max-width: 1140px;
+	@include media-breakpoint-only(lg){
+		max-width: 930px;
+	}
+	@include media-breakpoint-down(md){
+		max-width: 90vw;
+	}
 }
+
 a:hover {
 	text-decoration: none;
 }
+
 :hover, :focus, :visited {
 	outline: 0;
 	border: 0;
 }
+
 .custom-container {
 	max-width: $custom-container;
   padding: 0;
 }
+
 h2, h3{
 	position: relative;
 	overflow: hidden;
+	@include rem(padding-left, 50px);
 }
+
 h2:before, h3:before {
 	content: "";
   border-left: 2px solid $green;
-	margin-right: 50px;
+	height: 100%;
+	position: absolute;
+	left: 0;
 }
-h3:before {
-	margin-right: 30px;
+
+h3 {
+	@include rem(padding-left, 30px);
 }
+
 .holder > .title-holder > h3:before, .navigation.pagination > .screen-reader-text {
   display: none;
 }
@@ -88,13 +124,16 @@ a.page-numbers {
 }
 
 .pt-7{
-	padding-top: 70px;
+	@include rem(padding-top, 70px);
+}
+.tooltip_templates { 
+	display: none;
 }
 
 
-@media screen and (max-width:1400px) { 
+@media screen and (max-width:767px) { 
 html, body {
-	font-size: 12px;
+	font-size: 10px;
 }
 }
 

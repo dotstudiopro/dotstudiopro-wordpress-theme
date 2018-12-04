@@ -5,8 +5,8 @@ footer {
 		}
 	}
   .social-links-menu{
-	 	padding-left: 30px;
-		padding-top: 15px;
+		@include rem(padding-left, 30px);
+		@include rem(padding-top, 15px);
 	}
 	 a {
     padding: 0 15px;
@@ -15,13 +15,13 @@ footer {
       padding-left: 0;
     }
 		&:before {
-			font-size: 38px;
+			@include rem(font-size, 38px);
 		}
   }
   .copyright {
-    padding-top: 55px;
+		@include rem(padding-top, 55px);
     p {
-      font-size: 20px;
+			@include rem(font-size, 20px);
 			margin-left: 2px;
     }
   }
@@ -36,7 +36,7 @@ footer {
     width: 48%;
     margin: 3px 2% 3px 0;
     a {
-      font-size: 20px;
+      @include rem(font-size, 20px);
       font-weight: 700;
       color: $black-1;
       text-transform: uppercase;
@@ -58,3 +58,33 @@ footer {
     color: #cd486b;
   }
 }
+
+/* Fix footer bottom */
+html, body {
+  height: 100%;
+}
+
+.fix-footer-bottom {
+  min-height: 100%;
+  overflow: hidden;
+  .content-area-custom {
+    @include rem(padding-bottom, 265px);
+		@include media-breakpoint-down(sm){
+			@include rem(padding-bottom, 0);
+		}
+  }
+}
+
+.footer-container {
+  position: relative;
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+		@include media-breakpoint-down(sm){
+			position: relative;
+		}
+  }
+}
+

@@ -1,7 +1,11 @@
 <?php
 global $dsp_theme_options;
+$slide_text_class = '';
+if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1) {
+    $slide_text_class .= 'slide-text';
+}
 ?>
-<div class="slick-wrapper <?php echo $class ?>">
+<div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
     <?php
     $i = 0;
     foreach ($videos as $video):
@@ -19,7 +23,7 @@ global $dsp_theme_options;
                 <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                     <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
                     <div class="overlay">
-                        <div class="watch_now"><a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">&nbsp;</a></div>
+                        <div class="watch_now"><a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                     </div>
                 </div>
             </div>
@@ -42,7 +46,7 @@ global $dsp_theme_options;
                         <p><?php echo $description; ?></p>
                     </span>
                 </div>
-            <?php
+                <?php
             endif;
             $i++;
             ?>
