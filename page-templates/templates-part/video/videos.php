@@ -2,6 +2,10 @@
 /**
  * condition to check video slug in the url or id
  */
+global $client_token;
+
+$class_array = array();
+
 $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
 $child_channels = $theme_function->is_child_channels($channel->ID);
 
@@ -27,11 +31,12 @@ if (!empty($video_id))
     $video = $dsp_api->get_video_by_id($video_id);
 
 if (!is_wp_error($video) && !empty($video)):
+
     $desc = ($video['description']) ? $video['description'] : '';
     $title = ($video['title']) ? $video['title'] : '';
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
-    $year = isset($video['year']) ? '('.$video['year'].')' : '';
+    $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
     $company_id = isset($video['company_id']) ? $video['company_id'] : '';
 
     if (!empty($duration)) {
@@ -47,42 +52,130 @@ if (!is_wp_error($video) && !empty($video)):
     $settings[] = 'skin=' . ltrim($player_color, "#");
     $settings[] = 'autostart=' . $autoplay;
     $settings[] = 'muteonstart=' . $mute_on_load;
-    $player_setting = '?targetelm=.player&' . implode('&', $settings)
+
+    // Code to check if user subscribe to watch this channel
+    $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
+    if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['unlocked'])):
+        $channel_unlocked = false;
+    else:
+        if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['ads_enabled']))
+            $settings[] = 'disableads=true';
+        $channel_unlocked = true;
+    endif;
+
+    $player_setting = '?targetelm=.player&' . implode('&', $settings);
+
+    /*
+     * Get "recently watched" data for a video.
+     */
+    $video_point = '';
+    $get_video_data = $dsp_api->get_recent_viewed_data_video($client_token, $video_id);
+    if (!is_wp_error($get_video_data) && !empty($get_video_data['data']['point'])) {
+        $video_point = $get_video_data['data']['point'];
+    }
     ?>
-    <div id="video-overlay">
-        <div class="video-content-div">
-            <div class="custom-container container">
-                <div class="video-player">
-                    <div class="player-content">
-                        <div class="player-content-inner">
-                            <div class="visible-desktop" id="hero-vid">
-                                <div class="player"></div></div>
+
+    <?php if (!empty($channel_unlocked)): ?>
+        <div id="video-overlay">
+            <div class="video-content-div">
+                <div class="custom-container container">
+                    <div class="video-player">
+                        <div class="player-content">
+                            <div class="player-content-inner">
+                                <div class="visible-desktop" id="hero-vid">
+                                    <div class="player" data-video_id="<?php echo $video_id; ?>" data-nonce="<?php echo wp_create_nonce('save_point_data'); ?>"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php else: ?>
+        <div id="video-overlay">
+            <div class="video-content-div">
+                <div class="custom-container container">
+                    <div class="video-player">
+                        <div class="player-content">
+                            <div class="player-content-inner">
+                                <div class="visible-desktop" id="hero-vid">
+                                    <div class="image">
+                                        <?php
+                                        $banner = get_post_meta($channel->ID, 'chnl_poster', true);
+                                        ?>
+                                        <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/650'; ?>" alt="<?php echo get_the_title(); ?>">
+                                            <div class="v-overlay">
+                                                <div class="lock_overlay"><span class="lock-icon"></span>
+                                                    <div class="subscribe_now mt-3">
+                                                        <p>In order to view this video you need to subscribe</p>
+                                                        <a href="/packages" class="btn btn-primary">Subscribe Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="video-page-content">
         <div class="row no-gutters">
             <div class="custom-container container video-content">
-                <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
-                <p><?php echo $year . ' - ' . $duration; ?></p>
-                <p>
-                    <?php
-                    if ($genres) {
-                        foreach ($genres as $genre) {
-                            echo '<span class="p-2">' . $genre . '</span>';
+                <div class="col-md-9 col-sm-9 pull-left">
+                    <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
+                    <p><?php echo $year . ' - ' . $duration; ?></p>
+                    <p>
+                        <?php
+                        if ($genres) {
+                            foreach ($genres as $genre) {
+                                echo '<span class="p-2">' . $genre . '</span>';
+                            }
                         }
+                        ?>
+                    </p>
+                    <p><?php echo $desc; ?></p>
+                </div>
+                <div class="col-md-3 col-sm-3 pull-right">
+                    <?php
+                    $channel_meta = get_post_meta($channel->ID);
+                    $channel_img = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/240/360';
+                    $channel_id = $channel_meta['chnl_id'][0];
+                    if ($channel_meta['chnl_spotlight_poster'][0]) {
+                        $channel_img = $channel_meta['chnl_spotlight_poster'][0] . '/240/360';
                     }
                     ?>
-                </p>
-                <p><?php echo $desc; ?></p>
+                    <div class="col-sm-12 text-center add_to_list mb-2 pt-5">
+                        <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="search-custom-width mb-2">
+                        <div class="my_list_button">
+                            <?php
+                            if ($client_token) {
+                                $obj = new Dsp_External_Api_Request();
+                                $list_channel = $obj->get_user_watchlist($client_token);
+                                $in_list = array();
+                                if ($list_channel['channels'] && !empty($list_channel['channels'])) {
+                                    foreach ($list_channel['channels'] as $ch) {
+                                        $in_list[] = $ch['_id'];
+                                    }
+                                }
+                                if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
+                                    ?>
+                                    <button class="btn btn-danger text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
+                                <?php } else { ?>
+                                    <button class="btn btn-primary text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <button class="btn btn-primary login-link text-uppercase"><i class="fa fa-plus-circle"></i>Add to My List</button>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
-
-                                <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;         ?>"></script>-->
         <?php
         /**
          * code to add next and previous video link
@@ -143,25 +236,44 @@ if (!is_wp_error($video) && !empty($video)):
                 <?php } ?>
             </div>
         </div>
-        <?php
-    endif;
-    ?>
-    <div class="row no-gutters">
-        <div class="custom-container container  pt-7 other-categories">
-            <?php
-            /**
-             * function to display rails of the video in the current channel
-             */
-            if ($child_channels) {
-                $cnt = 0;
-                foreach ($child_channels as $child_channel) {
-                    $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
-                    $videos = $theme_function->show_videos($single_channel, 'other_carousel');
+
+        <div class="row no-gutters">
+            <div class="custom-container container  pt-7 other-categories">
+                <?php
+                /**
+                 * function to display rails of the video in the current channel
+                 */
+                if ($child_channels) {
+                    $cnt = 0;
+                    foreach ($child_channels as $child_channel) {
+                        $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
+                        $videos = $theme_function->show_videos($single_channel, 'other_carousel');
+                        if ($videos) {
+                            ?>
+                            <!-- Single Channel Video section start -->
+                            <div class="no-gutters">
+                                <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
+                                <?php
+                                $class = 'home-carousel' . $cnt;
+                                $class_array[] = $class;
+                                $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                include(locate_template('page-templates/templates-part/channel-videos.php'));
+                                ?>
+                            </div>
+                            <!-- Single Channel Video section end -->
+                            <?php
+                            $cnt++;
+                        }
+                    }
+                } else {
+                    $videos = $theme_function->show_videos($channel, 'other_carousel');
+                    $cnt = 0;
                     if ($videos) {
                         ?>
                         <!-- Single Channel Video section start -->
                         <div class="no-gutters">
-                            <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
+                            <h3 class="post-title mb-5"><?php echo $channel->post_title; ?></h3>
                             <?php
                             $class = 'home-carousel' . $cnt;
                             $class_array[] = $class;
@@ -172,32 +284,14 @@ if (!is_wp_error($video) && !empty($video)):
                         </div>
                         <!-- Single Channel Video section end -->
                         <?php
-                        $cnt++;
                     }
                 }
-            } else {
-                $videos = $theme_function->show_videos($channel, 'other_carousel');
-                $cnt = 0;
-                if ($videos) {
-                    ?>
-                    <!-- Single Channel Video section start -->
-                    <div class="no-gutters">
-                        <h3 class="post-title mb-5"><?php echo $channel->post_title; ?></h3>
-                        <?php
-                        $class = 'home-carousel' . $cnt;
-                        $class_array[] = $class;
-                        $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                        $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-                        include(locate_template('page-templates/templates-part/channel-videos.php'));
-                        ?>
-                    </div>
-                    <!-- Single Channel Video section end -->
-                    <?php
-                }
-            }
-            ?>
+                ?>
+            </div>
         </div>
-    </div>
+        <?php
+    endif;
+    ?>   
     <div class="row no-gutters pb-5">
         <div class="custom-container container  pt-7 other-categories">
             <?php
@@ -237,6 +331,17 @@ if (!is_wp_error($video) && !empty($video)):
                     });
                 }
             }, 250);
+
+<?php if ($client_token && $video_point) { ?>
+                jQuery(document).ready(function (e) {
+                    var dspPlayerCheckTimepoint = setInterval(function () {
+                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                            clearInterval(dspPlayerCheckTimepoint);
+                            dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
+                        }
+                    }, 250);
+                });
+<?php } ?>
         });
     </script>
 </div>

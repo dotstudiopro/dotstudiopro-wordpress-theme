@@ -4,6 +4,9 @@ $slide_text_class = '';
 if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1) {
     $slide_text_class .= 'slide-text';
 }
+$lock_video_class = '';
+if (isset($channel_unlocked) && $channel_unlocked == 0)
+    $lock_video_class = 'lock-overlay';
 ?>
 <div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
     <?php
@@ -11,18 +14,24 @@ if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1) {
     foreach ($videos as $video):
         $class = '';
         if (!preg_match('/^[a-f\d]{24}$/i', $video_slug)) {
-            if ($video['slug'] == $video_slug)
+            if ($video_slug && $video['slug'] == $video_slug)
                 $class = 'active';
         } else {
-            if ($video['id'] == $video_slug)
+            if ($video_slug && $video['id'] == $video_slug)
                 $class = 'active';
         }
         ?>
         <div class="slide <?php echo $class; ?>">
             <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
-                <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
+                <div class="hover <?php echo $lock_video_class; ?> ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                     <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy w-100" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
                     <div class="overlay">
+                        <?php if (isset($channel_unlocked) && $channel_unlocked == 0):
+                            ?>
+                            <div class="lock_overlay"><span class="lock-icon"></span>Subscribe now</div>
+                            <?php
+                        endif;
+                        ?>
                         <div class="watch_now"><a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                     </div>
                 </div>

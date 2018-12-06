@@ -24,6 +24,28 @@ if (!isset($redux_owd) && file_exists(dirname(__FILE__) . '/framework/dsp_option
 // initialize the the theme's option
 Redux::init('dsp_theme_options');
 
+/*
+ * checking if user is logged
+ */
+add_action('init', 'check_user_status', 1);
+
+function check_user_status() {
+    ob_start();
+    global $client_token;
+    $client_token = 0;
+    $client_id = get_current_user_id();
+    if ($client_id && !current_user_can('administrator')) {
+        $client_token = get_user_meta($client_id, 'dotstudiopro_client_token', true);
+        $client_token_expiration = get_user_meta($client_id, 'dotstudiopro_client_token_expiration', true);
+        if ($client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
+            $client = new Dsp_External_Api_Request();
+            $client_token = $client->refresh_client_token($client_token);
+            update_user_meta($client_id, 'dotstudiopro_client_token', $client_token['client_token']);
+            update_user_meta($client_id, 'dotstudiopro_client_token_expiration', time() + 5400);
+        }
+    }
+}
+
 // function to display menu option in admin panel.
 if (function_exists('register_nav_menus')) {
     register_nav_menus(
@@ -125,12 +147,12 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'modernizr.custom', 'effects.min');
+    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom', 'modernizr.custom', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
     endforeach;
-    wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
@@ -330,8 +352,44 @@ function autocomplete() {
     wp_send_json_success($items);
 }
 
+/**
+ * 
+ * @global type $client_token
+ * @return type
+ */
+function addToMyList() {
+    global $client_token;
+    $responce = array();
+    if (wp_verify_nonce($_POST['nonce'], 'addToMyList')) {
+        $dotstudio_api = new Dsp_External_Api_Request();
+        $channel_id = $_POST['channel_id'];
+        $responce = $dotstudio_api->add_to_user_list($client_token, $channel_id);
+    }
+    wp_send_json_success($responce);
+}
+
+/**
+ * 
+ * @global type $client_token
+ * @return type
+ */
+function removeFromMyList() {
+    global $client_token;
+    $responce = array();
+    if (wp_verify_nonce($_POST['nonce'], 'removeFromMyList')) {
+        $dotstudio_api = new Dsp_External_Api_Request();
+        $channel_id = $_POST['channel_id'];
+        $responce = $dotstudio_api->remove_from_user_list($client_token, $channel_id);
+    }
+    wp_send_json_success($responce);
+}
+
 add_action('wp_ajax_autocomplete', 'autocomplete');
 add_action('wp_ajax_nopriv_autocomplete', 'autocomplete');
+add_action('wp_ajax_addToMyList', 'addToMyList');
+add_action('wp_ajax_nopriv_addToMyList', 'addToMyList');
+add_action('wp_ajax_removeFromMyList', 'removeFromMyList');
+add_action('wp_ajax_nopriv_removeFromMyList', 'removeFromMyList');
 
 /**
  * Remove the admin bar for subscribers
@@ -350,6 +408,7 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
 function dsp_add_login_link($items, $args) {
     if ($args->theme_location == 'main_menu') {
         if (is_user_logged_in()) {
+            $items .= '<li><a href="/my-lists">My List</a></li>';
             $items .= '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>';
         } else {
             $items .= '<li><a href="#" data-login_url="' . wp_login_url() . '" class="dsp-auth0-login-button">Log In</a></li>';
@@ -415,6 +474,64 @@ function dsp_get_category_list_lis() {
         echo "<div class='blog-category-link'>" . $link . "</div>";
         echo "<div class='blog-category-count'>$count $articles</div>";
         echo "</li>";
+    }
+}
+
+/**
+ * Add a dotstudioPRO customer ID to the user that we get back from Auth0
+ *
+ * @param integer $user_id - WordPress user ID
+ * @param stdClass $userinfo - user information object from Auth0
+ * @param boolean $is_new - true if the user was created in WordPress, false if not
+ * @param string $id_token - ID token for the user from Auth0 (not used in code flow)
+ * @param string $access_token - bearer access token from Auth0 (not used in implicit flow)
+ */
+function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $access_token) {
+
+    if (empty($userinfo->user_metadata->customer) || empty($userinfo->user_metadata->spotlight))
+        return;
+    $customer_id = $userinfo->user_metadata->customer;
+    $spotlight = $userinfo->user_metadata->spotlight;
+
+    update_user_meta($user_id, "dotstudiopro_customer_id", $customer_id);
+    update_user_meta($user_id, "dotstudiopro_client_token", $spotlight);
+    update_user_meta($user_id, "dotstudiopro_client_token_expiration", time() + 5400);
+
+    $subscriptionClass = new Dotstudiopro_Subscription_Request();
+    $subscription = $subscriptionClass->getUserSubscription($spotlight);
+    if (!empty($sub[0]->subscription->platform)) {
+        update_user_meta($user_id, "dotstudiopro_subscription_platform", $sub[0]->subscription->platform);
+    }
+}
+
+add_action('auth0_user_login', 'dsp_add_customer_id_to_user', 10, 5);
+
+/**
+ * Ajax call to store the point data
+ */
+add_action('wp_ajax_save_point_data', 'save_point_data');
+add_action('wp_ajax_nopriv_save_point_data', 'save_point_data');
+
+function save_point_data() {
+    global $client_token;
+    if ($client_token && wp_verify_nonce($_POST['nonce'], 'save_point_data')) {
+        $video_id = $_POST['video_id'];
+        $point = $_POST['play_time'];
+        $dspExternalApiClass = new Dsp_External_Api_Request();
+        $response = $dspExternalApiClass->create_point_data($client_token, $video_id, $point);
+        if (is_wp_error($response)) {
+            $send_response = array('message' => 'Server Error : ' . $response->get_error_message());
+            wp_send_json_error($send_response, 403);
+        } elseif (isset($response['success']) && $response['success'] == 1) {
+            $send_response = array('message' => 'point data save succesfully.');
+            wp_send_json_success($send_response, 200);
+        } else {
+            $send_response = array('message' => 'Internal Server Error');
+            wp_send_json_error($send_response, 500);
+        }
+    } else {
+        $send_response = array('message' => 'Internal Server Error');
+        wp_send_json_error($send_response, 500);
     }
 }
 

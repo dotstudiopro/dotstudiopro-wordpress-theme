@@ -140,3 +140,65 @@ jQuery('.dsp-auth0-login-button').click(function () {
         window.location.href = jQuery(this).data('login_url');
     }
 });
+
+/**
+ * Action to load login pop-up if user is not logged-in
+ */
+jQuery('.login-link').on('click', function (e) {
+    e.preventDefault();
+    $('#a0LoginButton').click();
+});
+
+/**
+ * Add funcationality to add to my watch list
+ */
+
+jQuery('.manage_my_list').click(function (e) {
+    e.preventDefault();
+    $(this).prop('disabled', true);
+
+    var action = $(this).data('action');
+    var nonce = $(this).data('nonce');
+    var channel_id = $(this).data('channel_id');
+    var manage_my_list = $.post(
+            jsVariable.ajaxUrl,
+            {
+                'action': action,
+                'nonce': nonce,
+                'channel_id': channel_id
+            }
+    );
+    manage_my_list.done(function (response) {
+        $(this).prop('disabled', false);
+        if (action == 'addToMyList') {
+            $('.my_list_button').html('<a href="/my-list" class="btn btn-danger text-uppercase"><i class="fa fa-setting"></i>Remove from My List</a>');
+        } else {
+            window.location.reload();
+        }
+    });
+});
+
+/**
+ * Event to store the point data when the video page is refreshed
+ * @param {type} param1
+ * @param {type} param2
+ */
+
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
+        var play_time = dotstudiozPlayer.player.currentTime();
+        var video_id = jQuery('.player').data('video_id');
+        var nonce = jQuery('.player').data('nonce');
+        $.post(
+                jsVariable.ajaxUrl,
+                {
+                    'action': 'save_point_data',
+                    'play_time': play_time,
+                    'video_id': video_id,
+                    'nonce': nonce
+                }
+        );
+        return true;
+    }
+});

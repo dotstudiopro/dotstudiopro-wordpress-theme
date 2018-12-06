@@ -5,7 +5,7 @@
  * This template is used to display Home Page of the site.
  * @since 1.0.0
  */
-global $dsp_theme_options;
+global $dsp_theme_options, $client_token;
 get_header();
 
 $theme_function = new Theme_Functions();
@@ -49,7 +49,32 @@ $main_carousel = $theme_function->home_page_main_carousel();
     <div class="row no-gutters other-categories">
         <?php
         $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'channel-category');
-
+        $cnt = 0;
+        $class_array = [];
+        $slide_text_class = '';
+        if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
+            $slide_text_class .= 'slide-text';
+        }
+        $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        if ($client_token) {
+            $dotstudiopro_api = new Dsp_External_Api_Request();
+            $watch_list = $dotstudiopro_api->get_recent_viewed_data($client_token);
+            if (!is_wp_error($watch_list)) {
+                if (!empty($watch_list['data']['continue-watching'])) {
+                    $class = 'home-carousel' . $cnt;
+                    $class_array[] = $class;
+                    include(locate_template('page-templates/templates-part/homepage/continue-watch.php'));
+                    $cnt++;
+                }
+                if (!empty($watch_list['data']['watch-again'])) {
+                    $class = 'home-carousel' . $cnt;
+                    $class_array[] = $class;
+                    include(locate_template('page-templates/templates-part/homepage/watch-again.php'));
+                    $cnt++;
+                }
+            }
+        }
         $category_args = array(
             'post_type' => 'channel-category',
             'posts_per_page' => -1,
@@ -67,8 +92,6 @@ $main_carousel = $theme_function->home_page_main_carousel();
         $categories = new WP_Query($category_args);
 
         if ($categories->have_posts()) {
-            $cnt = 1;
-            $class_array = [];
             foreach ($categories->posts as $category) {
                 $category_slug = $category->post_name;
                 $category_name = $category->post_title;
@@ -80,12 +103,6 @@ $main_carousel = $theme_function->home_page_main_carousel();
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
-                        $slide_text_class = '';
-                        if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
-                            $slide_text_class .= 'slide-text';
-                        }
-                        $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                        $height = filter_var($dsp_theme_options['opt-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
                         ?>
                         <div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
                             <?php $i = 1 ?>
