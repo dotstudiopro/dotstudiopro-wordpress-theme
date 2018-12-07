@@ -147,7 +147,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                     $cnt++;
                 }
             }
-            $theme_function->slick_init_options($class_array, 'home');
+            $theme_function->slick_init_options('slick_carousel', $class_array, 'home');
         }
         ?>
 

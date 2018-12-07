@@ -16,6 +16,14 @@ a.btn.cc-readmore:hover{
 }
 .tooltip_templates { display: none; }
 
+.search-custom-width{
+    width:50%;
+}
+
+.col-md-2.p-2.channel-banner {
+    width: 50%;
+}  
+
 .subscribe_now a {
     font-size: 20px;
     text-transform: uppercase;
@@ -53,6 +61,13 @@ a.btn.cc-readmore:hover{
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
+
+#return-to-top:hover i {top: -21px !important;}
+
+.my_list_button button i, .my_list_button a i, .manage_my_list i{
+    color: #fff;
+    margin-right: 5px}
+
 .lock_overlay {
     color: #fff;
     top: 50%;
@@ -60,16 +75,15 @@ a.btn.cc-readmore:hover{
     transform: translateY(-50%);
     font-size: 20px;
     text-transform: uppercase;
+    font-weight: 700;
 }
-.lock_overlay span.lock-icon {
-    background: url(../img/lock-icon.png) no-repeat top center/cover;
-    height: 30px;
-    width: 30px;
+
+.lock_overlay i{
+    color: #fff;
+    font-size: 33px;
     display: block;
-    text-align: center;
-    z-index: 999999;
-    margin: 0 auto 5px;
 }
+
 .lock_overlay .watch_now {
     display: none;
 }

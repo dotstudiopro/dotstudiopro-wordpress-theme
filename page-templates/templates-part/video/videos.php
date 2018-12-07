@@ -32,8 +32,8 @@ if (!empty($video_id))
 
 if (!is_wp_error($video) && !empty($video)):
 
-    $desc = ($video['description']) ? $video['description'] : '';
-    $title = ($video['title']) ? $video['title'] : '';
+    $desc = isset($video['description']) ? $video['description'] : '';
+    $title = isset($video['title']) ? $video['title'] : '';
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
     $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
@@ -69,9 +69,11 @@ if (!is_wp_error($video) && !empty($video)):
      * Get "recently watched" data for a video.
      */
     $video_point = '';
-    $get_video_data = $dsp_api->get_recent_viewed_data_video($client_token, $video_id);
-    if (!is_wp_error($get_video_data) && !empty($get_video_data['data']['point'])) {
-        $video_point = $get_video_data['data']['point'];
+    if (!empty($client_token)) {
+        $get_video_data = $dsp_api->get_recent_viewed_data_video($client_token, $video_id);
+        if (!is_wp_error($get_video_data) && !empty($get_video_data['data']['point'])) {
+            $video_point = $get_video_data['data']['point'];
+        }
     }
     ?>
 
@@ -105,9 +107,9 @@ if (!is_wp_error($video) && !empty($video)):
                                         ?>
                                         <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/650'; ?>" alt="<?php echo get_the_title(); ?>">
                                             <div class="v-overlay">
-                                                <div class="lock_overlay"><span class="lock-icon"></span>
+                                                <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
-                                                        <p>In order to view this video you need to subscribe</p>
+                                                        <p>In order to view this video you need to subscribe first</p>
                                                         <a href="/packages" class="btn btn-primary">Subscribe Now</a>
                                                     </div>
                                                 </div>
@@ -163,7 +165,7 @@ if (!is_wp_error($video) && !empty($video)):
                                 }
                                 if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
                                     ?>
-                                    <button class="btn btn-danger text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
+                                    <a href="/my-list" class="btn btn-danger text-uppercase"><i class="fa fa-minus-circle"></i>Remove from My List</a>
                                 <?php } else { ?>
                                     <button class="btn btn-primary text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
                                 <?php } ?>
@@ -306,10 +308,9 @@ if (!is_wp_error($video) && !empty($video)):
                 }
                 $cnt = 0;
                 include(locate_template('page-templates/templates-part/related-content.php'));
-                array_push($class_array, 'related_content');
             }
-
-            $theme_function->slick_init_options($class_array, 'video');
+            $theme_function->slick_init_options('slick_related_carousel', 'related_content', 'related');
+            $theme_function->slick_init_options('slick_carousel', $class_array, 'video');
             ?>
         </div>
     </div>

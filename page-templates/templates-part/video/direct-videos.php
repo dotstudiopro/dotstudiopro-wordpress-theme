@@ -56,63 +56,63 @@ if (!is_wp_error($video) && !empty($video)):
                 </div>
             </div>
         </div>
-        <div class="video-page-content">
-            <div class="row no-gutters">
-                <div class="custom-container container video-content">
-                    <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
-                    <p><?php echo '(' . $year . ') - ' . $duration; ?></p>
-                    <p>
-                        <?php
-                        if ($genres) {
-                            foreach ($genres as $genre) {
-                                echo '<span class="p-2">' . $genre . '</span>';
-                            }
+    </div>    
+    <div class="video-page-content">
+        <div class="row no-gutters">
+            <div class="custom-container container video-content">
+                <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
+                <p><?php echo '(' . $year . ') - ' . $duration; ?></p>
+                <p>
+                    <?php
+                    if ($genres) {
+                        foreach ($genres as $genre) {
+                            echo '<span class="p-2">' . $genre . '</span>';
                         }
-                        ?>
-                    </p>
-                    <p><?php echo $desc; ?></p>
+                    }
+                    ?>
+                </p>
+                <p><?php echo $desc; ?></p>
 
-                </div>
             </div>
-        <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;                                          ?>"></script>-->
-            <?php
-        endif;
-        ?>
-        <div class="row no-gutters pb-5">
-            <div class="custom-container container  pt-7 other-categories">
-                <?php
-// Display Recomendation section
-                if ($dsp_theme_options['opt-related-section'] == 1) {
-                    $type = 'video';
-                    $related_id = $video_id;
-                    $cnt = 0;
-                    include(locate_template('page-templates/templates-part/related-content.php'));
-                    $class_array = array();
-                    array_push($class_array, 'related_content');
-                    $theme_function->slick_init_options($class_array, 'video');
-                }
-                ?>
-            </div></div>
-        <?php
-        ?>
-        <script>
-            jQuery(document).ready(function (e) {
+        </div>
 
-                var script = document.createElement("script");
-                script.setAttribute("type", "text/javascript");
-                script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
-                document.getElementsByTagName("body")[0].appendChild(script);
+                        <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;                                                ?>"></script>-->
+        <?php
+    endif;
+    ?>
+    <div class="row no-gutters pb-5">
+        <div class="custom-container container  pt-7 other-categories">
+            <?php
+// Display Recomendation section
+            if ($dsp_theme_options['opt-related-section'] == 1) {
+                $type = 'video';
+                $related_id = $video_id;
+                $cnt = 0;
+                include(locate_template('page-templates/templates-part/related-content.php'));
+                $theme_function->slick_init_options('slick_related_carousel', 'related_content', 'related');
+            }
+            ?>
+        </div></div>
+    <?php
+    ?>
+    <script>
+        jQuery(document).ready(function (e) {
+
+            var script = document.createElement("script");
+            script.setAttribute("type", "text/javascript");
+            script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
+            document.getElementsByTagName("body")[0].appendChild(script);
 
 <?php if ($client_token && $video_point) { ?>
-                    jQuery(document).ready(function (e) {
-                        var dspPlayerCheckTimepoint = setInterval(function () {
-                            if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                                clearInterval(dspPlayerCheckTimepoint);
-                                dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
-                            }
-                        }, 250);
-                    });
+                jQuery(document).ready(function (e) {
+                    var dspPlayerCheckTimepoint = setInterval(function () {
+                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                            clearInterval(dspPlayerCheckTimepoint);
+                            dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
+                        }
+                    }, 250);
+                });
 <?php } ?>
 
-            });
-        </script>
+        });
+    </script>

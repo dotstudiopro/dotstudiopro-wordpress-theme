@@ -147,12 +147,12 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom', 'modernizr.custom', 'effects.min');
+    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'modernizr.custom', 'effects.min');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
     endforeach;
-    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
@@ -186,9 +186,9 @@ function class_to_html_tag($output, $doctype) {
 // function to add bosy class
 function theme_body_class($class = '') {
     global $dsp_theme_options;
-    $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width' : 'boxed';
-    $fix_class = ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav' : '';
-    echo 'class="' . join(' ', get_body_class($class)) . join(' ', get_body_class($fix_class)) . '"';
+    $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width ' : 'boxed ';
+    $class .= ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav ' : '';
+    echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
 
 /**

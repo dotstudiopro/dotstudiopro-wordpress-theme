@@ -87,7 +87,8 @@ class Theme_Functions {
 
         $category = get_page_by_path($category_name, OBJECT, 'channel-category');
         // Make sure we actually have something here to show, or else this throws an error
-        if (empty($category->ID)) return array();
+        if (empty($category->ID))
+            return array();
 
         $category_meta = get_post_meta($category->ID, 'cat_id');
         $category_id = $category_meta[0];
@@ -184,28 +185,28 @@ class Theme_Functions {
             foreach ($child_channels as $key => $channel_name):
                 $channel = $this->get_channel_by_name($channel_name);
                 if ($channel):
-                $channel_meta = get_post_meta($channel->ID);
-                $response[$key]['id'] = $channel_meta['chnl_id'][0];
-                $response[$key]['title'] = $channel->post_title;
-                $response[$key]['description'] = $channel->post_content;
-                $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $channel_meta = get_post_meta($channel->ID);
+                    $response[$key]['id'] = $channel_meta['chnl_id'][0];
+                    $response[$key]['title'] = $channel->post_title;
+                    $response[$key]['description'] = $channel->post_content;
+                    $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
+                    $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                     if ($type == 'categories-template') {
                         $dsp_theme_options['opt-play-btn-type'] = 'play-video';
                     }
 
-                if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
-                    $response[$key]['url'] = get_the_permalink($channel->ID);
+                    if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
+                        $response[$key]['url'] = get_the_permalink($channel->ID);
 
-                else {
-                    $channelVideos = $this->get_channel_videos($channel->ID);
-                    if ($channelVideos) {
-                        $response[$key]['slug'] = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : '';
-                        $videoSlug = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : $channelVideos[0]['_id'];
-                        $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
+                    else {
+                        $channelVideos = $this->get_channel_videos($channel->ID);
+                        if ($channelVideos) {
+                            $response[$key]['slug'] = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : '';
+                            $videoSlug = ($channelVideos[0]['slug']) ? $channelVideos[0]['slug'] : $channelVideos[0]['_id'];
+                            $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
+                        }
                     }
-                }
                 endif;
             endforeach;
         } else {
@@ -286,7 +287,7 @@ class Theme_Functions {
         }
         else {
             return array();
-    }
+        }
     }
 
     /**
@@ -389,9 +390,9 @@ class Theme_Functions {
      *
      * @param type $class_array
      */
-    public function slick_init_options($class_array = null, $type) {
+    public function slick_init_options($slider_class_name, $class_array = null, $type) {
         global $dsp_theme_options;
-        wp_localize_script('slick-init', 'slick_carousel', array(
+        wp_localize_script('slick-init', $slider_class_name, array(
             'selector' => $class_array,
             'slidetoshow' => $dsp_theme_options['opt-slick-' . $type . '-slidetoshow'],
             'slidetoscroll' => $dsp_theme_options['opt-slick-' . $type . '-slidetoscroll'],

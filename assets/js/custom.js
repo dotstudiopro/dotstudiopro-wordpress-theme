@@ -171,7 +171,7 @@ jQuery('.manage_my_list').click(function (e) {
     manage_my_list.done(function (response) {
         $(this).prop('disabled', false);
         if (action == 'addToMyList') {
-            $('.my_list_button').html('<a href="/my-list" class="btn btn-danger text-uppercase"><i class="fa fa-setting"></i>Remove from My List</a>');
+            $('.my_list_button').html('<a href="/my-list" class="btn btn-danger text-uppercase"><i class="fa fa-minus-circle"></i>Remove from My List</a>');
         } else {
             window.location.reload();
         }
@@ -190,15 +190,17 @@ window.addEventListener('beforeunload', function (e) {
         var play_time = dotstudiozPlayer.player.currentTime();
         var video_id = jQuery('.player').data('video_id');
         var nonce = jQuery('.player').data('nonce');
-        $.post(
-                jsVariable.ajaxUrl,
-                {
-                    'action': 'save_point_data',
-                    'play_time': play_time,
-                    'video_id': video_id,
-                    'nonce': nonce
-                }
-        );
+        if (video_id && play_time) {
+            $.post(
+                    jsVariable.ajaxUrl,
+                    {
+                        'action': 'save_point_data',
+                        'play_time': play_time,
+                        'video_id': video_id,
+                        'nonce': nonce
+                    }
+            );
+        }
         return true;
     }
 });

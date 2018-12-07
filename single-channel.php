@@ -107,10 +107,10 @@ if (have_posts()) {
                         ?>
                     </div>
                     <?php
-                    array_push($class_array, 'related_content');
+                    //array_push($class_array, 'related_content');
                 }
-
-                $theme_function->slick_init_options($class_array, 'video');
+                $theme_function->slick_init_options('slick_related_carousel', 'related_content', 'related');
+                $theme_function->slick_init_options('slick_carousel', $class_array, 'video');
                 ?>
             </div> <!-- other-categories -->
         </div><!-- container -->
