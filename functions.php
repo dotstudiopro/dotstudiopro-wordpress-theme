@@ -408,8 +408,17 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
 function dsp_add_login_link($items, $args) {
     if ($args->theme_location == 'main_menu') {
         if (is_user_logged_in()) {
-            $items .= '<li><a href="/my-lists">My List</a></li>';
-            $items .= '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>';
+            $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
+                    . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
+                    . '<ul class="dropdown-menu position-absolute" role="menu">';
+            if (class_exists('Dotstudiopro_Subscription')):
+                $items .= '<li><a href="/packages">Subscriptions</a></li>'
+                        . '<li><a href="/payment-profile">My Payment Profile</a></li>';
+            endif;
+            $items .= '<li><a href="/my-lists">My List</a></li>'
+                    . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
+                    . '</ul>'
+                    . '</li>';
         } else {
             $items .= '<li><a href="#" data-login_url="' . wp_login_url() . '" class="dsp-auth0-login-button">Log In</a></li>';
         }

@@ -22,7 +22,7 @@ if (!empty($recommendation_content)):
         foreach ($recommendation_content as $channel):
             ?>
             <div class="slide">
-                <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
                     <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                         <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
                         <div class="overlay">
@@ -44,7 +44,7 @@ if (!empty($recommendation_content)):
                     </div>
                 <?php elseif ($dsp_theme_options['opt-related-layout-slider-content'] == 2): ?>
                     <div class="tooltip_templates">
-                        <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                        <span id="<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
                             <h4><?php echo $title; ?></h4>
                             <p><?php echo $description; ?></p>
                         </span>

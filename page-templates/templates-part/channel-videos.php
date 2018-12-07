@@ -22,7 +22,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
         }
         ?>
         <div class="slide <?php echo $class; ?>">
-            <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+            <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'channel_tooltip_content_' . $cnt . $i; ?>">
                 <div class="hover <?php echo $lock_video_class; ?> ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                     <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy w-100" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
                     <div class="overlay">
@@ -50,7 +50,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
                 </div>
             <?php elseif ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 2): ?>
                 <div class="tooltip_templates">
-                    <span id="<?php echo 'tooltip_content_' . $cnt . $i; ?>">
+                    <span id="<?php echo 'channel_tooltip_content_' . $cnt . $i; ?>">
                         <h4><?php echo $title; ?></h4>
                         <p><?php echo $description; ?></p>
                     </span>
