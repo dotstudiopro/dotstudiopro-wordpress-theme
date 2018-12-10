@@ -8,6 +8,62 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
                 'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
 
+/**
+ * Create the pages when theme is activated
+ */
+if (isset($_GET['activated']) && is_admin()) {
+
+    $home_page = get_page_by_title('Home Page');
+    $categories_page = get_page_by_title('Categories');
+    $video = get_page_by_title('Video');
+    $my_list_page = get_page_by_title('My List');
+
+    if ($home_page == NULL || $home_page->post_status == 'trash')
+        add_my_theme_custom_pages('Home Page', 'home-page', 'home-template.php');
+    else
+        update_post_meta($home_page->ID, '_wp_page_template', 'page-templates/home-template.php');
+
+    if ($categories_page == NULL || $categories_page->post_status == 'trash')
+        add_my_theme_custom_pages('Categories', 'categories', 'categories-template.php');
+    else
+        update_post_meta($categories_page->ID, '_wp_page_template', 'page-templates/categories-template.php');
+
+    if ($video == NULL || $video->post_status == 'trash')
+        add_my_theme_custom_pages('Video', 'video', 'video-player.php');
+    else
+        update_post_meta($video->ID, '_wp_page_template', 'page-templates/video-player.php');
+
+    if ($my_list_page == NULL || $my_list_page->post_status == 'trash')
+        add_my_theme_custom_pages('My List', 'my-list', 'my-lists-template.php');
+    else
+        update_post_meta($my_list_page->ID, '_wp_page_template', 'page-templates/my-lists-template.php');
+}
+
+/**
+ * function to add new pages with their template
+ * @param type $title
+ * @param type $slug
+ * @param type $new_page_template
+ * @param type $desc
+ * @param type $status
+ * @param type $author
+ * @param type $type
+ */
+function add_my_theme_custom_pages($title, $slug, $new_page_template, $desc = '', $status = 'publish', $author = 1, $type = 'page') {
+    $my_post = array(
+        'post_title' => wp_strip_all_tags($title),
+        'post_content' => $desc,
+        'post_status' => $status,
+        'post_name' => $slug,
+        'post_author' => $author,
+        'post_type' => $type,
+    );
+    $page_id = wp_insert_post($my_post);
+    if (!empty($new_page_template)) {
+        update_post_meta($page_id, '_wp_page_template', 'page-templates/' . $new_page_template);
+    }
+}
+
 require_once (dirname(__FILE__) . '/includes/class-walker-dsp-submenu.php');
 require_once (dirname(__FILE__) . '/includes/class-theme-functions.php');
 
