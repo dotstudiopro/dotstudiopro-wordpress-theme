@@ -247,7 +247,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose height for the logo.', 'dotstudio-pro'),
             'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
-            'compiler' => array('.site-logo img'),
+            'output' => array('.site-logo img'),
             'units' => array('px'),
             'width' => false,
             'default' => array(
@@ -327,28 +327,55 @@ Redux::setSection($opt_name, array(
     'icon' => 'el el-brush',
     'fields' => array(
         array(
+            'id' => 'opt-color-selection-section',
+            'type' => 'switch',
+            'title' => __('Set Main Theme Color', 'dotstudio-pro'),
+            'description' => __('If you not enable this option then it will take main theme color from css', 'dotstudio-pro'),
+            'default' => 0,
+            'on' => 'On',
+            'off' => 'Off',
+        ),
+        array(
+            'id' => 'opt-main-theme-color',
+            'type' => 'color',
+            'title' => __('Site Main Theme Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'default' => '#87b145',
+            'validate' => 'color',
+            'required' => array('opt-color-selection-section', '=', 1),
+        ),
+        array(
+            'id' => 'opt-main-theme-hover-color',
+            'type' => 'color',
+            'title' => __('Site Main Theme Hover Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for Hover for Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'default' => '#87b145',
+            'validate' => 'color',
+            'required' => array('opt-color-selection-section', '=', 1),
+        ),
+        array(
             'id' => 'opt-bg-color-header',
             'type' => 'color',
             'title' => __('Site Header Background Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the header (default: #428bca).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a background color for the header (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('header'),
+            'output' => array('header'),
             'mode' => 'background',
         ),
         array(
             'id' => 'opt-color-header',
             'type' => 'color',
             'title' => __('Site Header Text Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the header text (default: #000000).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the header text (default: #ffffff).', 'dotstudio-pro'),
             'default' => '#ffffff',
             'validate' => 'color',
-            'compiler' => array('header'),
+            'output' => array('header', '.main-navigation .navbar-nav > li a', '.site-logo', '.sb-search .sb-icon-search', '.sb-search.sb-search-open .sb-icon-search'),
         ),
         array(
             'id' => 'opt-background',
             'type' => 'background',
-            'compiler' => array('body'),
+            'output' => array('body'),
             'title' => __('Body Background', 'dotstudio-pro'),
             'subtitle' => __('Body background with image, color, etc.', 'dotstudio-pro'),
         ),
@@ -356,29 +383,29 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-color-body',
             'type' => 'color',
             'title' => __('Site Body Text Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the body text (default: #000000).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the body text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('body'),
+            'output' => array('body', 'p'),
         ),
         array(
             'id' => 'opt-bg-color-footer',
             'type' => 'color',
             'title' => __('Footer Background Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the footer (default: #dd9933).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a background color for the footer (default: #dddcdb).', 'dotstudio-pro'),
             'default' => '#dddcdb',
             'validate' => 'color',
-            'compiler' => array('footer'),
+            'output' => array('footer'),
             'mode' => 'background',
         ),
         array(
             'id' => 'opt-color-footer',
             'type' => 'color',
             'title' => __('Site Footer Text Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a background color for the footer text (default: #000000).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the footer text (default: #000000).', 'dotstudio-pro'),
             'default' => '#000000',
             'validate' => 'color',
-            'compiler' => array('footer'),
+            'output' => array('footer', '.footer-nav ul li a', 'footer .copyright p', 'footer h3'),
         ),
     )
 ));
@@ -403,10 +430,9 @@ Redux::setSection($opt_name, array(
             'line-height' => false,
             'subtitle' => __('Specify the body font properties.', 'dotstudio-pro'),
             'google' => true,
+            'color' => false,
             'default' => array(
-                'color' => '#dd9933',
                 'font-family' => 'Arial,Helvetica,sans-serif',
-                'font-weight' => 'Normal',
             ),
         ),
         array(
@@ -665,8 +691,9 @@ Redux::setSection($opt_name, array(
             'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
-                '1' => 'Text',
-                '2' => 'Tooltip'
+                '1' => 'Text & Description',
+                '2' => 'Tooltip',
+                '3' => 'Text',
             ),
             'default' => '1'
         ),
@@ -749,7 +776,7 @@ Redux::setSection($opt_name, array(
             'description' => __('Please enter the value in miliseconds (ex: 1 second is 1000, 2 seconds is 2000)', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '2000',
-            'required' => array('opt-slick-autoplay', '=', true),
+            'required' => array('opt-slick-home-autoplay', '=', true),
         ),
         array(
             'id' => 'opt-slick-home-slidespeed',
@@ -914,8 +941,9 @@ Redux::setSection($opt_name, array(
             'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
-                '1' => 'Text',
-                '2' => 'Tooltip'
+                '1' => 'Text & Description',
+                '2' => 'Tooltip',
+                '3' => 'Text'
             ),
             'default' => '1'
         ),
@@ -988,8 +1016,9 @@ Redux::setSection($opt_name, array(
             'desc' => __('Tooltip will display information in a tooltip, while Text will display information on the thumbnail', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
-                '1' => 'Text',
-                '2' => 'Tooltip'
+                '1' => 'Text & Description',
+                '2' => 'Tooltip',
+                '3' => 'Text'
             ),
             'default' => '1'
         ),
@@ -1068,7 +1097,7 @@ Redux::setSection($opt_name, array(
             'description' => __('By default set to  "2000". Please enter the value in miliseconds (ie. in multiples of 1000).', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '2000',
-            'required' => array('opt-slick-autoplay', '=', true),
+            'required' => array('opt-slick-video-autoplay', '=', true),
         ),
         array(
             'id' => 'opt-slick-video-slidespeed',
@@ -1178,8 +1207,9 @@ Redux::setSection($opt_name, array(
             'desc' => __('Select Tooltip option if you need to display description in a tooltip, or select Text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
-                '1' => 'Text',
-                '2' => 'Tooltip'
+                '1' => 'Text & Description',
+                '2' => 'Tooltip',
+                '3' => 'Text'
             ),
             'required' => array('opt-related-section', '=', 1),
             'default' => '1'
@@ -1215,6 +1245,7 @@ Redux::setSection($opt_name, array(
             'min' => '1',
             'step' => '1',
             'max' => '7',
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-slidetoscroll',
@@ -1225,6 +1256,7 @@ Redux::setSection($opt_name, array(
             'min' => '1',
             'step' => '1',
             'max' => '7',
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-pagination',
@@ -1232,6 +1264,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('This option is to enable/disable the navigation dots under the carousel', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-navigation',
@@ -1239,6 +1272,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('This option is to enable/disable the navigation arrows', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-infinite',
@@ -1246,6 +1280,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('This option is to enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-autoplay',
@@ -1253,6 +1288,7 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-autoplayspeed',
@@ -1261,7 +1297,7 @@ Redux::setSection($opt_name, array(
             'description' => __('By default set to  "2000". Please enter the value in miliseconds (ie. in multiples of 1000).', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '2000',
-            'required' => array('opt-slick-autoplay', '=', true),
+            'required' => array(array('opt-related-section', '=', 1), array('opt-slick-related-autoplay', '=', true)),
         ),
         array(
             'id' => 'opt-slick-related-slidespeed',
@@ -1270,6 +1306,7 @@ Redux::setSection($opt_name, array(
             'description' => __('By default set to  "500". Please enter the value in miliseconds (ie. in multiples of 1000 for seconds).', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '500',
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-responsive',
@@ -1277,13 +1314,14 @@ Redux::setSection($opt_name, array(
             'subtitle' => __('This option is to enable responsive display mode', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
+            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-slick-related-tablet-slidetoshow',
             'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
             'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
             'type' => 'spinner',
-            'required' => array('opt-slick-video-responsive', '=', true),
+            'required' => array(array('opt-related-section', '=', 1), array('opt-slick-related-responsive', '=', true)),
             'default' => '2',
             'min' => '1',
             'step' => '1',
@@ -1294,7 +1332,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
             'subtitle' => __('This defines the number of images to be displayed in mobile screen', 'dotstudio-pro'),
             'type' => 'spinner',
-            'required' => array('opt-slick-video-responsive', '=', true),
+            'required' => array(array('opt-related-section', '=', 1), array('opt-slick-related-responsive', '=', true)),
             'default' => '1',
             'min' => '1',
             'step' => '1',

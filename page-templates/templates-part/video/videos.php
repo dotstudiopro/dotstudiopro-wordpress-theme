@@ -5,6 +5,7 @@
 global $client_token;
 
 $class_array = array();
+$cnt = 0;
 
 $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
 $child_channels = $theme_function->is_child_channels($channel->ID);
@@ -110,7 +111,7 @@ if (!is_wp_error($video) && !empty($video)):
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
                                                         <p>In order to view this video you need to subscribe first</p>
-                                                        <a href="/packages" class="btn btn-primary">Subscribe Now</a>
+                                                        <a href="/packages" class="btn btn-primary btn-ds">Subscribe Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,8 +151,8 @@ if (!is_wp_error($video) && !empty($video)):
                         $channel_img = $channel_meta['chnl_spotlight_poster'][0] . '/240/360';
                     }
                     ?>
-                    <div class="col-sm-12 text-center add_to_list mb-2 pt-5">
-                        <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="search-custom-width mb-2">
+                    <div class="text-center add_to_list mb-2 pt-5">
+                        <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
                         <div class="my_list_button">
                             <?php
                             if ($client_token) {
@@ -165,12 +166,12 @@ if (!is_wp_error($video) && !empty($video)):
                                 }
                                 if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
                                     ?>
-                                    <a href="/my-list" class="btn btn-danger text-uppercase"><i class="fa fa-minus-circle"></i>Remove from My List</a>
+                                    <a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
                                 <?php } else { ?>
                                     <button class="btn btn-primary text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
                                 <?php } ?>
                             <?php } else { ?>
-                                <button class="btn btn-primary login-link text-uppercase"><i class="fa fa-plus-circle"></i>Add to My List</button>
+                                <button class="btn btn-primary btn-ds"><i class="fa fa-plus-circle"></i>Add to My List</button>
                             <?php } ?>
                         </div>
                     </div>
@@ -183,7 +184,7 @@ if (!is_wp_error($video) && !empty($video)):
          * code to add next and previous video link
          */
         if (!$child_channels) {
-            $npvideos = $theme_function->show_videos($channel, 'other_carousel');
+            $npvideos = $theme_function->show_videos($channel, 'other_carousel', $channel->post_name);
             $next_video = array();
             $prev_video = array();
             foreach ($npvideos as $key => $npvideo) {
@@ -203,7 +204,7 @@ if (!is_wp_error($video) && !empty($video)):
         } else {
             foreach ($child_channels as $key => $npchild_channel) {
                 $single_channel = get_page_by_path($npchild_channel, OBJECT, 'channel');
-                $npvideos = $theme_function->show_videos($single_channel, 'other_carousel');
+                $npvideos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
                 foreach ($npvideos as $key => $npvideo) {
                     if (!empty($npvideo['_id']) && !empty($video_id) && $npvideo['_id'] == $video_id) {
                         $next_video[] = isset($npvideos[$key + 1]) ? $npvideos[$key + 1] : '';
@@ -246,17 +247,17 @@ if (!is_wp_error($video) && !empty($video)):
                  * function to display rails of the video in the current channel
                  */
                 if ($child_channels) {
-                    $cnt = 0;
+
                     foreach ($child_channels as $child_channel) {
                         $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
-                        $videos = $theme_function->show_videos($single_channel, 'other_carousel');
+                        $videos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
                         if ($videos) {
                             ?>
                             <!-- Single Channel Video section start -->
                             <div class="no-gutters">
                                 <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
                                 <?php
-                                $class = 'home-carousel' . $cnt;
+                                $class = 'home-carousel' . $cnt++;
                                 $class_array[] = $class;
                                 $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                                 $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -265,19 +266,17 @@ if (!is_wp_error($video) && !empty($video)):
                             </div>
                             <!-- Single Channel Video section end -->
                             <?php
-                            $cnt++;
                         }
                     }
                 } else {
-                    $videos = $theme_function->show_videos($channel, 'other_carousel');
-                    $cnt = 0;
+                    $videos = $theme_function->show_videos($channel, 'other_carousel', $channel->post_name);
                     if ($videos) {
                         ?>
                         <!-- Single Channel Video section start -->
                         <div class="no-gutters">
                             <h3 class="post-title mb-5"><?php echo $channel->post_title; ?></h3>
                             <?php
-                            $class = 'home-carousel' . $cnt;
+                            $class = 'home-carousel' . $cnt++;
                             $class_array[] = $class;
                             $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                             $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -286,6 +285,47 @@ if (!is_wp_error($video) && !empty($video)):
                         </div>
                         <!-- Single Channel Video section end -->
                         <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
+        <!--  Code to display another rail section -->
+
+        <div class="row no-gutters">
+            <div class="custom-container container  pt-7 other-categories">
+                <?php
+                if (!empty($p_channel_slug)) {
+                    $parent_channel = get_page_by_path($p_channel_slug, OBJECT, 'channel');
+                    $parant_child_channels = $theme_function->is_child_channels($parent_channel->ID);
+                    /**
+                     * function to display rails of the video in the paranet channel
+                     */
+                    if ($parant_child_channels) {
+                        if (($key = array_search($channel_slug, $parant_child_channels)) !== false) {
+                            unset($parant_child_channels[$key]);
+                        }
+                        foreach ($parant_child_channels as $parant_child_channel) {
+                            $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
+                            $videos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
+                            if ($videos) {
+                                ?>
+                                <!-- Single Channel Video section start -->
+                                <div class="no-gutters">
+                                    <h3 class="post-title mb-5"><?php echo $single_channel->post_title; ?></h3>
+                                    <?php
+                                    $class = 'home-carousel' . $cnt++;
+                                    $class_array[] = $class;
+                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                    include(locate_template('page-templates/templates-part/channel-videos.php'));
+                                    ?>
+                                </div>
+                                <!-- Single Channel Video section end -->
+                                <?php
+                            }
+                        }
                     }
                 }
                 ?>
@@ -306,7 +346,6 @@ if (!is_wp_error($video) && !empty($video)):
                     $type = 'video';
                     $related_id = $theme_function->first_video_id($channel->ID);
                 }
-                $cnt = 0;
                 include(locate_template('page-templates/templates-part/related-content.php'));
             }
             $theme_function->slick_init_options('slick_related_carousel', 'related_content', 'related');

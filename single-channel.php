@@ -1,5 +1,5 @@
 <?php
-global $dsp_theme_options, $client_token;
+global $dsp_theme_options, $client_token, $post;
 $video_slug = '';
 get_header();
 
@@ -65,11 +65,12 @@ if (have_posts()) {
                         <?php
                     }
                 } else {
+                    $p_channel_slug = $post->post_name;
                     $cnt = 0;
                     foreach ($childchannels as $channel) {
                         //$channel_unlocked = '';
                         $single_channel = get_page_by_path($channel, OBJECT, 'channel');
-                        $videos = $theme_function->show_videos($single_channel, 'other_carousel');
+                        $videos = $theme_function->show_videos($single_channel, 'other_carousel', $p_channel_slug);
 
                         if ($videos) {
                             ?>

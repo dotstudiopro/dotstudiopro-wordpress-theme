@@ -53,7 +53,7 @@ get_header();
                     else:
                         $category_channel = $theme_function->get_category_channels($category->post_name);
                         if (!empty($category_channel)) {
-                            $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template');
+                            $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template', array_values($category_channel)[0]->post_name);
                             $link = $video[0]['url'];
                         } else {
                             $link = get_permalink($category->ID);

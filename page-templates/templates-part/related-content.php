@@ -49,6 +49,12 @@ if (!empty($recommendation_content)):
                             <p><?php echo $description; ?></p>
                         </span>
                     </div>
+                <?php elseif ($dsp_theme_options['opt-related-layout-slider-content'] == 3): ?>
+                    <div class="slide_content">
+                        <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
+                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                        </a>
+                    </div>
                     <?php
                 endif;
                 $i++;

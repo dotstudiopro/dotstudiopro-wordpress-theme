@@ -99,7 +99,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                 if ($channels) {
                     ?>
                     <div class="col-sm-12 no-gutters pt-7">
-                        <h3 class="post-title mb-5"><?php echo $category_name; ?></h3>
+                        <h3 class="post-title mb-5"><a href="<?php echo 'channel-category/' . $category_slug; ?>"><?php echo $category_name; ?></a></h3>
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
@@ -134,6 +134,13 @@ $main_carousel = $theme_function->home_page_main_carousel();
                                                 <h4><?php echo $title; ?></h4>
                                                 <p><?php echo $description; ?></p>
                                             </span>
+                                        </div>
+                                    <?php elseif ($dsp_theme_options['opt-layout-slider-content'] == 3):
+                                        ?>
+                                        <div class="slide_content">
+                                            <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
+                                                <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                                            </a>
                                         </div>
                                         <?php
                                     endif;

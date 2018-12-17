@@ -64,8 +64,9 @@
   }
   .sb-icon-search {
     color: $white;
-    background: url("../img/search-icon.png") no-repeat top right / cover;
     z-index: 90;
+		@include rem(font-size, 35px);
+		@include rem(line-height, 40px);
   }
   &.sb-search-open {
     width: 100%;

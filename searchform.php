@@ -12,7 +12,7 @@ $unique_id = esc_attr(uniqid('search-form-'));
         <form id="search-form" role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
             <input class="sb-search-input search-autocomplete" placeholder="<?php echo esc_attr_x('Search &hellip;', 'placeholder', 'twentyseventeen'); ?>" type="text" value="<?php echo get_search_query(); ?>" name="s" id="search" data-nonce="<?php echo wp_create_nonce('dsp_autocomplete_search'); ?>">
             <input class="sb-search-submit" type="submit" value="">
-            <span class="sb-icon-search"></span>
+            <span class="sb-icon-search fal fa-search"></span>
         </form>
     </div>
 </div>

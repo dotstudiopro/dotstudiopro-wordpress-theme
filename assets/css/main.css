@@ -16,50 +16,62 @@ a.btn.cc-readmore:hover{
 }
 .tooltip_templates { display: none; }
 
-.search-custom-width{
-    width:50%;
-}
 
 .col-md-2.p-2.channel-banner {
     width: 50%;
 }  
 
-.subscribe_now a {
-    font-size: 20px;
-    text-transform: uppercase;
-    padding: 8px 20px;
-    border-color: none;
-    margin-left: 12px;
-}
+
 
 .subscribe_now.mt-3 p {
     color: #fff;
     font-size: 20px;
-    text-transform: uppercase;
     padding: 8px 20px;
 }
 
-.btn-primary {
-    background-color: #87b145 !important;
-    border: none !important;
-    color: #fff !important;
+.btn-ds {
+    background-color: #87b145;
+    border-color: #87b145;
+    color: #fff;
+}
+.btn-ds:hover, .btn-ds:active, .btn-ds:focus, .btn-ds:not(:disabled):not(.disabled):active {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+    box-shadow: none;
+}
+.btn-ds:focus  {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
 }
 
 .v-overlay {
-    width: 100%;
+    width: 75%;
     height: 100%;
     position: absolute;
     overflow: hidden;
     top: 0;
     left: 0;
+    margin: 0 auto;
+    text-align: center;
+    right: 0;
 }
+
+@media (max-width: 1366px){
+    .v-overlay {
+        width: 100%;
+    }
+}
+
 .v-overlay {
     opacity: 1;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(136, 136, 136, 0.2);
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+}
+.inner-banner-img{
+    overflow:hidden;
 }
 
 #return-to-top:hover i {top: -21px !important;}
@@ -90,4 +102,7 @@ a.btn.cc-readmore:hover{
 
 #a0LoginButton{
     display: none;
+}
+.visible-desktop .unmute-video-container .unmute-video-text{
+    font-size: 15px;
 }

@@ -41,6 +41,12 @@
 
 /* Other-categories */
 .other-categories {
+	h3 a{
+		color: $black;
+		&:hover{
+			color: $green;
+		}
+	}
   .slide_content {
 		h4 {
 			@include rem(min-height, 88px);
@@ -88,16 +94,14 @@
   }
 	.slick-arrow {
 		@include rem(top, -70px);
-    background: url(../img/slick-arrow.png) no-repeat;
-		background-size: 200%;
+    background: $black;
 		@include rem(width, 50px);
 		@include rem(height, 50px);
     &.slick-prev {
-      background-position: top left;
       @include rem(right, 70px);
       left: inherit;
       &:hover {
-        background-position: bottom left;
+        background: $green;
       }
 			@include media-breakpoint-only(xs) {
 				left: 3px;
@@ -106,10 +110,9 @@
 			}
     }
     &.slick-next {
-      background-position: top right;
       @include rem(right, 0px);
       &:hover {
-        background-position: bottom right;
+        background: $green;
       }
 			@include media-breakpoint-only(xs) {
 				top: 50%;
@@ -119,8 +122,19 @@
     }
   }
   .slick-prev:before, .slick-next:before {
-    content: "";
+    font-family: 'Font Awesome 5 Pro';
+    font-weight: 300;
+    color: $white;
+		@include rem(font-size, 45px);
+		@include rem(line-height, 41px);
+		opacity: 1;
   }
+	.slick-prev:before {
+  	content: "\f104";
+	}
+	.slick-next:before {
+  	content: "\f105";
+	}
 	.slide-text {
 		.slick-arrow {
     	&.slick-prev {
@@ -256,13 +270,6 @@
 
 .ehover2 img {
 	width: 100%;
-}
-
-.video-content-div {
-  background: #000;
-}
-.video-player {
-  position: relative;
 }
 
 .channel-banner:hover h4 {

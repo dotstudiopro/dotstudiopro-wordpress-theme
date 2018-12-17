@@ -12,6 +12,7 @@ $theme_function = new Theme_Functions();
 
 $video_slug = get_query_var('video_slug');
 $channel_slug = get_query_var('channel_slug');
+$p_channel_slug = get_query_var('p_channel_slug');
 $player_color = (get_option('dsp_video_color_field')) ? get_option('dsp_video_color_field') : '#000000';
 $mute_on_load = (get_option('dsp_video_muteload_field')) ? 'true' : 'false';
 $autoplay = (get_option('dsp_video_autoplay_field')) ? 'true' : 'false';
