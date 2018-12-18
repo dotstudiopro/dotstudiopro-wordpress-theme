@@ -21,11 +21,23 @@ if (have_posts()) {
         $childchannels = $theme_function->is_child_channels(get_the_ID());
         $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
         $banner = ($channel_banner_image) ? $channel_banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+
+        if ($childchannels) {
+            $first_child_id = get_page_by_path($childchannels[0], OBJECT, 'channel');
+            $channel_videos = $theme_function->get_channel_videos($first_child_id->ID);
+            $videoSlug = ($channel_videos[0]['slug']) ? $channel_videos[0]['slug'] : $channel_videos[0]['_id'];
+            $first_video_url = get_site_url() . '/channel/' . $post->post_name . '/' . $first_child_id->post_name . '/video/' . $videoSlug;
+        } else {
+            $channel_videos = $theme_function->get_channel_videos(get_the_ID());
+            $videoSlug = ($channel_videos[0]['slug']) ? $channel_videos[0]['slug'] : $channel_videos[0]['_id'];
+            $first_video_url = get_site_url() . '/channel/' . $post->post_name . '/video/' . $videoSlug;
+        }
         ?>
 
-        <!-- Channel Banner image section start -->
+        <!-- Channel Banner image or video section start -->
         <div class="chnl inner-banner-bg">
-            <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/650'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+            <!-- Channel Banner image section start -->
+            <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/900'; ?>" alt="<?php echo get_the_title(); ?>"></div>
             <div class="inner-banner-content_bg">
                 <div class="inner-banner-content row no-gutters">
                     <h2><?php echo get_the_title(); ?></h2>
@@ -34,12 +46,62 @@ if (have_posts()) {
                         <div class="subscribe_now mt-3">
                             <a href="/packages" class="btn btn-primary">Subscribe Now</a>
                         </div>
+                    <?php else: ?>
+                        <div class="subscribe_now mt-3">
+                            <a href="<?php echo $first_video_url; ?>" class="btn btn-primary">Watch Now</a>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-        <!-- Channel Banner image section end -->
+            <!-- Channel Banner image section end -->
 
+            <!-- Display video insted of background image if user is ideal section start-->
+            <?php
+            $video_id = $theme_function->first_video_id(get_the_ID());
+            if (!empty($video_id)) {
+                $video = $dsp_api->get_video_by_id($video_id);
+                if (!is_wp_error($video) && !empty($video)) {
+                    if (isset($video['teaser_trailer']) && !empty($video['teaser_trailer'])) {
+                        $trailer_id = $video['teaser_trailer']['_id'];
+                        $company_id = isset($video['company_id']) ? $video['company_id'] : '';
+                        $player_color = (get_option('dsp_video_color_field')) ? get_option('dsp_video_color_field') : '#000000';
+                        $mute_on_load = (get_option('dsp_video_muteload_field')) ? 'true' : 'false';
+                        $settings = [];
+                        $settings[] = 'companykey=' . $company_id;
+                        $settings[] = 'skin=' . ltrim($player_color, "#");
+                        $settings[] = 'autostart=true';
+                        $settings[] = 'muteonstart=' . $mute_on_load;
+                        $settings[] = 'disableads=true';
+                        $settings[] = 'disablecontrolbar=true';
+                        $settings[] = 'loop=true';
+                        $player_setting = '?targetelm=.player&' . implode('&', $settings);
+                        ?>
+                        <div id="video-overlay" class="channel-teaser">
+                            <div class="player" data-video_id="<?php echo $trailer_id; ?>"></div>  
+                            <div class="inner-banner-content_bg channel-teaser-info">
+                                <div class="inner-banner-content row no-gutters">
+                                    <h2><?php echo get_the_title(); ?></h2>
+                                    <?php the_content(); ?>
+                                    <?php if (empty($channel_unlocked)): ?>
+                                        <div class="subscribe_now mt-3">
+                                            <a href="/packages" class="btn btn-primary">Subscribe Now</a>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="subscribe_now mt-3">
+                                            <a href="<?php echo $first_video_url; ?>" class="btn btn-primary">Watch Now</a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+            }
+            ?>
+            <!-- Display video insted of background image if user is ideal section end-->
+        </div>
+        <!-- Channel Banner image or video section end -->
 
         <div class="custom-container container pb-5">
             <div class="row no-gutters other-categories">
@@ -119,5 +181,53 @@ if (have_posts()) {
     endwhile;
 }
 ?>
+<!-- Script to display video of user is ideal for 5 seconds -->        
+<script type="text/javascript">
+    idleTimer = null;
+    idleState = false;
+    idleWait = 5000;
+    (function ($) {
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $trailer_id . $player_setting; ?>");
+        
+        $("#video-overlay").on('mousemove', function(e) {
+            if ((e.pageX - this.offsetLeft) < $(this).width() / 2) {
+                $('.channel-teaser-info').hide();
+            } else {
+                $('.channel-teaser-info').show();
+            }
+        });
+    
+        $('#video-overlay').bind('mouseleave', function (e) {
+            $('.channel-teaser-info').hide();
+        });
 
+        $(document).ready(function () {
+            $(window).bind('resize mousemove keydown scroll', function (e) {
+                if ($('.inner-banner-bg').isInViewport()) {
+                    clearTimeout(idleTimer);
+                    idleState = false;
+                    idleTimer = setTimeout(function () {
+                        $('.channel-teaser').show();
+                        document.getElementsByTagName("body")[0].appendChild(script);
+                        idleState = true;
+                    }, idleWait);
+                } else {
+                    clearTimeout(idleTimer);
+                }
+            });
+            $("body").trigger("mousemove");
+        });
+
+        $.fn.isInViewport = function () {
+            var elementTop = $(this).offset().top;
+            var elementBottom = elementTop + $(this).outerHeight();
+            var viewportTop = $(window).scrollTop();
+            var viewportBottom = viewportTop + $(window).height();
+            return elementBottom > viewportTop && elementTop < viewportBottom;
+        };
+
+    })(jQuery)
+</script>        
 <?php get_footer(); ?>

@@ -103,6 +103,23 @@ a.btn.cc-readmore:hover{
 #a0LoginButton{
     display: none;
 }
-.visible-desktop .unmute-video-container .unmute-video-text{
-    font-size: 15px;
+.unmute-video-text{
+    font-size: 15px !important;
+}
+
+/****/
+
+.channel-teaser .player div#dsp-vid-js-player{
+    height: 100%!important;
+}
+.channel-teaser{
+    position:absolute!important; 
+    display: none; 
+    height:100%!important;
+    width: 100%;
+    top: 0;
+}
+.channel-teaser .inner-banner-content_bg.channel-teaser-info{
+    display: none;
+    width: 70%!important;
 }
