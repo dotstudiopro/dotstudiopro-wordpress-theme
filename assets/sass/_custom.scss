@@ -206,7 +206,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 70%;
+    width: 60%;
     background-size: 100% 100%;
 		@include media-breakpoint-down(md){
 			position: relative;
@@ -219,6 +219,7 @@
   .inner-banner-content {
 		@include center-text;
 		top: 46%;
+		left: 60%;
 		@include media-breakpoint-down(md){
 			position: relative;
     	left: 0;
@@ -236,6 +237,8 @@
 			text-align: left;
 			display: block;
     	width: 100%;
+			@include rem(font-size, 64px);
+			@include rem(line-height, 64px);
 			@include media-breakpoint-down(md){
 				@include rem(font-size, 42px);
 				line-height: normal;
@@ -257,15 +260,13 @@
 			@include media-breakpoint-down(md){
 				width: 100%;
 			}
-			.inner-banner-content h2{
-				@include rem(font-size, 64px);
-				@include media-breakpoint-down(md){
-					@include rem(font-size, 42px);
-					line-height: normal;
-				}
-			}
 		}
 	}
+}
+
+.chnl.inner-banner-bg .inner-banner-img img{
+	width: auto;
+	height: 85vh;
 }
 
 .ehover2 img {

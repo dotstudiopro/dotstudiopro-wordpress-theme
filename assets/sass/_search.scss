@@ -15,7 +15,7 @@
 .sb-search {
   position: relative;
   width: 0%;
-	@include rem(min-width, 60px);
+	@include rem(min-width, 50px);
 	@include rem(height, 50px);
   float: right;
   overflow: hidden;
@@ -33,15 +33,16 @@
     @include rem(height, 50px);
     margin: 0;
     z-index: 10;
-		@include rem(padding, 10px 50px 10px 10px);
+		@include rem(padding, 10px 40px 10px 10px);
     font-family: inherit;
     font-size: 20px;
     color: $white;
     background: transparent;
   }
   .sb-icon-search {
-		@include rem(width, 40px);
+		@include rem(width, 50px);
 		@include rem(height, 39px);
+		@include rem(padding-left, 10px);
     position: absolute;
     right: 0;
     cursor: pointer;

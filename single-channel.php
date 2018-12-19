@@ -37,21 +37,23 @@ if (have_posts()) {
         <!-- Channel Banner image or video section start -->
         <div class="chnl inner-banner-bg">
             <!-- Channel Banner image section start -->
+            <div class="chanl_background_img">
             <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/900'; ?>" alt="<?php echo get_the_title(); ?>"></div>
             <div class="inner-banner-content_bg">
                 <div class="inner-banner-content row no-gutters">
                     <h2><?php echo get_the_title(); ?></h2>
-                    <p><?php the_content(); ?></p>
+                    <?php the_content(); ?>
                     <?php if (empty($channel_unlocked)): ?>
                         <div class="subscribe_now mt-3">
-                            <a href="/packages" class="btn btn-primary">Subscribe Now</a>
+                            <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                         </div>
                     <?php else: ?>
                         <div class="subscribe_now mt-3">
-                            <a href="<?php echo $first_video_url; ?>" class="btn btn-primary">Watch Now</a>
+                            <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                         </div>
                     <?php endif; ?>
                 </div>
+            </div>
             </div>
             <!-- Channel Banner image section end -->
 
@@ -73,7 +75,8 @@ if (have_posts()) {
                         $settings[] = 'muteonstart=' . $mute_on_load;
                         $settings[] = 'disableads=true';
                         $settings[] = 'disablecontrolbar=true';
-                        $settings[] = 'loop=true';
+                        $settings[] = 'loopplayback=true';
+                        $settings[] = 'enablesharing=false';
                         $player_setting = '?targetelm=.player&' . implode('&', $settings);
                         ?>
                         <div id="video-overlay" class="channel-teaser">
@@ -81,14 +84,14 @@ if (have_posts()) {
                             <div class="inner-banner-content_bg channel-teaser-info">
                                 <div class="inner-banner-content row no-gutters">
                                     <h2><?php echo get_the_title(); ?></h2>
-                                    <?php the_content(); ?>
+                                     <?php the_content(); ?>
                                     <?php if (empty($channel_unlocked)): ?>
                                         <div class="subscribe_now mt-3">
-                                            <a href="/packages" class="btn btn-primary">Subscribe Now</a>
+                                            <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                                         </div>
                                     <?php else: ?>
                                         <div class="subscribe_now mt-3">
-                                            <a href="<?php echo $first_video_url; ?>" class="btn btn-primary">Watch Now</a>
+                                            <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -193,14 +196,14 @@ if (have_posts()) {
         
         $("#video-overlay").on('mousemove', function(e) {
             if ((e.pageX - this.offsetLeft) < $(this).width() / 2) {
-                $('.channel-teaser-info').hide();
+                $('.channel-teaser-info').fadeOut();
             } else {
-                $('.channel-teaser-info').show();
+                $('.channel-teaser-info').fadeIn();
             }
         });
     
         $('#video-overlay').bind('mouseleave', function (e) {
-            $('.channel-teaser-info').hide();
+            $('.channel-teaser-info').fadeOut();
         });
 
         $(document).ready(function () {
@@ -210,10 +213,17 @@ if (have_posts()) {
                     idleState = false;
                     idleTimer = setTimeout(function () {
                         $('.channel-teaser').show();
+                        $('.chanl_background_img').hide();
                         document.getElementsByTagName("body")[0].appendChild(script);
                         idleState = true;
                     }, idleWait);
+                    if(typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                        dotstudiozPlayer.player.play();
+                    }
                 } else {
+                    if(typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                        dotstudiozPlayer.player.pause();
+                    }
                     clearTimeout(idleTimer);
                 }
             });

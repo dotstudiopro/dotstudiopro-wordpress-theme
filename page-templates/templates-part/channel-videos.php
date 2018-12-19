@@ -28,7 +28,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
                     <div class="overlay">
                         <?php if (isset($channel_unlocked) && $channel_unlocked == 0):
                             ?>
-                            <div class="lock_overlay"><i class="fa fa-lock"></i>Subscribe now</div>
+                            <a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>"><div class="lock_overlay"><i class="fa fa-lock"></i>Subscribe now</div></a>
                             <?php
                         endif;
                         ?>

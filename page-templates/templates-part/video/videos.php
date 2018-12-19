@@ -111,7 +111,7 @@ if (!is_wp_error($video) && !empty($video)):
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
                                                         <p>In order to view this video you need to subscribe first</p>
-                                                        <a href="/packages" class="btn btn-primary btn-ds">Subscribe Now</a>
+                                                        <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,7 +171,7 @@ if (!is_wp_error($video) && !empty($video)):
                                     <button class="btn btn-primary text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
                                 <?php } ?>
                             <?php } else { ?>
-                                <button class="btn btn-primary btn-ds"><i class="fa fa-plus-circle"></i>Add to My List</button>
+                                <button class="btn btn-primary btn-ds-primary login-link"><i class="fa fa-plus-circle"></i>Add to My List</button>
                             <?php } ?>
                         </div>
                     </div>
