@@ -136,11 +136,10 @@ a.btn.cc-readmore:hover{
 }
 .channel-teaser{
     display: none; 
-    height:900px!important;
+    height: 85vh !important;
 }
 .channel-teaser .inner-banner-content_bg.channel-teaser-info{
     display: none;
-    width: 70%!important;
 }
 
 .channel-teaser{

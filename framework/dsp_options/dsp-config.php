@@ -484,7 +484,7 @@ Redux::setSection($opt_name, array(
             'font-backup' => true,
             'all_styles' => true,
             // An array of CSS selectors to apply this font style to dynamically
-            'output' => array('h3'),
+            'output' => array('h3', 'h3 a'),
             // An array of CSS selectors to apply this font style to dynamically
             'units' => 'rem',
             // Defaults to px
