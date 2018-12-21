@@ -59,6 +59,7 @@ if (have_posts()) {
 
             <!-- Display video insted of background image if user is ideal section start-->
             <?php
+            $trailer_id = '';
             $video_id = $theme_function->first_video_id(get_the_ID());
             if (!empty($video_id)) {
                 $video = $dsp_api->get_video_by_id($video_id);
@@ -183,6 +184,7 @@ if (have_posts()) {
         <?php
     endwhile;
 }
+if(!empty($trailer_id)){
 ?>
 <!-- Script to display video of user is ideal for 5 seconds -->        
 <script type="text/javascript">
@@ -239,5 +241,6 @@ if (have_posts()) {
         };
 
     })(jQuery)
-</script>        
+</script>  
+<?php } ?>
 <?php get_footer(); ?>
