@@ -14,135 +14,32 @@ a.btn.cc-readmore:hover{
     background:#87b145;
     color:#000;
 }
-.tooltip_templates { display: none; }
-
 
 .col-md-2.p-2.channel-banner {
     width: 50%;
 }  
-
-
-
 .subscribe_now.mt-3 p {
     color: #fff;
     font-size: 20px;
     padding: 8px 20px;
 }
 
-.btn-ds-primary{
-    background-color: #87b145;
-    border-color: #87b145;
-    color: #fff;
-}
-.btn-ds-primary:hover, .btn-ds-primary:active, .btn-ds-primary:focus, .btn-ds-primary:not(:disabled):not(.disabled):active {
-    background-color: #000;
-    border-color: #000;
-    color: #fff;
-    box-shadow: none;
-}
-.btn-ds-primary:focus  {
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
-}
-
-.btn-ds-secondary{
-    background-color: #87b145;
-    border-color: #87b145;
-    color: #fff;
-}
-.btn-ds-secondary:hover, .btn-ds-secondary:active, .btn-ds-secondary:focus, .btn-ds-secondary:not(:disabled):not(.disabled):active {
-    background-color: #000;
-    border-color: #fff;
-    color: #fff;
-    box-shadow: none;
-}
-.btn-ds-secondary:focus  {
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
-}
-
-.v-overlay {
-    width: 75%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    margin: 0 auto;
-    text-align: center;
-    right: 0;
-}
-
-@media (max-width: 1366px){
-    .v-overlay {
-        width: 100%;
-    }
-}
-
-.v-overlay {
-    opacity: 1;
-    background-color: rgba(136, 136, 136, 0.2);
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    -webkit-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
-}
 .inner-banner-img{
     overflow:hidden;
 }
 
-#return-to-top:hover i {top: -21px !important;}
-
 .my_list_button button i, .my_list_button a i, .manage_my_list i{
     color: #fff;
-    margin-right: 5px}
-
-.lock-overlay a{
-  display:block;
-  height:100%;
-  width:100%;
-}
-.lock_overlay {
-    color: #fff;
-    top: 50%;
-    position: absolute;
-    transform: translateY(-22%);
-    font-size: 20px;
-    text-transform: uppercase;
-    font-weight: 700;
-    height: 100%;
-    width: 100%;
+    margin-right: 5px;
 }
 
-.lock_overlay i{
-    color: #fff;
-    font-size: 33px;
-    display: block;
-}
-
-.lock_overlay .watch_now {
-    display: none;
-}
-
-#a0LoginButton{
-    display: none;
-}
 .unmute-video-text{
     font-size: 15px !important;
 }
 
-/****/
-
-.channel-teaser .player div#dsp-vid-js-player{
-    height: 100%!important;
-}
-.channel-teaser{
-    display: none; 
-    height: 85vh !important;
-}
-.channel-teaser .inner-banner-content_bg.channel-teaser-info{
-    display: none;
-}
-
-.channel-teaser{
-    background-color: #000000;
-    height: 900px;
+.mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
+.mCS-minimal.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: #87b145 !important;
 }

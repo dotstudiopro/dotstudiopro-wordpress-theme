@@ -24,11 +24,16 @@
      * @type jqXHRSerch result autocomplete code
      */
 
-    $('.search-autocomplete').autoComplete({
+    var html = '';
+    var autocomplete = $('.search-autocomplete').autoComplete({
         minChars: 2,
         delay: 500,
+        cache: false,
         source: function (term, suggest) {
             var nonce = $('.search-autocomplete').data('nonce');
+            jQuery('.suggesion-loading').show();
+            jQuery('.channl_information').addClass('add-opacity');
+            $(".slider").slick('slickPause');
             try {
                 searchRequest.abort();
             } catch (e) {
@@ -42,19 +47,79 @@
                     }
             );
             searchRequest.done(function (response) {
-                suggest(response.data);
+                jQuery('.suggesion-loading').hide();
+                jQuery('.channl_information').removeClass('add-opacity');
+                html = '';
+                jQuery(".autocomplete-suggestions").html('');
+                jQuery('body').addClass('search-suggestions-open');
+                if (response.data.length == 0) {
+                    suggest([{flag: 'empty', data: ''}]);
+                } else {
+                    $.each(response.data, function (key, value) {
+                        suggest([{flag: key, data: response.data[key]}]);
+                    })
+                }
             });
             searchRequest.fail(function (response) {
+                jQuery('.suggesion-loading').hide();
+                jQuery('.channl_information').removeClass('add-opacity');
                 console.log(response);
             })
 
         },
         renderItem: function (item, search) {
-            return '<div class="autocomplete-suggestion" data-val="' + item['title'] + '"><img src="' + item['image'] + '/100/56"><div class="title">' + item['title'] + '</div></div>';
+
+            if (item.flag == 'directors') {
+                html += '<div class="directors_information information-top clearfix"><h5>Directors:</h5><ul>';
+                $.each(item.data, function (key, value) {
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                })
+                html += '</ul></div>';
+            }
+            if (item.flag == 'actors') {
+                html += '<div class="actors_information information-top clearfix"><h5>Actors:</h5><ul>';
+                $.each(item.data, function (key, value) {
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                })
+                html += '</ul></div>';
+            }
+            if (item.flag == 'title') {
+                html += '<div class="title_information information-top clearfix"><h5>Title:</h5><ul>';
+                $.each(item.data, function (key, value) {
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                })
+                html += '</ul></div>';
+            }
+            if (item.flag == 'tags') {
+                html += '<div class="tags_information information-top clearfix"><h5>Tags:</h5><ul>';
+                $.each(item.data, function (key, value) {
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                })
+                html += '</ul></div>';
+            }
+            if (item.flag == 'channel') {
+                html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + item.data[0].title + '</h3><div class="suggesion-loading"></div>';
+                $.each(item.data, function (key, value) {
+                    html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
+                })
+                html += '</div>';
+            }
+            if (item.flag == 'empty') {
+                html += '<div class=" empty-data information-top clearfix">';
+                html += '<h4>It seems we can’t find what you’re looking for. Perhaps searching can help.</h4>';
+                html += '</div>';
+            }
+
+            return html;
         },
-        onSelect: function (e, term, item) {
-            jQuery('.sb-search-input').val(term);
-            jQuery('.search-form').submit();
+    });
+    autocomplete.on('keyup.autocomplete', function (e) {
+        console.log(autocomplete.val().length);
+        if (autocomplete.val().length < 2) {
+            jQuery('body').removeClass('search-suggestions-open');
+            setTimeout(function () {
+                $(".slider").slick('slickPlay');
+            }, 1000);
         }
     });
 
@@ -62,9 +127,61 @@
 })(jQuery);
 
 /**
- * Back to top button
+ * Blur event to remove the class if exist
+ * @param {type} param1
+ * @param {type} param2
  */
 
+jQuery(window).on("blur", function (event) {
+    if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
+        if (jQuery("body").hasClass("search-suggestions-open")) {
+            jQuery("body").removeClass("search-suggestions-open")
+        } else {
+            return true;
+        }
+    }
+});
+
+
+/**
+ * Ajax call to change the result based on search suggesion click
+ */
+
+jQuery(document).on('click', '.suggesion_click', function () {
+    jQuery('.suggesion-loading').show();
+    jQuery('.channl_information').addClass('add-opacity');
+    var html = '';
+    var searchRequest = $.post(
+            jsVariable.ajaxUrl,
+            {
+                'action': 'search_suggesion',
+                'search': $(this).data('search'),
+            }
+    );
+    searchRequest.done(function (response) {
+        jQuery('.channl_information').html('');
+        jQuery('.suggesion-loading').hide();
+        jQuery('.channl_information').removeClass('add-opacity');
+        html += '<h3 class="ch_name mb-4 w-100">' + response.data[0].title + '</h3><div class="suggesion-loading"></div>';
+        var i;
+
+        jQuery.each(response.data, function (key, value) {
+            html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
+        });
+
+
+
+        jQuery('.channl_information').append(html);
+    });
+    searchRequest.fail(function (response) {
+        console.log(response);
+    })
+});
+
+/**
+ * Back to top button js
+ * @param {type} param
+ */
 jQuery(window).scroll(function () {
     if (jQuery(this).scrollTop() >= 50) {
         jQuery('#return-to-top').fadeIn(200);
@@ -116,6 +233,11 @@ jQuery.fn.putCursorAtEnd = function () {
             });
 })();
 
+/**
+ * Apply custom scrollbar
+ * @param {type} $
+ * @returns {undefined}
+ */
 (function ($) {
     $(window).on("load resize", function () {
         if ($(window).width() < 992) {
@@ -125,6 +247,11 @@ jQuery.fn.putCursorAtEnd = function () {
         } else {
             $("#content-1").mCustomScrollbar('destroy');
         }
+    });
+    jQuery(document).ajaxComplete(function (event) {
+        $("div.autocomplete-suggestions").mCustomScrollbar({
+            theme: "minimal"
+        });
     });
 })(jQuery);
 
@@ -190,7 +317,7 @@ window.addEventListener('beforeunload', function (e) {
         var play_time = dotstudiozPlayer.player.currentTime();
         var video_id = jQuery('.player').data('video_id');
         var nonce = jQuery('.player').data('nonce');
-        if (video_id && play_time) {
+        if (video_id && play_time && nonce) {
             $.post(
                     jsVariable.ajaxUrl,
                     {
@@ -204,5 +331,4 @@ window.addEventListener('beforeunload', function (e) {
         return true;
     }
 });
-
 

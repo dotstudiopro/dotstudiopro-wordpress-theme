@@ -33,6 +33,10 @@
   height: 100% !important;
   top: 0;
   left: 0;
+	@include respond-to(tablet-landscape) {
+		height: 60vh !important;
+		position: relative !important;
+	}
 }
 
 .player-content-inner {

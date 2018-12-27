@@ -5,7 +5,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 <header class="blog-masthead center-logo-header small-sub-nav <?php echo $class; ?>">
     <div class="custom-container container">
         <nav class="navbar navbar-expand-lg pt-0">
-            <div class="site-branding text-center"> 
+            <div class="site-branding text-center mb-3"> 
                 <!-- Logo section start -->
                 <div class="header-logo">
                     <?php $logo = isset($dsp_theme_options['opt-logo-url']['url']) ? $dsp_theme_options['opt-logo-url']['url'] : ''; ?>
@@ -23,7 +23,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                 </div>
                 <!-- Logo section end --> 
             </div>
-            <div class="main-navigation">
+            <div class="main-navigation float-left">
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,8 +42,6 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                             ?>
                             <?php
                         endif;
-                        if ($dsp_theme_options['opt-search'] == true)
-                            get_search_form();
                         ?>
                         <!-- Header Menu section end --> 
                     </div>
@@ -55,7 +53,10 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     <?php dynamic_sidebar('dsp_web_login_area'); ?>
                 </div><!-- #primary-sidebar -->
             <?php } ?>
-
+            <?php
+            if ($dsp_theme_options['opt-search'] == true)
+                get_search_form();
+            ?>
         </nav>
     </div>
 </header>

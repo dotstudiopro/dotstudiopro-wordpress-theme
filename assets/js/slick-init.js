@@ -7,7 +7,7 @@
         var selector = slick_carousel.selector;
         var responsive_array = [
             {
-                breakpoint: 768,
+                breakpoint: 992,
                 settings: {
                     slidesToShow: parseInt(slick_carousel.tablet_slidetoshow),
                     slidesToScroll: parseInt(slick_carousel.tablet_slidetoshow),

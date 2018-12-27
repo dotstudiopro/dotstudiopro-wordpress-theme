@@ -8,8 +8,11 @@ header {
         top: inherit;
         right: inherit;
         left: inherit;
-        z-index: 9999;
+        z-index: 9999999;
         width: 100%;
+    }
+		&.fixed-top {
+        z-index: 9999999;
     }
     &.left-logo-header {
         .site-branding {
@@ -25,7 +28,11 @@ header {
             width: $header-right;
             @include rem(padding-top, 32px);
             @include media-breakpoint-down(md){
-                width: 100%;
+            	width: 100%;
+							@include rem(padding-top, 20px);
+            }
+						@include media-breakpoint-down(sm) {
+							@include rem(padding-top, 16px);
             }
         }
     }
@@ -51,7 +58,7 @@ header {
             overflow: auto;
             position: relative;
             padding: 20px 0;
-            margin: 0;
+            margin:10px 0 0;
             width: 100%;
             max-width: 100%;
             @include rem(height, calc(100vh - 90px));
@@ -74,7 +81,13 @@ header {
         top: 10px;
         width: 100%;
         text-align: right;
-        padding-top: 2rem;
+				@include rem(padding-top, 32px);
+				@include media-breakpoint-down(md){
+					@include rem(padding-top, 20px);
+        }
+				breakpoint-down(sm) {
+					@include rem(padding-top, 16px);
+       	}
     }
     .navbar-nav {
         display: inline-block;
@@ -89,6 +102,7 @@ header {
             @include media-breakpoint-down(md){
                 float: none;
                 text-align: left;
+								clear: both;
             }
             &:after {
                 content: "";
@@ -124,20 +138,6 @@ header {
             }
             &.dropdown:hover .dropdown-menu {
                 display: block;
-                left: 0;
-                @include rem(top, 105px);
-                width: 100%;
-                max-width: $custom-container;
-                right: 0;
-                margin: 0 auto;
-                background: $black-2;
-                border: 0;
-                padding: 0;
-                @include media-breakpoint-down(md){
-                    display: none;
-                    position: inherit !important;
-                    background: transparent;
-                }
             }
             &.dropdown:hover .dropdown-menu.show {
                 @include media-breakpoint-down(md){
@@ -150,7 +150,23 @@ header {
 
 /* submenu */
 .navbar-collapse .navbar-nav .dropdown-menu {
-    @include media-breakpoint-down(md){
+		left: 0;
+                @include rem(top, 105px);
+                width: 100%;
+                max-width: $custom-container;
+                right: 0;
+                margin: 0 auto;
+                background: $black-2;
+                border: 0;
+                padding: 0;
+								border-top: 1px solid $light-gray;
+    						border-left: 1px solid $light-gray;
+                @include media-breakpoint-down(md){
+                    display: none;
+                    position: inherit !important;
+                    background: transparent;
+										border: 0;
+               
         position: static!important;
         background: transparent;
         padding: 0 5%;
@@ -159,7 +175,9 @@ header {
         display: block;
     }
     > li {
-        border: 1px solid #4a4a4a;
+        border: 1px solid $light-gray;
+				border-top: 0;
+				border-left: 0;
         text-align: center;
         width: 25%;
         display: flex;
@@ -174,9 +192,9 @@ header {
         }
         > a {
             display: flex;
-            font-size: 1.25rem;
+            font-size: 1rem;
             padding: 0;
-            @include rem(margin, 16px);
+            @include rem(margin, 14px 8px);
             &:before{
                 content: "";
                 @include media-breakpoint-down(md){
@@ -201,6 +219,9 @@ header.fixed-top.small-header {
     }
     &.left-logo-header .main-navigation {
         @include rem(padding-top, 32px);
+				@include media-breakpoint-down(md){
+        	@include rem(padding-top, 16px);
+        }
     }
     .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
         @include rem(top, 94px);
@@ -222,8 +243,17 @@ header.fixed-top.small-header {
 header.center-logo-header {
     @include rem(height, 210px);
     @include media-breakpoint-down(md){
-        @include rem(height, 170px); 
+        @include rem(height, 150px); 
     }
+		.site-branding{
+			@include media-breakpoint-down(md){
+      	text-align: left !important;
+				z-index: 9999999;
+				position: relative;
+				width: inherit; 
+				float: left;
+    	}
+		}
     .navbar {
         display: block;
     }
@@ -231,11 +261,14 @@ header.center-logo-header {
         @include rem(top, 170px); 
     }
     &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
-        max-width: 450px;
+        max-width: 500px;
         left: inherit;
         right: inherit;
+				border-top: 1px solid $light-gray;
+    		border-left: 1px solid $light-gray;
         @include media-breakpoint-down(md){
             max-width: 90vw;
+						border: 0;
         }
         li {
             float: left;
@@ -252,7 +285,7 @@ header.center-logo-header {
 .padding-fixed-center {
     @include rem(padding-top, 210px);
     @include media-breakpoint-down(md){
-        @include rem(padding-top, 170px); 
+        @include rem(padding-top, 150px); 
     }
 }
 
@@ -264,31 +297,42 @@ header.center-logo-header {
 }
 
 .navbar-toggler {
-    border: 0;
-    @include media-breakpoint-down(md){
-        padding-right: 5%;
-    }
-}
-.navbar-toggler.collapsed .navbar-toggler-icon {
+  border: 0;
+	@include media-breakpoint-down(md){
+  	padding-right: 5%;
+  }
+  &.collapsed .navbar-toggler-icon {
     background: url(../img/hamburger-menu.png) no-repeat;
     width: 40px;
     height: 26px;
     background-size: contain;
-}
-.navbar-toggler .navbar-toggler-icon {
+  }
+  .navbar-toggler-icon {
     background: url(../img/close.png) no-repeat;
     width: 40px;
     height: 26px;
     background-size: contain;
+  }
 }
-.navbar-collapse.show{
-    background: $black;
-    display: inline-block;
-    width: 100%;
+
+.navbar-collapse.show {
+  background: $black;
+  display: inline-block;
+  width: 100%;
 }
 
 @media screen and (max-width: 767px) {
     .dropdown-menu > li {
         display: block;
     }
+}
+
+body.logo-hide header .site-branding{
+	@include media-breakpoint-down(md){
+		display: none;
+	}
+} 
+
+#a0LoginButton{
+    display: none;
 }

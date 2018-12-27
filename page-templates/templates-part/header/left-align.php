@@ -42,8 +42,6 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                             ?>
                             <?php
                         endif;
-                        if ($dsp_theme_options['opt-search'] == true)
-                            get_search_form();
                         ?>
                         <!-- Header Menu section end --> 
                     </div>
@@ -54,6 +52,12 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     <?php dynamic_sidebar('dsp_web_login_area'); ?>
                 </div><!-- #primary-sidebar -->
             <?php } ?>
+
+            <?php
+            if ($dsp_theme_options['opt-search'] == true)
+                get_search_form();
+            ?>
+
         </nav>
     </div>
 </header>

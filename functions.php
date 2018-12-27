@@ -244,6 +244,7 @@ function theme_body_class($class = '') {
     global $dsp_theme_options;
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width ' : 'boxed ';
     $class .= ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav ' : '';
+    $class .= ($dsp_theme_options['opt-logo-align'] == 'center') ? 'center-header' : '';
     echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
 
@@ -394,18 +395,87 @@ function autocomplete() {
         $type = $dsp_theme_options['opt-search-option'];
         $dotstudio_api = new Dsp_External_Api_Request();
         $q = $_POST['search'];
-        $result = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
-        if (!empty($result) && !is_wp_error($result)) {
-            foreach ($result['data']['hits'] as $key => $data):
+
+        $suggesion = $dotstudio_api->search_suggestion($q);
+        $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
+
+        if (!empty($suggesion['data']['directors']['results'][0]['options']) && !is_wp_error($suggesion)) {
+            foreach ($suggesion['data']['directors']['results'][0]['options'] as $key => $director) {
+                $items['director'][$key]['name'] = $director['text'];
+                $items['director'][$key]['flag'] = 'director';
+            }
+        }
+
+        if (!empty($suggesion['data']['title']['results'][0]['options']) && !is_wp_error($suggesion)) {
+            foreach ($suggesion['data']['title']['results'][0]['options'] as $key => $title) {
+                $items['title'][$key]['name'] = $title['text'];
+                $items['title'][$key]['flag'] = 'title';
+            }
+        }
+
+        if (!empty($suggesion['data']['actors']['results'][0]['options']) && !is_wp_error($suggesion)) {
+            foreach ($suggesion['data']['actors']['results'][0]['options'] as $key => $actors) {
+                $items['actors'][$key]['name'] = $actors['text'];
+                $items['actors'][$key]['flag'] = 'actors';
+            }
+        }
+
+        if (!empty($suggesion['data']['tags']['results'][0]['options']) && !is_wp_error($suggesion)) {
+            foreach ($suggesion['data']['tags']['results'][0]['options'] as $key => $tags) {
+                $items['tags'][$key]['name'] = $tags['text'];
+                $items['tags'][$key]['flag'] = 'tags';
+            }
+        }
+
+        if (!empty($search) && !is_wp_error($search)) {
+            foreach ($search['data']['hits'] as $key => $data):
                 if ($type == 'channel'):
+                    $url = get_site_url() . '/channel/' . $data['slug'];
                     $image = (isset($data['poster'])) ? $data['poster'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $title = 'Channels';
                 else:
+                    $url = get_site_url() . '/video/' . $data['_id'];
                     $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $title = 'Videos';
                 endif;
-                $items[$key]['title'] = $data['_source']['title'];
-                $items[$key]['image'] = $image;
+                $items['channel'][$key]['name'] = $data['_source']['title'];
+                $items['channel'][$key]['image'] = $image;
+                $items['channel'][$key]['url'] = $url;
+                $items['channel'][$key]['title'] = $title;
+                $items['channel'][$key]['flag'] = 'channel';
             endforeach;
         }
+    }
+
+    wp_send_json_success($items);
+}
+
+function search_suggesion() {
+    $items = array();
+    global $dsp_theme_options;
+    $type = $dsp_theme_options['opt-search-option'];
+    $dotstudio_api = new Dsp_External_Api_Request();
+    $q = $_POST['search'];
+
+    $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
+
+    if (!empty($search) && !is_wp_error($search)) {
+        foreach ($search['data']['hits'] as $key => $data):
+            if ($type == 'channel'):
+                $url = get_site_url() . '/channel/' . $data['slug'];
+                $image = (isset($data['poster'])) ? $data['poster'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $title = 'Channels';
+            else:
+                $url = get_site_url() . '/video/' . $data['_id'];
+                $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $title = 'Videos';
+            endif;
+            $items[$key]['name'] = $data['_source']['title'];
+            $items[$key]['image'] = $image;
+            $items[$key]['url'] = $url;
+            $items[$key]['title'] = $title;
+            $items[$key]['flag'] = 'channel';
+        endforeach;
     }
     wp_send_json_success($items);
 }
@@ -448,6 +518,8 @@ add_action('wp_ajax_addToMyList', 'addToMyList');
 add_action('wp_ajax_nopriv_addToMyList', 'addToMyList');
 add_action('wp_ajax_removeFromMyList', 'removeFromMyList');
 add_action('wp_ajax_nopriv_removeFromMyList', 'removeFromMyList');
+add_action('wp_ajax_search_suggesion', 'search_suggesion');
+add_action('wp_ajax_nopriv_search_suggesion', 'search_suggesion');
 
 /**
  * Remove the admin bar for subscribers

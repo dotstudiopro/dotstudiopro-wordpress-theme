@@ -23,7 +23,9 @@ html.boxed, body.boxed {
 body.boxed, body.boxed .fixed-top {
 	max-width: 1170px;
   margin: 0 auto;
-	z-index: 9999;
+	z-index: 9999999;
+	left: 0;
+  right: 0;
 	@include media-breakpoint-down(lg){
 		max-width: 100%;
 	}
@@ -45,6 +47,13 @@ body.boxed .custom-container {
 	@include media-breakpoint-down(md){
 		max-width: 90vw;
 	}
+}
+
+body.boxed .autocomplete-suggestions {
+    max-width: 1170px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 }
 
 a:hover {
