@@ -43,3 +43,7 @@ a.btn.cc-readmore:hover{
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: #87b145 !important;
 }
+
+body{
+    width: 100%;
+}

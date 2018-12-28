@@ -124,20 +124,28 @@
     autocomplete.on('keyup.autocomplete', function (e) {
         if (autocomplete.val().length < 2) {
             jQuery('body').removeClass('search-suggestions-open');
-            $(".slider").slick('setPosition');
         }
     });
+
 
     $("body").click(function () {
         if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
             if (jQuery("body").hasClass("search-suggestions-open")) {
                 $('body').removeClass('search-suggestions-open');
-                $(".slider").slick('setPosition');
             }
         }
     });
 
 })(jQuery);
+
+
+jQuery(document).keyup(function (e) {
+    if (e.key === "Escape") {
+        if (jQuery("body").hasClass("search-suggestions-open")) {
+            jQuery("body").removeClass("search-suggestions-open");
+        }
+    }
+});
 
 
 
