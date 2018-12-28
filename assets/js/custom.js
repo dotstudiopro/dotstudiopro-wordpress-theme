@@ -54,7 +54,9 @@
                 jQuery('.suggesion-overlay').removeClass('add-opacity');
                 html = '';
                 jQuery(".autocomplete-suggestions").html('');
-                jQuery('body').addClass('search-suggestions-open');
+                if (jQuery('div.autocomplete-suggestions').is(':visible')) {
+                    jQuery('body').addClass('search-suggestions-open');
+                }
                 if (response.data.length == 0) {
                     suggest([{flag: 'empty', data: ''}]);
                 } else {
