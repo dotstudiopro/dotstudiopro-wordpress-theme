@@ -223,6 +223,8 @@ jQuery(document).on('click', '.suggesion_click', function () {
     });
 });
 
+
+
 /**
  * Back to top button js
  * @param {type} param
@@ -293,9 +295,15 @@ jQuery.fn.putCursorAtEnd = function () {
             $("#content-1").mCustomScrollbar('destroy');
         }
     });
+    
+    jQuery(document).ajaxStart(function (event) {
+        $("div.autocomplete-suggestions").mCustomScrollbar('destroy');
+    });
+    
     jQuery(document).ajaxComplete(function (event) {
         $("div.autocomplete-suggestions").mCustomScrollbar({
-            theme: "minimal"
+            theme: "minimal",
+            scrollEasing:"easeOut"
         });
     });
 })(jQuery);
