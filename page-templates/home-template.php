@@ -53,6 +53,9 @@ $main_carousel = $theme_function->home_page_main_carousel();
         $class_array = [];
         $slide_text_class = '';
         if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
+            $slide_text_class .= 'slide-text-dec';
+        }
+        elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
             $slide_text_class .= 'slide-text';
         }
         $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);

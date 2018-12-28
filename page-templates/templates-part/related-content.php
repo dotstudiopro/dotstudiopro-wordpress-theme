@@ -12,7 +12,10 @@ if (!empty($recommendation_content)):
     $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
     $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
     $slide_text_class = '';
-    if ($dsp_theme_options['opt-related-layout-slider-content'] == 1) {
+    if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
+        $slide_text_class .= 'slide-text-dec';
+    }
+    elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
         $slide_text_class .= 'slide-text';
     }
     ?>
