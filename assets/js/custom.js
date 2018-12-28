@@ -31,9 +31,12 @@
         cache: false,
         source: function (term, suggest) {
             var nonce = $('.search-autocomplete').data('nonce');
+            jQuery('.autocomplete-suggestions').show();
+            if (jQuery(".suggesion-loading").length == 0) {
+                jQuery(".autocomplete-suggestions").append("<div class='suggesion-loading'></div>");
+            }
             jQuery('.suggesion-loading').show();
-            jQuery('.channl_information').addClass('add-opacity');
-            $(".slider").slick('slickPause');
+            jQuery('.suggesion-overlay').addClass('add-opacity');
             try {
                 searchRequest.abort();
             } catch (e) {
@@ -48,7 +51,7 @@
             );
             searchRequest.done(function (response) {
                 jQuery('.suggesion-loading').hide();
-                jQuery('.channl_information').removeClass('add-opacity');
+                jQuery('.suggesion-overlay').removeClass('add-opacity');
                 html = '';
                 jQuery(".autocomplete-suggestions").html('');
                 jQuery('body').addClass('search-suggestions-open');
@@ -62,12 +65,16 @@
             });
             searchRequest.fail(function (response) {
                 jQuery('.suggesion-loading').hide();
-                jQuery('.channl_information').removeClass('add-opacity');
+                jQuery('.suggesion-overlay').removeClass('add-opacity');
                 console.log(response);
             })
 
         },
         renderItem: function (item, search) {
+
+            if (jQuery(".suggesion-loading").length == 0) {
+                html += '<div class="suggesion-loading"></div><div class="suggesion-overlay">';
+            }
 
             if (item.flag == 'directors') {
                 html += '<div class="directors_information information-top clearfix"><h5>Directors:</h5><ul>';
@@ -98,10 +105,11 @@
                 html += '</ul></div>';
             }
             if (item.flag == 'channel') {
-                html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + item.data[0].title + '</h3><div class="suggesion-loading"></div>';
+                html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + item.data[0].title + '</h3>';
                 $.each(item.data, function (key, value) {
                     html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
                 })
+                html += '</div>';
                 html += '</div>';
             }
             if (item.flag == 'empty') {
@@ -114,17 +122,24 @@
         },
     });
     autocomplete.on('keyup.autocomplete', function (e) {
-        console.log(autocomplete.val().length);
         if (autocomplete.val().length < 2) {
             jQuery('body').removeClass('search-suggestions-open');
-            setTimeout(function () {
-                $(".slider").slick('slickPlay');
-            }, 1000);
+            $(".slider").slick('setPosition');
         }
     });
 
+    $("body").click(function () {
+        if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
+            if (jQuery("body").hasClass("search-suggestions-open")) {
+                $('body').removeClass('search-suggestions-open');
+                $(".slider").slick('setPosition');
+            }
+        }
+    });
 
 })(jQuery);
+
+
 
 /**
  * Blur event to remove the class if exist
@@ -149,7 +164,7 @@ jQuery(window).on("blur", function (event) {
 
 jQuery(document).on('click', '.suggesion_click', function () {
     jQuery('.suggesion-loading').show();
-    jQuery('.channl_information').addClass('add-opacity');
+    jQuery('.suggesion-overlay').addClass('add-opacity');
     var html = '';
     var searchRequest = $.post(
             jsVariable.ajaxUrl,
@@ -161,8 +176,8 @@ jQuery(document).on('click', '.suggesion_click', function () {
     searchRequest.done(function (response) {
         jQuery('.channl_information').html('');
         jQuery('.suggesion-loading').hide();
-        jQuery('.channl_information').removeClass('add-opacity');
-        html += '<h3 class="ch_name mb-4 w-100">' + response.data[0].title + '</h3><div class="suggesion-loading"></div>';
+        jQuery('.suggesion-overlay').removeClass('add-opacity');
+        html += '<h3 class="ch_name mb-4 w-100">' + response.data[0].title + '</h3>';
         var i;
 
         jQuery.each(response.data, function (key, value) {

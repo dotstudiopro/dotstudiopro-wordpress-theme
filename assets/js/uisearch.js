@@ -128,17 +128,13 @@
             }
             // close the search input if body is clicked
             var bodyFn = function (ev) {
-                var target = $(ev.target), article;
-                if (target.is('.autocomplete-suggestions') || target.is('.information-top') || target.is('.channl_information')
-                        || target.is('.ch_name') || target.is('.suggesion_click') || target.is('.mCSB_draggerContainer')
-                        || target.is('.mCSB_draggerRail') || target.is('.mCSB_dragger_bar') || target.is('.mCSB_draggerContainer')
-                        || target.is('#mCSB_1_dragger_vertical.mCSB_dragger') || target.is('#mCSB_1_container.mCSB_container')
-                        || target.is('.autocomplete-suggestion-channel') || target.is('#mCSB_1') || target.is('img.mCS_img_loaded') || target.is('h5')) {
-                } else {
+                if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
                     self.close();
                     this.removeEventListener('click', bodyFn);
                     this.removeEventListener('touchstart', bodyFn);
-                    $('body').removeClass('search-suggestions-open');
+                    if ($("body").hasClass("search-suggestions-open")) {
+                        $('body').removeClass('search-suggestions-open');
+                    }
                 }
             };
             document.addEventListener('click', bodyFn);
