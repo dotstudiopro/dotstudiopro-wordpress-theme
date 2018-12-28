@@ -70,7 +70,12 @@
                 jQuery('.suggesion-overlay').removeClass('add-opacity');
                 console.log(response);
             })
-
+            autocomplete.on('keyup.autocomplete', function (e) {
+                if (autocomplete.val().length < 2) {
+                    searchRequest.abort();
+                    jQuery('body').removeClass('search-suggestions-open');
+                }
+            });
         },
         renderItem: function (item, search) {
 
@@ -107,7 +112,11 @@
                 html += '</ul></div>';
             }
             if (item.flag == 'channel') {
-                html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + item.data[0].title + '</h3>';
+                var title = '';
+                if (typeof item.data[0].title != "undefined") {
+                    title = item.data[0].title;
+                }
+                html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + title + '</h3>';
                 $.each(item.data, function (key, value) {
                     html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
                 })
@@ -123,13 +132,10 @@
             return html;
         },
     });
-    autocomplete.on('keyup.autocomplete', function (e) {
-        if (autocomplete.val().length < 2) {
-            jQuery('body').removeClass('search-suggestions-open');
-        }
-    });
 
-
+    /**
+     * remove the class if class exis on body even suggesion is close
+     */
     $("body").click(function () {
         if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
             if (jQuery("body").hasClass("search-suggestions-open")) {
@@ -140,7 +146,10 @@
 
 })(jQuery);
 
-
+/**
+ * Remove the class on keyup jquery
+ * @param {type} param
+ */
 jQuery(document).keyup(function (e) {
     if (e.key === "Escape") {
         if (jQuery("body").hasClass("search-suggestions-open")) {
@@ -148,7 +157,6 @@ jQuery(document).keyup(function (e) {
         }
     }
 });
-
 
 
 /**
@@ -187,13 +195,19 @@ jQuery(document).on('click', '.suggesion_click', function () {
         jQuery('.channl_information').html('');
         jQuery('.suggesion-loading').hide();
         jQuery('.suggesion-overlay').removeClass('add-opacity');
-        html += '<h3 class="ch_name mb-4 w-100">' + response.data[0].title + '</h3>';
+        var title = '';
+        if (typeof response.data[0].title != "undefined") {
+            title = response.data[0].title;
+        }
+        html += '<h3 class="ch_name mb-4 w-100">' + title + '</h3>';
         var i;
-
-        jQuery.each(response.data, function (key, value) {
-            html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
-        });
-
+        if (response.data.length == 0) {
+            html += '<h4>It seems we can’t find what you’re looking for. Perhaps searching can help.</h4>';
+        } else {
+            jQuery.each(response.data, function (key, value) {
+                html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
+            });
+        }
 
 
         jQuery('.channl_information').append(html);
@@ -201,6 +215,12 @@ jQuery(document).on('click', '.suggesion_click', function () {
     searchRequest.fail(function (response) {
         console.log(response);
     })
+
+    jQuery('.search-autocomplete').on('keyup.autocomplete', function (e) {
+        if (jQuery('.search-autocomplete').val().length < 2) {
+            searchRequest.abort();
+        }
+    });
 });
 
 /**
@@ -335,7 +355,6 @@ jQuery('.manage_my_list').click(function (e) {
  * @param {type} param1
  * @param {type} param2
  */
-
 window.addEventListener('beforeunload', function (e) {
     e.preventDefault();
     if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
@@ -355,5 +374,12 @@ window.addEventListener('beforeunload', function (e) {
         }
         return true;
     }
+});
+
+/**
+ * Toogle the class on menu icon click
+ */
+jQuery(document).on('click', '.navbar-toggler-icon', function(){
+  jQuery('body').toggleClass('fixed-body');
 });
 

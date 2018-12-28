@@ -9,7 +9,7 @@
 		@include rem(padding, 15px 25px);
 		clear: both;
     display: inline-block;
-		@include rem(margin-top, 22px);
+		@include rem(margin-top, 18px);
 		position: absolute;
     right: 10%;
 		top: 0;
@@ -55,7 +55,7 @@
   }
   .sb-icon-search {
 		@include rem(width, 50px);
-		@include rem(height, 39px);
+		@include rem(height, 50px);
 		@include rem(padding-left, 10px);
     position: absolute;
     right: 0;
@@ -81,7 +81,7 @@
     color: $white;
     z-index: 90;
 		@include rem(font-size, 35px);
-		@include rem(line-height, 40px);
+		@include rem(line-height, 50px);
   }
   &.sb-search-open {
     width: 100%;

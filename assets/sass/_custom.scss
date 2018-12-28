@@ -134,7 +134,7 @@
     .slick-next:before {
         content: "\f105";
     }
-    .slide-text {
+    .slide-text-dec {
         .slick-arrow {
             &.slick-prev {
                 @include media-breakpoint-only(xs) {
@@ -144,6 +144,20 @@
             &.slick-next {
                 @include media-breakpoint-only(xs) {
                     top: 30%;
+                }
+            }
+        }
+    }
+		.slide-text {
+        .slick-arrow {
+            &.slick-prev {
+                @include media-breakpoint-only(xs) {
+                    top: 40%;
+                }
+            }
+            &.slick-next {
+                @include media-breakpoint-only(xs) {
+                    top: 40%;
                 }
             }
         }

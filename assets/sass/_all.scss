@@ -11,6 +11,9 @@ html, body {
 	@include media-breakpoint-down(md){
 		font-size: 11px;
 	}
+	@include media-breakpoint-down(sm) {
+		font-size: 10px;
+	}
 }
 
 html.boxed, body.boxed {
@@ -138,10 +141,8 @@ a.page-numbers {
 	display: none;
 }
 
-
-@media screen and (max-width:767px) { 
-html, body {
-	font-size: 10px;
+body.fixed-body{
+	position: fixed;
+	overflow: hidden;
+  background: #000;
 }
-}
-

@@ -57,11 +57,11 @@ header {
         @include media-breakpoint-down(md){
             overflow: auto;
             position: relative;
-            padding: 20px 0;
+            padding: 20px 0 80px;
             margin:10px 0 0;
             width: 100%;
             max-width: 100%;
-            @include rem(height, calc(100vh - 90px));
+            @include rem(height, calc(100vh - 80px));
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;

@@ -21,7 +21,7 @@
   color: $white;
   &:hover, &:active, &:focus, &:not(:disabled):not(.disabled):active {
     background-color: $black;
-    border-color: $black;
+    border-color: $white;
     color: $white;
     box-shadow: none;
   }
