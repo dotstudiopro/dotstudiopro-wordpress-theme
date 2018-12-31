@@ -353,35 +353,37 @@ if (!is_wp_error($video) && !empty($video)):
             ?>
         </div>
     </div>
-    <script>
-        jQuery(document).ready(function (e) {
+    <?php if ($channel_unlocked == true): ?>        
+        <script>
+            jQuery(document).ready(function (e) {
 
-            var script = document.createElement("script");
-            script.setAttribute("type", "text/javascript");
-            script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
-            document.getElementsByTagName("body")[0].appendChild(script);
+                var script = document.createElement("script");
+                script.setAttribute("type", "text/javascript");
+                script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
+                document.getElementsByTagName("body")[0].appendChild(script);
 
-            var dspPlayerCheck = setInterval(function () {
-                if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                    clearInterval(dspPlayerCheck);
-                    dotstudiozPlayer.player.on("ended", function () {
-                        var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
-                        if (nextHref.length > 0)
-                            window.location.href = nextHref;
+                var dspPlayerCheck = setInterval(function () {
+                    if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                        clearInterval(dspPlayerCheck);
+                        dotstudiozPlayer.player.on("ended", function () {
+                            var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
+                            if (nextHref.length > 0)
+                                window.location.href = nextHref;
+                        });
+                    }
+                }, 250);
+
+    <?php if ($client_token && $video_point) { ?>
+                    jQuery(document).ready(function (e) {
+                        var dspPlayerCheckTimepoint = setInterval(function () {
+                            if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                                clearInterval(dspPlayerCheckTimepoint);
+                                dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
+                            }
+                        }, 250);
                     });
-                }
-            }, 250);
-
-<?php if ($client_token && $video_point) { ?>
-                jQuery(document).ready(function (e) {
-                    var dspPlayerCheckTimepoint = setInterval(function () {
-                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                            clearInterval(dspPlayerCheckTimepoint);
-                            dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
-                        }
-                    }, 250);
-                });
-<?php } ?>
-        });
-    </script>
+    <?php } ?>
+            });
+        </script>
+    <?php endif; ?>
 </div>

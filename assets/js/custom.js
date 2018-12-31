@@ -86,28 +86,28 @@
             if (item.flag == 'directors') {
                 html += '<div class="directors_information information-top clearfix"><h5>Directors:</h5><ul>';
                 $.each(item.data, function (key, value) {
-                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="javascript:" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
                 })
                 html += '</ul></div>';
             }
             if (item.flag == 'actors') {
                 html += '<div class="actors_information information-top clearfix"><h5>Actors:</h5><ul>';
                 $.each(item.data, function (key, value) {
-                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="javascript:" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
                 })
                 html += '</ul></div>';
             }
             if (item.flag == 'title') {
                 html += '<div class="title_information information-top clearfix"><h5>Title:</h5><ul>';
                 $.each(item.data, function (key, value) {
-                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="javascript:" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
                 })
                 html += '</ul></div>';
             }
             if (item.flag == 'tags') {
                 html += '<div class="tags_information information-top clearfix"><h5>Tags:</h5><ul>';
                 $.each(item.data, function (key, value) {
-                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="#" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
+                    html += '<li class="autocomplete-suggestion-title" data-val="' + value.name + '"><a href="javascript:" class="suggesion_click" data-search="' + value.name + '">' + value.name + '</a></li>';
                 })
                 html += '</ul></div>';
             }
@@ -295,15 +295,15 @@ jQuery.fn.putCursorAtEnd = function () {
             $("#content-1").mCustomScrollbar('destroy');
         }
     });
-    
+
     jQuery(document).ajaxStart(function (event) {
         $("div.autocomplete-suggestions").mCustomScrollbar('destroy');
     });
-    
+
     jQuery(document).ajaxComplete(function (event) {
         $("div.autocomplete-suggestions").mCustomScrollbar({
             theme: "minimal",
-            scrollEasing:"easeOut"
+            scrollEasing: "easeOut"
         });
     });
 })(jQuery);
@@ -387,7 +387,7 @@ window.addEventListener('beforeunload', function (e) {
 /**
  * Toogle the class on menu icon click
  */
-jQuery(document).on('click', '.navbar-toggler-icon', function(){
-  jQuery('body').toggleClass('fixed-body');
+jQuery(document).on('click', '.navbar-toggler-icon', function () {
+    jQuery('body').toggleClass('fixed-body');
 });
 
