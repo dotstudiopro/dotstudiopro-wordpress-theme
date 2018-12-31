@@ -57,16 +57,16 @@ header {
         @include media-breakpoint-down(md){
             overflow: auto;
             position: relative;
-            padding: 20px 0 80px;
+            padding: 20px 0 20px;
             margin:10px 0 0;
             width: 100%;
             max-width: 100%;
-            @include rem(height, calc(100vh - 80px));
+            @include rem(height, calc(100vh - 78px));
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
             background: #000;
-            z-index: 999999;
+            z-index: 99999999999;
         }
     }
 }
@@ -138,6 +138,9 @@ header {
             }
             &.dropdown:hover .dropdown-menu {
                 display: block;
+								@include media-breakpoint-down(md){
+									display: none;
+								}
             }
             &.dropdown:hover .dropdown-menu.show {
                 @include media-breakpoint-down(md){

@@ -144,5 +144,11 @@ a.page-numbers {
 body.fixed-body{
 	position: fixed;
 	overflow: hidden;
-  background: #000;
+  background: $black;
+	height: 100vh;
+}
+
+.mCustomScrollbar {
+    -ms-touch-action: inherit;
+    touch-action: inherit;
 }

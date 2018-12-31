@@ -1346,7 +1346,7 @@ Redux::setSection($opt_name, array(
  * @since 1.0.0
  */
 Redux::setSection($opt_name, array(
-    'title' => __('Saerch Results  Page ', 'dotstudio-pro'),
+    'title' => __('Search Results Page ', 'dotstudio-pro'),
     'id' => 'search-results',
     'icon' => 'el el-search',
     'fields' => array(
@@ -1362,11 +1362,22 @@ Redux::setSection($opt_name, array(
             'default' => 'channel'
         ),
         array(
+            'id' => 'opt-search-channel-poster-type',
+            'type' => 'radio',
+            'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
+            'subtitle' => __('Select the channel banner type which you would like to display', 'dotstudio-pro'),
+            'options' => array(
+                'spotlight_poster' => 'Spotlight Poster',
+                'poster' => 'Poster',
+            ),
+            'required' => array('opt-search-option', '=', 'channel'),
+            'default' => 'spotlight_poster'
+        ),
+        array(
             'id' => 'opt-search-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the search result content thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the search result thumbnails.', 'dotstudio-pro'),
-            'required' => array('opt-related-section', '=', 1),
             'default' => array(
                 'width' => 320,
                 'height' => 180,
@@ -1387,7 +1398,6 @@ Redux::setSection($opt_name, array(
             'min' => '0',
             'step' => '1',
             'max' => '30',
-            'required' => array('opt-related-section', '=', 1),
         ),
         array(
             'id' => 'opt-search-title-trim-word',
@@ -1398,7 +1408,6 @@ Redux::setSection($opt_name, array(
             'min' => '0',
             'step' => '1',
             'max' => '30',
-            'required' => array('opt-related-section', '=', 1),
         ),
     ),
 ));
