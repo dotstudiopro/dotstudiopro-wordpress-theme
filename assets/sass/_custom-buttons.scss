@@ -1,5 +1,11 @@
 /* DS custom button */
 
+.btn{
+	@include media-breakpoint-down(sm) {
+		font-size: 1.2rem;
+	}
+}
+
 .btn-ds-primary {
   background-color: $green;
   border-color: $green;

@@ -121,7 +121,7 @@ header {
                 @include rem(font-size, 28px);
                 color: $white;
                 font-family: $font-family-Roboto;
-                @include rem(margin, 35px);
+                @include rem(margin, 35px 32px);
                 text-transform: uppercase;
                 @include rem(padding-bottom, 32px);
                 @include media-breakpoint-down(md){
