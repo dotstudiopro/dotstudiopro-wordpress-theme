@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Homepage Template
- * 
+ *
  * This template is used to display Home Page of the site.
  * @since 1.0.0
  */
@@ -17,14 +17,17 @@ $main_carousel = $theme_function->home_page_main_carousel();
     <div class="col-sm-12 ">
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
-                <?php foreach ($main_carousel as $slide) { ?>
+                <?php
+                    $src = "src";
+                    foreach ($main_carousel as $slide) {
+                    ?>
                     <?php
                     $title = ($dsp_theme_options['opt-homepage-main-title-trim-word'] != 0) ? wp_trim_words($slide['title'], $dsp_theme_options['opt-homepage-main-title-trim-word']) : $slide['title'];
                     $description = ($dsp_theme_options['opt-homepage-main-description-trim-word'] != 0) ? wp_trim_words($slide['description'], $dsp_theme_options['opt-homepage-main-description-trim-word']) : $slide['description'];
                     ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container custom-container">
@@ -37,7 +40,12 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                <?php
+                    // Set our source property back to lazy loading
+                    // in case it isn't currently
+                    $src="data-lazy";
+                }
+                ?>
             </div>
         <?php } ?>
     </div>

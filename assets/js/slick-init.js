@@ -93,6 +93,7 @@
      */
 
     $(".slider").slick({
+        lazyLoad: 'ondemand',
         autoplay: true,
         autoplaySpeed: 5000,
         infinite: true,

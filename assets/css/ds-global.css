@@ -247,6 +247,7 @@ header {
       font-size: 1.75rem;
       color: #fff;
       font-family: "Roboto", sans-serif;
+      font-display: "swap";
       margin: 35px 32px;
       margin: 2.1875rem 2rem;
       text-transform: uppercase;
@@ -500,6 +501,7 @@ header.center-logo-header {
     padding: 10px 40px 10px 10px;
     padding: 0.625rem 2.5rem 0.625rem 0.625rem;
     font-family: inherit;
+    font-display: "swap";
     font-size: 20px;
     color: #fff;
     background: transparent; }
@@ -880,6 +882,7 @@ body.stickey-nav .autocomplete-suggestions {
 
 .other-categories .slick-prev:before, .other-categories .slick-next:before {
   font-family: 'Font Awesome 5 Pro';
+  font-display: "swap";
   font-weight: 300;
   color: #fff;
   font-size: 45px;

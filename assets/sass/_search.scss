@@ -49,6 +49,7 @@
     z-index: 10;
 		@include rem(padding, 10px 40px 10px 10px);
     font-family: inherit;
+    font-display: $font-display;
     font-size: 20px;
     color: $white;
     background: transparent;
@@ -146,7 +147,7 @@ body.stickey-nav .autocomplete-suggestions {
   max-height: inherit;
   padding: 3% 5%;
   background: $light-gray1;
-	@include rem(top, 150px !important); 
+	@include rem(top, 150px !important);
   .information-top {
     h5 {
       float: left;
@@ -203,9 +204,9 @@ body.stickey-nav .autocomplete-suggestions {
 }
 
 .center-header .autocomplete-suggestions {
-	@include rem(top, 210px !important); 
+	@include rem(top, 210px !important);
 	@include media-breakpoint-down(md){
-		@include rem(top, 150px !important); 
+		@include rem(top, 150px !important);
 	}
 }
 
