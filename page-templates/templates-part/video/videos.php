@@ -106,7 +106,7 @@ if (!is_wp_error($video) && !empty($video)):
                                         <?php
                                         $banner = get_post_meta($channel->ID, 'chnl_poster', true);
                                         ?>
-                                        <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/650'; ?>" alt="<?php echo get_the_title(); ?>">
+                                        <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/731'; ?>" alt="<?php echo get_the_title(); ?>">
                                             <div class="v-overlay">
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
@@ -333,7 +333,7 @@ if (!is_wp_error($video) && !empty($video)):
         </div>
         <?php
     endif;
-    ?>   
+    ?>
     <div class="row no-gutters pb-5">
         <div class="custom-container container  pt-7 other-categories">
             <?php
@@ -353,7 +353,7 @@ if (!is_wp_error($video) && !empty($video)):
             ?>
         </div>
     </div>
-    <?php if ($channel_unlocked == true): ?>        
+    <?php if ($channel_unlocked == true): ?>
         <script>
             jQuery(document).ready(function (e) {
 
