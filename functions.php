@@ -242,12 +242,12 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'search-autocomplete.min', 'modernizr.custom', 'effects.min');
-    foreach ($scripts as $script) :
-        wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
-        wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
-    endforeach;
-    wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    // $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'search-autocomplete.min', 'modernizr.custom', 'effects.min');
+    // foreach ($scripts as $script) :
+        wp_register_script("dsp-ugly", get_template_directory_uri() . '/assets/ugly-js.min.js');
+        wp_enqueue_script("dsp-ugly", get_template_directory_uri() . '/assets/ugly-js.min.js', false, false, true);
+    // endforeach;
+    wp_localize_script('dsp-ugly', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
