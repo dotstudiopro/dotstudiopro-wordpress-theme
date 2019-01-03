@@ -189,12 +189,37 @@ function bootstrapstarter_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
+/**
+ * Set up certain scripts to be asyncronous on load
+ * @since 1.0.0
+ * @param string $tag
+ * @param string $handle
+ * @return string
+ */
 function add_async_attribute($tag, $handle) {
-    if ( !in_array($handle, array('slick', 'popper', 'jquery-auto-complete', 'tooltipster')) )
+    $scripts = array('slick', 'popper', 'jquery-auto-complete', 'tooltipster');
+    if ( !in_array($handle, $scripts) )
         return $tag;
     return str_replace( ' src', ' async="async" src', $tag );
 }
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
+
+/**
+ * Set up certain styles to preload
+ * @since 1.0.0
+ * @param string $tag
+ * @param string $handle
+ * @return string
+ */
+// function add_preload_attribute($tag, $handle) {
+//     $styles = array('main', 'font-awesome-pro', 'ds-global', 'tooltipster.bundle.min');
+//     if ( !in_array($handle, $styles) )
+//         return $tag;
+//     $preload = str_replace( " rel='stylesheet'", " rel=\"preload\" as=\"style\"", $tag );
+
+//     return $preload . $tag;
+// }
+// add_filter('style_loader_tag', 'add_preload_attribute', 10, 2);
 
 
 /**
