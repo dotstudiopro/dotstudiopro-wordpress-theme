@@ -123,7 +123,7 @@
             }
         }
     });
-})
+})(jQuery);
 
 /**
  * Ajax call to change the result based on search suggesion click

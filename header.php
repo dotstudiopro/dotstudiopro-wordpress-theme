@@ -20,7 +20,6 @@
             <style type="text/css">
                 .slick-prev:before,
                 .slick-next:before,
-                .other-categories .slick-slide:hover h4,
                 .channel-banner:hover h4,
                 .slide.active .slide_content h4,
                 .video-content h4,
@@ -62,6 +61,16 @@
                     border-left-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
 
+                .mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+                    background-color: <?php echo $dsp_theme_options['opt-main-theme-color'] . ' !important'; ?>;
+                }
+
+
+                .btn-ds-primary, .btn-ds-secondary {
+                    background-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
+                    border-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
+                }
+
                 /* hover css */
                 .simple-navigation-item-content:hover,
                 .other-categories .slick-arrow.slick-prev:hover,
@@ -71,7 +80,10 @@
                 .main-navigation .navbar-nav > li.current-menu-item a,
                 .other-categories h3 a:hover,
                 .main-navigation .navbar-nav > li a:hover,
-                .footer-nav ul li a:hover
+                .other-categories .slick-slide:hover h4,
+                .footer-nav ul li a:hover,
+                .autocomplete-suggestions .information-top ul li a:hover,
+                .autocomplete-suggestions .channl_information a:hover h5
                 {
                     color: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
                 }
