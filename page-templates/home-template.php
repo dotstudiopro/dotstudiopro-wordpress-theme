@@ -27,7 +27,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                     ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image']; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container custom-container">

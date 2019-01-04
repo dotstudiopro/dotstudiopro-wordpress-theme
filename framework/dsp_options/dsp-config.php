@@ -210,7 +210,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
             'units_extended' => 'true', // Allow users to select any type of unit
             'title' => __('Header Padding', 'dotstudio-pro'),
-            'subtitle' => __('Controls the top/right/bottom/left margins for the header. Enter values including any valid CSS unit, ex: 31px, 31px, 0px, 0px.', 'dotstudio-pro'),
+            'subtitle' => __('Controls the top/right/bottom/left padding for the header. Enter values including any valid CSS unit, ex: 31px, 31px, 0px, 0px.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-logo-align',
@@ -245,13 +245,13 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-logo-height',
             'type' => 'dimensions',
             'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose height for the logo.', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to set height for the logo.', 'dotstudio-pro'),
             'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
             'output' => array('.site-logo img'),
-            'units' => array('px'),
+            'units' => array('em'),
             'width' => false,
             'default' => array(
-                'height' => 50,
+                'height' => 5.4375,
             )
         ),
         array(
@@ -269,6 +269,20 @@ Redux::setSection($opt_name, array(
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
+        ),
+        array(
+            'id' => 'opt-logo-height-after-resize',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Height) Option for the Home page logo after resize', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to set height for the logo after resize when nevbar is sticky.', 'dotstudio-pro'),
+            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'output' => array('header.fixed-top.small-header .site-logo img'),
+            'required' => array('opt-sticky', '=', '1'),
+            'units' => array('em'),
+            'width' => false,
+            'default' => array(
+                'height' => 3.75,
+            )
         ),
         array(
             'id' => 'opt-category-menu',
@@ -908,7 +922,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-category-poster-information',
             'title' => __('Display Category Poster Information', 'dotstudio-pro'),
-            'subtitle' => __('This option is to display the category information on poster and also display the "Play Now" button that you will navigate first video of that category.', 'dotstudio-pro'),
+            'subtitle' => __('This option is to display the category information on poster.', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
