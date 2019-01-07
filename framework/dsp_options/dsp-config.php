@@ -634,6 +634,16 @@ Redux::setSection($opt_name, array(
             'default' => 'poster'
         ),
         array(
+            'id' => 'opt-main-home-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width, height for the main thumbnails carousel.', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 1920,
+                'height' => 650,
+            )
+        ),
+        array(
             'id' => 'opt-play-btn-type',
             'type' => 'radio',
             'title' => __('Select Navigate Button Type For Main Carousel', 'dotstudio-pro'),

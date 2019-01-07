@@ -10,6 +10,8 @@ get_header();
 
 $theme_function = new Theme_Functions();
 $main_carousel = $theme_function->home_page_main_carousel();
+$main_carousel_width = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+$main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
 ?>
 
 <!-- Home page Main carousal section start-->
@@ -27,7 +29,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                     ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image']; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'].'/'. $main_carousel_width . '/' . $main_carousel_height; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container custom-container">
