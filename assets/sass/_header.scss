@@ -36,7 +36,11 @@ header {
             }
         }
     }
-    
+    .site-logo img {
+        @include respond-to(handhelds) {
+            @include rem(height, 87px);
+        }
+    }
     .custom-container {
         @include media-breakpoint-down(md){
             max-width: 100vw;
@@ -213,6 +217,9 @@ header.fixed-top.small-header {
     z-index: 9999;
     @include media-breakpoint-down(md){
         padding-top: 0;
+    }
+    .site-logo img {
+        @include rem(height, 60px);
     }
     &.left-logo-header .main-navigation {
         @include rem(padding-top, 32px);
