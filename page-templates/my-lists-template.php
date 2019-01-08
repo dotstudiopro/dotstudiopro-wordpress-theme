@@ -41,7 +41,7 @@ get_header();
                 }
             } else {
                 ?>
-        <h4>You don't have any titles added to your list. <a href="/">Explore</a> our selection to add some!</h4>
+                <h4>You don't have any titles added to your list. <a href="/">Explore</a> our selection to add some!</h4>
                 <?php
             }
         }

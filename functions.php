@@ -198,10 +198,11 @@ add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
  */
 function add_async_attribute($tag, $handle) {
     $scripts = array('slick', 'popper', 'jquery-auto-complete', 'tooltipster');
-    if ( !in_array($handle, $scripts) )
+    if (!in_array($handle, $scripts))
         return $tag;
-    return str_replace( ' src', ' async="async" src', $tag );
+    return str_replace(' src', ' async="async" src', $tag);
 }
+
 // add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 
 /**
@@ -216,11 +217,9 @@ function add_async_attribute($tag, $handle) {
 //     if ( !in_array($handle, $styles) )
 //         return $tag;
 //     $preload = str_replace( " rel='stylesheet'", " rel=\"preload\" as=\"style\"", $tag );
-
 //     return $preload . $tag;
 // }
 // add_filter('style_loader_tag', 'add_preload_attribute', 10, 2);
-
 
 /**
  * Get remote url response

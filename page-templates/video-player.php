@@ -19,8 +19,25 @@ $autoplay = (get_option('dsp_video_autoplay_field')) ? 'true' : 'false';
 $video_id = '';
 $video = '';
 
-if (!empty($channel_slug) && !empty($video_slug))
-    include(locate_template('page-templates/templates-part/video/videos.php'));
+if (!empty($channel_slug) && !empty($video_slug)) {
+    $channel_object = get_page_by_path($channel_slug, OBJECT, 'channel');
+    $chnl_title = $channel_object->post_title;
+    $channel_meta = get_post_meta($channel_object->ID);
+    $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
+    $plateform_web = false;
+    foreach ($categories as $channel_cat) {
+        $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
+        $slug_query = new WP_Query($args);
+        if ($slug_query->have_posts()) {
+            $plateform_web = true;
+            break;
+        }
+    }
+    if ($plateform_web)
+        include(locate_template('page-templates/templates-part/video/videos.php'));
+    else
+        include(locate_template('page-templates/templates-part/not-in-web-plateform.php'));
+}
 else if (!empty($video_slug))
     include(locate_template('page-templates/templates-part/video/direct-videos.php'));
 else

@@ -90,6 +90,10 @@ h3 {
 	@include rem(padding-left, 30px);
 }
 
+p{
+	font-size: 16px;
+}
+
 .holder > .title-holder > h3:before, .navigation.pagination > .screen-reader-text {
   display: none;
 }

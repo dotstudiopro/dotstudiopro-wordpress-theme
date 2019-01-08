@@ -10,3 +10,21 @@
 	margin: 0 auto;
   text-align: center;
 }
+
+.center-page-content {
+	.row{
+		@include center-text;
+		top: 40%;
+		width: 80%;
+	}
+}
+
+@media (min-width: 567px) and (max-width: 815px) and (orientation : landscape) {
+.center-page-content .row{ 
+	position: inherit;
+	top: inherit;
+	left: inherit;
+	transform: inherit;
+	-webkit-transform: inherit;
+}
+}
