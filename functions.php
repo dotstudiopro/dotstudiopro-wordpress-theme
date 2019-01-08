@@ -585,7 +585,7 @@ function dsp_add_login_link($items, $args) {
                 $items .= '<li><a href="/packages">Subscriptions</a></li>'
                         . '<li><a href="/payment-profile">My Payment Profile</a></li>';
             endif;
-            $items .= '<li><a href="/my-lists">My List</a></li>'
+            $items .= '<li><a href="/my-list">My List</a></li>'
                     . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
                     . '</ul>'
                     . '</li>';
