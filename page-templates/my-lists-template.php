@@ -26,7 +26,7 @@ get_header();
                     $link = '/channel/' . $channel['slug'];
                     $banner = $channel['spotlight_poster'] . '/240/360'
                     ?>
-                    <div class="col-md-2 text-center-img p-4">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
                         <a href="<?php echo $link; ?>" title="<?php echo $channel['title']; ?>">
                             <div class="holder">
                                 <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
@@ -34,7 +34,7 @@ get_header();
                             </div>
                         </a>    
                         <div class="pt-3 text-center pb-3">
-                            <button class="btn btn-danger text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
+                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
                         </div>
                     </div>
                     <?php

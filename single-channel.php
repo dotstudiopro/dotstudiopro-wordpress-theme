@@ -12,18 +12,23 @@ if (have_posts()) {
 
         // Code to check if user subscribe to watch this channel
         $dsp_api = new Dsp_External_Api_Request();
-        $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
-        $chnl_title = get_the_title();
 
-        // Condition to check platform is web true or not for this channel category
-        $plateform_web = false;
-        foreach ($categories as $channel_cat) {
-            $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
-            $slug_query = new WP_Query($args);
-            if ($slug_query->have_posts()) {
-                $plateform_web = true;
-                break;
+        if (isset($channel_meta['chnl_categories'][0])) {
+            $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
+            $chnl_title = get_the_title();
+
+            // Condition to check platform is web true or not for this channel category
+            $plateform_web = false;
+            foreach ($categories as $channel_cat) {
+                $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
+                $slug_query = new WP_Query($args);
+                if ($slug_query->have_posts()) {
+                    $plateform_web = true;
+                    break;
+                }
             }
+        } else {
+            $plateform_web = true;
         }
 
         if ($plateform_web) {
