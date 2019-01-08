@@ -20,14 +20,14 @@ $video_id = '';
 $video = '';
 
 if (!empty($channel_slug) && !empty($video_slug)) {
-    $chnl_title = $channel_object->post_title;
+    $channel_object = get_page_by_path($channel_slug, OBJECT, 'channel');
     if ($p_channel_slug) {
-        $channel_object = get_page_by_path($p_channel_slug, OBJECT, 'channel');
-        $channel_meta = get_post_meta($channel_object->ID);
+        $p_channel_object = get_page_by_path($p_channel_slug, OBJECT, 'channel');
+        $channel_meta = get_post_meta($p_channel_object->ID);
     } else {
-        $channel_object = get_page_by_path($channel_slug, OBJECT, 'channel');
         $channel_meta = get_post_meta($channel_object->ID);
     }
+    $chnl_title = $channel_object->post_title;
     if (isset($channel_meta['chnl_categories'][0])) {
         $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
         foreach ($categories as $channel_cat) {
