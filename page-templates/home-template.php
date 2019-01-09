@@ -10,6 +10,8 @@ get_header();
 
 $theme_function = new Theme_Functions();
 $main_carousel = $theme_function->home_page_main_carousel();
+$main_carousel_width = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+$main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
 ?>
 
 <!-- Home page Main carousal section start-->
@@ -18,8 +20,8 @@ $main_carousel = $theme_function->home_page_main_carousel();
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
                 <?php
-                    $src = "src";
-                    foreach ($main_carousel as $slide) {
+                $src = "src";
+                foreach ($main_carousel as $slide) {
                     ?>
                     <?php
                     $title = ($dsp_theme_options['opt-homepage-main-title-trim-word'] != 0) ? wp_trim_words($slide['title'], $dsp_theme_options['opt-homepage-main-title-trim-word']) : $slide['title'];
@@ -27,7 +29,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
                     ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'] . '/1920/650'; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'] . '/' . $main_carousel_width . '/' . $main_carousel_height; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container custom-container">
@@ -40,10 +42,10 @@ $main_carousel = $theme_function->home_page_main_carousel();
                             </div>
                         </div>
                     </div>
-                <?php
+                    <?php
                     // Set our source property back to lazy loading
                     // in case it isn't currently
-                    $src="data-lazy";
+                    $src = "data-lazy";
                 }
                 ?>
             </div>
@@ -62,8 +64,7 @@ $main_carousel = $theme_function->home_page_main_carousel();
         $slide_text_class = '';
         if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
             $slide_text_class .= 'slide-text-dec';
-        }
-        elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
+        } elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
             $slide_text_class .= 'slide-text';
         }
         $width = filter_var($dsp_theme_options['opt-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);

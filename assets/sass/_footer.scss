@@ -67,6 +67,9 @@ html, body {
 .fix-footer-bottom {
   min-height: 100%;
   overflow: hidden;
+	@include media-breakpoint-down(sm){
+		min-height: 70%;
+	}
   .content-area-custom {
     @include rem(padding-bottom, 265px);
 		@include media-breakpoint-down(sm){

@@ -200,8 +200,9 @@ function add_async_attribute($tag, $handle) {
     $scripts = array('slick-init', 'tooltipster');
     if ( !in_array($handle, $scripts) )
         return $tag;
-    return str_replace( ' src', ' async="async" src', $tag );
+    return str_replace(' src', ' async="async" src', $tag);
 }
+
 add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 
 /**
@@ -216,11 +217,9 @@ add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 //     if ( !in_array($handle, $styles) )
 //         return $tag;
 //     $preload = str_replace( " rel='stylesheet'", " rel=\"preload\" as=\"style\"", $tag );
-
 //     return $preload . $tag;
 // }
 // add_filter('style_loader_tag', 'add_preload_attribute', 10, 2);
-
 
 /**
  * Get remote url response
@@ -586,7 +585,7 @@ function dsp_add_login_link($items, $args) {
                 $items .= '<li><a href="/packages">Subscriptions</a></li>'
                         . '<li><a href="/payment-profile">My Payment Profile</a></li>';
             endif;
-            $items .= '<li><a href="/my-lists">My List</a></li>'
+            $items .= '<li><a href="/my-list">My List</a></li>'
                     . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
                     . '</ul>'
                     . '</li>';

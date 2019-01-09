@@ -168,7 +168,7 @@ if (!is_wp_error($video) && !empty($video)):
                                     ?>
                                     <a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
                                 <?php } else { ?>
-                                    <button class="btn btn-primary text-uppercase manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+                                    <button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
                                 <?php } ?>
                             <?php } else { ?>
                                 <button class="btn btn-primary btn-ds-primary login-link"><i class="fa fa-plus-circle"></i>Add to My List</button>

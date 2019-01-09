@@ -76,7 +76,7 @@ if (!is_wp_error($video) && !empty($video)):
             </div>
         </div>
 
-                        <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;                                                ?>"></script>-->
+                                    <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;                                                   ?>"></script>-->
         <?php
     endif;
     ?>

@@ -14,8 +14,7 @@ if (!empty($recommendation_content)):
     $slide_text_class = '';
     if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
         $slide_text_class .= 'slide-text-dec';
-    }
-    elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
+    } elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
         $slide_text_class .= 'slide-text';
     }
     ?>
