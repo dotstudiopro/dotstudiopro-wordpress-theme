@@ -25,7 +25,8 @@
                 .video-content h4,
                 .simple-navigation-item-content span,
                 .simple-navigation-item-content i:before,
-                .simple-navigation-item-content h5
+                .simple-navigation-item-content h5,
+                .credit-block h4, .jconfirm.jconfirm-custom .jconfirm-box .jconfirm-title-c, .thankyou-page i
                 {
                     color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
@@ -41,7 +42,8 @@
                     -webkit-box-shadow: inset 0 0 10px #87b145;
                     box-shadow: inset 0 0 10px <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
-                .custom-tooltip.tooltipster-sidetip .tooltipster-box {
+                .custom-tooltip.tooltipster-sidetip .tooltipster-box,
+                .center_title:before, .jconfirm.jconfirm-custom .jconfirm-box, .card .card-block {
                     border-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
                 .custom-tooltip.tooltipster-sidetip.tooltipster-top .tooltipster-arrow-border {
@@ -65,8 +67,8 @@
                     background-color: <?php echo $dsp_theme_options['opt-main-theme-color'] . ' !important'; ?>;
                 }
 
-
-                .btn-ds-primary, .btn-ds-secondary {
+                .btn-ds-primary, .btn-ds-secondary,
+                .card .card-header {
                     background-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                     border-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
@@ -87,6 +89,7 @@
                 {
                     color: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
                 }
+                
             </style>
         <?php endif; ?>
     </head>
