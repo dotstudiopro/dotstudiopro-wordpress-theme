@@ -19,22 +19,22 @@ if (isset($_GET['activated']) && is_admin()) {
     $my_list_page = get_page_by_title('My List');
 
     if ($home_page == NULL || $home_page->post_status == 'trash')
-        add_my_theme_custom_pages('Home Page', 'home-page', 'home-template.php');
+        add_dotstudiopro_bootstrap_custom_pages('Home Page', 'home-page', 'home-template.php');
     else
         update_post_meta($home_page->ID, '_wp_page_template', 'page-templates/home-template.php');
 
     if ($categories_page == NULL || $categories_page->post_status == 'trash')
-        add_my_theme_custom_pages('Categories', 'categories', 'categories-template.php');
+        add_dotstudiopro_bootstrap_custom_pages('Categories', 'categories', 'categories-template.php');
     else
         update_post_meta($categories_page->ID, '_wp_page_template', 'page-templates/categories-template.php');
 
     if ($video == NULL || $video->post_status == 'trash')
-        add_my_theme_custom_pages('Video', 'video', 'video-player.php');
+        add_dotstudiopro_bootstrap_custom_pages('Video', 'video', 'video-player.php');
     else
         update_post_meta($video->ID, '_wp_page_template', 'page-templates/video-player.php');
 
     if ($my_list_page == NULL || $my_list_page->post_status == 'trash')
-        add_my_theme_custom_pages('My List', 'my-list', 'my-lists-template.php');
+        add_dotstudiopro_bootstrap_custom_pages('My List', 'my-list', 'my-lists-template.php');
     else
         update_post_meta($my_list_page->ID, '_wp_page_template', 'page-templates/my-lists-template.php');
 }
@@ -49,7 +49,7 @@ if (isset($_GET['activated']) && is_admin()) {
  * @param type $author
  * @param type $type
  */
-function add_my_theme_custom_pages($title, $slug, $new_page_template, $desc = '', $status = 'publish', $author = 1, $type = 'page') {
+function add_dotstudiopro_bootstrap_custom_pages($title, $slug, $new_page_template, $desc = '', $status = 'publish', $author = 1, $type = 'page') {
     $my_post = array(
         'post_title' => wp_strip_all_tags($title),
         'post_content' => $desc,
