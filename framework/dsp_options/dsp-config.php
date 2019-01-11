@@ -580,7 +580,7 @@ Redux::setSection($opt_name, array(
 
 $options = array();
 $args = array(
-    'post_per_page' => -1,
+    'posts_per_page' => -1,
     'post_type' => 'channel-category',
     'meta_query' => array(
         array(
