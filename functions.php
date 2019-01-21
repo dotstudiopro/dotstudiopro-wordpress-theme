@@ -203,7 +203,7 @@ function add_async_attribute($tag, $handle) {
     return str_replace(' src', ' async="async" src', $tag);
 }
 
-add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
+//add_filter('script_loader_tag', 'add_async_attribute', 10, 2);
 
 /**
  * Set up certain styles to preload
