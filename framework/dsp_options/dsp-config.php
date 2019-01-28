@@ -246,7 +246,6 @@ Redux::setSection($opt_name, array(
             'type' => 'dimensions',
             'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to set height for the logo.', 'dotstudio-pro'),
-            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
             'output' => array('.site-logo img'),
             'units' => array('em'),
             'width' => false,
@@ -259,8 +258,8 @@ Redux::setSection($opt_name, array(
             'type' => 'switch',
             'title' => __('Enable/Disable the search bar', 'dotstudio-pro'),
             'default' => 0,
-            'on' => 'Enabled',
-            'off' => 'Disabled',
+            'on' => 'Enable',
+            'off' => 'Disable',
         ),
         array(
             'id' => 'opt-sticky',
@@ -274,8 +273,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-logo-height-after-resize',
             'type' => 'dimensions',
             'title' => __('Dimensions (Height) Option for the Home page logo after resize', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to set height for the logo after resize when nevbar is sticky.', 'dotstudio-pro'),
-            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to set height for the logo after resize when navbar is sticky.', 'dotstudio-pro'),
             'output' => array('header.fixed-top.small-header .site-logo img'),
             'required' => array('opt-sticky', '=', '1'),
             'units' => array('em'),
@@ -297,7 +295,7 @@ Redux::setSection($opt_name, array(
             'type' => 'text',
             'title' => 'Menu Title',
             'required' => array('opt-category-menu', '=', '1'),
-            'subtitle' => __('The menu title to display on the header menu', 'dotstudio-pro'),
+            'subtitle' => __('The menu name to display on the header menu', 'dotstudio-pro'),
             'default' => 'categories'
         ),
         array(
@@ -311,7 +309,7 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'title' => __('Menu Position', 'dotstudio-pro'),
-            'desc' => __('Choose the postion to display menu on the home page.', 'dotstudio-pro'),
+            'desc' => __('Choose the option to display menu at specific position on the home page.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-menu-position',
             'required' => array('opt-category-menu', '=', '1'),
@@ -344,7 +342,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-color-selection-section',
             'type' => 'switch',
             'title' => __('Set Main Theme Color', 'dotstudio-pro'),
-            'description' => __('If you not enable this option then it will take main theme color from css', 'dotstudio-pro'),
+            'description' => __('If you will not enable this option, it will take main theme color from CSS', 'dotstudio-pro'),
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
@@ -353,7 +351,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-main-theme-color',
             'type' => 'color',
             'title' => __('Site Main Theme Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a color for the Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the main theme (default: #428bca).', 'dotstudio-pro'),
             'default' => '#87b145',
             'validate' => 'color',
             'required' => array('opt-color-selection-section', '=', 1),
@@ -362,7 +360,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-main-theme-hover-color',
             'type' => 'color',
             'title' => __('Site Main Theme Hover Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a color for Hover for Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for hover for main theme (default: #428bca).', 'dotstudio-pro'),
             'default' => '#87b145',
             'validate' => 'color',
             'required' => array('opt-color-selection-section', '=', 1),
@@ -616,7 +614,7 @@ Redux::setSection($opt_name, array(
     'fields' => array(
         array(
             'title' => __('Select Category For Main Carousel', 'dotstudio-pro'),
-            'desc' => __('Choose the category to be used for the homepage carousel.', 'dotstudio-pro'),
+            'desc' => __('Choose the category to be used for the homepage main carousel.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-home-carousel',
             'options' => $options,
@@ -636,8 +634,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-main-home-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the main thumbnails carousel.', 'dotstudio-pro'),
+            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnail', 'dotstudio-pro'),
+            'subtitle' => __('Allow users to choose width and height for the main thumbnail carousel.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 1920,
                 'height' => 650,
@@ -646,8 +644,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-play-btn-type',
             'type' => 'radio',
-            'title' => __('Select Navigate Button Type For Main Carousel', 'dotstudio-pro'),
-            'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e.: <br/> 1). show a Play Video button (navigates to the first video of the channel) <b>OR</b><br/> 2). show a Watch Now button (navigates to the channel\'s list page)', 'dotstudio-pro'),
+            'title' => __('Select navigate button type for main carousel', 'dotstudio-pro'),
+            'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e.: <br/> 1). show a "Play Video" button (navigates to the first video of the channel) <b>OR</b><br/> 2). show a "Watch Now" button (navigates to the channel\'s list page)', 'dotstudio-pro'),
             'options' => array(
                 'play_video' => 'Play Video Button',
                 'watch_now' => 'Watch Now Button',
@@ -689,7 +687,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-carousel-poster-type',
             'type' => 'radio',
-            'title' => __('Select Carousel Image Type', 'dotstudio-pro'),
+            'title' => __('Select carousel image type', 'dotstudio-pro'),
             'subtitle' => __('Select the poster banner type which you would like to display on the carousel.', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -700,7 +698,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the carousel thumbnails', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
@@ -712,7 +710,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Content Layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
-            'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
+            'desc' => __('Select tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
                 '1' => 'Text & Description',
@@ -725,7 +723,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown in category titles in the carousel', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of words to be shown in category titles on the carousel', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -735,7 +733,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown in category descriptions in the carousel', 'dotstudio-pro'),
+            'desc' => __('Here you can set number of words to be shown in category descriptions on the carousel', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -745,7 +743,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-home-slidetoshow',
             'type' => 'spinner',
             'title' => __('Slides to show', 'dotstudio-pro'),
-            'subtitle' => __('This defines the number of images to be displayed in a carousel row', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be displayed on a carousel row', 'dotstudio-pro'),
             'default' => '4',
             'min' => '1',
             'step' => '1',
@@ -754,7 +752,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-slidetoscroll',
             'title' => __('Slides to scroll', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be scrolled on a carousel row', 'dotstudio-pro'),
             'type' => 'spinner',
             'default' => '4',
             'min' => '1',
@@ -788,7 +786,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-autoplay',
             'title' => __('Autoplay', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable/disable autoplay for the carousel', 'dotstudio-pro'),
             'description' => __('By default set to "off".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
@@ -820,7 +818,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-tablet-slidetoshow',
             'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be displayed on tablet screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-home-responsive', '=', true),
             'default' => '2',
@@ -831,7 +829,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-mobile-slidetoshow',
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in mobile screen', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be displayed on mobile screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-home-responsive', '=', true),
             'default' => '1',
@@ -861,7 +859,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-categories-poster-type',
             'type' => 'radio',
-            'title' => __('Select Category Image Type', 'dotstudio-pro'),
+            'title' => __('Select category image type', 'dotstudio-pro'),
             'subtitle' => __('Select the category banner type which you would like to display on category page.', 'dotstudio-pro'),
             'options' => array(
                 'poster' => 'Poster',
@@ -872,8 +870,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-categories-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the Category Image', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the category image', 'dotstudio-pro'),
+            'subtitle' => __('Allow users to choose width & height for the thumbnail.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
                 'height' => 180,
@@ -881,14 +879,14 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'id' => 'opt-categories-title',
-            'title' => __('Display Category Title', 'dotstudio-pro'),
-            'subtitle' => __('This option is to display title on category page.', 'dotstudio-pro'),
+            'title' => __('Display category title', 'dotstudio-pro'),
+            'subtitle' => __('This option is to display the title on category page.', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
         array(
             'title' => __('Number of category to display in a row', 'dotstudio-pro'),
-            'desc' => __('Choose the option to display number of rows in Categories page.', 'dotstudio-pro'),
+            'desc' => __('Choose the option to display number of categories in a row on the category page.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-display-categories-row',
             'options' => array_combine(array(12, 6, 4, 3, 2), array(1, 2, 3, 4, 6)),
@@ -899,7 +897,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Choose the option to display Category listing page', 'dotstudio-pro'),
             'subtitle' => __('Choose the option to display Category listing page / IVP page.', 'dotstudio-pro'),
-            'desc' => __('Select Category listing page option to show Channel/video listing by click on category, or select IVP page to play first video in playlist..', 'dotstudio-pro'),
+            'desc' => __('Select Category listing page option to show channel/video listing by click on category, or select IVP page to play first video in playlist..', 'dotstudio-pro'),
             'options' => array(
                 'category-listing-page' => 'Category listing page',
                 'ivp-page' => 'IVP page'
@@ -921,8 +919,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-category-poster-type',
             'type' => 'radio',
-            'title' => __('Select Category Banner Type', 'dotstudio-pro'),
-            'subtitle' => __('Select the category banner type which you would like to display on category page.', 'dotstudio-pro'),
+            'title' => __('Select category banner type', 'dotstudio-pro'),
+            'subtitle' => __('Select the category banner type which you would like to display on the category page.', 'dotstudio-pro'),
             'options' => array(
                 'poster' => 'Poster',
                 'wallpaper' => 'wallpaper',
@@ -931,7 +929,7 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'id' => 'opt-category-poster-information',
-            'title' => __('Display Category Poster Information', 'dotstudio-pro'),
+            'title' => __('Display category poster information', 'dotstudio-pro'),
             'subtitle' => __('This option is to display the category information on poster.', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
@@ -939,7 +937,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-category-channel-poster-type',
             'type' => 'radio',
-            'title' => __('Select Channal Poster Type', 'dotstudio-pro'),
+            'title' => __('Select channal poster type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel poster type which you would like to display on category detail page', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -950,7 +948,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-channel-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the Channel Image', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the channel image', 'dotstudio-pro'),
             'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
@@ -962,7 +960,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Content Layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option for channels.', 'dotstudio-pro'),
-            'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
+            'desc' => __('Select tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
                 '1' => 'Text & Description',
@@ -975,7 +973,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-channel-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be visible on channel title.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words to be visible on channel title.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -985,7 +983,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-channel-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be visible on channel description.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words to be visible on channel description.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -993,7 +991,7 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'title' => __('Number of category to display in a row', 'dotstudio-pro'),
-            'desc' => __('Choose the option to display number of rows in Categories page.', 'dotstudio-pro'),
+            'desc' => __('Choose the option to display the numbers of rows on Categories page.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-display-row',
             'options' => array_combine(array(12, 6, 4, 3, 2), array(1, 2, 3, 4, 6)),
@@ -1014,7 +1012,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-channel-poster-type',
             'type' => 'radio',
-            'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
+            'title' => __('Select channal banner type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type which you would like to display', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -1025,8 +1023,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-channel-video-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the video carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the video carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow users to choose width & height for the thumbnail.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
                 'height' => 180,
@@ -1035,7 +1033,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-channel-video-layout-slider-content',
             'type' => 'button_set',
-            'title' => __('Content Layout for videos', 'dotstudio-pro'),
+            'title' => __('Content layout for videos', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
             'desc' => __('Tooltip will display information in a tooltip, while Text will display information on the thumbnail', 'dotstudio-pro'),
             'options' => array(
@@ -1050,7 +1048,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-channel-video-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on video carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown for the Video Title on the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words shown for the video title on the carousel.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -1060,7 +1058,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-channel-video-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on video carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown for the Video Description on the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words shown for the Video Description on the carousel.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -1070,7 +1068,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-video-slidetoshow',
             'type' => 'spinner',
             'title' => __('Slides to show', 'dotstudio-pro'),
-            'subtitle' => __('This defines the number of images to be displayed in a carousel row', 'dotstudio-pro'),
+            'subtitle' => __('This defines the the numbers of images to be displayed on a carousel row', 'dotstudio-pro'),
             'default' => '4',
             'min' => '1',
             'step' => '1',
@@ -1079,7 +1077,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-video-slidetoscroll',
             'title' => __('Slides to scroll', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
+            'subtitle' => __('This define the numbers of images to be scrolled', 'dotstudio-pro'),
             'type' => 'spinner',
             'default' => '4',
             'min' => '1',
@@ -1110,7 +1108,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-video-autoplay',
             'title' => __('Autoplay', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
+            'subtitle' => __('This option is to enable/disable autoplay to the carousel', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
         ),
@@ -1141,7 +1139,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-video-tablet-slidetoshow',
             'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
+            'subtitle' => __('This define the numbers of images to be displayed on tablet screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-video-responsive', '=', true),
             'default' => '2',
@@ -1152,7 +1150,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-video-mobile-slidetoshow',
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
-            'subtitle' => __('This defines the number of images to be displayed in mobile screen', 'dotstudio-pro'),
+            'subtitle' => __('This defines the numbers of images to be displayed on mobile screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-video-responsive', '=', true),
             'default' => '1',
@@ -1191,8 +1189,8 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-option',
             'type' => 'button_set',
             'title' => __('Choose the option to display recommendations content', 'dotstudio-pro'),
-            'subtitle' => __('Choose the option to display video / channel.', 'dotstudio-pro'),
-            'desc' => __('Select Channel option to show related channels carousel under the content, or select Video to display related videos.', 'dotstudio-pro'),
+            'subtitle' => __('Choose the option to display video/channel.', 'dotstudio-pro'),
+            'desc' => __('Select channel option to show related channels carousel under the content, or select video to display related videos.', 'dotstudio-pro'),
             'options' => array(
                 'channel' => 'Channel',
                 'video' => 'Video'
@@ -1203,7 +1201,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-related-channel-poster-type',
             'type' => 'radio',
-            'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
+            'title' => __('Select channal banner type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type which you would like to display', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -1215,8 +1213,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-related-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the recommendations content carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the recommendations content carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width & height for the thumbnails.', 'dotstudio-pro'),
             'required' => array('opt-related-section', '=', 1),
             'default' => array(
                 'width' => 320,
@@ -1228,7 +1226,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Content Layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
-            'desc' => __('Select Tooltip option if you need to display description in a tooltip, or select Text to display description below the image. ', 'dotstudio-pro'),
+            'desc' => __('Select tooltip option if you need to display description in a tooltip, or select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
                 '1' => 'Text & Description',
@@ -1242,7 +1240,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content titles in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words to be shown for related content titles on the carousel.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -1253,7 +1251,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-related-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on recommendations content carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content descriptions in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words to be shown for related content descriptions on the carousel.', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -1264,7 +1262,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-slick-related-slidetoshow',
             'type' => 'spinner',
             'title' => __('Slides to show', 'dotstudio-pro'),
-            'subtitle' => __('This defines the number of images to be displayed in a carousel row', 'dotstudio-pro'),
+            'subtitle' => __('This defines the numbers of images to be displayed on a carousel row', 'dotstudio-pro'),
             'default' => '4',
             'min' => '1',
             'step' => '1',
@@ -1274,7 +1272,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-related-slidetoscroll',
             'title' => __('Slides to scroll', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
+            'subtitle' => __('This define the numbers of images to be scrolled', 'dotstudio-pro'),
             'type' => 'spinner',
             'default' => '4',
             'min' => '1',
@@ -1343,7 +1341,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-related-tablet-slidetoshow',
             'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
+            'subtitle' => __('This define the number of images to be displayed on tablet screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array(array('opt-related-section', '=', 1), array('opt-slick-related-responsive', '=', true)),
             'default' => '2',
@@ -1354,7 +1352,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-related-mobile-slidetoshow',
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
-            'subtitle' => __('This defines the number of images to be displayed in mobile screen', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be displayed on mobile screen', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array(array('opt-related-section', '=', 1), array('opt-slick-related-responsive', '=', true)),
             'default' => '1',
@@ -1378,7 +1376,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-search-option',
             'type' => 'button_set',
             'title' => __('Choose the option to search for content', 'dotstudio-pro'),
-            'subtitle' => __('Choose the option to search video / channel.', 'dotstudio-pro'),
+            'subtitle' => __('Choose the option to search video/channel.', 'dotstudio-pro'),
             'options' => array(
                 'channel' => 'Channel',
                 'video' => 'Video'
@@ -1388,7 +1386,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-search-channel-poster-type',
             'type' => 'radio',
-            'title' => __('Select Channal Banner Type', 'dotstudio-pro'),
+            'title' => __('Select channal banner type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type which you would like to display', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -1400,8 +1398,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-search-image-dimensions',
             'type' => 'dimensions',
-            'title' => __('Dimensions (Width/Height) Option for the search result content thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the search result thumbnails.', 'dotstudio-pro'),
+            'title' => __('Dimensions (width/height) option for the search result content thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width & height for the search result thumbnails.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
                 'height' => 180,
@@ -1417,7 +1415,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-search-page-size',
             'type' => 'spinner',
-            'title' => __('Select the number of posts to display per page', 'dotstudio-pro'),
+            'title' => __('Select the number of posts to be displayed per page', 'dotstudio-pro'),
             'default' => '6',
             'min' => '0',
             'step' => '1',
@@ -1427,7 +1425,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-search-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on search results page', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for search results titles.', 'dotstudio-pro'),
+            'desc' => __('Here you can set the numbers of words to be shown for search results titles.', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -1450,7 +1448,7 @@ Redux::setSection($opt_name, array(
             'type' => 'select',
             'data' => 'menus',
             'title' => __('Footer menu', 'dotstudio-pro'),
-            'desc' => __('Select a menu to display in the footer section.', 'dotstudio-pro'),
+            'desc' => __('Select a menu to be displayed on the footer section.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-copyright-text',
@@ -1469,7 +1467,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-social-links-target',
             'type' => 'switch',
-            'title' => __('Social icon links: Open in new Tab?', 'dotstudio-pro'),
+            'title' => __('Social icon links: open in new Tab?', 'dotstudio-pro'),
             'default' => 1,
             'required' => array('opt-social-icons', '=', '1'),
             'on' => 'Enable',
@@ -1486,99 +1484,99 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'facebook-link',
             'type' => 'text',
-            'title' => __('Facebook Page URL', 'dotstudio-pro'),
+            'title' => __('Facebook page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Facebook Page URL', 'dotstudio-pro'),
+            'desc' => __('Facebook page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'twitter-link',
             'type' => 'text',
-            'title' => __('Twitter Page URL', 'dotstudio-pro'),
+            'title' => __('Twitter page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Twitter Page URL', 'dotstudio-pro'),
+            'desc' => __('Twitter page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'dribbble-link',
             'type' => 'text',
-            'title' => __('Dribbble Page URL', 'dotstudio-pro'),
+            'title' => __('Dribbble page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Dribbble Page URL', 'dotstudio-pro'),
+            'desc' => __('Dribbble page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'flickr-link',
             'type' => 'text',
-            'title' => __('Flickr Page URL', 'dotstudio-pro'),
+            'title' => __('Flickr page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Flickr Page URL', 'dotstudio-pro'),
+            'desc' => __('Flickr page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'github-link',
             'type' => 'text',
-            'title' => __('Github Page URL', 'dotstudio-pro'),
+            'title' => __('Github page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Github Page URL', 'dotstudio-pro'),
+            'desc' => __('Github page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'pinterest-link',
             'type' => 'text',
-            'title' => __('Pinterest Page URL', 'dotstudio-pro'),
+            'title' => __('Pinterest page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Pinterest Page URL', 'dotstudio-pro'),
+            'desc' => __('Pinterest page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'youtube-link',
             'type' => 'text',
-            'title' => __('Youtube Page URL', 'dotstudio-pro'),
+            'title' => __('Youtube page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Youtube Page URL', 'dotstudio-pro'),
+            'desc' => __('Youtube page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'google-plus-link',
             'type' => 'text',
-            'title' => __('Google+ Page URL', 'dotstudio-pro'),
+            'title' => __('Google+ page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Google+ Page URL', 'dotstudio-pro'),
+            'desc' => __('Google+ page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'linkedin-link',
             'type' => 'text',
-            'title' => __('LinkedIn Page URL', 'dotstudio-pro'),
+            'title' => __('LinkedIn page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('LinkedIn Page URL', 'dotstudio-pro'),
+            'desc' => __('LinkedIn page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'instagram-link',
             'type' => 'text',
-            'title' => __('Instagram Page URL', 'dotstudio-pro'),
+            'title' => __('Instagram page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Instagram Page URL', 'dotstudio-pro'),
+            'desc' => __('Instagram page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
         array(
             'id' => 'vimeo-link',
             'type' => 'text',
-            'title' => __('Vimeo Page URL', 'dotstudio-pro'),
+            'title' => __('Vimeo page URL', 'dotstudio-pro'),
             'subtitle' => __('This must be a URL.', 'dotstudio-pro'),
-            'desc' => __('Vimeo Page URL', 'dotstudio-pro'),
+            'desc' => __('Vimeo page URL', 'dotstudio-pro'),
             'validate' => 'url',
             'default' => ''
         ),
