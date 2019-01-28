@@ -341,7 +341,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-color-selection-section',
             'type' => 'switch',
-            'title' => __('Set Main Theme Color', 'dotstudio-pro'),
+            'title' => __('Set main theme color', 'dotstudio-pro'),
             'description' => __('If you will not enable this option, it will take main theme color from CSS', 'dotstudio-pro'),
             'default' => 0,
             'on' => 'On',
@@ -623,7 +623,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-poster-type',
             'type' => 'radio',
-            'title' => __('Select Channel Banner Type For Main Carousel', 'dotstudio-pro'),
+            'title' => __('Select channel banner type for main carousel', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type which you would like to display on the main carousel', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
@@ -680,7 +680,7 @@ Redux::setSection($opt_name, array(
  * @since 1.0.0
  */
 Redux::setSection($opt_name, array(
-    'title' => __('Homepage other Carousel', 'dotstudio-pro'),
+    'title' => __('Homepage other carousel', 'dotstudio-pro'),
     'id' => 'carousels',
     'subsection' => true,
     'fields' => array(
@@ -1093,7 +1093,7 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'id' => 'opt-slick-video-navigation',
-            'title' => __('Enable Navigation', 'dotstudio-pro'),
+            'title' => __('Enable navigation', 'dotstudio-pro'),
             'subtitle' => __('This option is to enable/disable the navigation arrows', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
@@ -1173,7 +1173,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-related-section',
             'type' => 'switch',
-            'title' => __('Display Recommendations Content', 'dotstudio-pro'),
+            'title' => __('Display recommendations content', 'dotstudio-pro'),
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
@@ -1224,7 +1224,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-related-layout-slider-content',
             'type' => 'button_set',
-            'title' => __('Content Layout', 'dotstudio-pro'),
+            'title' => __('Content layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
             'desc' => __('Select tooltip option if you need to display description in a tooltip, or select text to display description below the image. ', 'dotstudio-pro'),
             'options' => array(
