@@ -139,20 +139,6 @@ Redux::setSection($opt_name, array(
             'default' => 1
         ),
         array(
-            'id' => 'opt-img-hover',
-            'type' => 'select',
-            'title' => __('Select Hover effect for the carousel items', 'dotstudio-pro'),
-            'subtitle' => __('Choose any one hover effect from the different 5 types of effects', 'dotstudio-pro'),
-            'options' => array(
-                1 => 'Hover Effect 1',
-                2 => 'Hover Effect 2',
-                3 => 'Hover Effect 3',
-                4 => 'Hover Effect 4',
-                5 => 'Hover Effect 5',
-            ),
-            'default' => 1
-        ),
-        array(
             'id' => 'opt-google-analytics',
             'type' => 'textarea',
             'title' => __('Google Analytics/Tag Manager Code', 'dotstudio-pro'),
@@ -210,7 +196,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
             'units_extended' => 'true', // Allow users to select any type of unit
             'title' => __('Header Padding', 'dotstudio-pro'),
-            'subtitle' => __('Controls the top/right/bottom/left padding for the header. Enter values including any valid CSS unit, ex: 31px, 31px, 0px, 0px.', 'dotstudio-pro'),
+            'subtitle' => __('Controls the top/right/bottom/left padding for the header.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-logo-align',
@@ -232,7 +218,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
             'units_extended' => 'true', // Allow users to select any type of unit
             'title' => __('Logo Margins', 'dotstudio-pro'),
-            'subtitle' => __('Controls the top/right/bottom/left margins for the logo. Enter values including any valid CSS unit, ex: 31px, 31px, 0px, 0px.', 'dotstudio-pro'),
+            'subtitle' => __('Controls the top/right/bottom/left margins for the logo.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-logo-url',
@@ -245,10 +231,9 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-logo-height',
             'type' => 'dimensions',
             'title' => __('Dimensions (Height) Option for the Home page logo', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to set height for the logo.', 'dotstudio-pro'),
-            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'subtitle' => __('Set the height for the logo.', 'dotstudio-pro'),
             'output' => array('.site-logo img'),
-            'units' => array('em'),
+            'units' => array('em', 'px', '%'),
             'width' => false,
             'default' => array(
                 'height' => 5.4375,
@@ -265,7 +250,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-sticky',
             'type' => 'switch',
-            'title' => __('Navbar Sticky', 'dotstudio-pro'),
+            'title' => __('Sticky Navbar', 'dotstudio-pro'),
+            'subtitle' => __('Set the navbar to stay at the top of the window/viewpart when a user scrolls down', 'dotstudio-pro'),
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
@@ -274,8 +260,8 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-logo-height-after-resize',
             'type' => 'dimensions',
             'title' => __('Dimensions (Height) Option for the Home page logo after resize', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to set height for the logo after resize when nevbar is sticky.', 'dotstudio-pro'),
-            'desc' => __('You can enable or disable any piece of this field. Height, or Units.', 'dotstudio-pro'),
+            'subtitle' => __('The height of the logo after the navbar resizes', 'dotstudio-pro'),
+            'description' => __('When a user scrolls down a page, you generally want to minimize the presence of your logo and the header in general so as to not interfere with a user seeing what they came for on your site. This allows you to determine what that size is.', 'dotstudio-pro'),
             'output' => array('header.fixed-top.small-header .site-logo img'),
             'required' => array('opt-sticky', '=', '1'),
             'units' => array('em'),
@@ -297,7 +283,7 @@ Redux::setSection($opt_name, array(
             'type' => 'text',
             'title' => 'Menu Title',
             'required' => array('opt-category-menu', '=', '1'),
-            'subtitle' => __('The menu title to display on the header menu', 'dotstudio-pro'),
+            'subtitle' => __('The title of the category menu to display in the header', 'dotstudio-pro'),
             'default' => 'categories'
         ),
         array(
@@ -311,7 +297,7 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'title' => __('Menu Position', 'dotstudio-pro'),
-            'desc' => __('Choose the postion to display menu on the home page.', 'dotstudio-pro'),
+            'desc' => __('Choose the postion to display the menu on the home page.', 'dotstudio-pro'),
             'type' => 'select',
             'id' => 'opt-menu-position',
             'required' => array('opt-category-menu', '=', '1'),
@@ -344,7 +330,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-color-selection-section',
             'type' => 'switch',
             'title' => __('Set Main Theme Color', 'dotstudio-pro'),
-            'description' => __('If you not enable this option then it will take main theme color from css', 'dotstudio-pro'),
+            'description' => __('This option overrides main theme colors set in your CSS file, if turned on.', 'dotstudio-pro'),
             'default' => 0,
             'on' => 'On',
             'off' => 'Off',
@@ -353,7 +339,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-main-theme-color',
             'type' => 'color',
             'title' => __('Site Main Theme Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a color for the Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a text color for the theme (default: #87b145).', 'dotstudio-pro'),
             'default' => '#87b145',
             'validate' => 'color',
             'required' => array('opt-color-selection-section', '=', 1),
@@ -362,7 +348,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-main-theme-hover-color',
             'type' => 'color',
             'title' => __('Site Main Theme Hover Color', 'dotstudio-pro'),
-            'subtitle' => __('Pick a color for Hover for Main Theme (default: #428bca).', 'dotstudio-pro'),
+            'subtitle' => __('Pick a link hover color the theme (default: #87b145).', 'dotstudio-pro'),
             'default' => '#87b145',
             'validate' => 'color',
             'required' => array('opt-color-selection-section', '=', 1),
@@ -391,7 +377,7 @@ Redux::setSection($opt_name, array(
             'type' => 'background',
             'output' => array('body'),
             'title' => __('Body Background', 'dotstudio-pro'),
-            'subtitle' => __('Body background with image, color, etc.', 'dotstudio-pro'),
+            'subtitle' => __('CSS for the body background, such as the color or an image.', 'dotstudio-pro'),
         ),
         array(
             'id' => 'opt-color-body',
@@ -610,7 +596,7 @@ Redux::setSection($opt_name, array(
 ));
 
 Redux::setSection($opt_name, array(
-    'title' => __('Homepage Main Carousel', 'dotstudio-pro'),
+    'title' => __('Homepage: Main Carousel', 'dotstudio-pro'),
     'id' => 'homepage',
     'subsection' => true,
     'fields' => array(
@@ -626,7 +612,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-poster-type',
             'type' => 'radio',
             'title' => __('Select Channel Banner Type For Main Carousel', 'dotstudio-pro'),
-            'subtitle' => __('Select the channel banner type which you would like to display on the main carousel', 'dotstudio-pro'),
+            'subtitle' => __('Select the channel banner type you would like to display in the main carousel', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
@@ -637,7 +623,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-main-home-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the main thumbnails carousel.', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width and height for the main thumbnails carousel.', 'dotstudio-pro'),
             'default' => array(
                 'width' => 1920,
                 'height' => 650,
@@ -647,7 +633,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-play-btn-type',
             'type' => 'radio',
             'title' => __('Select Navigate Button Type For Main Carousel', 'dotstudio-pro'),
-            'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e.: <br/> 1). show a Play Video button (navigates to the first video of the channel) <b>OR</b><br/> 2). show a Watch Now button (navigates to the channel\'s list page)', 'dotstudio-pro'),
+            'subtitle' => __('Select the navigate button type which you would like to display on the main carousel. i.e.: <br/> 1). Show a Play Video button (navigates to the first video of the channel) <b>OR</b><br/> 2). Show a Watch Now button (navigates to the channel\'s list page)', 'dotstudio-pro'),
             'options' => array(
                 'play_video' => 'Play Video Button',
                 'watch_now' => 'Watch Now Button',
@@ -658,7 +644,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-homepage-main-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on homepage main carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content titles in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Set number of words to be shown for related content titles in the carousel', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -668,7 +654,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-homepage-main-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on homepage main carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words to be shown for related content descriptions in the carousel.', 'dotstudio-pro'),
+            'desc' => __('Set number of words to be shown for related content descriptions in the carousel', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -682,7 +668,7 @@ Redux::setSection($opt_name, array(
  * @since 1.0.0
  */
 Redux::setSection($opt_name, array(
-    'title' => __('Homepage other Carousel', 'dotstudio-pro'),
+    'title' => __('Homepage: Secondary Carousels', 'dotstudio-pro'),
     'id' => 'carousels',
     'subsection' => true,
     'fields' => array(
@@ -690,7 +676,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-carousel-poster-type',
             'type' => 'radio',
             'title' => __('Select Carousel Image Type', 'dotstudio-pro'),
-            'subtitle' => __('Select the poster banner type which you would like to display on the carousel.', 'dotstudio-pro'),
+            'subtitle' => __('Select the poster banner type you would like to display on the carousel', 'dotstudio-pro'),
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
@@ -701,7 +687,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
-            'subtitle' => __('Allow your users to choose width, height for the thumbnails.', 'dotstudio-pro'),
+            'subtitle' => __('Choose width and height for the carousel thumbnails', 'dotstudio-pro'),
             'default' => array(
                 'width' => 320,
                 'height' => 180,
@@ -712,7 +698,7 @@ Redux::setSection($opt_name, array(
             'type' => 'button_set',
             'title' => __('Content Layout', 'dotstudio-pro'),
             'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
-            'desc' => __('Select Tooltip option if you need to display description on tooltip either select text to display description below the image. ', 'dotstudio-pro'),
+            'desc' => __('Tooltip will display everything in a tooltip, where "Text" and "Text & Description" will display whichever you select below the image', 'dotstudio-pro'),
             'options' => array(
                 '0' => 'None',
                 '1' => 'Text & Description',
@@ -725,7 +711,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-title-trim-word',
             'type' => 'spinner',
             'title' => __('Trim title on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown in category titles in the carousel', 'dotstudio-pro'),
+            'desc' => __('Set the number of words shown in category titles in the carousel', 'dotstudio-pro'),
             'default' => '5',
             'min' => '0',
             'step' => '1',
@@ -735,7 +721,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-description-trim-word',
             'type' => 'spinner',
             'title' => __('Trim description on carousel', 'dotstudio-pro'),
-            'desc' => __('Here you can set number of words shown in category descriptions in the carousel', 'dotstudio-pro'),
+            'desc' => __('Set the number of words shown in category descriptions in the carousel', 'dotstudio-pro'),
             'default' => '10',
             'min' => '0',
             'step' => '1',
@@ -754,7 +740,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-slidetoscroll',
             'title' => __('Slides to scroll', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be scrolled', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be scrolled when one of the arrow navigation buttons in the carousel is clicked', 'dotstudio-pro'),
             'type' => 'spinner',
             'default' => '4',
             'min' => '1',
@@ -763,24 +749,24 @@ Redux::setSection($opt_name, array(
         ),
         array(
             'id' => 'opt-slick-home-pagination',
-            'title' => __('Enable Pagination', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable/disable the navigation dots under the carousel', 'dotstudio-pro'),
-            'description' => __('By default set to "off".', 'dotstudio-pro'),
+            'title' => __('Enable Direct Navigation in Carousels', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the navigation dots under the carousel ', 'dotstudio-pro'),
+            'description' => __('By default, this is set to "off".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
         ),
         array(
             'id' => 'opt-slick-home-navigation',
             'title' => __('Enable Navigation', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable/disable the navigation arrows', 'dotstudio-pro'),
-            'description' => __('By default set to "on".', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the navigation arrows on the carousel', 'dotstudio-pro'),
+            'description' => __('By default, this is set to "on".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
         array(
             'id' => 'opt-slick-home-infinite',
             'title' => __('Enable infinite loop', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
             'description' => __('By default set to "on".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
@@ -788,7 +774,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-autoplay',
             'title' => __('Autoplay', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable autoplay to the carousel', 'dotstudio-pro'),
+            'subtitle' => __('Enable autoplay for secondary carousels', 'dotstudio-pro'),
             'description' => __('By default set to "off".', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => false,
@@ -796,8 +782,8 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-autoplayspeed',
             'title' => __('Autoplay Interval', 'dotstudio-pro'),
-            'subtitle' => __('This option is to set the interval for the autoplay sliding', 'dotstudio-pro'),
-            'description' => __('Please enter the value in miliseconds (ex: 1 second is 1000, 2 seconds is 2000)', 'dotstudio-pro'),
+            'subtitle' => __('Set the interval for the autoplay sliding', 'dotstudio-pro'),
+            'description' => __('Please enter the value in milliseconds (ex: 1 second is 1000, 2 seconds is 2000); this will be the time period between autoplay scrolling in secondary carousels', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '2000',
             'required' => array('opt-slick-home-autoplay', '=', true),
@@ -805,22 +791,22 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-slidespeed',
             'title' => __('Slide Speed', 'dotstudio-pro'),
-            'subtitle' => __('This option is to set the speed for the slide', 'dotstudio-pro'),
-            'description' => __('By default set to  "500". Please enter the value in miliseconds (ie. in multiples of 100).', 'dotstudio-pro'),
+            'subtitle' => __('Set the speed for the slide (how quickly the next slide comes in)', 'dotstudio-pro'),
+            'description' => __('By default set to  "500". Please enter the value in milliseconds (ex: half a second is 500, 1 second is 1000).', 'dotstudio-pro'),
             'type' => 'text',
             'default' => '500',
         ),
         array(
             'id' => 'opt-slick-home-responsive',
             'title' => __('Responsive Display', 'dotstudio-pro'),
-            'subtitle' => __('This option is to enable responsive display mode', 'dotstudio-pro'),
+            'subtitle' => __('Enable responsive display mode', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
         array(
             'id' => 'opt-slick-home-tablet-slidetoshow',
             'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in tablet screen', 'dotstudio-pro'),
+            'subtitle' => __('Defines the number of images to be displayed on a tablet screen per carousel row', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-home-responsive', '=', true),
             'default' => '2',
@@ -831,7 +817,7 @@ Redux::setSection($opt_name, array(
         array(
             'id' => 'opt-slick-home-mobile-slidetoshow',
             'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
-            'subtitle' => __('This define the number of images to be displayed in mobile screen', 'dotstudio-pro'),
+            'subtitle' => __('Defines the number of images to be displayed on a mobile screen per carousel row', 'dotstudio-pro'),
             'type' => 'spinner',
             'required' => array('opt-slick-home-responsive', '=', true),
             'default' => '1',
