@@ -154,27 +154,29 @@ if (!is_wp_error($video) && !empty($video)):
                     ?>
                     <div class="text-center add_to_list mb-2 pt-5">
                         <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
-                        <div class="my_list_button">
-                            <?php
-                            if ($client_token) {
-                                $obj = new Dsp_External_Api_Request();
-                                $list_channel = $obj->get_user_watchlist($client_token);
-                                $in_list = array();
-                                if ($list_channel['channels'] && !empty($list_channel['channels'])) {
-                                    foreach ($list_channel['channels'] as $ch) {
-                                        $in_list[] = $ch['_id'];
-                                    }
-                                }
-                                if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
-                                    ?>
-                                    <a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
-                                <?php } else { ?>
-                                    <button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
-                                <?php } ?>
-                            <?php } else { ?>
-                                <button class="btn btn-primary btn-ds-primary login-link"><i class="fa fa-plus-circle"></i>Add to My List</button>
-                            <?php } ?>
-                        </div>
+						<?php if(class_exists('WP_Auth0')){ ?>
+							<div class="my_list_button">
+								<?php
+								if ($client_token) {
+									$obj = new Dsp_External_Api_Request();
+									$list_channel = $obj->get_user_watchlist($client_token);
+									$in_list = array();
+									if ($list_channel['channels'] && !empty($list_channel['channels'])) {
+										foreach ($list_channel['channels'] as $ch) {
+											$in_list[] = $ch['_id'];
+										}
+									}
+									if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
+										?>
+										<a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
+									<?php } else { ?>
+										<button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+									<?php } ?>
+								<?php } else { ?>
+									<button class="btn btn-primary btn-ds-primary login-link"><i class="fa fa-plus-circle"></i>Add to My List</button>
+								<?php } ?>
+							</div>
+						<?php } ?>
                     </div>
                 </div>
 
