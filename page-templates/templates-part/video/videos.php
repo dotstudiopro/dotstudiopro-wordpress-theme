@@ -131,6 +131,7 @@ if (!is_wp_error($video) && !empty($video)):
                 <div class="col-md-9 col-sm-9 pull-left">
                     <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
                     <p><?php echo $year . ' - ' . $duration; ?></p>
+					<p><?php echo sharethis_inline_buttons(); ?></p>
                     <p>
                         <?php
                         if ($genres) {
