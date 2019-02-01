@@ -395,7 +395,7 @@ if (!is_wp_error($video) && !empty($video)):
                 jQuery('head').append('<meta property="og:title" content="<?php echo $title; ?>" />');
                 jQuery('head').append('<meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />');
                 jQuery('head').append('<meta property="og:image" content="<?php echo $banner ?>" />');
-                jQuery('head').append('<meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $desc);); ?>" />');
+                jQuery('head').append('<meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $desc)); ?>" />');
                 jQuery('head').append('<meta property="og:site_name" content="<?php echo bloginfo(); ?>" />');
             });
         </script>
