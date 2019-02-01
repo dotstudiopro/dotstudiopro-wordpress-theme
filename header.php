@@ -11,6 +11,7 @@
         }
         if(get_the_ID() == get_id_by_slug('video')){
             $theme_function = new Theme_Functions();
+            $dsp_api = new Dsp_External_Api_Request();
             $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
             $child_channels = $theme_function->is_child_channels($channel->ID);
 
