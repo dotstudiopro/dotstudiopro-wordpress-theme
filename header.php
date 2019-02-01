@@ -43,7 +43,7 @@
                 $banner = get_post_meta($channel->ID, 'chnl_poster', true);
             endif;
             ?>
-            <title><?php echo $title . ' - ' . $bloginfo(); ?></title>
+            <title><?php echo $title . ' - ' . bloginfo(); ?></title>
             <meta property="og:title" content="<?php echo $title; ?>" />
             <meta property="og:type" content="Video" />
             <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />
