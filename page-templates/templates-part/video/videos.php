@@ -32,9 +32,10 @@ if (!empty($video_id))
     $video = $dsp_api->get_video_by_id($video_id);
 
 if (!is_wp_error($video) && !empty($video)):
-
-    $desc = isset($video['description']) ? $video['description'] : '';
-    $title = isset($video['title']) ? $video['title'] : '';
+    global $share_banner, $share_desc, $share_title;
+    $share_desc = $desc = isset($video['description']) ? $video['description'] : '';
+    $share_title = $title = isset($video['title']) ? $video['title'] : '';
+    $share_banner = $banner = get_post_meta($channel->ID, 'chnl_poster', true);
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
     $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
@@ -76,6 +77,7 @@ if (!is_wp_error($video) && !empty($video)):
             $video_point = $get_video_data['data']['point'];
         }
     }
+    get_header();
     ?>
 
     <?php if (!empty($channel_unlocked)): ?>
@@ -103,9 +105,6 @@ if (!is_wp_error($video) && !empty($video)):
                             <div class="player-content-inner">
                                 <div class="visible-desktop" id="hero-vid">
                                     <div class="image">
-                                        <?php
-                                        $banner = get_post_meta($channel->ID, 'chnl_poster', true);
-                                        ?>
                                         <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/731'; ?>" alt="<?php echo get_the_title(); ?>">
                                             <div class="v-overlay">
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>

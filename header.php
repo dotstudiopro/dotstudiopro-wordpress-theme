@@ -5,54 +5,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?php
-        global $dsp_theme_options;
+        global $dsp_theme_options, $share_banner, $share_desc, $share_title;
+
         if (isset($dsp_theme_options['opt-favicon-url']['url'])) {
             echo '<link rel="shortcut icon" href="' . $dsp_theme_options['opt-favicon-url']['url'] . '" />';
         }
-        if(get_the_ID() == get_id_by_slug('video')){
-            $theme_function = new Theme_Functions();
-            $dsp_api = new Dsp_External_Api_Request();
-            $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
-            $child_channels = $theme_function->is_child_channels($channel->ID);
-
-            if (!preg_match('/^[a-f\d]{24}$/i', $video_slug)) {
-                if ($child_channels) {
-                    $video_id = $theme_function->first_video_id($channel->ID);
-                } else {
-                    $video_data = $theme_function->get_channel_videos($channel->ID);
-                    foreach ($video_data as $data):
-                        if ($data['slug'] == $video_slug) {
-                            $video_id = $data['_id'];
-                        }
-                    endforeach;
-                }
-            } else {
-                $video_id = $video_slug;
-            }
-
-            /**
-             * Get video information based on the id
-             */
-            if (!empty($video_id))
-                $video = $dsp_api->get_video_by_id($video_id);
-
-            if (!is_wp_error($video) && !empty($video)):
-
-                $desc = isset($video['description']) ? $video['description'] : '';
-                $title = isset($video['title']) ? $video['title'] : '';
-                $banner = get_post_meta($channel->ID, 'chnl_poster', true);
-            endif;
-            ?>
-            <title><?php echo $title . ' - ' . bloginfo(); ?></title>
-            <meta property="og:title" content="<?php echo $title; ?>" />
-            <meta property="og:type" content="Video" />
+        if(get_the_ID() == get_id_by_slug('video')){ ?>
+            <title><?php echo $share_title . ' - ' . bloginfo(); ?></title>
+            <meta property="og:title" content="<?php echo $share_title; ?>" />
             <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />
-            <meta property="og:image" content="<?php echo preg_replace("/^https:/i", "http:", $banner); ?>" />
-            <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $desc)); ?>" />
+            <meta property="og:image" content="<?php echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
+            <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />
             <meta property="og:site_name" content="<?php echo bloginfo(); ?>" />
-        <?php
-        }
-        ?>
+        <?php } ?>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="<?php echo esc_url(get_template_directory_uri()); ?>/bootstrap/js/html5.min.js"></script>
