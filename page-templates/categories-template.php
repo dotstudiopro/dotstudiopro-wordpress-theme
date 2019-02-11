@@ -12,13 +12,32 @@ get_header();
     <div class="row no-gutters categories-page pt-5 pb-5">
 
         <?php
-        $category_args = array(
-            'post_type' => 'channel-category',
-            'posts_per_page' => -1,
-            'order' => 'ASC',
-            'meta_key' => 'weight',
-            'orderby' => 'meta_value_num',
-        );
+        if($dsp_theme_options['opt-category-all']){
+            $category_args = array(
+                'post_type' => 'channel-category',
+                'posts_per_page' => -1,
+                'order' => 'ASC',
+                'meta_key' => 'weight',
+                'orderby' => 'meta_value_num',
+            );
+        }
+        else{
+            $selected_categories = $dsp_theme_options['opt-category-list'];
+            $arr = [];
+            foreach($selected_categories as $key => $value){
+                if($value == 1){
+                    $arr[] = $key;
+                }
+            }
+            $category_args = array(
+                'post_type' => 'channel-category',
+                'posts_per_page' => -1,
+                'post_name__in' => $arr,
+                'order' => 'ASC',
+                'meta_key' => 'weight',
+                'orderby' => 'meta_value_num',
+            );
+        }
 
         $categories = new WP_Query($category_args);
         $theme_function = new Theme_Functions();

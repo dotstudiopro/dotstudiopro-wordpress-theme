@@ -566,7 +566,7 @@ Redux::setSection($opt_name, array(
 
 $options = array();
 $args = array(
-    'post_per_page' => -1,
+    'posts_per_page' => -1,
     'post_type' => 'channel-category',
     'meta_query' => array(
         array(
@@ -832,6 +832,19 @@ Redux::setSection($opt_name, array(
  * Categories page
  * @since 1.0.0
  */
+$options = array();
+$args = array(
+    'posts_per_page' => -1,
+    'post_type' => 'channel-category',
+);
+$posts = new WP_Query($args);
+$default_option = '';
+if ($posts->have_posts()) {
+    $default_option = $posts->posts[0]->post_name;
+    foreach ($posts->posts as $post) {
+        $options[$post->post_name] = stripslashes($post->post_title);
+    }
+}
 Redux::setSection($opt_name, array(
     'title' => __('Category Page', 'dotstudio-pro'),
     'id' => 'cat',
@@ -890,6 +903,23 @@ Redux::setSection($opt_name, array(
                 'ivp-page' => 'IVP Page'
             ),
             'default' => 'category-listing-page'
+        ),
+		array(
+            'id' => 'opt-category-all',
+            'title' => __('Categories to display', 'dotstudio-pro'),
+            'subtitle' => __('This option is to display all or selected categories on category page', 'dotstudio-pro'),
+            'type' => 'switch',
+            'on' => 'All Categories',
+            'off' => 'Selected Categories',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-category-list',
+            'type' => 'checkbox',
+            'required' => array('opt-category-all', '=', false),
+            'title' => __('Categories', 'redux-framework-demo'),
+            'subtitle' => __('Select categories out of the following to display on the categories list page. <br/><br/> If you will not select any of categories from this list, it will display all categories', 'dotstudio-pro'),
+            'options' => $options
         ),
     )
 ));
