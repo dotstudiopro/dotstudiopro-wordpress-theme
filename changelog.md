@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2019-2-?
+
+### Changed
+- Updated missing units in `Dimensions (Height) Option for the Home page logo after resize` setting
+
 ## [1.1.0] - 2019-1-31
 
 ### Changed

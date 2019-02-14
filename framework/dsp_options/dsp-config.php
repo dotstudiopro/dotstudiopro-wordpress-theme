@@ -264,7 +264,7 @@ Redux::setSection($opt_name, array(
             'description' => __('When a user scrolls down a page, you generally want to minimize the presence of your logo and the header in general so as to not interfere with a user seeing what they came for on your site. This allows you to determine what that size is.', 'dotstudio-pro'),
             'output' => array('header.fixed-top.small-header .site-logo img'),
             'required' => array('opt-sticky', '=', '1'),
-            'units' => array('em'),
+            'units' => array('em', 'px', '%'),
             'width' => false,
             'default' => array(
                 'height' => 3.75,
