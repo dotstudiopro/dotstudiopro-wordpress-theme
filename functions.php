@@ -134,11 +134,11 @@ function bootstrapstarter_enqueue_styles() {
 
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_footer_styles() {
-    $bootstrapcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
-    wp_enqueue_style('bootstrap', $bootstrapcdn_url);
+    $bootstrapcdn_css_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
+    wp_enqueue_style('bootstrap', $bootstrapcdn_css_url);
 
-    $bootstrapcdn_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
-    wp_enqueue_script('bootstrap', $bootstrapcdn_url);
+    $bootstrapcdn_js_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
+    wp_enqueue_script('bootstrap', $bootstrapcdn_js_url, array(), '4.1.3', true);
 }
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
