@@ -132,13 +132,57 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7');
 }
 
-// function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
-function bootstrapstarter_enqueue_footer_styles() {
-    $bootstrapcdn_css_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
-    wp_enqueue_style('bootstrap', $bootstrapcdn_css_url);
 
+/**
+ * Deferred load for Bootstrap styles
+ *
+ * @return null
+ */
+function bootstrapstarter_enqueue_footer_styles_scripts() {
+    $bootstrapcdn_css_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
     $bootstrapcdn_js_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
-    wp_enqueue_script('bootstrap', $bootstrapcdn_js_url, array(), '4.1.3', true);
+    // Get our URLs into an array to properly determine type and such
+    $urls = array(
+        array("url" => $bootstrapcdn_js_url, "type" => "script"),
+        array("url" => $bootstrapcdn_css_url, "type" => "style")
+    );
+
+    echo bootstrapstarter_footer_script_defer($urls);
+}
+
+/**
+ * Create script tags for deferring the load of scripts and styles as needed
+ * @param array $arr The array we are looping through
+ *
+ * @return string The parsed script tags
+ */
+function bootstrapstarter_footer_script_defer($arr) {
+    $scripts = "";
+    if (!is_array($arr)) return $scripts;
+    foreach($arr as $url) {
+        if (empty($url['url']) || empty($url['type'])) continue;
+        $randVar = "var_" . rand(1,9999) . time();
+        $randVarLink = "varlink_" . rand(1,9999) . time();
+        $rel = "";
+        $elem = "script";
+        $type = "application/javascript";
+        if ($url['type'] == "style") {
+            $rel = "$randVar.rel = 'stylesheet';";
+            $elem = "link";
+            $type = "text/css";
+        }
+        $scripts .= "
+            <script>
+                var $randVar = document.createElement('$elem');
+                $rel
+                $randVar.href = '" . $url['url'] . "';
+                $randVar.type = '$type';
+                var $randVarLink = document.getElementsByTagName('$elem')[0];
+                $randVarLink.parentNode.insertBefore($randVar, $randVarLink);
+            </script>
+        ";
+    }
+    return $scripts;
 }
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
