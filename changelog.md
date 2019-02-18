@@ -1,7 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.1.1] - 2019-2-?
+## [1.1.2] - 2019-2-?
+
+### Changed
+- Set up some of the CSS to defer loading until the footer
+
+## [1.1.1] - 2019-2-12
 
 ### Changed
 - Updated missing units in `Dimensions (Height) Option for the Home page logo after resize` setting
