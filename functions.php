@@ -291,20 +291,18 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 // function to register and enqueue all other styles
 function register_theme_styles() {
     $styles = array('ds-global');
-    $urls = array();
     foreach ($styles as $style) :
-        // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
-        // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
-        $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".css", "type" => "style");
+        wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
+        wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
     endforeach;
 
 }
 
-// add_action('wp_enqueue_scripts', 'register_theme_styles');
+add_action('wp_enqueue_scripts', 'register_theme_styles');
 
 // function to register and enqueue styles we don't need immediately
 function defer_theme_styles() {
-    $styles = array('ds-global', 'main', 'font-awesome-pro', 'tooltipster.bundle.min');
+    $styles = array('main', 'font-awesome-pro', 'tooltipster.bundle.min');
     $urls = array();
     foreach ($styles as $style) :
         // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
