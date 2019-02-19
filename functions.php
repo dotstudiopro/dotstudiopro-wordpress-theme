@@ -311,7 +311,7 @@ function defer_theme_styles() {
         // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
         $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".css", "type" => "style");
     endforeach;
-    echo dsp_bootstrap_footer_script_defer($urls);
+    dsp_bootstrap_footer_script_defer($urls);
 }
 
 add_action('get_footer', 'defer_theme_styles', 50);
