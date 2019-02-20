@@ -117,11 +117,6 @@ add_theme_support('post-thumbnails');
 
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
-    $slickcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick.css';
-    wp_enqueue_style('slick', $slickcdn_url);
-
-    $slickthemecdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick-theme.css';
-    wp_enqueue_style('slick-theme', $slickthemecdn_url);
 
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
@@ -130,8 +125,9 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.css');
 
     wp_enqueue_style('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7');
-}
 
+    wp_enqueue_script('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js', array('jquery'), '1.0.7', true);
+}
 
 /**
  * Deferred load for Bootstrap styles
@@ -141,49 +137,75 @@ function bootstrapstarter_enqueue_styles() {
 function bootstrapstarter_enqueue_footer_styles_scripts() {
     $bootstrapcdn_css_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
     $bootstrapcdn_js_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
+    $slickcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick.css';
+    $slickthemecdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick-theme.css';
     // Get our URLs into an array to properly determine type and such
     $urls = array(
         array("url" => $bootstrapcdn_js_url, "type" => "script"),
-        array("url" => $bootstrapcdn_css_url, "type" => "style")
+        array("url" => $bootstrapcdn_css_url, "type" => "style"),
+        array("url" => $slickcdn_url, "type" => "style"),
+        array("url" => $slickthemecdn_url, "type" => "style")
     );
 
-    echo bootstrapstarter_footer_script_defer($urls);
+    dsp_bootstrap_footer_script_defer($urls);
+}
+
+$deferred_scripts = array();
+
+/**
+ * Store tags for deferring the load of scripts and styles as needed
+ * @param array $arr The array we are looping through
+ *
+ * @return boolean true
+ */
+function dsp_bootstrap_footer_script_defer($arr) {
+    global $deferred_scripts;
+    foreach($arr as $url) {
+        $deferred_scripts[] = $url;
+    }
+    return true;
 }
 
 /**
  * Create script tags for deferring the load of scripts and styles as needed
  * @param array $arr The array we are looping through
  *
- * @return string The parsed script tags
+ * @return boolean Whether or not adding the scripts to the array succeeded
  */
-function bootstrapstarter_footer_script_defer($arr) {
-    $scripts = "";
-    if (!is_array($arr)) return $scripts;
-    foreach($arr as $url) {
+function dsp_bootstrap_process_defer() {
+    global $deferred_scripts;
+
+    $scripts = "<script>
+                    var dsp_bootstrap_opts = document.querySelector('style.options-output');";
+    if (!is_array($deferred_scripts)) return $scripts;
+    foreach($deferred_scripts as $url) {
+        // Make sure we have what we need
         if (empty($url['url']) || empty($url['type'])) continue;
-        $randVar = "var_" . rand(1,9999) . time();
-        $randVarLink = "varlink_" . rand(1,9999) . time();
+        // Set up random variables to avoid collisions
+        $randVar = "dspvar_" . rand(1,9999) . time();
         $rel = "";
+        $srcprop = "src";
         $elem = "script";
         $type = "application/javascript";
+        // Change our vars to style values if this is css
         if ($url['type'] == "style") {
             $rel = "$randVar.rel = 'stylesheet';";
+            $srcprop = "href";
             $elem = "link";
             $type = "text/css";
         }
         $scripts .= "
-            <script>
                 var $randVar = document.createElement('$elem');
                 $rel
-                $randVar.href = '" . $url['url'] . "';
+                $randVar.$srcprop = '" . $url['url'] . "';
                 $randVar.type = '$type';
-                var $randVarLink = document.getElementsByTagName('$elem')[0];
-                $randVarLink.parentNode.insertBefore($randVar, $randVarLink);
-            </script>
-        ";
+                dsp_bootstrap_opts.parentNode.insertBefore($randVar, dsp_bootstrap_opts);";
     }
-    return $scripts;
+    $scripts .= "</script>";
+    echo $scripts;
 }
+
+add_action("get_footer", "dsp_bootstrap_process_defer", 99);
 
 // function to enqueue default bootstrap, slick, popper scripts and also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_scripts() {
@@ -201,7 +223,7 @@ function bootstrapstarter_enqueue_scripts() {
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
-add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_footer_styles');
+add_action('get_footer', 'bootstrapstarter_enqueue_footer_styles_scripts', 50);
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_scripts');
 
 /**
@@ -268,25 +290,29 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('ds-global');
+    $styles = array('ds-global', 'ds-header');
     foreach ($styles as $style) :
         wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
     endforeach;
+
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_styles');
 
 // function to register and enqueue styles we don't need immediately
 function defer_theme_styles() {
-    $styles = array('main', 'font-awesome-pro', 'tooltipster.bundle.min');
+    $styles = array('main', 'ds-footer', 'font-awesome-pro', 'tooltipster.bundle.min');
+    $urls = array();
     foreach ($styles as $style) :
-        wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
-        wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
+        // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
+        // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
+        $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".css", "type" => "style");
     endforeach;
+    dsp_bootstrap_footer_script_defer($urls);
 }
 
-add_action('get_footer', 'defer_theme_styles');
+add_action('get_footer', 'defer_theme_styles', 50);
 
 
 // Action to add class in html tag

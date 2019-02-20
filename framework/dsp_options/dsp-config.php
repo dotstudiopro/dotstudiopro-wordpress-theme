@@ -904,7 +904,7 @@ Redux::setSection($opt_name, array(
             ),
             'default' => 'category-listing-page'
         ),
-		array(
+        array(
             'id' => 'opt-category-all',
             'title' => __('Categories to display', 'dotstudio-pro'),
             'subtitle' => __('This option is to display all or selected categories on category page', 'dotstudio-pro'),
