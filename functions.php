@@ -122,7 +122,7 @@ function bootstrapstarter_enqueue_styles() {
 
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 
-    wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.css');
+    wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.min.css');
 
     wp_enqueue_style('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7');
 
@@ -302,7 +302,7 @@ add_action('wp_enqueue_scripts', 'register_theme_styles');
 
 // function to register and enqueue styles we don't need immediately
 function defer_theme_styles() {
-    $styles = array('main', 'font-awesome-pro', 'tooltipster.bundle');
+    $styles = array('ds-footer', 'main', 'font-awesome-pro', 'tooltipster.bundle');
     $urls = array();
     foreach ($styles as $style) :
         // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
@@ -485,7 +485,7 @@ function autocomplete() {
         $type = $dsp_theme_options['opt-search-option'];
         $dotstudio_api = new Dsp_External_Api_Request();
         $q = $_POST['search'];
-		$width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
         $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
         $suggesion = $dotstudio_api->search_suggestion($q);
         $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
@@ -534,8 +534,8 @@ function autocomplete() {
                 $items['channel'][$key]['image'] = $image;
                 $items['channel'][$key]['url'] = $url;
                 $items['channel'][$key]['title'] = $title;
-				$items['channel'][$key]['height'] = $height;
-				$items['channel'][$key]['width'] = $width;
+                $items['channel'][$key]['height'] = $height;
+                $items['channel'][$key]['width'] = $width;
                 $items['channel'][$key]['flag'] = 'channel';
             endforeach;
         }
@@ -550,8 +550,8 @@ function search_suggesion() {
     $type = $dsp_theme_options['opt-search-option'];
     $dotstudio_api = new Dsp_External_Api_Request();
     $q = $_POST['search'];
-	$width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-	$height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
     $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
     if (!empty($search) && !is_wp_error($search)) {
@@ -570,8 +570,8 @@ function search_suggesion() {
             $items[$key]['image'] = $image;
             $items[$key]['url'] = $url;
             $items[$key]['title'] = $title;
-			$items[$key]['width'] = $width;
-			$items[$key]['height'] = $height;
+            $items[$key]['width'] = $width;
+            $items[$key]['height'] = $height;
             $items[$key]['flag'] = 'channel';
         endforeach;
     }
