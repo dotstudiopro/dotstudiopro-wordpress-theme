@@ -1,12 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.1.2] - 2019-2-21
+## [1.2.0] - 2019-2-21
+
+### Added
+- Set up CSS/JS footer load optimizations
+- Minified all of the assets that needed it
+
+### Changed
+- Updated assets to pull minified versions
+
+## [1.1.2] - 2019-2-17
 
 ### Changed
 - Updated missing image dimension logic for search results
 
-## [1.1.1] - 2019-2-?
+## [1.1.1] - 2019-2-05
 
 ### Changed
 - Updated missing units in `Dimensions (Height) Option for the Home page logo after resize` setting
