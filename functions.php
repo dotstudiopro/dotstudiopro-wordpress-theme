@@ -139,12 +139,14 @@ function bootstrapstarter_enqueue_footer_styles_scripts() {
     $bootstrapcdn_js_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
     $slickcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick.css';
     $slickthemecdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick-theme.css';
+    $popper_url = 'https://wordpress-assets.dotstudiopro.com/js/popper.min.js';
     // Get our URLs into an array to properly determine type and such
     $urls = array(
         array("url" => $bootstrapcdn_js_url, "type" => "script"),
         array("url" => $bootstrapcdn_css_url, "type" => "style"),
         array("url" => $slickcdn_url, "type" => "style"),
-        array("url" => $slickthemecdn_url, "type" => "style")
+        array("url" => $slickthemecdn_url, "type" => "style"),
+        array("url" => $popper_url, "type" => "script")
     );
 
     dsp_bootstrap_footer_script_defer($urls);
@@ -212,9 +214,6 @@ function bootstrapstarter_enqueue_scripts() {
     wp_enqueue_script('jquery');
 
     wp_enqueue_script('tooltipster', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
-
-    $poper_url = 'https://wordpress-assets.dotstudiopro.com/js/popper.min.js';
-    wp_enqueue_script('popper', $poper_url);
 
     $slickcdn_url = get_template_directory_uri() . '/assets/js/slick.min.js';
     wp_enqueue_script('slick', $slickcdn_url);
