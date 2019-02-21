@@ -150,6 +150,8 @@ function bootstrapstarter_enqueue_footer_styles_scripts() {
     dsp_bootstrap_footer_script_defer($urls);
 }
 
+// Set our deferred scripts global to use for later when we
+// call our deferred scripts
 $deferred_scripts = array();
 
 /**
@@ -278,10 +280,10 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('jquery.mCustomScrollbar.concat.min', 'slick-init', 'image-lazy-load.min', 'classie', 'uisearch', 'custom.min', 'search-autocomplete.min', 'modernizr.custom', 'effects.min');
+    $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete.min', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
-        wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js');
-        wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.js', false, false, true);
+        wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js');
+        wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js', false, false, true);
     endforeach;
     wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
@@ -290,24 +292,23 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
-    $styles = array('ds-global');
+    $styles = array('ds-global', 'ds-header');
     foreach ($styles as $style) :
-        wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
+        wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".min.css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
     endforeach;
-
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_styles');
 
 // function to register and enqueue styles we don't need immediately
 function defer_theme_styles() {
-    $styles = array('main', 'font-awesome-pro', 'tooltipster.bundle.min');
+    $styles = array('main', 'font-awesome-pro', 'tooltipster.bundle');
     $urls = array();
     foreach ($styles as $style) :
         // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
-        $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".css", "type" => "style");
+        $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".min.css", "type" => "style");
     endforeach;
     dsp_bootstrap_footer_script_defer($urls);
 }

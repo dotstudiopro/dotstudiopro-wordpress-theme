@@ -1,5 +1,18 @@
+.error404 h2{
+    padding:0;
+}
 .error404 h2:before{
     border:0;
+}
+a.btn.cc-readmore{
+    border-radius:0;
+    background:#000;
+    color:#87b145;
+    border:0;
+}
+a.btn.cc-readmore:hover{
+    background:#87b145;
+    color:#000;
 }
 
 .col-md-2.p-2.channel-banner {
@@ -30,4 +43,8 @@
 .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: #87b145 !important;
+}
+
+body{
+    width: 100%;
 }

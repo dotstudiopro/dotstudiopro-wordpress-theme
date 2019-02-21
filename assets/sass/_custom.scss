@@ -39,7 +39,7 @@
     }
 }
 
-/* Other-categories */
+/* Other-categories -- this appears in multiple templates and should be global */
 .other-categories {
     h3 a{
         &:hover{
@@ -172,134 +172,13 @@
 
 /* Video Thumb Page */
 
-.holder, .chnl-bg {
+/* .holder, .chnl-bg {
     position: relative;
 }
 
 .holder img, .chnl-bg img, .channel-banner img {
     width: 100%;
     height: auto;
-}
+} */
 
-.holder h3 {
-    @include center-text;
-    color: $white;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.7);
-    padding: 0;
-    @include rem(font-size, 38px);
-		@include rem(line-height, 38px);
-    width: 80%;
-    &:before {
-        display: none;
-    }
-}
-
-.categories-page{
-	@include media-breakpoint-down(lg) {
-	.p-4 {
-    padding: 0.5rem!important;
-	}
-	}
-}
-
-/* category page */
-
-.inner-banner-bg {
-    position: relative;
-    .inner-banner-img {
-        @include media-breakpoint-down(md){
-            max-width: 100%;
-            overflow: hidden;
-        }
-        img {
-            width: 100%;
-            @include media-breakpoint-down(md){
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 150%;
-                margin-left: -25%;
-            }
-        }
-    }
-    .inner-banner-content_bg {
-        background: url(../img/black_bg.png) no-repeat;
-        height: 100%;
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 60%;
-        background-size: 100% 100%;
-        @include media-breakpoint-down(md){
-            position: relative;
-            background: #000;
-            top: 0;
-            width: 100%;
-            padding: 20px 0;
-        }
-    }
-    .inner-banner-content {
-        @include center-text;
-        transform: translate(-30%, -50%);
-        -moz-transform: translate(-30%, -50%);
-        -ms-transform: translate(-53%, -50%);
-        -o-transform: translate(-30%, -50%);
-        -webkit-transform: translate(-30%, -50%);
-        @include media-breakpoint-down(md){
-            position: relative;
-            left: 0;
-            transform: inherit;
-            -moz-transform: inherit;
-            -ms-transform: inherit;
-            -o-transform: inherit;
-            -webkit-transform: inherit;
-            top: 0;
-            max-width: 90vw;
-        }
-        h2 {
-            color: #fff;
-            padding: 0;
-            text-align: left;
-            display: block;
-            width: 100%;
-            @include rem(font-size, 64px);
-            @include rem(line-height, 64px);
-            @include media-breakpoint-down(md){
-                @include rem(font-size, 42px);
-                line-height: normal;
-            }
-            &:before {
-                display: none;
-            }
-        }
-        p {
-            color: #fff;
-            margin: 0;
-            text-align: left;
-            @include rem(font-size, 20px);
-        }
-    }
-    &.category {
-        .inner-banner-content_bg{
-            width: 50%;
-            @include media-breakpoint-down(md){
-                width: 100%;
-            }
-        }
-    }
-}
-
-.chnl.inner-banner-bg .inner-banner-img img{
-    width: auto;
-    height: 85vh;
-}
-
-.ehover2 img {
-    width: 100%;
-}
-
-.channel-banner:hover h4 {
-    color: $green;
-}
 

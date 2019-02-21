@@ -5,7 +5,6 @@ html {
 
 html, body {
 	font-size: 16px;
-	width: 100%;
 	@include respond-to(handhelds) {
 		font-size: 12px;
 	}
@@ -21,9 +20,6 @@ html.boxed, body.boxed {
 	font-size: 12px;
 	@include media-breakpoint-down(md){
 		font-size: 11px;
-	}
-	@include media-breakpoint-down(sm) {
-		font-size: 10px;
 	}
 }
 

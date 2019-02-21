@@ -5,19 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <?php
-        global $dsp_theme_options, $share_banner, $share_desc, $share_title;
-
+        global $dsp_theme_options;
         if (isset($dsp_theme_options['opt-favicon-url']['url'])) {
             echo '<link rel="shortcut icon" href="' . $dsp_theme_options['opt-favicon-url']['url'] . '" />';
         }
-        if(get_the_ID() == get_id_by_slug('video')){ ?>
-            <title><?php echo bloginfo() . ' - ' . $share_title; ?></title>
-            <meta property="og:title" content="<?php echo $share_title; ?>" />
-            <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />
-            <meta property="og:image" content="<?php echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
-            <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />
-            <meta property="og:site_name" content="<?php echo bloginfo(); ?>" />
-        <?php } ?>
+        ?>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="<?php echo esc_url(get_template_directory_uri()); ?>/bootstrap/js/html5.min.js"></script>

@@ -11,10 +11,8 @@ if (preg_match('/^[a-f\d]{24}$/i', $video_id)) {
 }
 
 if (!is_wp_error($video) && !empty($video)):
-    global $share_banner, $share_desc, $share_title;
-    $share_desc = $desc = ($video['description']) ? $video['description'] : '';
-    $share_title = $title = ($video['title']) ? $video['title'] : '';
-    $share_banner = $banner = ($video['thumb']) ? $video['thumb'] : '';
+    $desc = ($video['description']) ? $video['description'] : '';
+    $title = ($video['title']) ? $video['title'] : '';
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
     $year = isset($video['year']) ? $video['year'] : '';
@@ -43,7 +41,6 @@ if (!is_wp_error($video) && !empty($video)):
     if (!is_wp_error($get_video_data) && !empty($get_video_data['data']['point'])) {
         $video_point = $get_video_data['data']['point'];
     }
-    get_header();
     ?>
     <div id="video-overlay">
         <div class="video-content-div">
@@ -107,6 +104,7 @@ if (!is_wp_error($video) && !empty($video)):
             document.getElementsByTagName("body")[0].appendChild(script);
 
 <?php if ($client_token && $video_point) { ?>
+                jQuery(document).ready(function (e) {
                     var dspPlayerCheckTimepoint = setInterval(function () {
                         if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
                             clearInterval(dspPlayerCheckTimepoint);

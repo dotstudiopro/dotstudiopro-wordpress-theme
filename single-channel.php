@@ -34,9 +34,9 @@ if (have_posts()) {
         if ($plateform_web) {
             $check_subscription_status = $dsp_api->check_subscription_status($client_token, $channel_meta['dspro_channel_id'][0]);
             if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['unlocked']))
-                $parant_channel_unlocked = false;
+                $channel_unlocked = false;
             else
-                $parant_channel_unlocked = true;
+                $channel_unlocked = true;
 
             $childchannels = $theme_function->is_child_channels(get_the_ID());
             $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
@@ -63,7 +63,7 @@ if (have_posts()) {
                         <div class="inner-banner-content row no-gutters">
                             <h2><?php echo get_the_title(); ?></h2>
                             <?php the_content(); ?>
-                            <?php if (empty($parant_channel_unlocked)): ?>
+                            <?php if (empty($channel_unlocked)): ?>
                                 <div class="subscribe_now mt-3">
                                     <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                                 </div>
@@ -106,7 +106,7 @@ if (have_posts()) {
                                     <div class="inner-banner-content row no-gutters">
                                         <h2><?php echo get_the_title(); ?></h2>
                                         <?php the_content(); ?>
-                                        <?php if (empty($parant_channel_unlocked)): ?>
+                                        <?php if (empty($channel_unlocked)): ?>
                                             <div class="subscribe_now mt-3">
                                                 <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                                             </div>
@@ -133,7 +133,6 @@ if (have_posts()) {
                     if (!$childchannels) {
                         $videos = $theme_function->show_videos($post, 'other_carousel');
                         $cnt = 0;
-                        $channel_unlocked = $parant_channel_unlocked;
                         if ($videos) {
                             ?>
                             <!-- Single Channel Video section start -->
@@ -155,15 +154,10 @@ if (have_posts()) {
                         $p_channel_slug = $post->post_name;
                         $cnt = 0;
                         foreach ($childchannels as $channel) {
-                            $channel_unlocked = '';
+                            //$channel_unlocked = '';
                             $single_channel = get_page_by_path($channel, OBJECT, 'channel');
-                            $single_channel_meta = get_post_meta($single_channel->ID);
-                            $check_subscription_status_single = $dsp_api->check_subscription_status($client_token, $single_channel_meta['dspro_channel_id'][0]);
-                            if (!is_wp_error($check_subscription_status_single) && empty($check_subscription_status_single['unlocked']))
-                                $channel_unlocked = false;
-                            else
-                                $channel_unlocked = true;
                             $videos = $theme_function->show_videos($single_channel, 'other_carousel', $p_channel_slug);
+
                             if ($videos) {
                                 ?>
                                 <!-- Single Channel Video section start -->
@@ -183,6 +177,7 @@ if (have_posts()) {
                             }
                         }
                     }
+
                     // Display Recomendation section
                     if ($dsp_theme_options['opt-related-section'] == 1) {
                         if ($dsp_theme_options['opt-related-option'] == 'channel') {
