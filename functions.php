@@ -219,8 +219,6 @@ function bootstrapstarter_enqueue_scripts() {
 
     $slickcdn_url = get_template_directory_uri() . '/assets/js/slick.min.js';
     wp_enqueue_script('slick', $slickcdn_url);
-
-    wp_enqueue_script('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js', array('jquery'), '1.0.7', true);
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
@@ -279,7 +277,7 @@ function remote_get_url($url) {
 
 // function to register and enqueue all other scripts
 function register_theme_scripts() {
-    $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete.min', 'modernizr.custom', 'effects');
+    $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
         wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js');
         wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js', false, false, true);
