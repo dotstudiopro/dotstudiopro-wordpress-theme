@@ -8,6 +8,10 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
                 'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
 
+// The base url for theme assets; note that Bootstrap and some other things
+// pull from a different url
+define('DSP_THEME_ASSETS_BASE_URL', "https://wordpress-assets.dotstudiopro.com/main-theme");
+
 /**
  * Create the pages when theme is activated
  */
@@ -122,7 +126,7 @@ function bootstrapstarter_enqueue_styles() {
 
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 
-    wp_enqueue_style('effects', get_template_directory_uri() . '/assets/css/effects.min.css');
+    wp_enqueue_style('effects', DSP_THEME_ASSETS_BASE_URL . '/css/effects.min.css');
 
     wp_enqueue_style('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7');
 
@@ -135,11 +139,11 @@ function bootstrapstarter_enqueue_styles() {
  * @return null
  */
 function bootstrapstarter_enqueue_footer_styles_scripts() {
-    $bootstrapcdn_css_url = 'https://wordpress-assets.dotstudiopro.com/css/bootstrap.4.1.3.min.css';
-    $bootstrapcdn_js_url = 'https://wordpress-assets.dotstudiopro.com/js/bootstrap.4.1.3.min.js';
-    $slickcdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick.css';
-    $slickthemecdn_url = 'https://wordpress-assets.dotstudiopro.com/css/slick-theme.css';
-    $popper_url = 'https://wordpress-assets.dotstudiopro.com/js/popper.min.js';
+    $bootstrapcdn_css_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css';
+    $bootstrapcdn_js_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
+    $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick.css';
+    $slickthemecdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick-theme.css';
+    $popper_url = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js';
     // Get our URLs into an array to properly determine type and such
     $urls = array(
         array("url" => $bootstrapcdn_js_url, "type" => "script"),
@@ -215,9 +219,9 @@ add_action("get_footer", "dsp_bootstrap_process_defer", 99);
 function bootstrapstarter_enqueue_scripts() {
     wp_enqueue_script('jquery');
 
-    wp_enqueue_script('tooltipster', get_template_directory_uri() . '/assets/js/tooltipster.bundle.min.js');
+    wp_enqueue_script('tooltipster', DSP_THEME_ASSETS_BASE_URL . '/js/tooltipster.bundle.min.js');
 
-    $slickcdn_url = get_template_directory_uri() . '/assets/js/slick.min.js';
+    $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/js/slick.min.js';
     wp_enqueue_script('slick', $slickcdn_url);
 }
 
@@ -279,8 +283,8 @@ function remote_get_url($url) {
 function register_theme_scripts() {
     $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
-        wp_register_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js');
-        wp_enqueue_script($script, get_template_directory_uri() . '/assets/js/' . $script . '.min.js', false, false, true);
+        wp_register_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js');
+        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, false, true);
     endforeach;
     wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
@@ -291,7 +295,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 function register_theme_styles() {
     $styles = array('ds-global', 'ds-header');
     foreach ($styles as $style) :
-        wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".min.css");
+        wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
         wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
     endforeach;
 }
@@ -305,7 +309,7 @@ function defer_theme_styles() {
     foreach ($styles as $style) :
         // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
-        $urls[] = array("url" => get_template_directory_uri() . "/assets/css/" . $style . ".min.css", "type" => "style");
+        $urls[] = array("url" => DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css", "type" => "style");
     endforeach;
     dsp_bootstrap_footer_script_defer($urls);
 }
@@ -772,7 +776,7 @@ function save_point_data() {
 
 // Update CSS within in Admin
 function admin_style() {
-    wp_enqueue_style('admin-styles', get_template_directory_uri() . '/assets/css/admin.css');
+    wp_enqueue_style('admin-styles', DSP_THEME_ASSETS_BASE_URL . '/css/admin.min.css');
 }
 
 add_action('admin_enqueue_scripts', 'admin_style');

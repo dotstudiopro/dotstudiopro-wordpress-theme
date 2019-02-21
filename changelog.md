@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2019-2-21
+
+### Added
+- Set CSS/JS sources to either the proper CDN (in the case of assets like Bootstrap) or our Wordpress CDN for theme assets
+
 ## [1.2.0] - 2019-2-21
 
 ### Added
