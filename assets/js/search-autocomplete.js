@@ -97,8 +97,10 @@
                     title = item.data[0].title;
                 }
                 html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + title + '</h3>';
+                var img_hw = '/265/149';
                 $.each(item.data, function (key, value) {
-                    html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
+                    img_hw = '/' + value.width + '/' + value.height;
+                    html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + img_hw + '"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
                 })
                 html += '</div>';
                 html += '</div>';
@@ -153,8 +155,10 @@ jQuery(document).on('click', '.suggesion_click', function () {
         if (response.data.length == 0) {
             html += '<h4>It seems we can’t find what you’re looking for. Perhaps searching can help.</h4>';
         } else {
+            var img_hw = '/265/149';
             jQuery.each(response.data, function (key, value) {
-                html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '/265/149"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
+                img_hw = '/' + value.width + '/' + value.height;
+                html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + img_hw + '"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
             });
         }
 

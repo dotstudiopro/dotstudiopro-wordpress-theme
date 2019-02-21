@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2019-2-21
+
+### Changed
+- Updated missing image dimension logic for search results
+
 ## [1.1.1] - 2019-2-?
 
 ### Changed
