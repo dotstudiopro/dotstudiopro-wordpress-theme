@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 2019-2-22
+
+### Added
+- Added option to add external image URL in theme options.
+
 ## [1.2.1] - 2019-2-21
 
 ### Added

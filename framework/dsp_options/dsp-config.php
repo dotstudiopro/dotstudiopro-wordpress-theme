@@ -220,6 +220,14 @@ Redux::setSection($opt_name, array(
             'title' => __('Logo Margins', 'dotstudio-pro'),
             'subtitle' => __('Controls the top/right/bottom/left margins for the logo.', 'dotstudio-pro'),
         ),
+		array(
+			'id'       => 'opt-logo-text',
+			'type'     => 'text',
+			'title'    => __('External image URL', 'dotstudio-pro'),
+			'desc'     => __('Add an external image URL to use it instead of LOGO.', 'dotstudio-pro'),
+			'validate' => 'url',
+			'msg'      => 'Please upload valid image URL',
+		),
         array(
             'id' => 'opt-logo-url',
             'type' => 'media',
