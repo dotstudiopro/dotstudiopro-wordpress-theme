@@ -16,11 +16,21 @@ class Theme_Functions {
     public function home_page_main_carousel() {
 
         global $dsp_theme_options;
+        $channels_cache_key = "home_page_main_carousel_channels";
         $response = array();
 
         $main_carousel_category = $dsp_theme_options['opt-home-carousel'];
 
-        $channels = $this->get_category_channels($main_carousel_category);
+        $transient_channels = get_transient( $channels_cache_key );
+
+        $channels = null;
+
+        if ($transient_channels) {
+            $channels = $transient_channels;
+        } else {
+            $channels = $this->get_category_channels($main_carousel_category);
+            set_transient( $channels_cache_key, $channels, 3600 );
+        }
 
         if ($channels) {
 
@@ -45,9 +55,22 @@ class Theme_Functions {
     public function home_page_other_carousel($category_name, $poster_type = NULL) {
 
         global $dsp_theme_options;
+        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name;
+        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name;
+        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name;
         $response = array();
+        // Try to avoid having to get all of our channels via a giant call if we can
+        $transient_channels = get_transient( $channels_cache_key );
 
-        $channels = $this->get_category_channels($category_name);
+        $channels = null;
+
+        if ($transient_channels) {
+            $channels = $transient_channels;
+        } else {
+            // If we don't have channels yet, save them for the next time we need to pull
+            $channels = $this->get_category_channels($category_name);
+            set_transient( $channels_cache_key, $channels, 3600 );
+        }
 
         if ($channels) {
 
@@ -55,9 +78,23 @@ class Theme_Functions {
 
             $poster_type = ($poster_type) ? $poster_type : $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
-                return $this->show_channels($channels, 'other_carousel', $poster_type);
+
+                $transient_show_channels = get_transient( $show_channels_cache_key );
+                if ($transient_show_channels) return $transient_show_channels;
+
+                $show_channels = $this->show_channels($channels, 'other_carousel', $poster_type);
+                set_transient( $show_channels_cache_key, $show_channels, 3600 );
+                return $show_channels;
+
             } else {
-                return $this->show_videos(array_values($channels)[0], 'other_carousel', array_values($channels)[0]->post_name);
+
+                $transient_show_videos = get_transient( $show_videos_cache_key );
+                if ($transient_show_videos) return $transient_show_videos;
+
+                $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', array_values($channels)[0]->post_name);
+                set_transient( $show_videos_cache_key, $show_videos, 3600 );
+                return $show_videos;
+
             }
         }
     }
