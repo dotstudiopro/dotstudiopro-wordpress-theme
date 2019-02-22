@@ -119,6 +119,57 @@ if (function_exists('register_nav_menus')) {
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 
+add_filter( 'template_include', 'bootstrapstarter_current_template_filter', 1000 );
+
+/**
+ * Sets the base filename for the current page template in the global variables
+ *
+ * @return string The base filename of the current page template
+ */
+function bootstrapstarter_current_template_filter( $t ){
+    $GLOBALS['current_theme_template'] = basename($t);
+    return $t;
+}
+
+/**
+ * Gets the current template name from the global variables
+ *
+ * @return string The base filename of the current page template
+ */
+function bootstrapstarter_get_current_template( $echo = false ) {
+    if( !isset( $GLOBALS['current_theme_template'] ) )
+        return false;
+    if( $echo )
+        echo $GLOBALS['current_theme_template'];
+    else
+        return $GLOBALS['current_theme_template'];
+}
+
+/**
+ * Function to allow us to enqueue styles as we need them on a per-template basis
+ *
+ * @return string The base filename of the current page template
+ */
+function bootstrapstarter_enqueue_current_styles() {
+    $template = bootstrapstarter_get_current_template();
+    $styles = array();
+    switch($template) {
+        case "single-channel.php":
+            $styles[] = "ds-cat-channel";
+            $styles[] = "ds-category";
+            break;
+        case "video-player.php":
+            $styles[] = "ds-video";
+            break;
+    }
+    if (count($styles) > 0) {
+        foreach($styles as $style) {
+            wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".min.css");
+            wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
+        }
+    }
+}
+
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
 
