@@ -187,8 +187,6 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_script('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js', array('jquery'), null, true);
 }
 
-add_action("wp_head", "boostrapstarter_skeleton_styles");
-
 /**
  * Deferred load for Bootstrap styles
  *
