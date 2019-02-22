@@ -169,6 +169,7 @@ function bootstrapstarter_enqueue_current_styles() {
         }
     }
 }
+add_action("wp_enqueue_scripts", "bootstrapstarter_enqueue_current_styles");
 
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
