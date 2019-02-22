@@ -118,7 +118,7 @@ header {
                 color: $green;
             }
             a {
-                @include rem(font-size, 28px);
+                @include rem(font-size, 14px);
                 color: $white;
                 font-family: $font-family-Roboto;
                 font-display: $font-display;

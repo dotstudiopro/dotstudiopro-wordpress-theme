@@ -174,6 +174,8 @@ add_action("wp_enqueue_scripts", "bootstrapstarter_enqueue_current_styles");
 // function to enqueue default bootstrap, slick, font-awsom stlyes also handle the fallback if cdn falls
 function bootstrapstarter_enqueue_styles() {
 
+    wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', array(), null);
+
     wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
@@ -185,13 +187,14 @@ function bootstrapstarter_enqueue_styles() {
     wp_enqueue_script('jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js', array('jquery'), null, true);
 }
 
+add_action("wp_head", "boostrapstarter_skeleton_styles");
+
 /**
  * Deferred load for Bootstrap styles
  *
  * @return null
  */
 function bootstrapstarter_enqueue_footer_styles_scripts() {
-    $bootstrapcdn_css_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css';
     $bootstrapcdn_js_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
     $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick.css';
     $slickthemecdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick-theme.css';
@@ -199,7 +202,7 @@ function bootstrapstarter_enqueue_footer_styles_scripts() {
     // Get our URLs into an array to properly determine type and such
     $urls = array(
         array("url" => $bootstrapcdn_js_url, "type" => "script"),
-        array("url" => $bootstrapcdn_css_url, "type" => "style"),
+        // array("url" => $bootstrapcdn_css_url, "type" => "style"),
         array("url" => $slickcdn_url, "type" => "style"),
         array("url" => $slickthemecdn_url, "type" => "style"),
         array("url" => $popper_url, "type" => "script")
