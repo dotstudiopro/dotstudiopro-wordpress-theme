@@ -164,7 +164,7 @@ function bootstrapstarter_enqueue_current_styles() {
     }
     if (count($styles) > 0) {
         foreach($styles as $style) {
-            wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".min.css");
+            wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
             wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
         }
     }
