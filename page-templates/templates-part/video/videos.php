@@ -160,7 +160,7 @@ if (!is_wp_error($video) && !empty($video)):
 									$obj = new Dsp_External_Api_Request();
 									$list_channel = $obj->get_user_watchlist($client_token);
 									$in_list = array();
-									if ($list_channel['channels'] && !empty($list_channel['channels'])) {
+									if (!is_wp_error($list_channel) && $list_channel['channels'] && !empty($list_channel['channels'])) {
 										foreach ($list_channel['channels'] as $ch) {
 											$in_list[] = $ch['_id'];
 										}
