@@ -101,10 +101,10 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                 )
             )
         );
-        $categories = new WP_Query($category_args);
+        $categories = query_categories_posts($category_args, "homepage_other_carousel_categories");
 
-        if ($categories->have_posts()) {
-            foreach ($categories->posts as $category) {
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
                 $category_slug = $category->post_name;
                 $category_name = $category->post_title;
                 $channels = $theme_function->home_page_other_carousel($category_slug, $dsp_theme_options['opt-carousel-poster-type']);

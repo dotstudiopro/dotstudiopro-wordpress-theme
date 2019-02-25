@@ -38,9 +38,9 @@ class Theme_Functions {
 
             $poster_type = $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
-                return $this->show_channels($channels, 'main_carousel', $poster_type);
+                return $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type);
             } else {
-                return $this->show_videos(array_values($channels)[0], 'main_carousel', array_values($channels)[0]->post_name);
+                return $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name);
             }
         }
     }
@@ -82,7 +82,7 @@ class Theme_Functions {
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'other_carousel', $poster_type);
+                $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type);
                 set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -91,7 +91,7 @@ class Theme_Functions {
                 $transient_show_videos = get_transient( $show_videos_cache_key );
                 if ($transient_show_videos) return $transient_show_videos;
 
-                $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', array_values($channels)[0]->post_name);
+                $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, array_values($channels)[0]->post_name);
                 set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
@@ -107,6 +107,10 @@ class Theme_Functions {
      * @return type Array
      */
     public function get_category_channels($category_name) {
+
+        $cache_key = "show_channels_" . $category_name;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
 
         $channels_args = array(
             'post_type' => 'channel',
@@ -153,6 +157,7 @@ class Theme_Functions {
                 $i++;
             endforeach;
             ksort($channels_array);
+            set_transient($cache_key, $channels_array, 3600);
             return $channels_array;
         } else
             return array();
@@ -166,7 +171,11 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels, $type, $poster_type) {
+    public function show_channels($channels, $type, $category, $poster_type) {
+
+        $cache_key = "show_channels_" . $type . "_" . $category;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
 
         global $dsp_theme_options;
 
@@ -201,7 +210,7 @@ class Theme_Functions {
                 }
             }
         endforeach;
-
+        set_transient($cache_key, $response, 3600);
         return $response;
     }
 
@@ -213,7 +222,11 @@ class Theme_Functions {
      * @param type $channel
      * @return string
      */
-    public function show_videos($channel, $type, $p_channel = null) {
+    public function show_videos($channel, $type, $category, $p_channel = null) {
+
+        $cache_key = "show_videos_" . $channel->ID;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
 
         global $dsp_theme_options;
         $child_channels = $this->is_child_channels($channel->ID);
@@ -269,6 +282,7 @@ class Theme_Functions {
                 endforeach;
             }
         }
+        set_transient($cache_key, $response, 3600);
         return $response;
     }
 
@@ -281,6 +295,10 @@ class Theme_Functions {
      */
     public function get_channel_by_name($channel_name) {
 
+        $cache_key = "get_channel_by_name_" . $channel_name;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
+
         $channel_args = array(
             'post_type' => 'channel',
             'pagename' => $channel_name,
@@ -288,10 +306,12 @@ class Theme_Functions {
 
         $channel = new WP_Query($channel_args);
 
-        if ($channel->have_posts())
+        if ($channel->have_posts()) {
+            set_transient($cache_key, $channel->posts[0], 3600);
             return $channel->posts[0];
-        else
+        } else {
             return array();
+        }
     }
 
     /**
@@ -318,6 +338,11 @@ class Theme_Functions {
      * @return type
      */
     public function get_channel_videos($channel_id) {
+
+        $cache_key = "get_channel_videos_" . $channel_id;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
+
         global $wpdb;
         $dsp = new Dotstudiopro_Api();
         $dsp_video_table = $dsp->get_Dotstudiopro_Video_Table();
@@ -329,6 +354,7 @@ class Theme_Functions {
                 $videoData[$key] = maybe_unserialize(base64_decode($data[0]->video_detail));
                 $videoData[$key]['_id'] = $video;
             endforeach;
+            set_transient($cache_key, $videoData, 3600);
             return $videoData;
         }
         else {
@@ -345,6 +371,11 @@ class Theme_Functions {
      */
     public function first_video_id($channel_id) {
 
+        $cache_key = "first_video_id_" . $channel_id;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
+        // If we don't have a video, we can bring in global variables and such;
+        // no point in wasting time doing so if we don't have to
         global $dsp_theme_options;
         $child_channels = $this->is_child_channels($channel_id);
         if ($child_channels) {
@@ -357,6 +388,7 @@ class Theme_Functions {
                 $response = $videoData[0]['_id'];
             }
         }
+        set_transient($cache_key, $response, 3600);
         return $response;
     }
 
@@ -367,6 +399,10 @@ class Theme_Functions {
      * @return type
      */
     public function get_channelByChannelId($channel_id) {
+
+        $cache_key = "get_channelByChannelId_" . $channel_id;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
 
         $channels_args = array(
             'post_type' => 'channel',
@@ -380,10 +416,12 @@ class Theme_Functions {
             )
         );
         $channel = new WP_Query($channels_args);
-        if (isset($channel->posts[0]))
+        if (isset($channel->posts[0])){
+            set_transient($cache_key, $channel->posts[0], 3600);
             return $channel->posts[0];
-        else
+        } else {
             return array();
+        }
     }
 
     /**
@@ -428,6 +466,26 @@ class Theme_Functions {
             endforeach;
             return $recommendation_content;
         }
+    }
+
+    /**
+     * Query a category and cache the results so we can return them later
+     * @since 1.0.0
+     *
+     * @param object $args The arguments for the query
+     * @param string $trans_key The cache key for storing/grabbing this query from a transient cache
+     * @return object Query result
+     */
+    public function query_categories_posts($args, $trans_key = null) {
+        if ($trans_key) {
+            $posts = get_transient($trans_key);
+            if ($posts) return $posts;
+        }
+        $query = new WP_Query($args);
+        if (empty($query->posts)) return array();
+        // Cache for 30 mins
+        set_transient($trans_key, $query->posts, 1800);
+        return $query->posts;
     }
 
     /**
