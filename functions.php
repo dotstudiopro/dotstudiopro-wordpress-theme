@@ -7,11 +7,10 @@ require 'theme-update-checker/theme-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
                 'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
-
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
 define('DSP_THEME_ASSETS_BASE_URL', "https://wordpress-assets.dotstudiopro.com/main-theme");
-define('DSP_THEME_ASSETS_CACHEBUSTER', date("YmdHi", filemtime( get_stylesheet_directory() . '/assets/css/main.min.css')));
+define('DSP_THEME_ASSETS_CACHEBUSTER', date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css')));
 
 /**
  * Create the pages when theme is activated
