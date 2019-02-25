@@ -11,6 +11,7 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
 define('DSP_THEME_ASSETS_BASE_URL', "https://wordpress-assets.dotstudiopro.com/main-theme");
+define('DSP_THEME_ASSETS_CACHEBUSTER', date("YmdHi", filemtime( get_stylesheet_directory() . '/assets/css/main.min.css')));
 
 /**
  * Create the pages when theme is activated
@@ -165,7 +166,7 @@ function bootstrapstarter_enqueue_current_styles() {
     if (count($styles) > 0) {
         foreach($styles as $style) {
             wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
-            wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
+            wp_enqueue_style($style, array(), DSP_THEME_ASSETS_CACHEBUSTER, 'screen');
         }
     }
 }
@@ -337,7 +338,7 @@ function register_theme_scripts() {
     $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
         wp_register_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js');
-        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, false, true);
+        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, DSP_THEME_ASSETS_CACHEBUSTER, true);
     endforeach;
     wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
@@ -349,7 +350,7 @@ function register_theme_styles() {
     $styles = array('ds-global', 'ds-header');
     foreach ($styles as $style) :
         wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
-        wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
+        wp_enqueue_style($style, array(), DSP_THEME_ASSETS_CACHEBUSTER, 'screen');
     endforeach;
 }
 
@@ -362,7 +363,7 @@ function defer_theme_styles() {
     foreach ($styles as $style) :
         // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
         // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
-        $urls[] = array("url" => DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css", "type" => "style");
+        $urls[] = array("url" => DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css?ver=" . DSP_THEME_ASSETS_CACHEBUSTER, "type" => "style");
     endforeach;
     dsp_bootstrap_footer_script_defer($urls);
 }
