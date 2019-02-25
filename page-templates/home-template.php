@@ -111,7 +111,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                 if ($channels) {
                     ?>
                     <div class="col-sm-12 no-gutters pt-7">
-                        <h3 class="post-title mb-5"><a href="<?php echo 'channel-category/' . $category_slug; ?>"><?php echo $category_name; ?></a></h3>
+                        <h3 class="post-title mb-5"><a href="<?php echo '/channel-category/' . $category_slug; ?>"><?php echo $category_name; ?></a></h3>
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;

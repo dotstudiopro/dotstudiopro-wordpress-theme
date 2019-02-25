@@ -339,7 +339,7 @@ function register_theme_scripts() {
         wp_register_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js');
         wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, false, true);
     endforeach;
-    wp_localize_script('custom.min', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
