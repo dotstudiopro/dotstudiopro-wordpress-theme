@@ -348,8 +348,7 @@ add_action('wp_enqueue_scripts', 'register_theme_scripts');
 function register_theme_styles() {
     $styles = array('ds-global', 'ds-header');
     foreach ($styles as $style) :
-        wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
-        wp_enqueue_style($style, array(), DSP_THEME_ASSETS_CACHEBUSTER, 'screen');
+        wp_enqueue_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css", false, DSP_THEME_ASSETS_CACHEBUSTER, 'all');
     endforeach;
 }
 
@@ -360,8 +359,6 @@ function defer_theme_styles() {
     $styles = array('ds-footer', 'main', 'font-awesome-pro', 'tooltipster.bundle');
     $urls = array();
     foreach ($styles as $style) :
-        // wp_register_style($style, get_template_directory_uri() . "/assets/css/" . $style . ".css");
-        // wp_enqueue_style($style, array(), filemtime(get_template_directory() . '/style.css'), 'screen');
         $urls[] = array("url" => DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css?ver=" . DSP_THEME_ASSETS_CACHEBUSTER, "type" => "style");
     endforeach;
     dsp_bootstrap_footer_script_defer($urls);
