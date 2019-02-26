@@ -94,7 +94,7 @@ function check_user_status() {
     global $client_token;
     $client_token = 0;
     $client_id = get_current_user_id();
-    if ($client_id && !current_user_can('administrator')) {
+    if ($client_id) {
         $client_token = get_user_meta($client_id, 'dotstudiopro_client_token', true);
         $client_token_expiration = get_user_meta($client_id, 'dotstudiopro_client_token_expiration', true);
         if ($client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
