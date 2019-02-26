@@ -143,17 +143,7 @@ Redux::setSection($opt_name, array(
             'type' => 'textarea',
             'title' => __('Google Analytics/Tag Manager Code', 'dotstudio-pro'),
             'desc' => __('Add google tag manager code with having <script> tag', 'dotstudio-pro'),
-            'validate' => 'html_custom',
             'default' => '',
-            'allowed_html' => array(
-                'a' => array(
-                    'href' => array(),
-                    'title' => array()
-                ),
-                'br' => array(),
-                'em' => array(),
-                'strong' => array()
-            )
         ),
     )
 ));
