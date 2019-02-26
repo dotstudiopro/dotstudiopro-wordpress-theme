@@ -153,12 +153,13 @@ function bootstrapstarter_get_current_template( $echo = false ) {
 function bootstrapstarter_enqueue_current_styles() {
     $template = bootstrapstarter_get_current_template();
     $styles = array();
-    $styles[] = "ds-cat-channel";
     switch($template) {
         case "single-channel.php":
+            $styles[] = "ds-cat-channel";
             $styles[] = "ds-category";
             break;
         case "video-player.php":
+            $styles[] = "ds-cat-channel";
             $styles[] = "ds-video";
             break;
     }
