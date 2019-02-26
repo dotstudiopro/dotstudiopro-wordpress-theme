@@ -1,5 +1,5 @@
 <div class="col-sm-12 no-gutters pt-7">
-    <h3 class="post-title mb-5">Continue Watch</h3>
+    <h3 class="post-title mb-5">Continue Watching</h3>
     <div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
         <?php $i = 1 ?>
         <?php foreach ($watch_list['data']['continue-watching'] as $video) { ?>

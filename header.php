@@ -92,6 +92,11 @@
                 
             </style>
         <?php endif; ?>
+        <?php
+            if(isset($dsp_theme_options['opt-google-analytics']) && !empty($dsp_theme_options['opt-google-analytics'])):
+                echo $header_ad = $dsp_theme_options['opt-google-analytics']; 
+            endif;
+        ?>
     </head>
 
     <body <?php theme_body_class(); ?>>
