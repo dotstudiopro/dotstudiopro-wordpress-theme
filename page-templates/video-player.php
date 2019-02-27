@@ -3,8 +3,6 @@
 /**
  * Template Name: Video Player
  */
-get_header();
-
 global $dsp_theme_options, $client_token;
 
 $dsp_api = new Dsp_External_Api_Request();

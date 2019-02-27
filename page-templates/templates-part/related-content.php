@@ -7,7 +7,7 @@ $recommendation_content = $theme_function->get_recommendation_content($type, $re
 
 if (!empty($recommendation_content)):
     ?>
-    <h3 class="post-title mb-5"><?php echo $dsp_theme_options['opt-related-content-text']; ?></h3>
+    <h3 class="post-title mb-4"><?php echo $dsp_theme_options['opt-related-content-text']; ?></h3>
     <?php
     $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
     $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);

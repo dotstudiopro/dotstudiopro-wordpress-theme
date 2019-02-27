@@ -46,7 +46,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
             <?php if ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 1): ?>
                 <div class="slide_content">
                     <a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">
-                        <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                        <h4 class="pt-3 pb-1"><?php echo $title; ?></h4>
                         <p><?php echo $description; ?></p>
                     </a>
                 </div>
@@ -60,7 +60,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
             <?php elseif ($dsp_theme_options['opt-channel-video-layout-slider-content'] == 3): ?>
                 <div class="slide_content">
                     <a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">
-                        <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                        <h4 class="pt-3 pb-1"><?php echo $title; ?></h4>
                     </a>
                 </div>
                 <?php

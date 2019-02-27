@@ -6,6 +6,7 @@ global $client_token;
 
 $class_array = array();
 $cnt = 0;
+$channel_unlocked = false;
 
 $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
 $child_channels = $theme_function->is_child_channels($channel->ID);
@@ -36,6 +37,9 @@ if (!is_wp_error($video) && !empty($video)):
     $share_desc = $desc = isset($video['description']) ? $video['description'] : '';
     $share_title = $title = isset($video['title']) ? $video['title'] : '';
     $share_banner = $banner = get_post_meta($channel->ID, 'chnl_poster', true);
+endif;
+get_header();
+if (!is_wp_error($video) && !empty($video)):
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
     $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
@@ -77,7 +81,6 @@ if (!is_wp_error($video) && !empty($video)):
             $video_point = $get_video_data['data']['point'];
         }
     }
-    get_header();
     ?>
 
     <?php if (!empty($channel_unlocked)): ?>
@@ -128,19 +131,21 @@ if (!is_wp_error($video) && !empty($video)):
         <div class="row no-gutters">
             <div class="custom-container container video-content">
                 <div class="col-md-9 col-sm-9 pull-left">
-                    <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
+                    <h3 class="post-title mb-4 pt-4"><?php echo $title; ?></h3>
+                    <?php if (function_exists('sharethis_inline_buttons')) { ?>
+                        <p> <?php echo sharethis_inline_buttons(); ?> </p>
+                    <?php } ?>
                     <p><?php echo $year . ' - ' . $duration; ?></p>
-					<p><?php echo sharethis_inline_buttons(); ?></p>
-                    <p>
+                    <p class="video-cat">
                         <?php
                         if ($genres) {
                             foreach ($genres as $genre) {
-                                echo '<span class="p-2">' . $genre . '</span>';
+                                echo '<span>' . $genre . '</span>';
                             }
                         }
                         ?>
                     </p>
-                    <p><?php echo $desc; ?></p>
+                    <p class="descr"><?php echo $desc; ?></p>
                 </div>
                 <div class="col-md-3 col-sm-3 pull-right">
                     <?php
@@ -153,7 +158,7 @@ if (!is_wp_error($video) && !empty($video)):
                     ?>
                     <div class="text-center add_to_list mb-2 pt-5">
                         <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
-						<?php if(class_exists('WP_Auth0')){ ?>
+			<?php if(class_exists('WP_Auth0')){ ?>
 							<div class="my_list_button">
 								<?php
 								if ($client_token) {
@@ -186,7 +191,7 @@ if (!is_wp_error($video) && !empty($video)):
          * code to add next and previous video link
          */
         if (!$child_channels) {
-            $npvideos = $theme_function->show_videos($channel, 'other_carousel', $channel->post_name);
+            $npvideos = $theme_function->show_videos($channel, 'other_carousel', null, $channel->post_name);
             $next_video = array();
             $prev_video = array();
             foreach ($npvideos as $key => $npvideo) {
@@ -206,7 +211,7 @@ if (!is_wp_error($video) && !empty($video)):
         } else {
             foreach ($child_channels as $key => $npchild_channel) {
                 $single_channel = get_page_by_path($npchild_channel, OBJECT, 'channel');
-                $npvideos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
+                $npvideos = $theme_function->show_videos($single_channel, 'other_carousel', null, $single_channel->post_name);
                 foreach ($npvideos as $key => $npvideo) {
                     if (!empty($npvideo['_id']) && !empty($video_id) && $npvideo['_id'] == $video_id) {
                         $next_video[] = isset($npvideos[$key + 1]) ? $npvideos[$key + 1] : '';
@@ -252,7 +257,7 @@ if (!is_wp_error($video) && !empty($video)):
 
                     foreach ($child_channels as $child_channel) {
                         $single_channel = get_page_by_path($child_channel, OBJECT, 'channel');
-                        $videos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
+                        $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $single_channel->post_name);
                         if ($videos) {
                             ?>
                             <!-- Single Channel Video section start -->
@@ -271,7 +276,7 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                     }
                 } else {
-                    $videos = $theme_function->show_videos($channel, 'other_carousel', $channel->post_name);
+                    $videos = $theme_function->show_videos($channel, 'other_carousel', null, $channel->post_name);
                     if ($videos) {
                         ?>
                         <!-- Single Channel Video section start -->
@@ -310,7 +315,7 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                         foreach ($parant_child_channels as $parant_child_channel) {
                             $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
-                            $videos = $theme_function->show_videos($single_channel, 'other_carousel', $single_channel->post_name);
+                            $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $single_channel->post_name);
                             if ($videos) {
                                 ?>
                                 <!-- Single Channel Video section start -->
@@ -358,7 +363,6 @@ if (!is_wp_error($video) && !empty($video)):
     <?php if ($channel_unlocked == true): ?>
         <script>
             jQuery(document).ready(function (e) {
-
                 var script = document.createElement("script");
                 script.setAttribute("type", "text/javascript");
                 script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");

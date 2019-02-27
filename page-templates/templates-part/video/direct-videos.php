@@ -11,11 +11,16 @@ if (preg_match('/^[a-f\d]{24}$/i', $video_id)) {
 }
 
 if (!is_wp_error($video) && !empty($video)):
-    $desc = ($video['description']) ? $video['description'] : '';
-    $title = ($video['title']) ? $video['title'] : '';
+    global $share_banner, $share_desc, $share_title;
+    $share_desc = $desc = isset($video['description']) ? $video['description'] : '';
+    $share_title = $title = isset($video['title']) ? $video['title'] : '';
+    $share_banner = $banner = ($video['thumb']) ? $video['thumb'] : '';
+endif;
+get_header();
+if (!is_wp_error($video) && !empty($video)):
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
-    $year = isset($video['year']) ? $video['year'] : '';
+    $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
     $company_id = isset($video['company_id']) ? $video['company_id'] : '';
 
     if (!empty($duration)) {
@@ -60,28 +65,28 @@ if (!is_wp_error($video) && !empty($video)):
     <div class="video-page-content">
         <div class="row no-gutters">
             <div class="custom-container container video-content">
-                <h4 class="post-title mb-2 pt-5"><?php echo $title; ?></h4>
-                <p><?php echo '(' . $year . ') - ' . $duration; ?></p>
-                <p>
+                    <h3 class="post-title mb-4 pt-4"><?php echo $title; ?></h3>
+                    <?php if (function_exists('sharethis_inline_buttons')) { ?>
+                        <p> <?php echo sharethis_inline_buttons(); ?> </p>
+                    <?php } ?>
+                    <p><?php echo $year . ' - ' . $duration; ?></p>
+                    <p class="video-cat">
                     <?php
                     if ($genres) {
                         foreach ($genres as $genre) {
-                            echo '<span class="p-2">' . $genre . '</span>';
+                                echo '<span>' . $genre . '</span>';
                         }
                     }
                     ?>
                 </p>
-                <p><?php echo $desc; ?></p>
-
+                    <p class="descr"><?php echo $desc; ?></p>
             </div>
         </div>
-
-                                    <!--    <script src="<?php //echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting;                                                   ?>"></script>-->
         <?php
     endif;
     ?>
     <div class="row no-gutters pb-5">
-        <div class="custom-container container  pt-7 other-categories">
+        <div class="custom-container container  pt-5 other-categories">
             <?php
 // Display Recomendation section
             if ($dsp_theme_options['opt-related-section'] == 1) {

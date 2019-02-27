@@ -13,7 +13,7 @@ get_header();
 ?>
 <div class="custom-container container">
     <h2 class="page-title pt-5">My List</h2>
-    <div class="row no-gutters categories-page pt-5 pb-5">
+    <div class="row no-gutters pt-5 pb-5">
         <?php
         $dotstudio_api = new Dsp_External_Api_Request();
         $all_channels = $dotstudio_api->get_user_watchlist($client_token);
@@ -34,7 +34,7 @@ get_header();
                             </div>
                         </a>    
                         <div class="pt-3 text-center pb-3">
-                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
+                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
                         </div>
                     </div>
                     <?php

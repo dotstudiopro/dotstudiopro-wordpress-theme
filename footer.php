@@ -19,9 +19,11 @@
                 $social_icons['instagram'] = ($dsp_theme_options['instagram-link']) ? $dsp_theme_options['instagram-link'] : '';
                 $social_icons['vimeo'] = ($dsp_theme_options['vimeo-link']) ? $dsp_theme_options['vimeo-link'] : '';
                 ?>
+                <?php if ($dsp_theme_options['opt-social-icons'] == 1): ?>
                 <div class="col-md-12">
                     <h3 class="post-title pb-1">FOLLOW US</h3>
                 </div>
+                <?php endif; ?>
                 <div class="col-md-7">
                     <!-- social icon section start -->
                     <?php if ($dsp_theme_options['opt-social-icons'] == 1): ?>
