@@ -388,6 +388,7 @@ function theme_body_class($class = '') {
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width ' : 'boxed ';
     $class .= ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav ' : '';
     $class .= ($dsp_theme_options['opt-logo-align'] == 'center') ? 'center-header' : '';
+    $class .= ($dsp_theme_options['opt-advertise'] == 1) ? 'advertise ' : '';
     echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
 
@@ -687,6 +688,7 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
  * Add a login link to the main navigation
  */
 function dsp_add_login_link($items, $args) {
+    global $wp;
     if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
         if (is_user_logged_in()) {
             $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
@@ -701,7 +703,7 @@ function dsp_add_login_link($items, $args) {
                     . '</ul>'
                     . '</li>';
         } else {
-            $items .= '<li><a href="#" data-login_url="' . wp_login_url() . '" class="dsp-auth0-login-button">Log In</a></li>';
+            $items .= '<li><a href="' . wp_login_url( home_url( $wp->request )) . '">Log In</a></li>';
         }
     }
     return $items;
