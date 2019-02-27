@@ -13,7 +13,7 @@ get_header();
 ?>
 <div class="custom-container container">
     <h2 class="page-title pt-5">My List</h2>
-    <div class="row no-gutters pt-5 pb-5">
+    <div class="row no-gutters pt-3 pb-5">
         <?php
         $dotstudio_api = new Dsp_External_Api_Request();
         $all_channels = $dotstudio_api->get_user_watchlist($client_token);
@@ -30,10 +30,10 @@ get_header();
                         <a href="<?php echo $link; ?>" title="<?php echo $channel['title']; ?>">
                             <div class="holder">
                                 <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
-                                <h3><?php echo $channel['title']; ?></h3>
+                                <h4 class="pt-2 text-center"><?php echo $channel['title']; ?></h4>
                             </div>
                         </a>    
-                        <div class="pt-3 text-center pb-3">
+                        <div class="text-center pb-2">
                             <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
                         </div>
                     </div>
