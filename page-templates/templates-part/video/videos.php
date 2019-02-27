@@ -2,7 +2,7 @@
 /**
  * condition to check video slug in the url or id
  */
-global $client_token;
+global $client_token, $wp;
 
 $class_array = array();
 $cnt = 0;
@@ -177,7 +177,7 @@ if (!is_wp_error($video) && !empty($video)):
 										<button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
 									<?php } ?>
 								<?php } else { ?>
-									<button class="btn btn-primary btn-ds-primary login-link"><i class="fa fa-plus-circle"></i>Add to My List</button>
+                                                                        <a href="<?php echo wp_login_url( home_url( $wp->request ) ); ?>" class="btn btn-primary btn-ds-primary">+ Add to My List</a>
 								<?php } ?>
 							</div>
 						<?php } ?>
