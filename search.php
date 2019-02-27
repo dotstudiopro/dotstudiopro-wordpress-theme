@@ -19,7 +19,7 @@ $type = $dsp_theme_options['opt-search-option'];
 $result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
 $no_of_row = $dsp_theme_options['opt-search-columns-row'];
 ?>
-<div class="custom-container container mb-5 pt-5">
+<div class="custom-container container mb-5">
     <?php
     if (!is_wp_error($result)):
         ?>
