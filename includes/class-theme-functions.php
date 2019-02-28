@@ -17,6 +17,8 @@ class Theme_Functions {
 
         global $dsp_theme_options;
         $channels_cache_key = "home_page_main_carousel_channels";
+        $show_channels_cache_key = "home_page_main_carousel_show_channels";
+        $show_videos_cache_key = "home_page_main_carousel_show_videos";
         $response = array();
 
         $main_carousel_category = $dsp_theme_options['opt-home-carousel'];
@@ -38,9 +40,23 @@ class Theme_Functions {
 
             $poster_type = $dsp_theme_options['opt-poster-type'];
             if ($total_channels > 1) {
-                return $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type);
+
+                $transient_show_channels = get_transient( $show_channels_cache_key );
+                if ($transient_show_channels) return $transient_show_channels;
+
+                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type);
+                set_transient( $show_channels_cache_key, $show_channels, 3600 );
+                return $show_channels;
+
             } else {
-                return $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name);
+
+                $transient_show_videos = get_transient( $show_videos_cache_key );
+                if ($transient_show_videos) return $transient_show_videos;
+
+                $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name);
+                set_transient( $show_videos_cache_key, $show_videos, 3600 );
+                return $show_videos;
+
             }
         }
     }
