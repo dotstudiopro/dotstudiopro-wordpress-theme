@@ -193,8 +193,8 @@ jQuery('.manage_my_list').click(function (e) {
  * @param {type} param2
  */
 window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
     if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
+        e.preventDefault();
         var play_time = dotstudiozPlayer.player.currentTime();
         var video_id = jQuery('.player').data('video_id');
         var nonce = jQuery('.player').data('nonce');

@@ -61,6 +61,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
         $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'channel-category');
         $cnt = 0;
         $class_array = [];
+        $continue_class_array = [];
         $slide_text_class = '';
         if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
             $slide_text_class .= 'slide-text-dec';
@@ -74,14 +75,14 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
             $watch_list = $dotstudiopro_api->get_recent_viewed_data($client_token);
             if (!is_wp_error($watch_list)) {
                 if (!empty($watch_list['data']['continue-watching'])) {
-                    $class = 'home-carousel' . $cnt;
-                    $class_array[] = $class;
+                    $class = 'home-cnt-carousel' . $cnt;
+                    $continue_class_array[] = $class;
                     include(locate_template('page-templates/templates-part/homepage/continue-watch.php'));
                     $cnt++;
                 }
                 if (!empty($watch_list['data']['watch-again'])) {
-                    $class = 'home-carousel' . $cnt;
-                    $class_array[] = $class;
+                    $class = 'home-cnt-carousel' . $cnt;
+                    $continue_class_array[] = $class;
                     include(locate_template('page-templates/templates-part/homepage/watch-again.php'));
                     $cnt++;
                 }
@@ -167,6 +168,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                 }
             }
             $theme_function->slick_init_options('slick_carousel', $class_array, 'home');
+            $theme_function->slick_init_options('slick_continue_watch', $continue_class_array, 'continue-watch');
         }
         ?>
 

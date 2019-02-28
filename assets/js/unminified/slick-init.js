@@ -98,6 +98,49 @@
         autoplaySpeed: 5000,
         infinite: true,
     });
+    
+    /**
+     * Carousel settings for continue watch rails
+     */
+    if (typeof (slick_continue_watch) != 'undefined') {
+        
+        var selector = slick_continue_watch.selector;
+        var responsive_array = [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: parseInt(slick_continue_watch.tablet_slidetoshow),
+                    slidesToScroll: parseInt(slick_continue_watch.tablet_slidetoshow),
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: parseInt(slick_continue_watch.mobile_slidetoshow),
+                    slidesToScroll: parseInt(slick_continue_watch.mobile_slidetoshow),
+                }
+            }
+        ];
+        /*
+         * Global configuration for slick slider.
+         */
+        console.log('selector = ' + selector);
+        $.each(selector, function (index, value) {
+        console.log('value = ' + value);
+        console.log('index = ' + index);
+            $("." + value).slick({
+                slidesToShow: parseInt(slick_continue_watch.slidetoshow),
+                slidesToScroll: parseInt(slick_continue_watch.slidetoscroll),
+                infinite: (slick_continue_watch.infinite == 1) ? true : false,
+                speed: parseInt(slick_continue_watch.slidespeed),
+                dots: (slick_continue_watch.pagination == 1) ? true : false,
+                autoplay: (slick_continue_watch.autoplay == 1) ? true : false,
+                autoplaySpeed: parseInt(slick_continue_watch.autoplayspeed),
+                adaptiveHeight: true,
+                responsive: (slick_continue_watch.responsive == 1) ? responsive_array : [],
+            });
+        });
+    }
 
 
 })(jQuery);

@@ -828,6 +828,160 @@ Redux::setSection($opt_name, array(
 ));
 
 /**
+ * Home page Slick carousel Settings
+ * @since 1.0.0
+ */
+Redux::setSection($opt_name, array(
+    'title' => __('Homepage: Countinue Watch Carousels', 'dotstudio-pro'),
+    'id' => 'countinue-carousels',
+    'subsection' => true,
+    'fields' => array(
+        array(
+            'id' => 'opt-continue-watch-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width and height for the carousel thumbnails', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 320,
+                'height' => 180,
+            )
+        ),
+        array(
+            'id' => 'opt-continue-watch-layout-slider-content',
+            'type' => 'button_set',
+            'title' => __('Content Layout', 'dotstudio-pro'),
+            'subtitle' => __('Choose the content layout option.', 'dotstudio-pro'),
+            'desc' => __('Tooltip will display everything in a tooltip, where "Text" and "Text & Description" will display whichever you select below the image', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'None',
+                '1' => 'Text & Description',
+                '2' => 'Tooltip',
+                '3' => 'Text',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-continue-watch-title-trim-word',
+            'type' => 'spinner',
+            'title' => __('Trim title on carousel', 'dotstudio-pro'),
+            'desc' => __('Set the number of words shown in category titles in the carousel', 'dotstudio-pro'),
+            'default' => '5',
+            'min' => '0',
+            'step' => '1',
+            'max' => '30',
+        ),
+        array(
+            'id' => 'opt-continue-watch-description-trim-word',
+            'type' => 'spinner',
+            'title' => __('Trim description on carousel', 'dotstudio-pro'),
+            'desc' => __('Set the number of words shown in category descriptions in the carousel', 'dotstudio-pro'),
+            'default' => '10',
+            'min' => '0',
+            'step' => '1',
+            'max' => '50',
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-slidetoshow',
+            'type' => 'spinner',
+            'title' => __('Slides to show', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be displayed in a carousel row', 'dotstudio-pro'),
+            'default' => '4',
+            'min' => '1',
+            'step' => '1',
+            'max' => '7',
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-slidetoscroll',
+            'title' => __('Slides to scroll', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of images to be scrolled when one of the arrow navigation buttons in the carousel is clicked', 'dotstudio-pro'),
+            'type' => 'spinner',
+            'default' => '4',
+            'min' => '1',
+            'step' => '1',
+            'max' => '7',
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-pagination',
+            'title' => __('Enable Direct Navigation in Carousels', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the navigation dots under the carousel ', 'dotstudio-pro'),
+            'description' => __('By default, this is set to "off".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => false,
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-navigation',
+            'title' => __('Enable Navigation', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the navigation arrows on the carousel', 'dotstudio-pro'),
+            'description' => __('By default, this is set to "on".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-infinite',
+            'title' => __('Enable infinite loop', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the infinite loop for the carousel', 'dotstudio-pro'),
+            'description' => __('By default set to "on".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-autoplay',
+            'title' => __('Autoplay', 'dotstudio-pro'),
+            'subtitle' => __('Enable autoplay for secondary carousels', 'dotstudio-pro'),
+            'description' => __('By default set to "off".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => false,
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-autoplayspeed',
+            'title' => __('Autoplay Interval', 'dotstudio-pro'),
+            'subtitle' => __('Set the interval for the autoplay sliding', 'dotstudio-pro'),
+            'description' => __('Please enter the value in milliseconds (ex: 1 second is 1000, 2 seconds is 2000); this will be the time period between autoplay scrolling in secondary carousels', 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '2000',
+            'required' => array('opt-slick-home-autoplay', '=', true),
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-slidespeed',
+            'title' => __('Slide Speed', 'dotstudio-pro'),
+            'subtitle' => __('Set the speed for the slide (how quickly the next slide comes in)', 'dotstudio-pro'),
+            'description' => __('By default set to  "500". Please enter the value in milliseconds (ex: half a second is 500, 1 second is 1000).', 'dotstudio-pro'),
+            'type' => 'text',
+            'default' => '500',
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-responsive',
+            'title' => __('Responsive Display', 'dotstudio-pro'),
+            'subtitle' => __('Enable responsive display mode', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-tablet-slidetoshow',
+            'title' => __('Slides to show in tablet device (portrait mode)', 'dotstudio-pro'),
+            'subtitle' => __('The number of images to be displayed on a tablet screen per carousel row', 'dotstudio-pro'),
+            'type' => 'spinner',
+            'required' => array('opt-slick-home-responsive', '=', true),
+            'default' => '2',
+            'min' => '1',
+            'step' => '1',
+            'max' => '5',
+        ),
+        array(
+            'id' => 'opt-slick-continue-watch-mobile-slidetoshow',
+            'title' => __('Slides to show in mobile device', 'dotstudio-pro'),
+            'subtitle' => __('Defines the number of images to be displayed on a mobile screen per carousel row', 'dotstudio-pro'),
+            'type' => 'spinner',
+            'required' => array('opt-slick-home-responsive', '=', true),
+            'default' => '1',
+            'min' => '1',
+            'step' => '1',
+            'max' => '5',
+        ),
+    ),
+));
+
+/**
  * Categories page
  * @since 1.0.0
  */
