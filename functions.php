@@ -100,6 +100,9 @@ function check_user_status() {
         if ($client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
             $client = new Dsp_External_Api_Request();
             $client_token = $client->refresh_client_token($client_token);
+            if (is_wp_error($client_token)) {
+                return $client_token;
+            }
             update_user_meta($client_id, 'dotstudiopro_client_token', $client_token['client_token']);
             update_user_meta($client_id, 'dotstudiopro_client_token_expiration', time() + 5400);
         }

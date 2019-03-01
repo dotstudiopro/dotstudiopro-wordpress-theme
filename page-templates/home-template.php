@@ -103,7 +103,6 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
             )
         );
         $categories = $theme_function->query_categories_posts($category_args, "homepage_other_carousel_categories");
-
         if (!empty($categories)) {
             foreach ($categories as $category) {
                 $category_slug = $category->post_name;

@@ -6,6 +6,32 @@
  */
 class Theme_Functions {
 
+    private $external_api_class;
+    private $country;
+
+    function __construct() {
+        $external_api_class = new Dsp_External_Api_Request;
+        // Start the PHP session so we can save the country and don't
+        // need to constantly do the call to get a country
+        if (!session_id()) {
+            session_start();
+        }
+        // Check our session variable for a country, so we can avoid
+        // the API call
+        if(isset($_SESSION['dsp_theme_country'])) {
+            $this->country = $_SESSION['dsp_theme_country'];
+        }
+        // Call the API, store the country in the session
+        $this->country = $external_api_class->get_country();
+        if (!$this->country || is_wp_error($this->country)) {
+            // Default to no visibility; I think we should add in
+            // an option later to set a default country or none
+            $this->country = "NONE";
+            return;
+        }
+        $_SESSION['dsp_theme_country'] = $this->country;
+    }
+
     /**
      * home page main carousel function
      * @since 1.0.0
@@ -16,9 +42,9 @@ class Theme_Functions {
     public function home_page_main_carousel() {
 
         global $dsp_theme_options;
-        $channels_cache_key = "home_page_main_carousel_channels";
-        $show_channels_cache_key = "home_page_main_carousel_show_channels";
-        $show_videos_cache_key = "home_page_main_carousel_show_videos";
+        $channels_cache_key = "home_page_main_carousel_channels_" . $this->country;
+        $show_channels_cache_key = "home_page_main_carousel_show_channels_" . $this->country;
+        $show_videos_cache_key = "home_page_main_carousel_show_videos_" . $this->country;
         $response = array();
 
         $main_carousel_category = $dsp_theme_options['opt-home-carousel'];
@@ -45,7 +71,7 @@ class Theme_Functions {
                 if ($transient_show_channels) return $transient_show_channels;
 
                 $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type);
-                set_transient( $show_channels_cache_key, $show_channels, 3600 );
+                if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
             } else {
@@ -54,7 +80,7 @@ class Theme_Functions {
                 if ($transient_show_videos) return $transient_show_videos;
 
                 $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name);
-                set_transient( $show_videos_cache_key, $show_videos, 3600 );
+                if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
             }
@@ -99,7 +125,7 @@ class Theme_Functions {
                 if ($transient_show_channels) return $transient_show_channels;
 
                 $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type);
-                set_transient( $show_channels_cache_key, $show_channels, 3600 );
+                if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
             } else {
@@ -108,7 +134,7 @@ class Theme_Functions {
                 if ($transient_show_videos) return $transient_show_videos;
 
                 $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, array_values($channels)[0]->post_name);
-                set_transient( $show_videos_cache_key, $show_videos, 3600 );
+                if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
             }
@@ -124,9 +150,9 @@ class Theme_Functions {
      */
     public function get_category_channels($category_name) {
 
-        $cache_key = "show_channels_" . $category_name;
-        $cache = get_transient($cache_key);
-        if ($cache) return $cache;
+        $cache_key = "show_channels_" . $category_name . "_" . $this->country;
+        // $cache = get_transient($cache_key);
+        // if ($cache) return $cache;
 
         $channels_args = array(
             'post_type' => 'channel',
@@ -154,7 +180,14 @@ class Theme_Functions {
             $channels_array = array();
             $i = 999;
             foreach ($channels->posts as $channel):
-                $channel_weightings = get_post_meta($channel->ID, 'chnl_weightings');
+                $post_meta = get_post_meta($channel->ID);
+                $geo = maybe_unserialize($post_meta['dspro_channel_geo'][0]);
+                if (count($geo) && !in_array($this->country, $geo)) {
+                    // If the user doesn't have access to this channel due to
+                    // location, we don't need to show it to them in the category
+                    continue;
+                }
+                $channel_weightings = !empty($post_meta['chnl_weightings']) ? $post_meta['chnl_weightings'][0] : "";
                 if (!empty($channel_weightings)) {
                     $weightings = maybe_unserialize($channel_weightings[0]);
                     $channel_add = false;
@@ -189,7 +222,7 @@ class Theme_Functions {
      */
     public function show_channels($channels, $type, $category, $poster_type) {
 
-        $cache_key = "show_channels_" . $type . "_" . $category;
+        $cache_key = "show_channels_" . $type . "_" . $category . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -197,6 +230,12 @@ class Theme_Functions {
 
         foreach ($channels as $key => $channel):
             $channel_meta = get_post_meta($channel->ID);
+            $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
+            if (count($geo) && !in_array($this->country, $geo)) {
+                // If the user doesn't have access to this channel due to
+                // location, we don't need to show it to them in the category
+                continue;
+            }
             $response[$key]['id'] = $channel_meta['chnl_id'][0];
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
@@ -240,7 +279,7 @@ class Theme_Functions {
      */
     public function show_videos($channel, $type, $category = null, $p_channel = null) {
 
-        $cache_key = "show_videos_" . $channel->ID;
+        $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -251,6 +290,12 @@ class Theme_Functions {
                 $channel = $this->get_channel_by_name($channel_name);
                 if ($channel):
                     $channel_meta = get_post_meta($channel->ID);
+                    $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
+                    if (count($geo) && !in_array($this->country, $geo)) {
+                        // If the user doesn't have access to this channel due to
+                        // location, we don't need to show it to them in the category
+                        continue;
+                    }
                     $response[$key]['id'] = $channel_meta['chnl_id'][0];
                     $response[$key]['title'] = $channel->post_title;
                     $response[$key]['description'] = $channel->post_content;
