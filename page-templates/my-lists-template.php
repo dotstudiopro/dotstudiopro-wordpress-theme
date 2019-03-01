@@ -24,7 +24,7 @@ get_header();
                 foreach ($all_channels['channels'] as $channel) {
                     $channel_id = $channel['_id'];
                     $link = '/channel/' . $channel['slug'];
-                    $banner = $channel['spotlight_poster'] . '/240/360'
+                    $banner = (isset($channel['spotlight_poster'])) ? $channel['spotlight_poster'] . '/240/360' : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360';
                     ?>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
                         <a href="<?php echo $link; ?>" title="<?php echo $channel['title']; ?>">

@@ -1,16 +1,3 @@
-<?php
-/**
- * Template Name: test
- *
- * This template is used to display Home Page of the site.
- * @since 1.0.0
- */
-global $dsp_theme_options, $client_token;
-get_header();
-
-$theme_function = new Theme_Functions();
-$main_carousel = $theme_function->home_page_main_carousel();
-?>
 <div class="custom-container container pt-5 pb-5 center-page-content">
     <div class="row no-gutters other-categories">
     	<div class="col-md-12 text-center">
@@ -22,5 +9,3 @@ $main_carousel = $theme_function->home_page_main_carousel();
       </div>
     </div>
 </div>
-
-<?php get_footer(); ?>

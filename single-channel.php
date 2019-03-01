@@ -208,7 +208,7 @@ if (have_posts()) {
             </div><!-- container -->
             <?php
         } else {
-            include(locate_template('page-templates/templates-part/not-in-web-plateform.php'));
+            include(locate_template('page-templates/templates-part/not-in-web-platform.php'));
         }
     endwhile;
 }
