@@ -151,8 +151,8 @@ class Theme_Functions {
     public function get_category_channels($category_name) {
 
         $cache_key = "show_channels_" . $category_name . "_" . $this->country;
-        // $cache = get_transient($cache_key);
-        // if ($cache) return $cache;
+        $cache = get_transient($cache_key);
+        if ($cache) return $cache;
 
         $channels_args = array(
             'post_type' => 'channel',
@@ -191,6 +191,7 @@ class Theme_Functions {
                 if (!empty($channel_weightings)) {
                     $weightings = maybe_unserialize($channel_weightings[0]);
                     $channel_add = false;
+                    die(print_r($channel_weightings));
                     foreach ($weightings as $weighting):
                         if (array_keys($weighting)[0] == $category_id) {
                             $channels_array[array_values($weighting)[0]] = $channel;
