@@ -17,8 +17,9 @@ class Theme_Functions {
             session_start();
         }
         // Check our session variable for a country, so we can avoid
-        // the API call
-        if(isset($_SESSION['dsp_theme_country'])) {
+        // the API call; we check for an array as an earlier bug set
+        // this value as an array, and we don't want/need that
+        if(isset($_SESSION['dsp_theme_country']) && !is_array($_SESSION['dsp_theme_country'])) {
             $this->country = $_SESSION['dsp_theme_country'];
         }
         // Call the API, store the country in the session
@@ -97,9 +98,9 @@ class Theme_Functions {
     public function home_page_other_carousel($category_name, $poster_type = NULL) {
 
         global $dsp_theme_options;
-        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name;
-        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name;
-        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name;
+        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country;
+        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country;
+        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country;
         $response = array();
         // Try to avoid having to get all of our channels via a giant call if we can
         $transient_channels = get_transient( $channels_cache_key );
