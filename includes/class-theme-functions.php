@@ -192,12 +192,14 @@ class Theme_Functions {
                 if (!empty($channel_weightings)) {
                     $weightings = maybe_unserialize($channel_weightings[0]);
                     $channel_add = false;
-                    foreach ($weightings as $weighting):
-                        if (array_keys($weighting)[0] == $category_id) {
-                            $channels_array[array_values($weighting)[0]] = $channel;
-                            $channel_add = true;
-                        }
-                    endforeach;
+					if(is_array($channel_weightings)){
+						foreach ($weightings as $weighting):
+							if (array_keys($weighting)[0] == $category_id) {
+								$channels_array[array_values($weighting)[0]] = $channel;
+								$channel_add = true;
+							}
+						endforeach;
+					}
                     if ($channel_add == false)
                         $channels_array[$i] = $channel;
                 }
