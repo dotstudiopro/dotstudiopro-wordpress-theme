@@ -21,6 +21,7 @@ class Theme_Functions {
         // this value as an array, and we don't want/need that
         if(isset($_SESSION['dsp_theme_country']) && !is_array($_SESSION['dsp_theme_country'])) {
             $this->country = $_SESSION['dsp_theme_country'];
+            return;
         }
         // Call the API, store the country in the session
         $this->country = $external_api_class->get_country();
