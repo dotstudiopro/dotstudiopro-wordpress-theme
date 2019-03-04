@@ -25,7 +25,7 @@ class Theme_Functions {
         }
         // Call the API, store the country in the session
         $this->country = $external_api_class->get_country();
-        if (!$this->country || is_wp_error($this->country)) {
+        if (empty($this->country) || is_wp_error($this->country)) {
             // Default to no visibility; I think we should add in
             // an option later to set a default country or none
             $this->country = "NONE";
