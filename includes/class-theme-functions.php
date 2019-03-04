@@ -188,11 +188,10 @@ class Theme_Functions {
                     // location, we don't need to show it to them in the category
                     continue;
                 }
-                $channel_weightings = !empty($post_meta['chnl_weightings']) ? $post_meta['chnl_weightings'][0] : "";
+                $channel_weightings = !empty($post_meta['chnl_weightings']) ? $post_meta['chnl_weightings'][0] : array();
                 if (!empty($channel_weightings)) {
                     $weightings = maybe_unserialize($channel_weightings[0]);
                     $channel_add = false;
-                    die(print_r($channel_weightings));
                     foreach ($weightings as $weighting):
                         if (array_keys($weighting)[0] == $category_id) {
                             $channels_array[array_values($weighting)[0]] = $channel;
