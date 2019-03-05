@@ -528,6 +528,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['url'] = get_site_url() . '/video/' . $video['_id'];
                     }
                 }
+                $recommendation_content[$key]['is_product'] = (isset($recommendation['_source']['is_product'])) ? $recommendation['_source']['is_product'] : '';
             endforeach;
             return $recommendation_content;
         }
