@@ -12,6 +12,7 @@ if (have_posts()) {
         // Code to check if user subscribe to watch this channel
         $dsp_api = new Dsp_External_Api_Request();
         $country_code = 'IN'; //$dsp_api->get_country();
+        $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
         if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
             ?>
             <div class="custom-container container pb-5">
