@@ -9,9 +9,20 @@ if (have_posts()) {
 
         $theme_function = new Theme_Functions();
         $channel_meta = get_post_meta(get_the_ID());
-
         // Code to check if user subscribe to watch this channel
         $dsp_api = new Dsp_External_Api_Request();
+        $country_code = 'IN'; //$dsp_api->get_country();
+        if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
+            ?>
+            <div class="custom-container container pb-5">
+                <div class="row no-gutters other-categories text-center">
+                    <h4 class="p-4 w-100">The owner of this content has made it unavailable in your country.</h4>
+                    <h4 class="p-4 w-100">Please explore our other selections from <a href="/home-page" title="Explore">here</a></h4>
+                </div>
+            </div>
+            <?php
+            break;
+        }
 
         if (isset($channel_meta['chnl_categories'][0])) {
             $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
@@ -61,7 +72,12 @@ if (have_posts()) {
                     <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/900'; ?>" alt="<?php echo get_the_title(); ?>"></div>
                     <div class="inner-banner-content_bg">
                         <div class="inner-banner-content row no-gutters">
+                            <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){?>
+                                <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                            <?php }else{ ?>
                             <h2><?php echo get_the_title(); ?></h2>
+                            <?php }?>
+                            <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                             <?php the_content(); ?>
                             <div class="subscribe_now mt-3">
                                 <?php if (empty($parant_channel_unlocked)): ?>
@@ -130,7 +146,12 @@ if (have_posts()) {
                                 <div class="player" data-video_id="<?php echo $trailer_id; ?>"></div>  
                                 <div class="inner-banner-content_bg channel-teaser-info">
                                     <div class="inner-banner-content row no-gutters">
+                                        <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){?>
+                                            <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                                        <?php }else{ ?>
                                         <h2><?php echo get_the_title(); ?></h2>
+                                        <?php }?>
+                                        <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                                         <?php the_content(); ?>
                                         <div class="subscribe_now mt-3">
                                             <?php if (empty($parant_channel_unlocked)): ?>

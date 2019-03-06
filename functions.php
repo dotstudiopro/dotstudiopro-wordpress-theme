@@ -843,4 +843,25 @@ function admin_style() {
 }
 
 add_action('admin_enqueue_scripts', 'admin_style');
+
+/**
+ *  Method to get channel year and language as a string
+ *  
+ * @param type $channel_id
+ * @return type string
+ *
+ */
+function dsp_get_channel_publication_meta($channel_id = null){
+    $properties = array();
+    $channel_year = get_post_meta($channel_id, 'dspro_channel_year', true);
+    if($channel_year){
+        $properties['year'] = $channel_year;
+    }
+    $channel_language = get_post_meta($channel_id, 'dspro_channel_language', true);
+    if($channel_language){
+        $properties['language'] = $channel_language ;
+    }
+    $channel_properties = implode(' | ', $properties);
+    return $channel_properties;
+}
 ?>

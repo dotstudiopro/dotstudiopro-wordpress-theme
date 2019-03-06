@@ -1201,6 +1201,17 @@ Redux::setSection($opt_name, array(
             )
         ),
         array(
+            'id' => 'opt-channel-poster-logo-title',
+            'type' => 'radio',
+            'title' => __('Display Logo OR Title', 'dotstudio-pro'),
+            'subtitle' => __('Choose the option to display logo or title on channel page overlay.', 'dotstudio-pro'),
+            'options' => array(
+                'logo' => 'Channel Logo',
+                'title' => 'Channel Title',
+            ),
+            'default' => 'logo'
+        ),
+        array(
             'id' => 'opt-channel-video-layout-slider-content',
             'type' => 'button_set',
             'title' => __('Content Layout for videos', 'dotstudio-pro'),
