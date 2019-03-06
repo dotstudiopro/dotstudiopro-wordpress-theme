@@ -245,6 +245,7 @@ class Theme_Functions {
             $response[$key]['description'] = $channel->post_content;
             $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
                 $response[$key]['url'] = get_the_permalink($channel->ID);
