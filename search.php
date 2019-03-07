@@ -19,7 +19,7 @@ $type = $dsp_theme_options['opt-search-option'];
 $result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
 $no_of_row = $dsp_theme_options['opt-search-columns-row'];
 ?>
-<div class="custom-container container mb-5">
+<div class="custom-container container mb-5 mt-5">
     <?php
     if (!is_wp_error($result)):
         ?>
@@ -27,7 +27,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <div class="row no-gutters">
             <h3 class="page-title mb-3"><?php printf(__('Search Results for : %s', 'twentyfifteen'), get_search_query()); ?></h3>
         </div>
-        <div class="row no-gutters pb-5 d-xs-block d-md-none d-lg-none">
+        <div class="row no-gutters pb-5 pt-3 d-xs-block d-md-none d-lg-none">
             <form role="search" method="get" id="searchform" class="w-100" action="<?php echo esc_url(home_url('/')); ?>">
                 <div>
                     <input class="search-textbox" type="text" value="<?php echo get_search_query(); ?>" name="s" id="search" />
@@ -38,7 +38,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <?php if ($result['data']['hits'] && $type == 'video') : ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
-                    <div class="col-md-<?php echo $no_of_row; ?> p-3 search-custom-width">
+                    <div class="col-6 col-sm-3 col-md-<?php echo $no_of_row; ?> p-2 search-custom-width">
                         <a href="/video/<?php echo $data['_id']; ?>" title="<?php echo $data['_source']['title']; ?>">
                             <div class="holder">
                                 <?php
@@ -59,7 +59,7 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
         <?php elseif ($result['data']['hits'] && $type == 'channel'): ?>
             <div class="row">
                 <?php foreach ($result['data']['hits'] as $data): ?>
-                    <div class="col-md-<?php echo $no_of_row; ?> p-2  search-custom-width">
+                    <div class="col-6 col-sm-3 col-md-<?php echo $no_of_row; ?> p-2  search-custom-width">
                         <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['_source']['title']; ?>">
                             <div class="holder">
                                 <?php
