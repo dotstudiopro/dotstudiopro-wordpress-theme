@@ -169,12 +169,14 @@ jQuery('.manage_my_list').click(function (e) {
     var action = $(this).data('action');
     var nonce = $(this).data('nonce');
     var channel_id = $(this).data('channel_id');
+	var parent_channel_id = $(this).data('parent_channel_id');
     var manage_my_list = $.post(
             jsVariable.ajaxUrl,
             {
                 'action': action,
                 'nonce': nonce,
-                'channel_id': channel_id
+                'channel_id': channel_id,
+				'parent_channel_id': parent_channel_id
             }
     );
     manage_my_list.done(function (response) {

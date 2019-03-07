@@ -23,18 +23,25 @@ get_header();
 
                 foreach ($all_channels['channels'] as $channel) {
                     $channel_id = $channel['_id'];
+					$title = $channel['title'];
                     $link = '/channel/' . $channel['slug'];
                     $banner = (isset($channel['spotlight_poster'])) ? $channel['spotlight_poster'] . '/240/360' : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360';
+					if(isset($channel['parent_channel']) && !empty($channel['parent_channel'])){
+                        $channel_id = $channel['parent_channel']['_id'];
+                        $title = $channel['parent_channel']['title'];
+                        $link = '/channel/' . $channel['parent_channel']['slug'];
+                        $banner = (isset($channel['parent_channel']['spotlight_poster'])) ? $channel['parent_channel']['spotlight_poster'] . '/240/360' : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360';
+                    }
                     ?>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
-                        <a href="<?php echo $link; ?>" title="<?php echo $channel['title']; ?>">
+                        <a href="<?php echo $link; ?>" title="<?php echo $title; ?>">
                             <div class="holder">
                                 <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
-                                <h4 class="pt-2 text-center"><?php echo $channel['title']; ?></h4>
+                                <h4 class="pt-2 text-center"><?php echo $title; ?></h4>
                             </div>
                         </a>    
                         <div class="text-center pb-2">
-                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
+                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel['_id']; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
                         </div>
                     </div>
                     <?php

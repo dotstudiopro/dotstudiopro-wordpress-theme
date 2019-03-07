@@ -653,7 +653,8 @@ function addToMyList() {
     if (wp_verify_nonce($_POST['nonce'], 'addToMyList')) {
         $dotstudio_api = new Dsp_External_Api_Request();
         $channel_id = $_POST['channel_id'];
-        $responce = $dotstudio_api->add_to_user_list($client_token, $channel_id);
+		$parent_channel_id = ($_POST['parent_channel_id']) ? $_POST['parent_channel_id'] : null;
+        $responce = $dotstudio_api->add_to_user_list($client_token, $channel_id, $parent_channel_id);
     }
     wp_send_json_success($responce);
 }

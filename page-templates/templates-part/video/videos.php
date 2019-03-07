@@ -155,6 +155,12 @@ if (!is_wp_error($video) && !empty($video)):
                     if ($channel_meta['chnl_spotlight_poster'][0]) {
                         $channel_img = $channel_meta['chnl_spotlight_poster'][0] . '/240/360';
                     }
+					$p_channel_id = 0;
+                    if (!empty($p_channel_slug)) {
+                        $p_channel = get_page_by_path($p_channel_slug, OBJECT, 'channel');
+                        $p_channel_meta = get_post_meta($p_channel->ID);
+                        $p_channel_id = $p_channel_meta['chnl_id'][0];
+                    }
                     ?>
                     <div class="text-center add_to_list mb-2 pt-5">
                         <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
@@ -174,7 +180,7 @@ if (!is_wp_error($video) && !empty($video)):
 										?>
 										<a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
 									<?php } else { ?>
-										<button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+										<button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>"  data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
 									<?php } ?>
 								<?php } else { ?>
                                                                         <a href="<?php echo wp_login_url( home_url( $wp->request ) ); ?>" class="btn btn-primary btn-ds-primary">+ Add to My List</a>
