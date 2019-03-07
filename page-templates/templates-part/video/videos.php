@@ -36,9 +36,24 @@ if (!is_wp_error($video) && !empty($video)):
     global $share_banner, $share_desc, $share_title;
     $share_desc = $desc = isset($video['description']) ? $video['description'] : '';
     $share_title = $title = isset($video['title']) ? $video['title'] : '';
-    $share_banner = $banner = get_post_meta($channel->ID, 'chnl_poster', true);
+    $share_banner = $banner = isset($video['thumb']) ? $video['thumb'] : get_post_meta($channel->ID, 'chnl_poster', true);
 endif;
 get_header();
+$channel_meta = get_post_meta($channel->ID);
+$dsp_api = new Dsp_External_Api_Request();
+$country_code = $dsp_api->get_country();
+$dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
+if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
+    ?>
+    <div class="custom-container container pb-5">
+        <div class="row no-gutters other-categories text-center">
+            <h4 class="p-4 w-100">The owner of this content has made it unavailable in your country.</h4>
+            <h4 class="p-4 w-100">Please explore our other selections from <a href="/home-page" title="Explore">here</a></h4>
+        </div>
+    </div>
+    <?php
+    return;
+}
 if (!is_wp_error($video) && !empty($video)):
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
