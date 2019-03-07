@@ -629,6 +629,16 @@ Redux::setSection($opt_name, array(
             )
         ),
         array(
+            'id' => 'opt-main-home-image-mobile-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails. (For smaller devices)', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width and height for the main thumbnails carousel. (For smaller devices)', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 600,
+                'height' => 450,
+            )
+        ),
+        array(
             'id' => 'opt-play-btn-type',
             'type' => 'radio',
             'title' => __('Select Navigate Button Type For Main Carousel', 'dotstudio-pro'),
