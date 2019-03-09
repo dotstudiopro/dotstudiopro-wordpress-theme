@@ -108,10 +108,12 @@ function check_user_status() {
             update_user_meta($client_id, 'dotstudiopro_client_token_expiration', time() + 5400);
         }
         /* Check if user has any active subscription */
-        $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-        $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
-        if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
-            $is_user_subscribed = true;
+        if (class_exists('Dotstudiopro_Subscription')) {
+            $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+            $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
+            if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
+                $is_user_subscribed = true;
+            }
         }
     }
 }
@@ -398,7 +400,7 @@ function theme_body_class($class = '') {
     $class = ($dsp_theme_options['opt-layout'] == 1) ? 'full-width ' : 'boxed ';
     $class .= ($dsp_theme_options['opt-sticky'] == 1) ? 'stickey-nav ' : '';
     $class .= ($dsp_theme_options['opt-logo-align'] == 'center') ? 'center-header' : '';
-    $class .= ($dsp_theme_options['opt-advertise'] == 1) ? 'advertise ' : '';
+    $class .= (isset($dsp_theme_options['opt-advertise']) && $dsp_theme_options['opt-advertise'] == 1) ? 'advertise ' : '';
     echo 'class="' . join(' ', get_body_class($class)) . '"';
 }
 
