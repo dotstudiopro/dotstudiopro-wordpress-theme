@@ -102,6 +102,10 @@ function check_user_status() {
             $client = new Dsp_External_Api_Request();
             $client_token = $client->refresh_client_token($client_token);
             if (is_wp_error($client_token)) {
+                // If we have an error with the client token, we can't leave that value as a wp_error object;
+                // if we do, every API call involving a client token throws an error because we can't send a
+                // wp_error object as a header value, so we set an empty value instead
+                $client_token = "";
                 return $client_token;
             }
             update_user_meta($client_id, 'dotstudiopro_client_token', $client_token['client_token']);
@@ -849,7 +853,7 @@ add_action('admin_enqueue_scripts', 'admin_style');
 
 /**
  *  Method to get channel year and language as a string
- *  
+ *
  * @param type $channel_id
  * @return type string
  *
@@ -870,7 +874,7 @@ function dsp_get_channel_publication_meta($channel_id = null){
 
 /**
  * Check for mobile devise
- * 
+ *
  * @staticvar type $is_mobile
  * @return boolean
  */
