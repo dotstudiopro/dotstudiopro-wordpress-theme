@@ -1587,6 +1587,16 @@ Redux::setSection($opt_name, array(
             'default' => 'spotlight_poster'
         ),
         array(
+            'id' => 'opt-search-autocomplete-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) for Search Autocomplete Result Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width and height for the search autocomplete result thumbnails', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 265,
+                'height' => 149,
+            )
+        ),
+        array(
             'id' => 'opt-search-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for Search Result Thumbnails', 'dotstudio-pro'),

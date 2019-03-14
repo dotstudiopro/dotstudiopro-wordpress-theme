@@ -555,8 +555,8 @@ function autocomplete() {
         $type = $dsp_theme_options['opt-search-option'];
         $dotstudio_api = new Dsp_External_Api_Request();
         $q = $_POST['search'];
-        $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-        $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
         $suggesion = $dotstudio_api->search_suggestion($q);
         $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
@@ -594,18 +594,19 @@ function autocomplete() {
                     $url = get_site_url() . '/channel/' . $data['slug'];
                     $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                     $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
                     $title = 'Channels';
                 else:
                     $url = get_site_url() . '/video/' . $data['_id'];
                     $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $is_product = 0;
                     $title = 'Videos';
                 endif;
                 $items['channel'][$key]['name'] = $data['_source']['title'];
-                $items['channel'][$key]['image'] = $image;
+                $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
                 $items['channel'][$key]['url'] = $url;
+                $items['channel'][$key]['is_product'] = $is_product;
                 $items['channel'][$key]['title'] = $title;
-                $items['channel'][$key]['height'] = $height;
-                $items['channel'][$key]['width'] = $width;
                 $items['channel'][$key]['flag'] = 'channel';
             endforeach;
         }
@@ -620,8 +621,8 @@ function search_suggesion() {
     $type = $dsp_theme_options['opt-search-option'];
     $dotstudio_api = new Dsp_External_Api_Request();
     $q = $_POST['search'];
-    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+    $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
     $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
     if (!empty($search) && !is_wp_error($search)) {
@@ -630,18 +631,19 @@ function search_suggesion() {
                 $url = get_site_url() . '/channel/' . $data['slug'];
                 $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                 $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
                 $title = 'Channels';
             else:
                 $url = get_site_url() . '/video/' . $data['_id'];
                 $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $is_product = 0;
                 $title = 'Videos';
             endif;
             $items[$key]['name'] = $data['_source']['title'];
-            $items[$key]['image'] = $image;
+            $items[$key]['image'] = $image.'/'.$width.'/'.$height;
             $items[$key]['url'] = $url;
             $items[$key]['title'] = $title;
-            $items[$key]['width'] = $width;
-            $items[$key]['height'] = $height;
+            $items[$key]['is_product'] = $is_product;
             $items[$key]['flag'] = 'channel';
         endforeach;
     }

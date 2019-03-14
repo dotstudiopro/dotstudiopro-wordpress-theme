@@ -218,7 +218,7 @@ window.addEventListener('beforeunload', function (e) {
 /**
  * Toogle the class on menu icon click
  */
-jQuery(document).on('click', '.navbar-toggler-icon', function () {
+jQuery(document).on('click', '.navbar-toggler', function () {
     jQuery('body').toggleClass('fixed-body');
 });
 
