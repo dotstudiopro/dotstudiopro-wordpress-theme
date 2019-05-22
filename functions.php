@@ -808,10 +808,12 @@ function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $a
     update_user_meta($user_id, "dotstudiopro_client_token", $spotlight);
     update_user_meta($user_id, "dotstudiopro_client_token_expiration", time() + 5400);
 
-    $subscriptionClass = new Dotstudiopro_Subscription_Request();
-    $subscription = $subscriptionClass->getUserSubscription($spotlight);
-    if (!empty($sub[0]->subscription->platform)) {
-        update_user_meta($user_id, "dotstudiopro_subscription_platform", $sub[0]->subscription->platform);
+    if (class_exists('Dotstudiopro_Subscription_Request')) {
+        $subscriptionClass = new Dotstudiopro_Subscription_Request();
+        $subscription = $subscriptionClass->getUserSubscription($spotlight);
+        if (!empty($sub[0]->subscription->platform)) {
+            update_user_meta($user_id, "dotstudiopro_subscription_platform", $sub[0]->subscription->platform);
+        }
     }
 }
 

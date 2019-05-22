@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2019-5-22
+
+### Fixed
+- Fixed a bug where the subscription class was being called when it didn't exist after a user logs in. The script now checks for the class before attempting to use it.
+
+## [1.3.0] - 2019-3-1
+
+### Fixed
+- Fixed some issues with caching related to user's location, as the country code needs to be included for caching so we cache results by country instead of homogenously
+
 ## [1.2.2] - 2019-2-22
 
 ### Added
