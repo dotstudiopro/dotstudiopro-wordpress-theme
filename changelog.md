@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.2] - 2019-6-10
+
+### Fixed
+- Discovered discrepancy between minified version of search autocomplete JS file and regular version; reminified our JS to fix.
+
 ## [1.3.1] - 2019-5-22
 
 ### Fixed
