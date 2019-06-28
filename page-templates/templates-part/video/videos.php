@@ -212,7 +212,7 @@ if (!is_wp_error($video) && !empty($video)):
          * code to add next and previous video link
          */
         if (!$child_channels) {
-            $npvideos = $theme_function->show_videos($channel, 'other_carousel', null, $channel->post_name);
+            $npvideos = $theme_function->show_videos($channel, 'other_carousel', null, $p_channel_slug);
             $next_video = array();
             $prev_video = array();
             foreach ($npvideos as $key => $npvideo) {
@@ -297,7 +297,7 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                     }
                 } else {
-                    $videos = $theme_function->show_videos($channel, 'other_carousel', null, $channel->post_name);
+                    $videos = $theme_function->show_videos($channel, 'other_carousel', null, $p_channel_slug);
                     if ($videos) {
                         ?>
                         <!-- Single Channel Video section start -->
@@ -336,7 +336,7 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                         foreach ($parant_child_channels as $parant_child_channel) {
                             $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
-                            $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $single_channel->post_name);
+                            $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $p_channel_slug);
                             if ($videos) {
                                 ?>
                                 <!-- Single Channel Video section start -->
