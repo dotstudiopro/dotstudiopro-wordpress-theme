@@ -21,8 +21,10 @@ if (have_posts()) {
             <?php if ($dsp_theme_options['opt-category-poster-information'] == true) : ?>
                 <div class="inner-banner-content_bg">
                     <div class="inner-banner-content row no-gutters">
-                        <h2><?php echo get_the_title(); ?></h2>
-                        <p><?php the_content(); ?></p>
+                        <div class="custom-container container pt-5">
+                            <h2><?php echo get_the_title(); ?></h2>
+                            <?php the_content(); ?>
+                        </div>
                     </div>
                 </div>
             <?php endif; ?>
