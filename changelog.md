@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.3] - 2019-7-9
+
+### Fixed
+- Switched lazy loading methods for images due to the current method reloading images unnecessarily.
+
 ## [1.3.2] - 2019-6-10
 
 ### Fixed
