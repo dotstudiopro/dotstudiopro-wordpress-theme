@@ -235,7 +235,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'),
             'width' => false,
             'default' => array(
-                'height' => 5.4375,
+                'height' => 75,
             )
         ),
         array(
@@ -266,7 +266,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'),
             'width' => false,
             'default' => array(
-                'height' => 3.75,
+                'height' => 75,
             )
         ),
         array(
