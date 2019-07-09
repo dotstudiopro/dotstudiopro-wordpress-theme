@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Switched lazy loading methods for images due to the current method reloading images unnecessarily.
 
+### Added
+- Set up a config option for whether or not to show or hide the category banner
+
 ## [1.3.2] - 2019-6-10
 
 ### Fixed
