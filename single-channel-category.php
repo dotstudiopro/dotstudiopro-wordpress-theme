@@ -8,12 +8,16 @@ if (have_posts()) {
         $theme_function = new Theme_Functions();
         $category_meta = get_post_meta(get_the_ID());
         $banner_image = ($dsp_theme_options['opt-category-poster-type'] == 'poster') ? $category_meta['cat_poster'][0] : $category_meta['cat_wallpaper'][0];
+        $banner_visibility = ($dsp_theme_options['opt-category-poster-visible'] == 1) ? true : false;
         $banner = ($banner_image) ? $banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
         ?>
 
         <!-- Category Background and Information section start -->
+        
         <div class="category inner-banner-bg">
-            <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+            <?php if($banner_visibility ): ?>
+                <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+            <?php endif; ?>
             <?php if ($dsp_theme_options['opt-category-poster-information'] == true) : ?>
                 <div class="inner-banner-content_bg">
                     <div class="inner-banner-content row no-gutters">

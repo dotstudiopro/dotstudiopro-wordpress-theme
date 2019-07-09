@@ -1097,6 +1097,15 @@ Redux::setSection($opt_name, array(
     'subsection' => true,
     'fields' => array(
         array(
+            'id' => 'opt-category-poster-visible',
+            'type' => 'switch',
+            'title' => __('Show/Hide the Category Banner', 'dotstudio-pro'),
+            'subtitle' => __('Display or hide the Category Banner.', 'dotstudio-pro'),
+            'default' => 1,
+            'on' => 'Show',
+            'off' => 'Hide',
+        ),
+        array(
             'id' => 'opt-category-poster-type',
             'type' => 'radio',
             'title' => __('Select Category Banner Type', 'dotstudio-pro'),
@@ -1105,12 +1114,13 @@ Redux::setSection($opt_name, array(
                 'poster' => 'Poster',
                 'wallpaper' => 'wallpaper',
             ),
+            'required' => array('opt-category-poster-visible', '=', 1),
             'default' => 'wallpaper'
         ),
         array(
             'id' => 'opt-category-poster-information',
             'title' => __('Display Category Poster Information', 'dotstudio-pro'),
-            'subtitle' => __('Display the category information on the category poster.', 'dotstudio-pro'),
+            'subtitle' => __('Display the category information on the category poster(i.e. Ditle and description).', 'dotstudio-pro'),
             'type' => 'switch',
             'default' => true,
         ),
