@@ -353,8 +353,7 @@ function remote_get_url($url) {
 function register_theme_scripts() {
     $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
-        wp_register_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js');
-        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, DSP_THEME_ASSETS_CACHEBUSTER, true);
+        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', array(), DSP_THEME_ASSETS_CACHEBUSTER, true);
     endforeach;
     wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }

@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.5] - 2019-7-10
+
+### Fixed
+- JS file cachebusters were not being properly honored due to registering the script for no reason; they do now.
+
 ## [1.3.4] - 2019-7-10
 
 ### Added
