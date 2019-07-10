@@ -72,7 +72,7 @@ class Theme_Functions {
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type);
+                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type, 100);
                 if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -81,7 +81,7 @@ class Theme_Functions {
                 $transient_show_videos = get_transient( $show_videos_cache_key );
                 if ($transient_show_videos) return $transient_show_videos;
 
-                $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name);
+                $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name, 100);
                 if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
@@ -99,9 +99,13 @@ class Theme_Functions {
     public function home_page_other_carousel($category_name, $poster_type = NULL) {
 
         global $dsp_theme_options;
-        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country;
-        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country;
-        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country;
+        // Figure out how many slides we need to load
+        $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
+        if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
+
+        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
+        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
+        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $response = array();
         // Try to avoid having to get all of our channels via a giant call if we can
         $transient_channels = get_transient( $channels_cache_key );
@@ -126,7 +130,7 @@ class Theme_Functions {
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type);
+                $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type, $cnt);
                 if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -135,7 +139,7 @@ class Theme_Functions {
                 $transient_show_videos = get_transient( $show_videos_cache_key );
                 if ($transient_show_videos) return $transient_show_videos;
 
-                $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, array_values($channels)[0]->post_name);
+                $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, array_values($channels)[0]->post_name, $cnt);
                 if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
@@ -224,15 +228,17 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels, $type, $category, $poster_type) {
+    public function show_channels($channels, $type, $category, $poster_type, $total) {
 
-        $cache_key = "show_channels_" . $type . "_" . $category . "_" . $this->country;
+        $cache_key = "show_channels_" . $type . "_" . $category . "_" . $this->country . "_" . $total;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
         global $dsp_theme_options;
+        $response = [];
 
-        foreach ($channels as $key => $channel):
+        foreach (array_slice($channels, 0, $total) as $key => $channel):
+            $response[$key] = [];
             $channel_meta = get_post_meta($channel->ID);
             $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
             if (count($geo) && !in_array($this->country, $geo)) {
@@ -282,7 +288,7 @@ class Theme_Functions {
      * @param type $channel
      * @return string
      */
-    public function show_videos($channel, $type, $category = null, $p_channel = null) {
+    public function show_videos($channel, $type, $category = null, $p_channel = null, $total) {
 
         $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
@@ -292,6 +298,8 @@ class Theme_Functions {
         $child_channels = $this->is_child_channels($channel->ID);
         if ($child_channels) {
             foreach ($child_channels as $key => $channel_name):
+                // Make sure we don't end up with too many slides
+                if (count($response) >= $total) break;
                 $channel = $this->get_channel_by_name($channel_name);
                 if ($channel):
                     $channel_meta = get_post_meta($channel->ID);
@@ -334,7 +342,7 @@ class Theme_Functions {
         } else {
             $videoData = $this->get_channel_videos($channel->ID);
             if ($videoData) {
-                foreach ($videoData as $key => $video):
+                foreach (array_slice($videoData, 0, $total) as $key => $video):
                     $response[$key]['id'] = $video['_id'];
                     $response[$key]['title'] = $video['title'];
                     $response[$key]['description'] = $video['description'];

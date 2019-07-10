@@ -757,6 +757,16 @@ Redux::setSection($opt_name, array(
             'max' => '7',
         ),
         array(
+            'id' => 'opt-slick-home-slidestoload',
+            'title' => __('Slides to load', 'dotstudio-pro'),
+            'subtitle' => __('This defines the number of slides you want to load in each carousel. Note that higher numbers may impede load times.'),
+            'type' => 'spinner',
+            'default' => '10',
+            'min' => '1',
+            'step' => '1',
+            'max' => '20',
+        ),
+        array(
             'id' => 'opt-slick-home-pagination',
             'title' => __('Enable Direct Navigation in Carousels', 'dotstudio-pro'),
             'subtitle' => __('Enable/disable the navigation dots under the carousel ', 'dotstudio-pro'),
