@@ -1,6 +1,5 @@
 .searchform{
 	width: 25%;
-	@include rem(padding-top, 32px);
 	@include media-breakpoint-down(lg){
 		width: 200px;
 	}
@@ -142,12 +141,12 @@ body.stickey-nav .autocomplete-suggestions {
   z-index: 999999;
   width: 100% !important;
   left: 0 !important;
-  height: calc(100vh - 9.375rem) !important;
+  height: calc(100vh - 5rem) !important;
 	overflow-y: scroll;
   max-height: inherit;
   padding: 3% 5%;
   background: $light-gray1;
-	@include rem(top, 150px !important);
+	@include rem(top, 80px !important);
   .information-top {
     h5 {
       float: left;
@@ -204,7 +203,8 @@ body.stickey-nav .autocomplete-suggestions {
 }
 
 .center-header .autocomplete-suggestions {
-	@include rem(top, 210px !important);
+	@include rem(top, 150px !important);
+  height: calc(100vh - 9.4rem) !important;
 	@include media-breakpoint-down(md){
 		@include rem(top, 150px !important);
 	}

@@ -1,5 +1,5 @@
 header {
-    @include rem(height, 150px);
+    @include rem(height, 112px);
     @include rem(padding-top, 28px);
     position: relative;
     z-index: 9999;
@@ -26,7 +26,6 @@ header {
         }
         .main-navigation {
             width: $header-right;
-            @include rem(padding-top, 32px);
             @include media-breakpoint-down(md){
             	width: 100%;
 							@include rem(padding-top, 20px);
@@ -124,7 +123,7 @@ header {
                 font-display: $font-display;
                 @include rem(margin, 35px 32px);
                 text-transform: uppercase;
-                @include rem(padding-bottom, 32px);
+                @include rem(padding-bottom, 34px);
                 @include media-breakpoint-down(md){
                     @include rem(margin, 0);
                     @include rem(padding, 15px 25px);
@@ -155,7 +154,7 @@ header {
 /* submenu */
 .navbar-collapse .navbar-nav .dropdown-menu {
 		left: 0;
-                @include rem(top, 105px);
+                @include rem(top, 84px);
                 width: 100%;
                 max-width: $custom-container;
                 right: 0;
@@ -212,7 +211,7 @@ header {
 
 /* fixed header */
 header.fixed-top.small-header {
-    @include rem(height, 110px);
+    @include rem(height, 80px);
     padding-top: 0.8rem;
     z-index: 9999;
     @include media-breakpoint-down(md){
@@ -222,22 +221,21 @@ header.fixed-top.small-header {
         @include rem(height, 60px);
     }
     &.left-logo-header .main-navigation {
-        @include rem(padding-top, 32px);
 				@include media-breakpoint-down(md){
         	@include rem(padding-top, 16px);
         }
     }
     .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-        @include rem(top, 94px);
+        @include rem(top, 65px);
     }
     &.center-logo-header {
-        @include rem(height, 180px);
+        @include rem(height, 150px);
         @include rem(padding-top, 16px);
         @include media-breakpoint-down(md){
             @include rem(height, 140px);
         }
         .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-            @include rem(top, 150px);
+            @include rem(top, 132px);
         }
     }
 }
@@ -245,7 +243,7 @@ header.fixed-top.small-header {
 /* center */
 
 header.center-logo-header {
-    @include rem(height, 210px);
+    @include rem(height, 170px);
     @include media-breakpoint-down(md){
         @include rem(height, 150px);
     }
@@ -262,10 +260,11 @@ header.center-logo-header {
         display: block;
     }
     .main-navigation .navbar-nav > li.dropdown:hover .dropdown-menu {
-        @include rem(top, 170px);
+        @include rem(top, 140px);
     }
     &.small-sub-nav .main-navigation .navbar-nav > li.dropdown .dropdown-menu {
         max-width: 500px;
+        z-index:999999999;
         left: inherit;
         right: inherit;
 				border-top: 1px solid $light-gray;
