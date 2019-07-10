@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.4] - 2019-7-10
+
+### Added
+- Added a theme option for how many slides to load per rail for all rails on the homepage besides the main rail; the main rail is currently hardcoded to 100 max, which should work for plausible use cases.
+- Added a theme option to show or hide the category detail page banner
+
+### Fixed
+- The images in the main carousel load all at once, so we don't run into janky UI issues with lazy loading.
+- Set default logo height to 75 pixels
+
 ## [1.3.3] - 2019-7-9
 
 ### Fixed
