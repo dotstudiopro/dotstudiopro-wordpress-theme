@@ -20,7 +20,6 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
         <?php if ($main_carousel) { ?>
             <div class="columns slick-wrapper small-12 slider" >
                 <?php
-                $src = "src";
                 foreach ($main_carousel as $slide) {
                     ?>
                     <?php
@@ -29,7 +28,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                     ?>
                     <div class="slide">
                         <div class="slide_image">
-                            <img class="img img-fluid w-100" <?php echo $src; ?>="<?php echo $slide['image'] . '/' . $main_carousel_width . '/' . $main_carousel_height; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            <img class="img img-fluid w-100" src="<?php echo $slide['image'] . '/' . $main_carousel_width . '/' . $main_carousel_height; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
                         </div>
                         <div class="slide_content">
                             <div class="container custom-container">
@@ -43,9 +42,6 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                         </div>
                     </div>
                     <?php
-                    // Set our source property back to lazy loading
-                    // in case it isn't currently
-                    $src = "data-lazy";
                 }
                 ?>
             </div>
