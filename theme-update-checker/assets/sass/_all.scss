@@ -1,0 +1,158 @@
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html, body {
+	font-size: 16px;
+	@include respond-to(handhelds) {
+		font-size: 12px;
+	}
+	@include media-breakpoint-down(md){
+		font-size: 11px;
+	}
+	@include media-breakpoint-down(sm) {
+		font-size: 10px;
+	}
+}
+
+html.boxed, body.boxed {
+	font-size: 12px;
+	@include media-breakpoint-down(md){
+		font-size: 11px;
+	}
+}
+
+body.boxed, body.boxed .fixed-top {
+	max-width: 1170px;
+  margin: 0 auto;
+	z-index: 9999999;
+	left: 0;
+  right: 0;
+	@include media-breakpoint-down(lg){
+		max-width: 100%;
+	}
+	@include media-breakpoint-down(md){
+		max-width: inherit;
+	}	
+	.custom-container {
+		@include media-breakpoint-down(md){
+			max-width: 100%;
+		}	
+	}	
+}
+
+body.boxed .custom-container {
+ 	max-width: 1140px;
+	@include media-breakpoint-only(lg){
+		max-width: 930px;
+	}
+	@include media-breakpoint-down(md){
+		max-width: 90vw;
+	}
+}
+
+body.boxed .autocomplete-suggestions {
+    max-width: 1170px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+:hover, :focus, :visited {
+	outline: 0;
+}
+
+.custom-container {
+	max-width: $custom-container;
+  padding: 0;
+}
+
+h2, h3{
+	position: relative;
+	overflow: hidden;
+	@include rem(padding-left, 50px);
+}
+
+h2:before, h3:before {
+	content: "";
+  border-left: 2px solid $green;
+	height: 100%;
+	position: absolute;
+	left: 0;
+}
+
+h3 {
+	@include rem(padding-left, 30px);
+}
+
+p{
+	font-size: 16px;
+}
+
+.holder > .title-holder > h3:before, .navigation.pagination > .screen-reader-text {
+  display: none;
+}
+
+.navigation.pagination {
+  width: 100%;
+}
+
+.holder > .title-holder > h3 {
+  text-align: center;
+  color: #fff9f9;
+}
+
+.nav-links {
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.holder > img {
+  filter: brightness(70%);
+}
+
+a.page-numbers {
+  color: #87b145;
+}
+
+.next.page-numbers > .screen-reader-text, .prev.page-numbers > .screen-reader-text {
+  color: inherit;
+}
+
+@media screen and (max-width: 480px) {
+  .page-title {
+    text-align: center;
+  }
+  a.page-numbers:not(.prev):not(.next), .page-numbers.current {
+    font-size: 55px;
+  }
+  a.page-numbers.prev:after, a.page-numbers.next:before {
+    content: ' ';
+    display: block;
+  }
+}
+
+.pt-7{
+	@include rem(padding-top, 70px);
+}
+.tooltip_templates { 
+	display: none;
+}
+
+body.fixed-body{
+	position: fixed;
+	overflow: hidden;
+  background: $black;
+	height: 100vh;
+}
+
+.mCustomScrollbar {
+    -ms-touch-action: inherit;
+    touch-action: inherit;
+}

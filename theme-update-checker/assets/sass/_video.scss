@@ -1,0 +1,193 @@
+.video-content-div {
+  background: $black;
+}
+
+/** KMT changes - start **/
+
+.video-player {
+  position: relative;
+  min-height: 50px;
+  max-height: 50%;
+}
+
+.player-content {
+  text-align: center;
+  line-height: 0;
+  /* width: 900px; */
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  .player-content-inner {
+    padding-top: 35%;
+    /* The min-height is based on the size of the
+       display pictures for the video banner */
+    min-height: 745px;
+    width: 100%;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+			@include media-breakpoint-down(md){
+				padding-top: 100%;
+			}
+  }
+}
+
+.player {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+	@include respond-to(tablet-landscape) {
+		height: 60vh !important;
+		position: relative !important;
+	}
+}
+
+.player-content-inner {
+  > *:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  #player-embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    > *:first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  .flowplayer, .video-js, .wp-video, .jwplayer, video, iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.video-content {
+	h4 {
+  	text-transform: uppercase;
+  	padding: 0;
+  	color: $green;
+	}
+	p {
+		@include rem(font-size, 20px);
+	}
+	.video-right-img{
+		width:50%;
+		@include respond-to(handhelds) {
+			width: 80%;
+		}
+		@include respond-to(tablet-landscape) {
+			width: 100%;
+		}
+		@include media-breakpoint-only(xs) {
+			width: auto;
+		}
+	}
+}
+
+.video-next-prev {
+  border-bottom: 2px solid $green;
+  &:hover, &:focus {
+    border-bottom: 2px solid $green;
+  }
+  .prev_video_link a {
+    float: left;
+  }
+  .next_video_link a {
+    float: right;
+  }
+}
+
+.simple-navigation-item-content {
+  background: $black;
+  width: auto;
+  padding: 15px;
+  &:hover {
+    background: $green;
+  }
+  span, i:before, h5 {
+    color: $green;
+  }
+  &:hover {
+    span, i:before, h5 {
+      color: $black;
+    }
+  }
+}
+
+.prev_video_link h5.pl-4, .next_video_link h5.pr-4 {
+  clear: both;
+}
+
+.prev_video_link h5 {
+  text-align: left;
+  display: inline-block;
+  margin: 2px 0 0;
+	@include media-breakpoint-down(md){
+		width: calc(100% - 6%);
+	}
+}
+
+.next_video_link h5 {
+  text-align: right;
+  display: inline-block;
+  margin: 2px 0 0;
+	@include media-breakpoint-down(md){
+		width: calc(100% - 6%);
+	}
+}
+
+.prev_video_link, .next_video_link {
+  width: 50%;
+}
+
+.slide.active {
+  -moz-box-shadow: inset 0 0 10px $green;
+  -webkit-box-shadow: inset 0 0 10px $green;
+  box-shadow: inset 0 0 10px $green;
+  padding: 15px;
+  .slide_content h4 {
+    color: $green;
+  }
+}
+
+/* Hero Video + Fallback */
+
+.video-js {
+  .vjs-control:before, .vjs-play-control.vjs-playing:before {
+    color: $white;
+  }
+}
+
+.vjs-icon-pause:before {
+  color: $white;
+}
+
+.video-js {
+  *, :after, :before {
+    color: $white;
+  }
+}
+
+#video-overlay{
+	position: relative;
+	overflow: hidden;
+	    height: 100%;
+}
+.video-js .vjs-big-play-button{
+	overflow: hidden !important;
+}

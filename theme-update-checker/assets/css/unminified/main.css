@@ -1,0 +1,50 @@
+.error404 h2{
+    padding:0;
+}
+.error404 h2:before{
+    border:0;
+}
+a.btn.cc-readmore{
+    border-radius:0;
+    background:#000;
+    color:#87b145;
+    border:0;
+}
+a.btn.cc-readmore:hover{
+    background:#87b145;
+    color:#000;
+}
+
+.col-md-2.p-2.channel-banner {
+    width: 50%;
+}  
+.subscribe_now.mt-3 p {
+    color: #fff;
+    font-size: 20px;
+    padding: 8px 20px;
+    line-height: normal;
+}
+
+.inner-banner-img{
+    overflow:hidden;
+}
+
+.my_list_button button i, .my_list_button a i, .manage_my_list i{
+    color: #fff;
+    margin-right: 5px;
+}
+
+.unmute-video-text{
+    font-size: 15px !important;
+}
+
+.mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
+.mCS-minimal.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: #87b145 !important;
+}
+
+body{
+    width: 100%;
+}
