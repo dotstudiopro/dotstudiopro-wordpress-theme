@@ -30,7 +30,8 @@ if (!empty($channel_slug) && !empty($video_slug)) {
         $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
         foreach ($categories as $channel_cat) {
             $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
-            $slug_query = new WP_Query($args);
+            $cache_key = "single_video_categories_" . $channel_cat;
+            $slug_query = $theme_function->query_categories_posts($args, $cache_key);
             if ($slug_query->have_posts()) {
                 $plateform_web = true;
                 break;
