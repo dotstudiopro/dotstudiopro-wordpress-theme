@@ -13,15 +13,26 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     }
                     else{
                         $logo = isset($dsp_theme_options['opt-logo-url']['url']) ? $dsp_theme_options['opt-logo-url']['url'] : '';
-                    } ?>
+                    }
+                    $h1_title = get_the_title();
+                    if(get_the_ID() == get_id_by_slug('video')){
+                        $h1_title = $share_title;
+                    }
+                    $home_url = home_url();
+                    if (!empty($dsp_theme_options['opt-logo-url'])) {
+                        $page_slug = $dsp_theme_options['opt-logo-url'];
+                        $page_id = get_page_by_path( $page_slug, OBJECT, 'page' );
+                        $home_url = get_permalink($page_id);
+                    }
+                    ?>
                     <?php if (!empty($logo)) { ?>
-                        <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>">
-                            <h1 class="site-logo"><img src="<?php echo $logo; ?>" title="<?php bloginfo('name'); ?>" alt="<?php bloginfo('name'); ?>" ></h1>
+                        <a href="<?php echo $home_url; ?>" title="<?php echo $h1_title; ?>">
+                            <h1 class="site-logo"><img src="<?php echo $logo; ?>" title="<?php echo $h1_title; ?>" alt="<?php echo $h1_title; ?>" ></h1>
                         </a>
                     <?php } else { ?>
-                        <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>">
+                        <a href="<?php echo $home_url; ?>" title="<?php echo $h1_title; ?>">
                             <h1 class="site-logo">
-                                <?php bloginfo('name'); ?>
+                                <?php echo $h1_title; ?>
                             </h1>
                         </a>
                     <?php } ?>

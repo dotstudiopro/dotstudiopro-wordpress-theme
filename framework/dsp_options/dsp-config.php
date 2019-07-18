@@ -171,7 +171,13 @@ if ($posts->have_posts()) {
         $options[$post->post_name] = stripslashes($post->post_title);
     }
 }
-
+$page_options = array();
+$page_lists = get_pages();
+if ($page_lists) {
+    foreach ($page_lists as $page_list) {
+        $page_options[$page_list->post_name] = stripslashes($page_list->post_title);
+    }
+}
 Redux::setSection($opt_name, array(
     'title' => __('Header', 'dotstudio-pro'),
     'id' => 'header',
@@ -237,6 +243,13 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'height' => 75,
             )
+        ),
+         array(
+            'id' => 'opt-logo-url',
+            'type' => 'select',
+            'title' => __('Select the page you want to link to logo', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one page on which the user will be redirected after clicking the site logo', 'dotstudio-pro'),
+            'options' => $page_options,
         ),
         array(
             'id' => 'opt-search',
