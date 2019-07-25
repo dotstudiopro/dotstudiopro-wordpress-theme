@@ -22,7 +22,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     if (!empty($dsp_theme_options['opt-logo-url'])) {
                         $page_slug = $dsp_theme_options['opt-logo-url'];
                         $page_id = get_page_by_path( $page_slug, OBJECT, 'page' );
-                        $home_url = get_permalink($page_id);
+                        $home_url = get_permalink($page_id->ID);
                     }
                     ?>
                     <?php if (!empty($logo)) { ?>
