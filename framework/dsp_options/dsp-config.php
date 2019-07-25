@@ -250,6 +250,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select the page you want to link to logo', 'dotstudio-pro'),
             'subtitle' => __('Choose any one page on which the user will be redirected after clicking the site logo', 'dotstudio-pro'),
             'options' => $page_options,
+            'default' => '',
         ),
         array(
             'id' => 'opt-search',
