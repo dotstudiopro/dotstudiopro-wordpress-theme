@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.5] - 2019-7-26
+
+## Added
+- Added H1 toggle to theme options
+
+## Fixed
+- Updated cache keys to be dynamic for certain features; static keys were causing info to not load properly
+- Set up dynamic page titles for some templates that were missing them
+
 ## [1.3.4] - 2019-7-10
 
 ### Added
