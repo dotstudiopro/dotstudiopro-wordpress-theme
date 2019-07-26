@@ -288,7 +288,7 @@ class Theme_Functions {
      * @param type $channel
      * @return string
      */
-    public function show_videos($channel, $type, $category = null, $p_channel = null, $total) {
+    public function show_videos($channel, $type, $category = null, $p_channel = null, $total = null) {
 
         $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
