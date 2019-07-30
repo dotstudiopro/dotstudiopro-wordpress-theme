@@ -245,7 +245,7 @@ Redux::setSection($opt_name, array(
             )
         ),
          array(
-            'id' => 'opt-logo-url',
+            'id' => 'opt-logo-link',
             'type' => 'select',
             'title' => __('Select the page you want to link to logo', 'dotstudio-pro'),
             'subtitle' => __('Choose any one page on which the user will be redirected after clicking the site logo', 'dotstudio-pro'),
