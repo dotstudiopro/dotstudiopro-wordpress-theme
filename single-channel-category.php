@@ -36,7 +36,7 @@ if (have_posts()) {
             <div class="col-sm-12 other-categories">
                 <div class="row">
                     <?php
-                    $channels = $theme_function->home_page_other_carousel($post->post_name, $dsp_theme_options['opt-category-channel-poster-type']);
+                    $channels = $theme_function->home_page_other_carousel($post->post_name, $dsp_theme_options['opt-category-channel-poster-type'], 'category');
                     if ($channels) {
                         $width = filter_var($dsp_theme_options['opt-channel-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
                         $height = filter_var($dsp_theme_options['opt-channel-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
