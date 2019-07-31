@@ -37,7 +37,7 @@ get_header();
                     )
                 );
                 $cache_key = "categories_channel_" . $category->post_name;
-                $channels = $theme_function->query_channels_posts($channels_args, $cache_key);
+                $channels = $theme_function->query_categories_posts($channels_args, $cache_key);
 
                 if ($channels) {
                     $category_meta = get_post_meta($category->ID);
