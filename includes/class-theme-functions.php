@@ -294,7 +294,7 @@ class Theme_Functions {
         $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
-
+        $response = array();
         global $dsp_theme_options;
         $child_channels = $this->is_child_channels($channel->ID);
         if ($child_channels) {
