@@ -1,10 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.3.5] - 2019-7-10
 
-### Fixed
-- JS file cachebusters were not being properly honored due to registering the script for no reason; they do now.
+## [1.3.5] - 2019-7-26
+
+## Added
+- Added H1 toggle to theme options
+
+## Fixed
+- Updated cache keys to be dynamic for certain features; static keys were causing info to not load properly
+- Set up dynamic page titles for some templates that were missing them
 
 ## [1.3.4] - 2019-7-10
 
@@ -15,6 +20,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - The images in the main carousel load all at once, so we don't run into janky UI issues with lazy loading.
 - Set default logo height to 75 pixels
+- JS file cachebusters were not being properly honored due to registering the script for no reason; they do now.
 
 ## [1.3.3] - 2019-7-9
 

@@ -10,7 +10,7 @@
             echo '<link rel="shortcut icon" href="' . $dsp_theme_options['opt-favicon-url']['url'] . '" />';
         }
         if(get_the_ID() == get_id_by_slug('video')){ ?>
-            <title><?php echo $share_title . ' - ' . bloginfo(); ?></title>
+            <title><?php echo $share_title . ' - ' . get_bloginfo('name'); ?></title>
             <meta property="og:title" content="<?php echo $share_title; ?>" />
             <meta property="og:image" content="<?php echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
             <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />

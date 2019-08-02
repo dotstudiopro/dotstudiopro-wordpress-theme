@@ -20,12 +20,11 @@ get_header();
             'orderby' => 'meta_value_num',
         );
 
-        $categories = new WP_Query($category_args);
         $theme_function = new Theme_Functions();
+        $categories = $theme_function->query_categories_posts($category_args, "categories_template");
 
-        if ($categories->have_posts()) {
-            foreach ($categories->posts as $category) {
-
+        if ($categories) {
+            foreach ($categories as $category) {
                 $channels_args = array(
                     'post_type' => 'channel',
                     'posts_per_page' => -1,
@@ -37,10 +36,10 @@ get_header();
                         )
                     )
                 );
+                $cache_key = "categories_channel_" . $category->post_name;
+                $channels = $theme_function->query_categories_posts($channels_args, $cache_key);
 
-                $channels = new WP_Query($channels_args);
-
-                if ($channels->have_posts()) {
+                if ($channels) {
                     $category_meta = get_post_meta($category->ID);
                     $category_banner = ($dsp_theme_options['opt-categories-poster-type'] == 'wallpaper') ? $category->cat_wallpaper : $category->cat_poster;
                     $width = filter_var($dsp_theme_options['opt-categories-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);

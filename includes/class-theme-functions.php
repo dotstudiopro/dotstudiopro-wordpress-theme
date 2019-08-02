@@ -96,13 +96,14 @@ class Theme_Functions {
      * @global type $dsp_theme_options
      * @return type
      */
-    public function home_page_other_carousel($category_name, $poster_type = NULL) {
+        public function home_page_other_carousel($category_name, $poster_type = NULL, $template = '') {
 
         global $dsp_theme_options;
         // Figure out how many slides we need to load
         $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
         if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
-
+        if($template == 'category')
+            $cnt = -1;
         $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country . "_total_" . $cnt;
@@ -288,12 +289,12 @@ class Theme_Functions {
      * @param type $channel
      * @return string
      */
-    public function show_videos($channel, $type, $category = null, $p_channel = null, $total) {
+    public function show_videos($channel, $type, $category = null, $p_channel = null, $total = null) {
 
         $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
-
+        $response = array();
         global $dsp_theme_options;
         $child_channels = $this->is_child_channels($channel->ID);
         if ($child_channels) {

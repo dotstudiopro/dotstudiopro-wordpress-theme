@@ -1,0 +1,38 @@
+/* DS custom button */
+
+.btn{
+	white-space: inherit;
+	@include media-breakpoint-down(sm) {
+		font-size: 1.2rem;
+	}
+}
+
+.btn-ds-primary {
+  background-color: $green;
+  border-color: $green;
+  color: $white;
+  &:hover, &:active, &:focus, &:not(:disabled):not(.disabled):active {
+    background-color: $black;
+    border-color: $black;
+    color: $white;
+    box-shadow: none;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  }
+}
+
+.btn-ds-secondary {
+  background-color: $green;
+  border-color: $green;
+  color: $white;
+  &:hover, &:active, &:focus, &:not(:disabled):not(.disabled):active {
+    background-color: $black;
+    border-color: $white;
+    color: $white;
+    box-shadow: none;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  }
+}

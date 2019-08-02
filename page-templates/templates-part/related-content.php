@@ -22,6 +22,7 @@ if (!empty($recommendation_content)):
         <?php
         $i = 1;
         foreach ($recommendation_content as $channel):
+            if(isset($channel)):
             ?>
             <div class="slide">
                 <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
@@ -63,6 +64,7 @@ if (!empty($recommendation_content)):
                 ?>
             </div>
             <?php
+            endif;
         endforeach;
         ?>
     </div><!-- related_content -->
