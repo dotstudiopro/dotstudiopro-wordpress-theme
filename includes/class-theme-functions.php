@@ -302,7 +302,7 @@ class Theme_Functions {
         if ($child_channels) {
             foreach ($child_channels as $key => $channel_name):
                 // Make sure we don't end up with too many slides
-                if (count($response) >= $total) break;
+                if ($total && count($response) >= $total) break;
                 $channel = $this->get_channel_by_name($channel_name);
                 if ($channel):
                     $channel_meta = get_post_meta($channel->ID);
