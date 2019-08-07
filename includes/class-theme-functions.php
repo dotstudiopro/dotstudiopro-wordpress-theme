@@ -72,7 +72,7 @@ class Theme_Functions {
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type, 100);
+                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type, null);
                 if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -81,7 +81,7 @@ class Theme_Functions {
                 $transient_show_videos = get_transient( $show_videos_cache_key );
                 if ($transient_show_videos) return $transient_show_videos;
 
-                $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name, 100);
+                $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name, null);
                 if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
 
@@ -100,10 +100,12 @@ class Theme_Functions {
 
         global $dsp_theme_options;
         // Figure out how many slides we need to load
-        $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
-        if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
-        if($template == 'category')
-            $cnt = -1;
+
+        $cnt = null;        
+        if($template == 'home-template'){
+            $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
+            if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
+        }
         $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country . "_total_" . $cnt;
@@ -231,7 +233,7 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels, $type, $category, $poster_type, $total) {
+    public function show_channels($channels, $type, $category, $poster_type, $total = null) {
 
         $cache_key = "show_channels_" . $type . "_" . $category . "_" . $this->country . "_" . $total;
         $cache = get_transient($cache_key);
@@ -240,7 +242,10 @@ class Theme_Functions {
         global $dsp_theme_options;
         $response = [];
 
-        foreach (array_slice($channels, 0, $total) as $key => $channel):
+        if($total)
+            $channels = array_slice($channels, 0, $total); 
+
+        foreach ($channels as $key => $channel):
             $response[$key] = [];
             $channel_meta = get_post_meta($channel->ID);
             $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
@@ -345,7 +350,11 @@ class Theme_Functions {
         } else {
             $videoData = $this->get_channel_videos($channel->ID);
             if ($videoData) {
-                foreach (array_slice($videoData, 0, $total) as $key => $video):
+
+                if($total)
+                    $videoData = array_slice($videoData, 0, $total);
+
+                foreach ($videoData as $key => $video):
                     $response[$key]['id'] = $video['_id'];
                     $response[$key]['title'] = $video['title'];
                     $response[$key]['description'] = $video['description'];
