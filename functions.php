@@ -454,7 +454,7 @@ add_filter('request', 'display_query_vars', 1);
 
 function display_query_vars($query_vars) {
     $data = $query_vars;
-    if (isset($data['channel'])) {
+    if (isset($data['channel']) && !is_array($data['channel'])) {
         $video_array = explode('/', $data['channel']);
         if (isset($video_array[1])) {
             if ($video_array[1] == 'video') {
