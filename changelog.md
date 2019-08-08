@@ -1,12 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.6] - 2019-8-8
+
+### Fixed
+- Fixed an issue where an incorrect count creating issues with updating while ingesting webhook data
+
 ## [1.3.5] - 2019-7-26
 
-## Added
+### Added
 - Added H1 toggle to theme options
 
-## Fixed
+### Fixed
 - Updated cache keys to be dynamic for certain features; static keys were causing info to not load properly
 - Set up dynamic page titles for some templates that were missing them
 
