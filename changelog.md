@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.7] - 2019-10-29
+
+### Fixed
+- Fixed an issue with jQuery for newer wordpress version
+
 ## [1.3.6] - 2019-8-8
 
 ### Fixed
