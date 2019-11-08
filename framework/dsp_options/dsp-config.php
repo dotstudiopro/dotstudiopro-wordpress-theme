@@ -133,8 +133,10 @@ Redux::setSection($opt_name, array(
                 1 => 'Hover Effect 1',
                 2 => 'Hover Effect 2',
                 3 => 'Hover Effect 3',
-                4 => 'Hover Effect 4',
-                5 => 'Hover Effect 5',
+                8 => 'Hover Effect 4',
+                9 => 'Hover Effect 5',
+                13 => 'Hover Effect 6',
+                14 => 'Hover Effect 7',
             ),
             'default' => 1
         ),
