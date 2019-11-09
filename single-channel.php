@@ -59,6 +59,9 @@ if (have_posts()) {
             if (!empty($first_child_id)) {
                 $p_channel_meta = get_post_meta($first_child_id->ID);
                 $p_channel_id = $p_channel_meta['chnl_id'][0];
+                if(!isset($p_channel_meta['chnl_child_channels'][0]) && empty($p_channel_meta['chnl_child_channels'][0])){
+                    $p_channel_id = 0;
+                }
             }
             if ($childchannels) {
                 $first_child_id = get_page_by_path($childchannels[0], OBJECT, 'channel');

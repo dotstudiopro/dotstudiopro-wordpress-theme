@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.9] - 2019-11-09
+
+### Fixed
+ - Resolved parent/child channel Add To Mylist issue
+ - Spelling correction
+
+## [1.3.8] - 2019-11-08
+
+### Added
+ - Added some new hover effects for the video thumbs for the video/channel rails
+
 ## [1.3.7] - 2019-10-29
 
 ### Fixed
