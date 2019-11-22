@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2019-11-22
+### Fixed
+- Resolved one issue for the child theme if we overwrite any function in it
+
+### Fixed
+
 ## [1.3.9] - 2019-11-09
 
 ### Fixed

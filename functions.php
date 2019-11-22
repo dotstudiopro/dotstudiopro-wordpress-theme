@@ -705,28 +705,29 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
 /**
  * Add a login link to the main navigation
  */
-function dsp_add_login_link($items, $args) {
-    global $wp;
-    if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
-        if (is_user_logged_in()) {
-            $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
-                    . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
-                    . '<ul class="dropdown-menu position-absolute" role="menu">';
-            if (class_exists('Dotstudiopro_Subscription')):
-                $items .= '<li><a href="/packages">Subscriptions</a></li>'
-                        . '<li><a href="/payment-profile">My Payment Profile</a></li>';
-            endif;
-            $items .= '<li><a href="/my-list">My List</a></li>'
-                    . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
-                    . '</ul>'
-                    . '</li>';
-        } else {
-            $items .= '<li><a href="' . wp_login_url( home_url( $wp->request )) . '">Log In</a></li>';
+if(!function_exists('dsp_add_login_link')){
+    function dsp_add_login_link($items, $args) {
+        global $wp;
+        if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
+            if (is_user_logged_in()) {
+                $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
+                        . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
+                        . '<ul class="dropdown-menu position-absolute" role="menu">';
+                if (class_exists('Dotstudiopro_Subscription')):
+                    $items .= '<li><a href="/packages">Subscriptions</a></li>'
+                            . '<li><a href="/payment-profile">My Payment Profile</a></li>';
+                endif;
+                $items .= '<li><a href="/my-list">My List</a></li>'
+                        . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
+                        . '</ul>'
+                        . '</li>';
+            } else {
+                $items .= '<li><a href="' . wp_login_url( home_url( $wp->request )) . '">Log In</a></li>';
+            }
         }
+        return $items;
     }
-    return $items;
 }
-
 add_filter('wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
 
 /**
