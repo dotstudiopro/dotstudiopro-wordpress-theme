@@ -11,11 +11,7 @@
         }
         if(get_the_ID() == get_id_by_slug('video')){ ?>
             <title><?php echo $share_title . ' - ' . get_bloginfo('name'); ?></title>
-            <meta property="og:title" content="<?php echo $share_title; ?>" />
-            <meta property="og:image" content="<?php echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
             <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />
-            <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />
-            <meta property="og:site_name" content="<?php echo bloginfo(); ?>" />
         <?php } ?>
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,6 +20,14 @@
                 <script src="<?php echo esc_url(get_template_directory_uri()); ?>/bootstrap/js/respond.min.js"></script>
                 <![endif]-->
         <?php wp_head(); ?>
+        <?php
+        if(get_the_ID() == get_id_by_slug('video')){ ?>
+            <title><?php echo $share_title . ' - ' . get_bloginfo('name'); ?></title>
+            <meta property="og:title" content="<?php echo $share_title; ?>" />
+            <meta property="og:image" content="<?php echo $share_banner; //echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
+            <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />
+            <meta property="og:site_name" content="<?php echo bloginfo(); ?>" />
+        <?php } ?>
         <?php if ($dsp_theme_options['opt-color-selection-section'] == 1): ?>
             <style type="text/css">
                 .slick-prev:before,
