@@ -189,7 +189,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-header-padding',
             'type' => 'spacing',
             'mode' => 'padding',
-            'compiler' => array('header'),
+            'output' => array('header'),
             'all' => false,
             'default' => '',
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %
@@ -211,7 +211,7 @@ Redux::setSection($opt_name, array(
             'id' => 'opt-logo-margin',
             'type' => 'spacing',
             'mode' => 'margin',
-            'compiler' => array('.site-logo'),
+            'output' => array('.site-logo'),
             'default' => '',
             'all' => false,
             'units' => array('em', 'px', '%'), // You can specify a unit value. Possible: px, em, %

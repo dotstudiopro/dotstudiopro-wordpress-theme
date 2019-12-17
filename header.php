@@ -91,17 +91,21 @@
                 .other-categories .slick-arrow.slick-next:hover {
                     background: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
                 }
+                .dsp-homepage-see-more a{
+                    float: right;
+                    color: #000000;
+                }
                 .main-navigation .navbar-nav > li.current-menu-item a,
                 .other-categories h3 a:hover,
                 .main-navigation .navbar-nav > li a:hover,
                 .other-categories .slick-slide:hover h4,
                 .footer-nav ul li a:hover,
                 .autocomplete-suggestions .information-top ul li a:hover,
-                .autocomplete-suggestions .channl_information a:hover h5
+                .autocomplete-suggestions .channl_information a:hover h5,
+                .dsp-homepage-see-more a
                 {
                     color: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
                 }
-                
             </style>
         <?php endif; ?>
         <?php

@@ -890,20 +890,20 @@ function dsp_wp_is_mobile() {
         return $is_mobile;
 
     if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
-        $is_mobile = false;
+        $is_mobile = 0;
     } elseif (
         strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
-            $is_mobile = true;
+            $is_mobile = 1;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false && strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') == false) {
-            $is_mobile = true;
+            $is_mobile = 1;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) {
-        $is_mobile = false;
+        $is_mobile = 2;
     } else {
-        $is_mobile = false;
+        $is_mobile = 0;
     }
 
     return $is_mobile;

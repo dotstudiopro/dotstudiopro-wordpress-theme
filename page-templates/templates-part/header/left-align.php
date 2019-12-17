@@ -1,5 +1,5 @@
 <?php
-global $dsp_theme_options;
+global $dsp_theme_options, $share_title;
 $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
 ?>
 <header class="blog-masthead left-logo-header <?php echo $class; ?>">
@@ -32,7 +32,7 @@ $class = ($dsp_theme_options['opt-sticky'] == 1) ? 'fixed-top' : '';
                     <?php } else { ?>
                         <a href="<?php echo $home_url; ?>" title="<?php echo $h1_title; ?>">
                             <h1 class="site-logo">
-                                <?php echo $h1_title; ?>
+                                <?php bloginfo('name'); ?>
                             </h1>
                         </a>
                     <?php } ?>

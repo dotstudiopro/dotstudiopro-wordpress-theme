@@ -35,7 +35,7 @@ if (have_posts()) {
                 $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
                 $cache_key = "single_video_categories_" . $channel_cat;
                 $slug_query = $theme_function->query_categories_posts($args, $cache_key);
-                if ($slug_query->have_posts()) {
+                if ($slug_query) {
                     $plateform_web = true;
                     break;
                 }

@@ -1,15 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.4.4] - 2019-11-29
+## [1.4.2] - 2019-12-17
+
+### Fixed
+- Resolved minor issue related to the theme options
+
+## [1.4.1] - 2019-11-29
+
 ### Fixed
 - Resolved one issue for the open graph metadata content on the videos page
 
 ## [1.4.0] - 2019-11-22
-### Fixed
-- Resolved one issue for the child theme if we overwrite any function in it
 
 ### Fixed
+- Resolved one issue for the child theme if we overwrite any function in it
 
 ## [1.3.9] - 2019-11-09
 
