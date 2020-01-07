@@ -42,8 +42,10 @@ if (!empty($channel_slug) && !empty($video_slug)) {
     }
     if ($plateform_web)
         include(locate_template('page-templates/templates-part/video/videos.php'));
-    else
-        include(locate_template('page-templates/templates-part/not-in-web-plateform.php'));
+    else{
+        get_header();
+        include(locate_template('page-templates/templates-part/not-in-web-platform.php'));
+    }
 }
 else if (!empty($video_slug))
     include(locate_template('page-templates/templates-part/video/direct-videos.php'));
