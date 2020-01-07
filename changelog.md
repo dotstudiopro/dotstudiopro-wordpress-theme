@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.3] - 2020-01-07
+
+### Fixed
+- Resolved not in platform error in video page
+
 ## [1.4.2] - 2019-12-17
 
 ### Fixed
