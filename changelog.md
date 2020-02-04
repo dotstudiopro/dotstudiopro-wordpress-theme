@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.4] - 2020-02-04
+
+### Removed
+- Removed sharing functionality form video player
+
 ## [1.4.3] - 2020-01-07
 
 ### Fixed

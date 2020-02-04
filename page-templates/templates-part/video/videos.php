@@ -73,6 +73,7 @@ if (!is_wp_error($video) && !empty($video)):
     $settings[] = 'skin=' . ltrim($player_color, "#");
     $settings[] = 'autostart=' . $autoplay;
     $settings[] = 'muteonstart=' . $mute_on_load;
+    $settings[] = 'enablesharing=false';
 
     // Code to check if user subscribe to watch this channel
     $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
