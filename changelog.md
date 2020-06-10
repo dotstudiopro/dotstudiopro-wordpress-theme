@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.5] - 2020-06-10
+
+### Changed
+- Remove a channel from my list directly from the channel or video page instead of going into my list page to remove the channel
+
 ## [1.4.4] - 2020-02-04
 
 ### Removed

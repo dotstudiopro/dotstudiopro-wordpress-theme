@@ -163,7 +163,7 @@ jQuery.fn.putCursorAtEnd = function () {
      * Add funcationality to add to my watch list
      */
 
-    $('.manage_my_list').click(function (e) {
+    $(document).on('click', '.manage_my_list', function (e) {
         e.preventDefault();
         $(this).prop('disabled', true);
 
@@ -171,6 +171,7 @@ jQuery.fn.putCursorAtEnd = function () {
         var nonce = $(this).data('nonce');
         var channel_id = $(this).data('channel_id');
         var parent_channel_id = $(this).data('parent_channel_id');
+        var remove_list_nonce = null;
         var manage_my_list = $.post(
                 jsVariable.ajaxUrl,
                 {
@@ -183,7 +184,8 @@ jQuery.fn.putCursorAtEnd = function () {
         manage_my_list.done(function (response) {
             $(this).prop('disabled', false);
             if (action == 'addToMyList') {
-                $('.my_list_button').html('<a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>');
+                remove_list_nonce = $('.manage_my_list').next().data('nonce');
+                $('.my_list_button').html('<button class="btn btn-danger manage_my_list" data-channel_id="'+channel_id+'" data-parent_channel_id="'+parent_channel_id+'" data-action="removeFromMyList" data-nonce="'+remove_list_nonce+'"><i class="fa fa-minus-circle"></i>Remove from My List</button>');
             } else {
                 window.location.reload();
             }
