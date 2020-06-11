@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.6] - 2020-06-10
+
+### Fixed
+- Resolved one issue for the seo metadata content on the videos page and also add seo metadata information on channel page
+
 ## [1.4.5] - 2020-06-10
 
 ### Changed

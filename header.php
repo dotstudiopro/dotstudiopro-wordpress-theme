@@ -9,10 +9,12 @@
         if (isset($dsp_theme_options['opt-favicon-url']['url'])) {
             echo '<link rel="shortcut icon" href="' . $dsp_theme_options['opt-favicon-url']['url'] . '" />';
         }
-        if(get_the_ID() == get_id_by_slug('video')){ ?>
+        if(get_the_ID() == get_id_by_slug('video') || is_singular('channel')){ ?>
             <title><?php echo $share_title . ' - ' . get_bloginfo('name'); ?></title>
             <meta property="og:url" content="<?php global $wp; echo home_url( $wp->request ) ?>" />
-        <?php } ?>
+        <?php } else { ?>
+            <title><?php echo wp_title( '-', false, 'right' ) . get_bloginfo('name'); ?></title>
+        <?php } ?>    
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -21,8 +23,8 @@
                 <![endif]-->
         <?php wp_head(); ?>
         <?php
-        if(get_the_ID() == get_id_by_slug('video')){ ?>
-            <title><?php echo $share_title . ' - ' . get_bloginfo('name'); ?></title>
+        if(get_the_ID() == get_id_by_slug('video') || is_singular('channel')){ ?>
+            <meta name="description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />
             <meta property="og:title" content="<?php echo $share_title; ?>" />
             <meta property="og:image" content="<?php echo $share_banner; //echo preg_replace("/^https:/i", "http:", $share_banner); ?>" />
             <meta property="og:description" content="<?php echo htmlspecialchars(preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $share_desc)); ?>" />

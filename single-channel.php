@@ -1,6 +1,13 @@
 <?php
-global $dsp_theme_options, $client_token, $post, $wp;
+global $dsp_theme_options, $client_token, $post, $wp, $share_banner, $share_desc, $share_title;
 $video_slug = '';
+
+$channel_meta = get_post_meta(get_the_ID());
+
+$share_title = $title = get_the_title();
+$share_desc = $desc =  apply_filters('the_content', get_post_field('post_content', get_the_ID()));
+$share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+
 get_header();
 
 if (have_posts()) {
