@@ -69,11 +69,8 @@ if (!is_wp_error($video) && !empty($video)):
     }
 
     $settings = [];
-    $settings[] = 'companykey=' . $company_id;
-    $settings[] = 'skin=' . ltrim($player_color, "#");
-    $settings[] = 'autostart=' . $autoplay;
-    $settings[] = 'muteonstart=' . $mute_on_load;
-    $settings[] = 'enablesharing=false';
+
+    $show_ads = "true";
 
     // Code to check if user subscribe to watch this channel
     $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
@@ -81,7 +78,7 @@ if (!is_wp_error($video) && !empty($video)):
         $channel_unlocked = false;
     else:
         if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['ads_enabled']))
-            $settings[] = 'disableads=true';
+            $show_ads = "false";
         $channel_unlocked = true;
     endif;
 
@@ -386,32 +383,42 @@ if (!is_wp_error($video) && !empty($video)):
     <?php if ($channel_unlocked == true): ?>
         <script>
             jQuery(document).ready(function (e) {
-                var script = document.createElement("script");
-                script.setAttribute("type", "text/javascript");
-                script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
-                document.getElementsByTagName("body")[0].appendChild(script);
+                const mountObj = {
+                    video_id: "<?php echo $video_id; ?>",
+                    company_id: "<?php echo $company_id; ?>",
+                    target: ".player",
+                    autostart: <?php echo $autoplay; ?>,
+                    muted: <?php echo $mute_on_load; ?>
+                }
+
+                <?php if (!$show_ads) { ?>
+                    mountObj.show_interruptions = false;
+                <?php } ?>
+
+                DotPlayer.mount(mountObj);
+
+                let playerMounted = false;
 
                 var dspPlayerCheck = setInterval(function () {
-                    if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                    if (typeof DotPlayer !== "undefined") {
                         clearInterval(dspPlayerCheck);
-                        dotstudiozPlayer.player.on("ended", function () {
+                        DotPlayer.on("ended", function () {
                             var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
                             if (nextHref.length > 0)
                                 window.location.href = nextHref;
                         });
+                        playerMounted = true;
                     }
                 }, 250);
 
-    <?php if ($client_token && $video_point) { ?>
-                    jQuery(document).ready(function (e) {
-                        var dspPlayerCheckTimepoint = setInterval(function () {
-                            if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                                clearInterval(dspPlayerCheckTimepoint);
-                                dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
-                            }
-                        }, 250);
-                    });
-    <?php } ?>
+                <?php if ($client_token && $video_point) { ?>
+                            var dspPlayerCheckTimepoint = setInterval(function () {
+                                if (playerMounted) {
+                                    clearInterval(dspPlayerCheckTimepoint);
+                                    DotPlayer.currentTime(<?php echo $video_point; ?>);
+                                }
+                            }, 250);
+                <?php } ?>
             });
         </script>
     <?php endif; ?>
