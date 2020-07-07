@@ -61,7 +61,7 @@ if (!is_wp_error($video) && !empty($video)):
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <div class="video-page-content">
         <div class="row no-gutters">
             <div class="custom-container container video-content">
@@ -100,24 +100,51 @@ if (!is_wp_error($video) && !empty($video)):
         </div></div>
     <?php
     ?>
+    <script type="text/javascript" src="https://www.dplayer.pro/dotplayer.js"></script>
     <script>
-        jQuery(document).ready(function (e) {
+            jQuery(document).ready(function (e) {
+                const mountObj = {
+                    video_id: "<?php echo $video_id; ?>",
+                    company_id: "<?php echo $company_id; ?>",
+                    target: ".player",
+                    autostart: <?php echo $autoplay; ?>,
+                    muted: <?php echo $mute_on_load; ?>
+                }
 
-            var script = document.createElement("script");
-            script.setAttribute("type", "text/javascript");
-            script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
-            document.getElementsByTagName("body")[0].appendChild(script);
+                <?php if (!empty($channel->ID)) { ?>
+                    mountObj.channel_id = "<?php echo $channel->ID; ?>";
+                    mountObj.channel_title = "<?php echo $channel->post_title; ?>";
+                <?php } ?>
 
-<?php if ($client_token && $video_point) { ?>
-                jQuery(document).ready(function (e) {
-                    var dspPlayerCheckTimepoint = setInterval(function () {
-                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                            clearInterval(dspPlayerCheckTimepoint);
-                            dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
-                        }
-                    }, 250);
-                });
-<?php } ?>
+                <?php if (!$show_ads) { ?>
+                    mountObj.show_interruptions = false;
+                <?php } ?>
 
-        });
-    </script>
+
+
+                DotPlayer.mount(mountObj);
+
+                let playerMounted = false;
+
+                var dspPlayerCheck = setInterval(function () {
+                    if (typeof DotPlayer.on !== "undefined") {
+                        clearInterval(dspPlayerCheck);
+                        DotPlayer.on("ended", function () {
+                            var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
+                            if (nextHref.length > 0)
+                                window.location.href = nextHref;
+                        });
+                        playerMounted = true;
+                    }
+                }, 250);
+
+                <?php if ($client_token && $video_point) { ?>
+                        var dspPlayerCheckTimepoint = setInterval(function () {
+                            if (playerMounted) {
+                                clearInterval(dspPlayerCheckTimepoint);
+                                DotPlayer.currentTime(<?php echo $video_point; ?>);
+                            }
+                        }, 250);
+                <?php } ?>
+            });
+        </script>

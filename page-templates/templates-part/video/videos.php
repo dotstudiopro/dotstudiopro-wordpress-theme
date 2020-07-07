@@ -69,10 +69,8 @@ if (!is_wp_error($video) && !empty($video)):
     }
 
     $settings = [];
-    $settings[] = 'companykey=' . $company_id;
-    $settings[] = 'skin=' . ltrim($player_color, "#");
-    $settings[] = 'autostart=' . $autoplay;
-    $settings[] = 'muteonstart=' . $mute_on_load;
+
+    $show_ads = "true";
 
     // Code to check if user subscribe to watch this channel
     $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
@@ -80,7 +78,7 @@ if (!is_wp_error($video) && !empty($video)):
         $channel_unlocked = false;
     else:
         if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['ads_enabled']))
-            $settings[] = 'disableads=true';
+            $show_ads = "false";
         $channel_unlocked = true;
     endif;
 
@@ -193,9 +191,10 @@ if (!is_wp_error($video) && !empty($video)):
 									}
 									if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
 										?>
-										<a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>
+										<button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</button>
 									<?php } else { ?>
 										<button class="btn btn-primary btn-ds-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>"  data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+                                        <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
 									<?php } ?>
 								<?php } else { ?>
                                                                         <a href="<?php echo wp_login_url( home_url( $wp->request ) ); ?>" class="btn btn-primary btn-ds-primary">+ Add to My List</a>
@@ -382,34 +381,52 @@ if (!is_wp_error($video) && !empty($video)):
         </div>
     </div>
     <?php if ($channel_unlocked == true): ?>
+    <script type="text/javascript" src="https://www.dplayer.pro/dotplayer.js"></script>
         <script>
             jQuery(document).ready(function (e) {
-                var script = document.createElement("script");
-                script.setAttribute("type", "text/javascript");
-                script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $video_id . $player_setting; ?>");
-                document.getElementsByTagName("body")[0].appendChild(script);
+                const mountObj = {
+                    video_id: "<?php echo $video_id; ?>",
+                    company_id: "<?php echo $company_id; ?>",
+                    target: ".player",
+                    autostart: <?php echo $autoplay; ?>,
+                    muted: <?php echo $mute_on_load; ?>
+                }
+
+                <?php if (!empty($channel->ID)) { ?>
+                    mountObj.channel_id = "<?php echo $channel->ID; ?>";
+                    mountObj.channel_title = "<?php echo $channel->post_title; ?>";
+                <?php } ?>
+
+                <?php if (!$show_ads) { ?>
+                    mountObj.show_interruptions = false;
+                <?php } ?>
+
+
+
+                DotPlayer.mount(mountObj);
+
+                let playerMounted = false;
 
                 var dspPlayerCheck = setInterval(function () {
-                    if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                    if (typeof DotPlayer.on !== "undefined") {
                         clearInterval(dspPlayerCheck);
-                        dotstudiozPlayer.player.on("ended", function () {
+                        DotPlayer.on("ended", function () {
                             var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
                             if (nextHref.length > 0)
                                 window.location.href = nextHref;
                         });
+                        playerMounted = true;
                     }
                 }, 250);
 
-    <?php if ($client_token && $video_point) { ?>
-                    jQuery(document).ready(function (e) {
+                <?php if ($client_token && $video_point) { ?>
                         var dspPlayerCheckTimepoint = setInterval(function () {
-                            if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
+                            if (playerMounted) {
                                 clearInterval(dspPlayerCheckTimepoint);
-                                dotstudiozPlayer.player.currentTime(<?php echo $video_point; ?>);
+                                DotPlayer.currentTime(<?php echo $video_point; ?>);
                             }
                         }, 250);
-                    });
-    <?php } ?>
+                <?php } ?>
             });
         </script>
     <?php endif; ?>
