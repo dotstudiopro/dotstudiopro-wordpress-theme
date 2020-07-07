@@ -32,7 +32,7 @@ if (!empty($channel_slug) && !empty($video_slug)) {
             $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
             $cache_key = "single_video_categories_" . $channel_cat;
             $slug_query = $theme_function->query_categories_posts($args, $cache_key);
-            if ($slug_query->have_posts()) {
+            if ($slug_query) {
                 $plateform_web = true;
                 break;
             }
@@ -42,8 +42,10 @@ if (!empty($channel_slug) && !empty($video_slug)) {
     }
     if ($plateform_web)
         include(locate_template('page-templates/templates-part/video/videos.php'));
-    else
-        include(locate_template('page-templates/templates-part/not-in-web-plateform.php'));
+    else{
+        get_header();
+        include(locate_template('page-templates/templates-part/not-in-web-platform.php'));
+    }
 }
 else if (!empty($video_slug))
     include(locate_template('page-templates/templates-part/video/direct-videos.php'));

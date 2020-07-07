@@ -140,85 +140,87 @@ jQuery.fn.putCursorAtEnd = function () {
 /**
  * Add functionality to Login button when clicked to trigger auth0 login
  */
-jQuery('.dsp-auth0-login-button').click(function () {
-    // Make sure we have the auth0 login button before we try triggering events
-    if (jQuery("#a0LoginButton").length > 0) {
-        jQuery("#a0LoginButton").trigger('click');
-    } else {
-        // If we don't have the button, redirect the user to the login
-        window.location.href = jQuery(this).data('login_url');
-    }
-});
-
-/**
- * Action to load login pop-up if user is not logged-in
- */
-jQuery('.login-link').on('click', function (e) {
-    e.preventDefault();
-    $('#a0LoginButton').click();
-});
-
-/**
- * Add funcationality to add to my watch list
- */
-
-jQuery('.manage_my_list').click(function (e) {
-    e.preventDefault();
-    $(this).prop('disabled', true);
-
-    var action = $(this).data('action');
-    var nonce = $(this).data('nonce');
-    var channel_id = $(this).data('channel_id');
-	var parent_channel_id = $(this).data('parent_channel_id');
-    var manage_my_list = $.post(
-            jsVariable.ajaxUrl,
-            {
-                'action': action,
-                'nonce': nonce,
-                'channel_id': channel_id,
-				'parent_channel_id': parent_channel_id
-            }
-    );
-    manage_my_list.done(function (response) {
-        $(this).prop('disabled', false);
-        if (action == 'addToMyList') {
-            $('.my_list_button').html('<a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i>Remove from My List</a>');
+(function ($) {
+    $('.dsp-auth0-login-button').click(function () {
+        // Make sure we have the auth0 login button before we try triggering events
+        if (jQuery("#a0LoginButton").length > 0) {
+            jQuery("#a0LoginButton").trigger('click');
         } else {
-            window.location.reload();
+            // If we don't have the button, redirect the user to the login
+            window.location.href = jQuery(this).data('login_url');
         }
     });
-});
 
-/**
- * Event to store the point data when the video page is refreshed
- * @param {type} param1
- * @param {type} param2
- */
-window.addEventListener('beforeunload', function (e) {
-    if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
+    /**
+     * Action to load login pop-up if user is not logged-in
+     */
+    jQuery('.login-link').on('click', function (e) {
         e.preventDefault();
-        var play_time = dotstudiozPlayer.player.currentTime();
-        var video_id = jQuery('.player').data('video_id');
-        var nonce = jQuery('.player').data('nonce');
-        if (video_id && play_time && nonce) {
-            $.post(
-                    jsVariable.ajaxUrl,
-                    {
-                        'action': 'save_point_data',
-                        'play_time': play_time,
-                        'video_id': video_id,
-                        'nonce': nonce
-                    }
-            );
-        }
-        return true;
-    }
-});
+        $('#a0LoginButton').click();
+    });
 
+    /**
+     * Add funcationality to add to my watch list
+     */
+
+    $(document).on('click', '.manage_my_list', function (e) {
+        e.preventDefault();
+        $(this).prop('disabled', true);
+
+        var action = $(this).data('action');
+        var nonce = $(this).data('nonce');
+        var channel_id = $(this).data('channel_id');
+        var parent_channel_id = $(this).data('parent_channel_id');
+        var remove_list_nonce = null;
+        var manage_my_list = $.post(
+                jsVariable.ajaxUrl,
+                {
+                    'action': action,
+                    'nonce': nonce,
+                    'channel_id': channel_id,
+                    'parent_channel_id': parent_channel_id
+                }
+        );
+        manage_my_list.done(function (response) {
+            $(this).prop('disabled', false);
+            if (action == 'addToMyList') {
+                remove_list_nonce = $('.manage_my_list').next().data('nonce');
+                $('.my_list_button').html('<button class="btn btn-danger manage_my_list" data-channel_id="'+channel_id+'" data-parent_channel_id="'+parent_channel_id+'" data-action="removeFromMyList" data-nonce="'+remove_list_nonce+'"><i class="fa fa-minus-circle"></i>Remove from My List</button>');
+            } else {
+                window.location.reload();
+            }
+        });
+    });
+
+    /**
+     * Event to store the point data when the video page is refreshed
+     * @param {type} param1
+     * @param {type} param2
+     */
+    window.addEventListener('beforeunload', function (e) {
+        if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
+            e.preventDefault();
+            var play_time = dotstudiozPlayer.player.currentTime();
+            var video_id = jQuery('.player').data('video_id');
+            var nonce = jQuery('.player').data('nonce');
+            if (video_id && play_time && nonce) {
+                $.post(
+                        jsVariable.ajaxUrl,
+                        {
+                            'action': 'save_point_data',
+                            'play_time': play_time,
+                            'video_id': video_id,
+                            'nonce': nonce
+                        }
+                );
+            }
+            return true;
+        }
+    });
+})(jQuery);
 /**
  * Toogle the class on menu icon click
  */
 jQuery(document).on('click', '.navbar-toggler', function () {
     jQuery('body').toggleClass('fixed-body');
 });
-

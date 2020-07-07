@@ -36,6 +36,7 @@ if (!is_wp_error($video) && !empty($video)):
     $settings[] = 'skin=' . ltrim($player_color, "#");
     $settings[] = 'autostart=' . $autoplay;
     $settings[] = 'muteonstart=' . $mute_on_load;
+    $settings[] = 'enablesharing=false';
     $player_setting = '?targetelm=.player&' . implode('&', $settings);
 
     /*

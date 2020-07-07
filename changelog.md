@@ -1,6 +1,57 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.6] - 2020-06-10
+
+### Fixed
+- Resolved one issue for the seo metadata content on the videos page and also add seo metadata information on channel page
+
+## [1.4.5] - 2020-06-10
+
+### Changed
+- Remove a channel from my list directly from the channel or video page instead of going into my list page to remove the channel
+
+## [1.4.4] - 2020-02-04
+
+### Removed
+- Removed sharing functionality form video player
+
+## [1.4.3] - 2020-01-07
+
+### Fixed
+- Resolved not in platform error in video page
+
+## [1.4.2] - 2019-12-17
+
+### Fixed
+- Resolved minor issue related to the theme options
+
+## [1.4.1] - 2019-11-29
+
+### Fixed
+- Resolved one issue for the open graph metadata content on the videos page
+
+## [1.4.0] - 2019-11-22
+
+### Fixed
+- Resolved one issue for the child theme if we overwrite any function in it
+
+## [1.3.9] - 2019-11-09
+
+### Fixed
+- Resolved parent/child channel Add To Mylist issue
+- Spelling correction
+
+## [1.3.8] - 2019-11-08
+
+### Added
+- Added some new hover effects for the video thumbs for the video/channel rails
+
+## [1.3.7] - 2019-10-29
+
+### Fixed
+- Fixed an issue with jQuery for newer wordpress version
+
 ## [1.3.6] - 2019-8-8
 
 ### Fixed
@@ -24,6 +75,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - The images in the main carousel load all at once, so we don't run into janky UI issues with lazy loading.
 - Set default logo height to 75 pixels
+- JS file cachebusters were not being properly honored due to registering the script for no reason; they do now.
 
 ## [1.3.3] - 2019-7-9
 

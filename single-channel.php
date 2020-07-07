@@ -1,6 +1,13 @@
 <?php
-global $dsp_theme_options, $client_token, $post, $wp;
+global $dsp_theme_options, $client_token, $post, $wp, $share_banner, $share_desc, $share_title;
 $video_slug = '';
+
+$channel_meta = get_post_meta(get_the_ID());
+
+$share_title = $title = get_the_title();
+$share_desc = $desc =  apply_filters('the_content', get_post_field('post_content', get_the_ID()));
+$share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+
 get_header();
 
 if (have_posts()) {
@@ -35,7 +42,7 @@ if (have_posts()) {
                 $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
                 $cache_key = "single_video_categories_" . $channel_cat;
                 $slug_query = $theme_function->query_categories_posts($args, $cache_key);
-                if ($slug_query->have_posts()) {
+                if ($slug_query) {
                     $plateform_web = true;
                     break;
                 }
@@ -59,6 +66,9 @@ if (have_posts()) {
             if (!empty($first_child_id)) {
                 $p_channel_meta = get_post_meta($first_child_id->ID);
                 $p_channel_id = $p_channel_meta['chnl_id'][0];
+                if(!isset($p_channel_meta['chnl_child_channels'][0]) && empty($p_channel_meta['chnl_child_channels'][0])){
+                    $p_channel_id = 0;
+                }
             }
             if ($childchannels) {
                 $first_child_id = get_page_by_path($childchannels[0], OBJECT, 'channel');
@@ -108,9 +118,10 @@ if (have_posts()) {
                                                 }
                                                 if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
                                                     ?>
-                                                    <a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i> Remove from My List</a>
+                                                    <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
                                                 <?php } else { ?>
                                                     <a href="#" class="btn btn-secondary btn-ds-secondary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</a>
+                                                    <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
                                                 <?php } ?>
                                             <?php } else { ?>
                                                 <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-secondary btn-ds-secondary"><i class="fa fa-plus-circle"></i> Add to My List</a>
@@ -182,9 +193,10 @@ if (have_posts()) {
                                                             }
                                                             if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
                                                                 ?>
-                                                                <a href="/my-list" class="btn btn-danger"><i class="fa fa-minus-circle"></i> Remove from My List</a>
+                                                                <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
                                                             <?php } else { ?>
                                                                 <button class="btn btn-primary btn-revry-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+                                                                <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
                                                             <?php } ?>
                                                         <?php } else { ?>
                                                             <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-primary btn-revry-primary"><i class="fa fa-plus-circle"></i> Add to My List</a>

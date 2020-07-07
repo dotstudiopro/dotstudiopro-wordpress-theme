@@ -353,8 +353,7 @@ function remote_get_url($url) {
 function register_theme_scripts() {
     $scripts = array('jquery.mCustomScrollbar.concat', 'slick-init', 'image-lazy-load', 'classie', 'uisearch', 'custom', 'search-autocomplete', 'modernizr.custom', 'effects');
     foreach ($scripts as $script) :
-        wp_register_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js');
-        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', false, DSP_THEME_ASSETS_CACHEBUSTER, true);
+        wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', array(), DSP_THEME_ASSETS_CACHEBUSTER, true);
     endforeach;
     wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
 }
@@ -706,28 +705,29 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
 /**
  * Add a login link to the main navigation
  */
-function dsp_add_login_link($items, $args) {
-    global $wp;
-    if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
-        if (is_user_logged_in()) {
-            $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
-                    . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
-                    . '<ul class="dropdown-menu position-absolute" role="menu">';
-            if (class_exists('Dotstudiopro_Subscription')):
-                $items .= '<li><a href="/packages">Subscriptions</a></li>'
-                        . '<li><a href="/payment-profile">My Payment Profile</a></li>';
-            endif;
-            $items .= '<li><a href="/my-list">My List</a></li>'
-                    . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
-                    . '</ul>'
-                    . '</li>';
-        } else {
-            $items .= '<li><a href="' . wp_login_url( home_url( $wp->request )) . '">Log In</a></li>';
+if(!function_exists('dsp_add_login_link')){
+    function dsp_add_login_link($items, $args) {
+        global $wp;
+        if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
+            if (is_user_logged_in()) {
+                $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
+                        . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
+                        . '<ul class="dropdown-menu position-absolute" role="menu">';
+                if (class_exists('Dotstudiopro_Subscription')):
+                    $items .= '<li><a href="/packages">Subscriptions</a></li>'
+                            . '<li><a href="/payment-profile">My Payment Profile</a></li>';
+                endif;
+                $items .= '<li><a href="/my-list">My List</a></li>'
+                        . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
+                        . '</ul>'
+                        . '</li>';
+            } else {
+                $items .= '<li><a href="' . wp_login_url( home_url( $wp->request )) . '">Log In</a></li>';
+            }
         }
+        return $items;
     }
-    return $items;
 }
-
 add_filter('wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
 
 /**
@@ -890,20 +890,20 @@ function dsp_wp_is_mobile() {
         return $is_mobile;
 
     if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
-        $is_mobile = false;
+        $is_mobile = 0;
     } elseif (
         strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
-            $is_mobile = true;
+            $is_mobile = 1;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false && strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') == false) {
-            $is_mobile = true;
+            $is_mobile = 1;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) {
-        $is_mobile = false;
+        $is_mobile = 2;
     } else {
-        $is_mobile = false;
+        $is_mobile = 0;
     }
 
     return $is_mobile;

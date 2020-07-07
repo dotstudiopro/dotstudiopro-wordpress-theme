@@ -12,9 +12,22 @@ get_header();
     <div class="row no-gutters categories-page pt-5 pb-5">
 
         <?php
+
+        $selected_collections = $dsp_theme_options['opt-category-list'];
+        
+        $arr = [];
+        foreach($selected_collections as $key => $value){
+            if($value == 1){
+                $arr[] = $key;
+            }
+        }
+        if(isset($dsp_theme_options['opt-category-all']) && $dsp_theme_options['opt-category-all'] == 1){
+            $arr = [];
+        }
         $category_args = array(
             'post_type' => 'channel-category',
             'posts_per_page' => -1,
+            'post_name__in' => $arr,
             'order' => 'ASC',
             'meta_key' => 'weight',
             'orderby' => 'meta_value_num',

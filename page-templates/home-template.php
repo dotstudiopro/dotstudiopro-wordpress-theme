@@ -111,6 +111,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                         <?php
                         $class = 'home-carousel' . $cnt;
                         $class_array[] = $class;
+                        $total_channels = count($channels);
                         ?>
                         <div class="slick-wrapper <?php echo $class . ' ' . $slide_text_class ?>">
                             <?php $i = 1 ?>
@@ -156,6 +157,32 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                                     ?>
                                 </div>
                             <?php } ?>
+                        </div>
+                        <?php
+                            $style = '';
+                            switch (dsp_wp_is_mobile()) {
+                                case 0:
+                                    if($total_channels <= $dsp_theme_options['opt-slick-home-slidetoshow']):
+                                        $style = 'style="display:none;"';
+                                    endif;
+                                    break;
+                                case 1:
+                                    if($total_channels <= $dsp_theme_options['opt-slick-home-mobile-slidetoshow']):
+                                        $style = 'style="display:none;"';
+                                    endif;
+                                    break;
+                                case 2:
+                                    if($total_channels <= $dsp_theme_options['opt-slick-home-tablet-slidetoshow']):
+                                        $style = 'style="display:none;"';
+                                    endif;
+                                    break;
+                                default:
+                                    $style = '';
+                                    break;
+                            }
+                        ?>
+                        <div class="dsp-homepage-see-more" <?php echo $style; ?>>
+                            <a href="<?php echo '/channel-category/' . $category_slug; ?>">View All</a>
                         </div>
                     </div>
                     <?php
