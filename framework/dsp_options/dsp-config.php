@@ -1814,6 +1814,60 @@ Redux::setSection($opt_name, array(
     )
 ));
 
+
+
+/**
+ * Player themes
+ * @since 1.0.0
+ */
+Redux::setSection($opt_name, array(
+    'title' => __('Player Theming', 'dotstudio-pro'),
+    'id' => 'player-theme',
+    'icon' => 'el el-video',
+    'fields' => array(
+        array(
+            'id' => 'opt-player-icon-color',
+            'type' => 'color',
+            'title' => __('Player Icon Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a text color for the player icons.', 'dotstudio-pro'),
+            'default' => '#ffffff',
+            'validate' => 'color'
+        ),
+        array(
+            'id' => 'opt-player-font-color-hover',
+            'type' => 'color',
+            'title' => __('Player Icon Hover Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the player icons when you hover.', 'dotstudio-pro'),
+            'default' => '#33B275',
+            'validate' => 'color'
+        ),
+        array(
+            'id' => 'opt-player-progress-slider-main',
+            'type' => 'color',
+            'title' => __('Player Progress Slider Main Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the player progress slider.', 'dotstudio-pro'),
+            'default' => '#33B275',
+            'validate' => 'color'
+        ),
+        array(
+            'id' => 'opt-player-progress-slider-bg',
+            'type' => 'color',
+            'title' => __('Player Progress Slider Background Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the background of the player progress slider.', 'dotstudio-pro'),
+            'default' => '#aaaaaa',
+            'validate' => 'color'
+        ),
+        array(
+            'id' => 'opt-player-control-bar-color',
+            'type' => 'color',
+            'title' => __('Player Control Bar Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a color for the control bar.', 'dotstudio-pro'),
+            'default' => '#000000',
+            'validate' => 'color'
+        )
+    )
+));
+
 add_filter('redux/options/' . $opt_name . '/compiler', 'compiler_action', 10, 3);
 
 /**

@@ -389,8 +389,32 @@ if (!is_wp_error($video) && !empty($video)):
                     company_id: "<?php echo $company_id; ?>",
                     target: ".player",
                     autostart: <?php echo $autoplay ? "true" : "false"; ?>,
-                    muted: <?php echo $mute_on_load ? "true" : "false"; ?>
+                    muted: <?php echo $mute_on_load ? "true" : "false"; ?>,
+                    theme: {}
                 }
+
+                /* PLAYER THEMEING */
+                <?php  if (!empty($dsp_theme_options["opt-player-icon-color"])) { ?>
+                    mountObj.theme.fontColor = "<?php echo $dsp_theme_options["opt-player-icon-color"]; ?>";
+                <?php } ?>
+
+                <?php  if (!empty($dsp_theme_options["opt-player-font-color-hover"])) { ?>
+                    mountObj.theme.fontColorHover = "<?php echo $dsp_theme_options["opt-player-font-color-hover"]; ?>";
+                <?php } ?>
+
+                <?php  if (!empty($dsp_theme_options["opt-player-progress-slider-main"])) { ?>
+                    mountObj.theme.progressSliderMain = "<?php echo $dsp_theme_options["opt-player-progress-slider-main"]; ?>";
+                <?php } ?>
+
+                <?php  if (!empty($dsp_theme_options["opt-player-progress-slider-bg"])) { ?>
+                    mountObj.theme.progressSliderBackground = "<?php echo $dsp_theme_options["opt-player-progress-slider-bg"]; ?>";
+                <?php } ?>
+
+                <?php  if (!empty($dsp_theme_options["opt-player-control-bar-color"])) { ?>
+                    mountObj.theme.controlBar = "<?php echo $dsp_theme_options["opt-player-control-bar-color"]; ?>";
+                <?php } ?>
+                /* /END PLAYER THEMEING */
+
 
                 <?php if (!empty($channel->ID)) { ?>
                     mountObj.channel_id = "<?php echo $channel->ID; ?>";

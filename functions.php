@@ -10,11 +10,13 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
 $url = "https://wordpress-assets.dotstudiopro.com/main-theme";
+$buster = date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css'));
 if (defined('DOTSTUDIOPRO_DEV')) {
     $url = get_template_directory_uri() . "/assets";
+    $buster = time();
 }
 define('DSP_THEME_ASSETS_BASE_URL', $url);
-define('DSP_THEME_ASSETS_CACHEBUSTER', date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css')));
+define('DSP_THEME_ASSETS_CACHEBUSTER', $buster);
 
 /**
  * Create the pages when theme is activated
@@ -185,8 +187,7 @@ function bootstrapstarter_enqueue_current_styles() {
     }
     if (count($styles) > 0) {
         foreach($styles as $style) {
-            wp_register_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css");
-            wp_enqueue_style($style, array(), DSP_THEME_ASSETS_CACHEBUSTER, 'screen');
+            wp_enqueue_style($style, DSP_THEME_ASSETS_BASE_URL . "/css/" . $style . ".min.css", [], DSP_THEME_ASSETS_CACHEBUSTER, 'screen');
         }
     }
 }
