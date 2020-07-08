@@ -35,9 +35,12 @@ header {
             }
         }
     }
-    .site-logo img {
-        @include respond-to(handhelds) {
-            @include rem(height, 87px);
+    .site-logo {
+        line-height: 1.2;
+        > img {
+            @include respond-to(handhelds) {
+                @include rem(height, 87px);
+            }
         }
     }
     .custom-container {
@@ -217,8 +220,12 @@ header.fixed-top.small-header {
     @include media-breakpoint-down(md){
         padding-top: 0;
     }
-    .site-logo img {
-        @include rem(height, 60px);
+
+    .site-logo {
+        line-height: 1.2;
+        > img {
+            @include rem(height, 60px);
+        }
     }
     &.left-logo-header .main-navigation {
 				@include media-breakpoint-down(md){

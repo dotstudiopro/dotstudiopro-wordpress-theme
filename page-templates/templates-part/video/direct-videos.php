@@ -102,6 +102,7 @@ if (!is_wp_error($video) && !empty($video)):
                     target: ".player",
                     autostart: <?php echo $autoplay ? "true" : "false"; ?>,
                     muted: <?php echo $mute_on_load ? "true" : "false"; ?>,
+                    fluid: false,
                     theme: {}
                 }
 

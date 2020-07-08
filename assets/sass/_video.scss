@@ -4,10 +4,10 @@
 
 .DotPlayer .video-js,
 .DotPlayer .video-js.vjs-16-9 {
-  padding-top: 0;
+  // padding-top: 0;
 }
 
-.DotPlayer .video-content-div {
+.video-content-div {
   background: #000;
   max-width: 1366px;
   margin: 0 auto;
@@ -16,6 +16,8 @@
 #video-overlay {
   background: #000;
 }
+
+
 
 /** KMT changes - start **/
 
@@ -42,9 +44,18 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-			@include media-breakpoint-down(md){
-				padding-top: 100%;
-			}
+		@include media-breakpoint-down(md){
+			padding-top: 100%;
+		}
+    @media (max-width: 1024px) {
+      min-height: 0;
+      padding-top: 60vh;
+    }
+    > .visible-desktop {
+       @media (max-width: 1024px) {
+        height: 60vh!important;
+      }
+    }
   }
 }
 
