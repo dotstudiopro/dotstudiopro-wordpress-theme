@@ -9,7 +9,11 @@ $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 );
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
-define('DSP_THEME_ASSETS_BASE_URL', "https://wordpress-assets.dotstudiopro.com/main-theme");
+$url = "https://wordpress-assets.dotstudiopro.com/main-theme";
+if (defined('DOTSTUDIOPRO_DEV')) {
+    $url = get_template_directory_uri() . "/assets";
+}
+define('DSP_THEME_ASSETS_BASE_URL', $url);
 define('DSP_THEME_ASSETS_CACHEBUSTER', date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css')));
 
 /**

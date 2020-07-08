@@ -2,7 +2,8 @@
   background: $black;
 }
 
-.DotPlayer > .video-js {
+.DotPlayer > .video-js,
+.DotPlayer > .video-js.vjs-16-9 {
   padding-top: 0;
 }
 

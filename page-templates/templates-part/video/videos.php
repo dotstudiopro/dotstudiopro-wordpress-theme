@@ -388,8 +388,8 @@ if (!is_wp_error($video) && !empty($video)):
                     video_id: "<?php echo $video_id; ?>",
                     company_id: "<?php echo $company_id; ?>",
                     target: ".player",
-                    autostart: <?php echo $autoplay; ?>,
-                    muted: <?php echo $mute_on_load; ?>
+                    autostart: <?php echo $autoplay ? "true" : "false"; ?>,
+                    muted: <?php echo $mute_on_load ? "true" : "false"; ?>
                 }
 
                 <?php if (!empty($channel->ID)) { ?>
