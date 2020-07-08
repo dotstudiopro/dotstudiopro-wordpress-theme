@@ -112,16 +112,8 @@ if (!is_wp_error($video) && !empty($video)):
                     muted: <?php echo $mute_on_load; ?>
                 }
 
-                <?php if (!empty($channel->ID)) { ?>
-                    mountObj.channel_id = "<?php echo $channel->ID; ?>";
-                    mountObj.channel_title = "<?php echo $channel->post_title; ?>";
-                <?php } ?>
-
-                <?php if (!$show_ads) { ?>
-                    mountObj.show_interruptions = false;
-                <?php } ?>
-
-
+                // Note: There are no channel-related params to pass,
+                // as this is viewing a video outside of a channel
 
                 DotPlayer.mount(mountObj);
 

@@ -70,7 +70,7 @@ if (!is_wp_error($video) && !empty($video)):
 
     $settings = [];
 
-    $show_ads = "true";
+    $show_ads = true;
 
     // Code to check if user subscribe to watch this channel
     $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
@@ -78,7 +78,7 @@ if (!is_wp_error($video) && !empty($video)):
         $channel_unlocked = false;
     else:
         if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['ads_enabled']))
-            $show_ads = "false";
+            $show_ads = false;
         $channel_unlocked = true;
     endif;
 
