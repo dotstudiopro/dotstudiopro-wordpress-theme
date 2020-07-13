@@ -59,6 +59,8 @@ if (!is_wp_error($video) && !empty($video)):
     $duration = isset($video['duration']) ? $video['duration'] : '';
     $year = isset($video['year']) ? '(' . $video['year'] . ')' : '';
     $company_id = isset($video['company_id']) ? $video['company_id'] : '';
+    $chnl_id = isset($main_channel_meta['chnl_id'][0]) ? $main_channel_meta['chnl_id'][0] : '';
+    $dspro_channel_id = isset($main_channel_meta['dspro_channel_id'][0]) ? $main_channel_meta['dspro_channel_id'][0] : '';
 
     if (!empty($duration)) {
         if ($duration < 60) {
@@ -177,7 +179,7 @@ if (!is_wp_error($video) && !empty($video)):
                     ?>
                     <div class="text-center add_to_list mb-2 pt-5">
                         <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
-			<?php if(class_exists('WP_Auth0')){ ?>
+			<?php if(class_exists('WP_Auth0_Options')){ ?>
 							<div class="my_list_button">
 								<?php
 								if ($client_token) {
@@ -286,8 +288,17 @@ if (!is_wp_error($video) && !empty($video)):
                                 <?php
                                 $class = 'home-carousel' . $cnt++;
                                 $class_array[] = $class;
-                                $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
+                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                } else {
+                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio_width = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $ratio_height = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio = $ratio_height / $ratio_width;
+                                }
                                 include(locate_template('page-templates/templates-part/channel-videos.php'));
                                 ?>
                             </div>
@@ -305,8 +316,17 @@ if (!is_wp_error($video) && !empty($video)):
                             <?php
                             $class = 'home-carousel' . $cnt++;
                             $class_array[] = $class;
-                            $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                            $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                            if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
+                                $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                            } else {
+                                $width = filter_var($dsp_theme_options['opt-channel-video-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                $ratio_width = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                $ratio_height = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                $ratio = $ratio_height / $ratio_width;
+                            }
                             include(locate_template('page-templates/templates-part/channel-videos.php'));
                             ?>
                         </div>
@@ -344,8 +364,17 @@ if (!is_wp_error($video) && !empty($video)):
                                     <?php
                                     $class = 'home-carousel' . $cnt++;
                                     $class_array[] = $class;
-                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                    if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
+                                        $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                        $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                    } else {
+                                        $width = filter_var($dsp_theme_options['opt-channel-video-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                        $ratio_width = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                        $ratio_height = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                        $ratio = $ratio_height / $ratio_width;
+                                    }
                                     include(locate_template('page-templates/templates-part/channel-videos.php'));
                                     ?>
                                 </div>
@@ -381,7 +410,6 @@ if (!is_wp_error($video) && !empty($video)):
         </div>
     </div>
     <?php if ($channel_unlocked == true): ?>
-    <script type="text/javascript" src="https://www.dplayer.pro/dotplayer.js"></script>
         <script>
             jQuery(document).ready(function (e) {
                 const mountObj = {
@@ -417,9 +445,12 @@ if (!is_wp_error($video) && !empty($video)):
                 /* /END PLAYER THEMEING */
 
 
-                <?php if (!empty($channel->ID)) { ?>
-                    mountObj.channel_id = "<?php echo $channel->ID; ?>";
-                    mountObj.channel_title = "<?php echo $channel->post_title; ?>";
+                <?php if (!empty($chnl_id)) { ?>
+                    mountObj.channel_id = "<?php echo $chnl_id; ?>";
+                    mountObj.channel_title = "<?php echo $chnl_title; ?>";
+                <?php } ?>
+                <?php if(!empty($dspro_channel_id)) { ?>
+                    mountObj.dspro_channel_id = "<?php echo $dspro_channel_id; ?>";
                 <?php } ?>
 
                 <?php if (!$show_ads) { ?>

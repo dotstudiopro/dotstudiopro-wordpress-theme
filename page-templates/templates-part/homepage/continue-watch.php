@@ -3,14 +3,29 @@
     <div class="slick-wrapper continue-watching <?php echo $class .' '. $slide_text_class ?>">
         <?php
         $c = 0;
-        $c_width = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-        $c_height = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        if($dsp_theme_options['opt-continue-watch-image-size'] == '0') {
+            $c_width = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $c_height = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        }
+        else {
+            $c_width = filter_var($dsp_theme_options['opt-continue-watch-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $c_ratio_width = filter_var($dsp_theme_options['opt-continue-watch-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $c_ratio_height = filter_var($dsp_theme_options['opt-continue-watch-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+            
+            $c_ratio = $c_ratio_height / $c_ratio_width;
+        }
         foreach ($watch_list['data']['continue-watching'] as $video):
             ?>
             <div class="slide">
                 <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'channel_tooltip_content_' . $c; ?>">
                     <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width . '/' . $c_height; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb'] . '/' . $c_width . '/' . $c_height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                        <?php if( $dsp_theme_options['opt-continue-watch-image-size'] == '1' ) :
+                            $image_attributes = dsp_build_responsive_images( 'https://images.dotstudiopro.com/'.$video['thumb'], $c_width, $c_ratio ); ?>
+
+                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb']; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                        <?php else : ?>
+                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width . '/' . $c_height; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb'] . '/' . $c_width . '/' . $c_height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                        <?php endif; ?>
                         <div class="overlay">
                             <div class="watch_now"><a class="info" href="<?php echo get_site_url() . '/video/' . $video['_id']; ?>" title="<?php echo $video['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                         </div>

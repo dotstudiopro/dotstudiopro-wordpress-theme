@@ -55,8 +55,18 @@ get_header();
                 if ($channels) {
                     $category_meta = get_post_meta($category->ID);
                     $category_banner = ($dsp_theme_options['opt-categories-poster-type'] == 'wallpaper') ? $category->cat_wallpaper : $category->cat_poster;
-                    $width = filter_var($dsp_theme_options['opt-categories-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                    $height = filter_var($dsp_theme_options['opt-categories-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                    if( $dsp_theme_options['opt-categories-image-size'] == '1') {
+                        $width = filter_var($dsp_theme_options['opt-categories-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                        $ratio_width = filter_var($dsp_theme_options['opt-categories-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                        $ratio_height = filter_var($dsp_theme_options['opt-categories-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                        $ratio = $ratio_height / $ratio_width;
+                    }
+                    else {
+                        $width = filter_var($dsp_theme_options['opt-categories-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                        $height = filter_var($dsp_theme_options['opt-categories-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                    }
                     $banner = ($category_banner) ? $category_banner : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b';
                     $number_of_row = $dsp_theme_options['opt-display-categories-row'];
                     $category_listing_option = $dsp_theme_options['opt-cateogry-listing-option'];
@@ -75,9 +85,19 @@ get_header();
                     <div class="col-md-<?php echo $number_of_row; ?> p-4">
                         <a href="<?php echo $link; ?>" title="<?php echo $category->post_title; ?>">
                             <div class="holder">
-                                <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy w-100" data-src="<?php echo $banner . '/' . $width . '/' . $height; ?>"> 
+                                <?php if( $dsp_theme_options['opt-categories-image-size'] == '1') :
+                                    $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio ); ?>
+
+                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                <?php else : ?>    
+                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>">
+                                <?php endif; ?> 
                                 <?php if ($dsp_theme_options['opt-categories-title'] == true): ?>
-                                    <h3><?php echo $category->post_title; ?></h3>
+                                    <?php if(!empty($category_meta['cat_display_name'][0])) : ?>
+                                        <h3><?php echo $category_meta['cat_display_name'][0]; ?></h3>
+                                    <?php else : ?>    
+                                        <h3><?php echo $category->post_title; ?></h3>
+                                    <?php endif; ?>    
                                 <?php endif; ?>
                             </div>
                         </a>    

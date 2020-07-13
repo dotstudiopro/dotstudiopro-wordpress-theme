@@ -115,6 +115,30 @@ p{
 
 .holder > img {
   filter: brightness(70%);
+  width: 100%;
+}
+
+.search .locked-channel {
+	right: 20px;
+	bottom: 60px;
+}
+
+@media(min-width: 1441px) {
+	.search .locked-channel {
+		right: 25px;
+		bottom: 80px;
+	}
+}
+@media(max-width: 991px) {
+	.search .locked-channel {
+		bottom: 55px;
+	}
+}
+@media(max-width: 767px) {
+	.search .locked-channel {
+		font-size: 14px !important;
+		bottom: 80px;
+	}
 }
 
 a.page-numbers {

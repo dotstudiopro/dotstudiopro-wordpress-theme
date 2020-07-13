@@ -93,7 +93,6 @@ if (!is_wp_error($video) && !empty($video)):
         </div></div>
     <?php
     ?>
-    <script type="text/javascript" src="https://www.dplayer.pro/dotplayer.js"></script>
     <script>
             jQuery(document).ready(function (e) {
                 const mountObj = {

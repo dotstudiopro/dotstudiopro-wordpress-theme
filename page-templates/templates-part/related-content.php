@@ -1,7 +1,7 @@
 <?php
 $theme_function = new Theme_Functions();
 
-global $dsp_theme_options;
+global $dsp_theme_options, $is_user_subscribed;
 
 $recommendation_content = $theme_function->get_recommendation_content($type, $related_id);
 
@@ -9,8 +9,17 @@ if (!empty($recommendation_content)):
     ?>
     <h3 class="post-title mb-4"><?php echo $dsp_theme_options['opt-related-content-text']; ?></h3>
     <?php
-    $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    if( $dsp_theme_options['opt-related-image-size'] == '0' ) {
+        $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    } else {
+        $width = filter_var($dsp_theme_options['opt-related-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+        $ratio_width = filter_var($dsp_theme_options['opt-related-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $ratio_height = filter_var($dsp_theme_options['opt-related-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+        $ratio = $ratio_height / $ratio_width;
+    }
     $slide_text_class = '';
     if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
         $slide_text_class .= 'slide-text-dec';
@@ -27,7 +36,17 @@ if (!empty($recommendation_content)):
             <div class="slide">
                 <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
                     <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                        <?php if(isset($channel['is_product']) && $channel['is_product'] == 1 && $is_user_subscribed == false): ?>
+                           <div class="locked-channel"><i class="fa fa-lock"></i></div>
+                        <?php endif; ?>
+
+                        <?php if( $dsp_theme_options['opt-related-image-size'] == '1' ) :
+                            $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); ?>
+
+                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                        <?php else : ?>    
+                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                        <?php endif; ?>
                         <div class="overlay">
                             <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                         </div>

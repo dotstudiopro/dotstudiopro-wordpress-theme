@@ -137,8 +137,7 @@ if (function_exists('register_nav_menus')) {
             )
     );
 }
-// add title-tag and post-thumbnails
-add_theme_support('title-tag');
+// add post-thumbnails support
 add_theme_support('post-thumbnails');
 
 add_filter( 'template_include', 'bootstrapstarter_current_template_filter', 1000 );
@@ -298,6 +297,7 @@ function bootstrapstarter_enqueue_scripts() {
 
     $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/js/slick.min.js';
     wp_enqueue_script('slick', $slickcdn_url);
+    wp_enqueue_script('DotPlayer', "https://www.dplayer.pro/dotplayer.js");
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
@@ -559,8 +559,17 @@ function autocomplete() {
         $type = $dsp_theme_options['opt-search-option'];
         $dotstudio_api = new Dsp_External_Api_Request();
         $q = $_POST['search'];
-        $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-        $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
+            $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+        } else {
+            $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+            $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+            
+            $ratio = $ratio_height / $ratio_width;
+        }   
         $suggesion = $dotstudio_api->search_suggestion($q);
         $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
@@ -607,7 +616,15 @@ function autocomplete() {
                     $title = 'Videos';
                 endif;
                 $items['channel'][$key]['name'] = $data['_source']['title'];
-                $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
+                if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+                    
+                    $items['channel'][$key]['image'] = $image;
+                    $items['channel'][$key]['image_attributes'] = $image_attributes;
+                else :    
+                    $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
+                    $items['channel'][$key]['image_attributes'] = '';
+                endif;
                 $items['channel'][$key]['url'] = $url;
                 $items['channel'][$key]['is_product'] = $is_product;
                 $items['channel'][$key]['title'] = $title;
@@ -625,8 +642,17 @@ function search_suggesion() {
     $type = $dsp_theme_options['opt-search-option'];
     $dotstudio_api = new Dsp_External_Api_Request();
     $q = $_POST['search'];
-    $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
+        $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_var($dsp_theme_options['opt-search-autocomplete-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+    } else {
+        $width = filter_var($dsp_theme_options['opt-search-autocomplete-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+        $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+        $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+        
+        $ratio = $ratio_height / $ratio_width;
+    }
     $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
     if (!empty($search) && !is_wp_error($search)) {
@@ -644,7 +670,15 @@ function search_suggesion() {
                 $title = 'Videos';
             endif;
             $items[$key]['name'] = $data['_source']['title'];
-            $items[$key]['image'] = $image.'/'.$width.'/'.$height;
+            if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+                
+                $items['channel'][$key]['image'] = $image;
+                $items['channel'][$key]['image_attributes'] = $image_attributes;
+            else :    
+                $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
+                $items['channel'][$key]['image_attributes'] = '';
+            endif;
             $items[$key]['url'] = $url;
             $items[$key]['title'] = $title;
             $items[$key]['is_product'] = $is_product;
@@ -713,7 +747,7 @@ add_action('after_setup_theme', 'dsp_remove_admin_bar');
 if(!function_exists('dsp_add_login_link')){
     function dsp_add_login_link($items, $args) {
         global $wp;
-        if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0')) {
+        if ($args->theme_location == 'main_menu' && class_exists('WP_Auth0_Options')) {
             if (is_user_logged_in()) {
                 $items .= '<li id="menu-item-my_account" class="menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-category_menu">'
                         . '<a href="#" data-toggle="dropdown" class="dropdown-toggle">My Account</a>'
@@ -912,5 +946,34 @@ function dsp_wp_is_mobile() {
     }
 
     return $is_mobile;
+}
+
+/**
+ * Generate responsive images
+ *
+ * @param url $image
+ * @param size $target_width
+ * @param ratio $ratio
+ * @return type array
+ */
+function dsp_build_responsive_images($image, $target_width, $ratio) {
+    // fill the variant factors with defaults
+    $variant_factors = [1, 1.25, 1.5, 2];
+
+    $attributes = $srcset = array();
+    // build the srcset attribute string, and generate the corresponding widths
+    foreach($variant_factors as $factor) {
+        $new_width = ceil($target_width * $factor);
+        $new_height = ceil($ratio * $new_width);
+
+        $srcset[] = $image . '/'. $new_width . '/' . $new_height . ' ' . $new_width.'w';
+    }
+    $attributes['srcset'] = implode(', ', $srcset);
+
+    // build the sizes attribute string
+    $size_quries = array('(max-width: '.$original_width.'px) 100vw, 50vw');
+    $attributes['sizes'] = implode(', ', $size_quries);
+
+    return $attributes;
 }
 ?>

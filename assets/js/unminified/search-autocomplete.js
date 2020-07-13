@@ -98,7 +98,11 @@
                 }
                 html += '<div class="channl_information clearfix mt-4 row"><h3 class="ch_name mb-4 w-100">' + title + '</h3>';
                 $.each(item.data, function (key, value) {
-                    html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
+                    var image_attributes = '';
+                    if(!$.isEmptyObject(value.image_attributes)) {
+                        image_attributes = 'srcset = "' + value.image_attributes.srcset + '" sizes = "' + value.image_attributes.sizes + '"';
+                    }
+                    html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '" ' + image_attributes + '><h5 class="pt-2 pb-1 text-center">' + value.name + '</h4></a></div>';
                 })
                 html += '</div>';
                 html += '</div>';
@@ -154,7 +158,11 @@ jQuery(document).on('click', '.suggesion_click', function () {
             html += '<h4>It seems we can’t find what you’re looking for. Perhaps searching can help.</h4>';
         } else {
             jQuery.each(response.data, function (key, value) {
-                html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '"><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
+                var image_attributes = '';
+                if(!$.isEmptyObject(value.image_attributes)) {
+                    image_attributes = 'srcset = "' + value.image_attributes.srcset + '" sizes = "' + value.image_attributes.sizes + '"';
+                }
+                html += '<div class="autocomplete-suggestion-channel col-lg-2 col-md-3 col-6" data-val="' + value.name + '"><a href="' + value.url + '" title="' + value.name + '"><img src="' + value.image + '" ' + image_attributes + '><h5 class="pt-2 pb-1 text-center">' + value.name + '</h5></a></div>';
             });
         }
 

@@ -170,7 +170,9 @@ $args = array(
 $posts = new WP_Query($args);
 if ($posts->have_posts()) {
     foreach ($posts->posts as $post) {
-        $options[$post->post_name] = stripslashes($post->post_title);
+        $cat_display_name = get_post_meta($post->ID, 'cat_display_name', true);
+        $value = (!empty($cat_display_name) ? $cat_display_name : $post->post_title);
+        $options[$post->post_name] = stripslashes($value);
     }
 }
 $page_options = array();
@@ -709,6 +711,41 @@ Redux::setSection($opt_name, array(
             'default' => 'spotlight_poster'
         ),
         array(
+            'id' => 'opt-home-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Carousel Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the carousel image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the carousel thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-home-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the carousel thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-home-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
@@ -716,7 +753,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-home-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-layout-slider-content',
@@ -873,6 +911,41 @@ Redux::setSection($opt_name, array(
     'subsection' => true,
     'fields' => array(
         array(
+            'id' => 'opt-continue-watch-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Carousel Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the carousel image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-continue-watch-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the carousel thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-continue-watch-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-continue-watch-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the carousel thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-continue-watch-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-continue-watch-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the carousel thumbnails', 'dotstudio-pro'),
@@ -880,7 +953,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-continue-watch-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-continue-watch-layout-slider-content',
@@ -1058,6 +1132,41 @@ Redux::setSection($opt_name, array(
             'default' => 'poster'
         ),
         array(
+            'id' => 'opt-categories-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Categories Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the categories image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-categories-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the Categories Image', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the categories thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-categories-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-categories-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Categories Image', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the Categories thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-categories-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-categories-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for the Category Image', 'dotstudio-pro'),
@@ -1065,7 +1174,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-categories-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-categories-title',
@@ -1162,6 +1272,41 @@ Redux::setSection($opt_name, array(
             'default' => 'poster'
         ),
         array(
+            'id' => 'opt-category-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Channel Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the channel image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-category-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the Channel Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the channel thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-category-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-category-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Channel Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the Channel thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-category-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-channel-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for Channel Thumbnails', 'dotstudio-pro'),
@@ -1169,7 +1314,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-category-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-layout-channel-slider-content',
@@ -1237,6 +1383,41 @@ Redux::setSection($opt_name, array(
             'default' => 'spotlight_poster'
         ),
         array(
+            'id' => 'opt-channel-video-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Video Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the Video image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-channel-video-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the Video Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the Video thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-channel-video-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-channel-video-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Video Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the Video thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-channel-video-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-channel-video-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for Video Thumbnails', 'dotstudio-pro'),
@@ -1244,7 +1425,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-channel-video-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-channel-poster-logo-title',
@@ -1438,6 +1620,41 @@ Redux::setSection($opt_name, array(
             'default' => 'spotlight_poster'
         ),
         array(
+            'id' => 'opt-related-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Recommendation Content Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the Recommendation Content image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-related-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the Recommendation Content Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-related-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-related-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Recommendation Content Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-related-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-related-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for Recommendation Content carousel thumbnails', 'dotstudio-pro'),
@@ -1446,7 +1663,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-related-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-related-layout-slider-content',
@@ -1623,6 +1841,53 @@ Redux::setSection($opt_name, array(
             'default' => 'spotlight_poster'
         ),
         array(
+            'id' => 'opt-search-image-size',
+            'type' => 'button_set',
+            'title' => __('Select Search Image Size', 'dotstudio-pro'),
+            'subtitle' => __('Choose the search image size option.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Pixels',
+                '1' => 'Aspect Ratio',
+            ),
+            'default' => '1'
+        ),
+        array(
+            'id' => 'opt-search-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the Search Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the search thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-search-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-search-autocomplete-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Search Autocomplete Result Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the search autocomplete result thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 265,
+            ),
+            'required' => array('opt-search-image-size', '=', '1'),
+        ),
+        array(
+            'id' => 'opt-search-image-width',
+            'type' => 'dimensions',
+            'title' => __('Width for Search Result Thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose width for the search result thumbnails', 'dotstudio-pro'),
+            'desc' => __('Height will be calculated automatically based on above aspect ratio', 'dotstudio-pro'),
+            'height' => false,
+            'default' => array(
+                'width' => 320,
+            ),
+            'required' => array('opt-search-image-size', '=', '1'),
+        ),
+        array(
             'id' => 'opt-search-autocomplete-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) for Search Autocomplete Result Thumbnails', 'dotstudio-pro'),
@@ -1630,7 +1895,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 265,
                 'height' => 149,
-            )
+            ),
+            'required' => array('opt-search-image-size', '=', '0'),
         ),
         array(
             'id' => 'opt-search-image-dimensions',
@@ -1640,7 +1906,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 320,
                 'height' => 180,
-            )
+            ),
+            'required' => array('opt-search-image-size', '=', '0'),
         ),
         array(
             'title' => __('Number of results to display per row', 'dotstudio-pro'),

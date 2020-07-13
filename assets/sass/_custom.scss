@@ -165,6 +165,17 @@
     }
 }
 
+/* Lock Icon css */
+.locked-channel {
+    color: #fff;
+    position: absolute;
+    z-index: 99;
+    right: 10px;
+    bottom: 10px;
+    font-size: 21px !important;
+    text-shadow: -1px -1px 10px #555, 1px -1px 10px #555, -1px 1px 10px #555, 1px 1px 10px #555;
+}
+
 /* Return to Top */
 #return-to-top {
     @include return-to-top;

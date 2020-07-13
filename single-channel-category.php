@@ -1,5 +1,5 @@
 <?php
-global $dsp_theme_options;
+global $dsp_theme_options, $is_user_subscribed;
 get_header();
 
 if (have_posts()) {
@@ -16,13 +16,17 @@ if (have_posts()) {
         
         <div class="category inner-banner-bg">
             <?php if($banner_visibility ): ?>
-                <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+                <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo (!empty($category_meta['cat_display_name'][0]) ? $category_meta['cat_display_name'][0] : get_the_title() ); ?>"></div>
             <?php endif; ?>
             <?php if ($dsp_theme_options['opt-category-poster-information'] == true) : ?>
                 <div class="inner-banner-content_bg">
                     <div class="inner-banner-content row no-gutters">
                         <div class="custom-container container pt-5">
-                            <h2><?php echo get_the_title(); ?></h2>
+                            <?php if($category_meta['cat_display_name'][0]) : ?>
+                                <h2><?php echo $category_meta['cat_display_name'][0]; ?></h2>
+                            <?php else : ?>    
+                                <h2><?php echo get_the_title(); ?></h2>
+                            <?php endif; ?>
                             <?php the_content(); ?>
                         </div>
                     </div>
@@ -38,8 +42,17 @@ if (have_posts()) {
                     <?php
                     $channels = $theme_function->home_page_other_carousel($post->post_name, $dsp_theme_options['opt-category-channel-poster-type'], 'category');
                     if ($channels) {
-                        $width = filter_var($dsp_theme_options['opt-channel-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                        $height = filter_var($dsp_theme_options['opt-channel-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                        if( $dsp_theme_options['opt-category-image-size'] == '0' ) {
+                            $width = filter_var($dsp_theme_options['opt-channel-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                            $height = filter_var($dsp_theme_options['opt-channel-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                        } else {
+                            $width = filter_var($dsp_theme_options['opt-category-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                            $ratio_width = filter_var($dsp_theme_options['opt-category-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                            $ratio_height = filter_var($dsp_theme_options['opt-category-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                            $ratio = $ratio_height / $ratio_width;
+                        }
                         $number_of_row = $dsp_theme_options['opt-display-row'];
                         $i = 0;
                         foreach ($channels as $channel) {
@@ -49,7 +62,17 @@ if (have_posts()) {
                                     <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
                                         <div class="clearfix">
                                             <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                                                <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                <?php if (isset($channel['dspro_is_product']) && $channel['dspro_is_product'] == 1 && $is_user_subscribed == false): ?>
+                                                    <div class="locked-channel"><i class="fa fa-lock"></i></div>
+                                                <?php endif; ?>
+
+                                                <?php if( $dsp_theme_options['opt-category-image-size'] == '1' ) :
+                                                    $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); ?>
+
+                                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                                <?php else : ?>    
+                                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                <?php endif; ?>
                                                 <div class="overlay">
 
                                                     <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>

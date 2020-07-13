@@ -5,7 +5,7 @@
  * @since 1.0.0
  */
 get_header();
-global $dsp_theme_options;
+global $dsp_theme_options, $is_user_subscribed;
 $q = get_query_var('s');
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
     'options' => array(
@@ -43,11 +43,26 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                             <div class="holder">
                                 <?php
                                 $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                                $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
+                                    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                } else {
+                                    $width = filter_var($dsp_theme_options['opt-search-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio = $ratio_height / $ratio_width;
+                                }
                                 $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
                                 ?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
+                                <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
+                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); ?>
+
+                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                <?php else : ?>
+                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                <?php endif; ?>
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>
                                 </div>
@@ -65,11 +80,30 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                                 <?php
                                 $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                                 $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                                $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
+                                    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                } else {
+                                    $width = filter_var($dsp_theme_options['opt-search-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio = $ratio_height / $ratio_width;
+                                }
                                 $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
                                 ?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>"> 
+                                <?php if (isset($data['_source']['is_product']) && $data['_source']['is_product'] == 1 && $is_user_subscribed == false): ?>
+                                    <div class="locked-channel"><i class="fa fa-lock"></i></div>
+                                <?php endif; ?>
+
+                                <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
+                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); ?>
+
+                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                <?php else : ?>    
+                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                <?php endif; ?>
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>
                                 </div>

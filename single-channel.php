@@ -4,6 +4,10 @@ $video_slug = '';
 
 $channel_meta = get_post_meta(get_the_ID());
 
+$company_id = "";
+$chnl_id = isset($channel_meta['chnl_id'][0]) ? $channel_meta['chnl_id'][0] : '';
+$dspro_channel_id = isset($channel_meta['dspro_channel_id'][0]) ? $channel_meta['dspro_channel_id'][0] : '';
+
 $share_title = $title = get_the_title();
 $share_desc = $desc =  apply_filters('the_content', get_post_field('post_content', get_the_ID()));
 $share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
@@ -15,10 +19,9 @@ if (have_posts()) {
     while (have_posts()) : the_post();
 
         $theme_function = new Theme_Functions();
-        $channel_meta = get_post_meta(get_the_ID());
         // Code to check if user subscribe to watch this channel
         $dsp_api = new Dsp_External_Api_Request();
-        $country_code = 'IN'; //$dsp_api->get_country();
+        $country_code = $dsp_api->get_country();
         $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
         if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
             ?>
@@ -102,7 +105,7 @@ if (have_posts()) {
                                 <?php else: ?>
                                     <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                 <?php endif; ?>
-                                <?php if (class_exists('WP_Auth0')) { ?>
+                                <?php if (class_exists('WP_Auth0_Options')) { ?>
                                     <div class="my_list_button">
                                         <?php
                                         if ($first_child_id) {
@@ -147,21 +150,10 @@ if (have_posts()) {
                         if (isset($video['teaser_trailer']) && !empty($video['teaser_trailer'])) {
                             $trailer_id = $video['teaser_trailer']['_id'];
                             $company_id = isset($video['company_id']) ? $video['company_id'] : '';
-                            $player_color = (get_option('dsp_video_color_field')) ? get_option('dsp_video_color_field') : '#000000';
-                            $mute_on_load = (get_option('dsp_video_muteload_field')) ? 'true' : 'false';
-                            $settings = [];
-                            $settings[] = 'companykey=' . $company_id;
-                            $settings[] = 'skin=' . ltrim($player_color, "#");
-                            $settings[] = 'autostart=true';
-                            $settings[] = 'muteonstart=' . $mute_on_load;
-                            $settings[] = 'disableads=true';
-                            $settings[] = 'disablecontrolbar=true';
-                            $settings[] = 'loopplayback=true';
-                            $settings[] = 'enablesharing=false';
-                            $player_setting = '?targetelm=.player&' . implode('&', $settings);
+                            $mute_on_load = (get_option('dsp_video_muteload_field')) ? true : false;
                             ?>
                             <div id="video-overlay" class="channel-teaser">
-                                <div class="player" data-video_id="<?php echo $trailer_id; ?>"></div>  
+                                <div class="player" data-video_id="<?php echo $trailer_id; ?>"></div>
                                 <div class="inner-banner-content_bg channel-teaser-info">
                                     <div class="inner-banner-content row no-gutters">
                                         <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){?>
@@ -177,7 +169,7 @@ if (have_posts()) {
                                             <?php else: ?>
                                                 <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                             <?php endif; ?>
-                                            <?php if (class_exists('WP_Auth0')) { ?>
+                                            <?php if (class_exists('WP_Auth0_Options')) { ?>
                                                 <div class="my_list_button">
                                                     <?php
                                                     if ($first_child_id) {
@@ -234,8 +226,17 @@ if (have_posts()) {
                                 <?php
                                 $class = 'home-carousel' . $cnt;
                                 $class_array[] = $class;
-                                $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
+                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                } else {
+                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio_width = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                    $ratio_height = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                    $ratio = $ratio_height / $ratio_width;
+                                }
                                 include(locate_template('page-templates/templates-part/channel-videos.php'));
                                 ?>
 
@@ -264,8 +265,17 @@ if (have_posts()) {
                                     <?php
                                     $class = 'home-carousel' . $cnt;
                                     $class_array[] = $class;
-                                    $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                    if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
+                                        $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                        $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+                                    } else {
+                                        $width = filter_var($dsp_theme_options['opt-channel-video-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+
+                                        $ratio_width = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+                                        $ratio_height = filter_var($dsp_theme_options['opt-channel-video-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+
+                                        $ratio = $ratio_height / $ratio_width;
+                                    }
                                     include(locate_template('page-templates/templates-part/channel-videos.php'));
                                     ?>
                                 </div>
@@ -306,15 +316,68 @@ if (have_posts()) {
 }
 if (!empty($trailer_id)) {
     ?>
-    <!-- Script to display video of user is ideal for 5 seconds -->        
+    <!-- Script to display video of user is ideal for 5 seconds -->
     <script type="text/javascript">
         idleTimer = null;
         idleState = false;
         idleWait = 5000;
         (function ($) {
-            var script = document.createElement("script");
-            script.setAttribute("type", "text/javascript");
-            script.setAttribute("src", "<?php echo'https://player.dotstudiopro.com/player/' . $trailer_id . $player_setting; ?>");
+
+            $.fn.isInViewport = function () {
+                var elementTop = $(this).offset().top;
+                var elementBottom = elementTop + $(this).outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                return elementBottom > viewportTop && elementTop < viewportBottom;
+            };
+
+            // $settings[] = 'loopplayback=true';
+
+            const mountObj = {
+                video_id: "<?php echo $trailer_id; ?>",
+                company_id: "<?php echo $company_id; ?>",
+                target: ".player",
+                autostart: true,
+                muted: <?php echo $mute_on_load ? "true" : "false"; ?>,
+                fluid: false,
+                // We need to loop but don't have a value for it yet...ugh
+                controls: false,
+                <?php // This flag controls ads; we have this set to false since we are just displaying a trailer ?>
+                show_interruptions: false,
+                theme: {}
+            }
+
+            /* PLAYER THEMEING */
+            <?php  if (!empty($dsp_theme_options["opt-player-icon-color"])) { ?>
+                mountObj.theme.fontColor = "<?php echo $dsp_theme_options["opt-player-icon-color"]; ?>";
+            <?php } ?>
+
+            <?php  if (!empty($dsp_theme_options["opt-player-font-color-hover"])) { ?>
+                mountObj.theme.fontColorHover = "<?php echo $dsp_theme_options["opt-player-font-color-hover"]; ?>";
+            <?php } ?>
+
+            <?php  if (!empty($dsp_theme_options["opt-player-progress-slider-main"])) { ?>
+                mountObj.theme.progressSliderMain = "<?php echo $dsp_theme_options["opt-player-progress-slider-main"]; ?>";
+            <?php } ?>
+
+            <?php  if (!empty($dsp_theme_options["opt-player-progress-slider-bg"])) { ?>
+                mountObj.theme.progressSliderBackground = "<?php echo $dsp_theme_options["opt-player-progress-slider-bg"]; ?>";
+            <?php } ?>
+
+            <?php  if (!empty($dsp_theme_options["opt-player-control-bar-color"])) { ?>
+                mountObj.theme.controlBar = "<?php echo $dsp_theme_options["opt-player-control-bar-color"]; ?>";
+            <?php } ?>
+            /* /END PLAYER THEMEING */
+
+
+            <?php if (!empty($chnl_id)) { ?>
+                mountObj.channel_id = "<?php echo $chnl_id; ?>";
+                mountObj.channel_title = "<?php echo $chnl_title; ?>";
+            <?php } ?>
+            <?php if(!empty($dspro_channel_id)) { ?>
+                mountObj.dspro_channel_id = "<?php echo $dspro_channel_id; ?>";
+            <?php } ?>
+
 
             $("#video-overlay").on('mousemove', function (e) {
                 if ((e.pageX - this.offsetLeft) < $(this).width() / 2) {
@@ -328,6 +391,8 @@ if (!empty($trailer_id)) {
                 $('.channel-teaser-info').fadeOut();
             });
 
+            let playerMounted = false;
+
             $(document).ready(function () {
                 $(window).bind('resize mousemove keydown scroll', function (e) {
                     if ($('.inner-banner-bg').isInViewport()) {
@@ -336,15 +401,15 @@ if (!empty($trailer_id)) {
                         idleTimer = setTimeout(function () {
                             $('.channel-teaser').show();
                             $('.chanl_background_img').hide();
-                            document.getElementsByTagName("body")[0].appendChild(script);
+                            DotPlayer.mount(mountObj);
                             idleState = true;
                         }, idleWait);
-                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                            dotstudiozPlayer.player.play();
+                        if (playerMounted) {
+                            DotPlayer.play();
                         }
                     } else {
-                        if (typeof dotstudiozPlayer !== "undefined" && typeof dotstudiozPlayer.player !== "undefined") {
-                            dotstudiozPlayer.player.pause();
+                        if (playerMounted) {
+                            DotPlayer.pause();
                         }
                         clearTimeout(idleTimer);
                     }
@@ -352,15 +417,15 @@ if (!empty($trailer_id)) {
                 $("body").trigger("mousemove");
             });
 
-            $.fn.isInViewport = function () {
-                var elementTop = $(this).offset().top;
-                var elementBottom = elementTop + $(this).outerHeight();
-                var viewportTop = $(window).scrollTop();
-                var viewportBottom = viewportTop + $(window).height();
-                return elementBottom > viewportTop && elementTop < viewportBottom;
-            };
+
+            var dspPlayerCheck = setInterval(function () {
+                if (typeof DotPlayer.on !== "undefined") {
+                    clearInterval(dspPlayerCheck);
+                    playerMounted = true;
+                }
+            }, 250);
 
         })(jQuery)
-    </script>  
+    </script>
 <?php } ?>
 <?php get_footer(); ?>

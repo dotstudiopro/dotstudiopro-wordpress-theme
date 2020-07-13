@@ -26,8 +26,13 @@
 			}
 		}
   }
-  .player div#dsp-vid-js-player {
-    height: 100% !important;
+  .player {
+    height: 100%;
+    width: 100%;
+    > .DotPlayer {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 

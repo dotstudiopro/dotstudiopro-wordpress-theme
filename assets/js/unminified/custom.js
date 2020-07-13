@@ -198,20 +198,20 @@ jQuery.fn.putCursorAtEnd = function () {
      * @param {type} param2
      */
     window.addEventListener('beforeunload', function (e) {
-        if (typeof (dotstudiozPlayer) != "undefined" && dotstudiozPlayer !== null) {
+        if (typeof DotPlayer.on !== "undefined") {
             e.preventDefault();
-            var play_time = dotstudiozPlayer.player.currentTime();
+            var play_time = DotPlayer.currentTime();
             var video_id = jQuery('.player').data('video_id');
             var nonce = jQuery('.player').data('nonce');
             if (video_id && play_time && nonce) {
                 $.post(
-                        jsVariable.ajaxUrl,
-                        {
-                            'action': 'save_point_data',
-                            'play_time': play_time,
-                            'video_id': video_id,
-                            'nonce': nonce
-                        }
+                    jsVariable.ajaxUrl,
+                    {
+                        'action': 'save_point_data',
+                        'play_time': play_time,
+                        'video_id': video_id,
+                        'nonce': nonce
+                    }
                 );
             }
             return true;

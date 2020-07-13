@@ -1,5 +1,5 @@
 <?php
-global $dsp_theme_options;
+global $dsp_theme_options, $is_user_subscribed;
 $slide_text_class = '';
 if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
     $slide_text_class .= 'slide-text-dec';
@@ -26,14 +26,18 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
         <div class="slide <?php echo $class; ?>">
             <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'channel_tooltip_content_' . $cnt . $i; ?>">
                 <div class="hover <?php echo $lock_video_class; ?> ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height ?>;" class="lazy w-100" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                    <?php if (isset($channel_unlocked) && $channel_unlocked == 0 && $is_user_subscribed == false): ?>
+                        <div class="locked-channel"><i class="fa fa-lock"></i></div>
+                    <?php endif; ?>
+
+                    <?php if( $dsp_theme_options['opt-channel-video-image-size'] == '1' ) :
+                        $image_attributes = dsp_build_responsive_images( $video['image'], $width, $ratio ); ?>
+                        
+                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $video['image']; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                    <?php else : ?>
+                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $video['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                    <?php endif; ?>
                     <div class="overlay">
-                        <?php if (isset($channel_unlocked) && $channel_unlocked == 0):
-                            ?>
-                            <a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>"><div class="lock_overlay"><i class="fa fa-lock"></i>Subscribe now</div></a>
-                            <?php
-                        endif;
-                        ?>
                         <div class="watch_now"><a class="info" href="<?php echo $video['url']; ?>" title="<?php echo $video['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                     </div>
                 </div>

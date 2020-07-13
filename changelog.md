@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.9] - 2020-07-13
+
+### Added
+- Added New option Aspact Ratio for all the slider so we can load the images based on the screen resolution using that aspect ratio.
+
+### Changed
+- Display the category display name insted of title.
+- Update the player on the channel page 
+- Update the lock icon styles
+
+## [1.4.8] - 2020-07-08
+- Style changes post-player update
+
+### Changed
+
+## [1.4.7] - 2020-07-07
+
+### Changed
+- Change old player with new player also added some options for styling the player
+
 ## [1.4.6] - 2020-06-10
 
 ### Fixed

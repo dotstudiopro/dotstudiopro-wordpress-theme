@@ -361,9 +361,9 @@ class Theme_Functions {
                     $response[$key]['image'] = $video['thumb'];
                     $response[$key]['slug'] = ($video['slug']) ? $video['slug'] : '';
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
-                    if ($p_channel)
-                        $response[$key]['url'] = get_site_url() . '/channel/' . $p_channel . '/' . $channel->post_name . '/video/' . $videoSlug;
-                    else
+                    // if ($p_channel)
+                    //     $response[$key]['url'] = get_site_url() . '/channel/' . $p_channel . '/' . $channel->post_name . '/video/' . $videoSlug;
+                    // else
                         $response[$key]['url'] = get_site_url() . '/channel/' . $channel->post_name . '/video/' . $videoSlug;
                 endforeach;
             }
