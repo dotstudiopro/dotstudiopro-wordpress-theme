@@ -237,12 +237,10 @@ jQuery(document).ready(() => {
                 'debug': 1,
                 'parse.hls': true,
                 'parse.cdnNode': true,
-                'extraparam.1': dsp_company_id,
-                'extraparam.2': dsp_subdomain
+                'extraparam.1': jsVariable.company_id,
+                'extraparam.2': jsVariable.subdomain
             });
             window.plugin.infinity.begin();
         }
     }, 500);
-
-
 })

@@ -361,7 +361,9 @@ function register_theme_scripts() {
     foreach ($scripts as $script) :
         wp_enqueue_script($script, DSP_THEME_ASSETS_BASE_URL . '/js/' . $script . '.min.js', array(), DSP_THEME_ASSETS_CACHEBUSTER, true);
     endforeach;
-    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    $configs = get_option('dsp_analytics_parameters');
+    if (!$configs) $configs = json_decode("{\"company_id\": \"\", \"subdomain\": \"\"}"); // Shortcut for an empty object with our params
+    wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php'), 'company_id' => $configs->company_id, 'subdomain' => $configs->subdomain  ));
 }
 
 add_action('wp_enqueue_scripts', 'register_theme_scripts');
