@@ -214,7 +214,7 @@ jQuery.fn.putCursorAtEnd = function () {
                     }
                 );
             }
-            return true;
+            return null;
         }
     });
 })(jQuery);
@@ -224,3 +224,25 @@ jQuery.fn.putCursorAtEnd = function () {
 jQuery(document).on('click', '.navbar-toggler', function () {
     jQuery('body').toggleClass('fixed-body');
 });
+
+/**
+ * Youbora analytics integration
+ */
+jQuery(document).ready(() => {
+    const dspYouboraLoad = setInterval(() => {
+        if (typeof youbora !== 'undefined' && typeof youbora.Plugin !== 'undefined') {
+            clearInterval(dspYouboraLoad);
+            window.plugin = new youbora.Plugin({
+                'accountCode': 'dotstudioz',
+                'debug': 1,
+                'parse.hls': true,
+                'parse.cdnNode': true,
+                'extraparam.1': dsp_company_id,
+                'extraparam.2': dsp_subdomain
+            });
+            window.plugin.infinity.begin();
+        }
+    }, 500);
+
+
+})

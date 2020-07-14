@@ -298,6 +298,7 @@ function bootstrapstarter_enqueue_scripts() {
     $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/js/slick.min.js';
     wp_enqueue_script('slick', $slickcdn_url);
     wp_enqueue_script('DotPlayer', "https://www.dplayer.pro/dotplayer.js");
+    wp_enqueue_script('youbora-plugin', 'https://smartplugin.youbora.com/v6/js/lib/6.5.26/youboralib.min.js', array(), false, true);
 }
 
 add_action('wp_enqueue_scripts', 'bootstrapstarter_enqueue_styles');
@@ -567,9 +568,9 @@ function autocomplete() {
 
             $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
             $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
-            
+
             $ratio = $ratio_height / $ratio_width;
-        }   
+        }
         $suggesion = $dotstudio_api->search_suggestion($q);
         $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
@@ -618,10 +619,10 @@ function autocomplete() {
                 $items['channel'][$key]['name'] = $data['_source']['title'];
                 if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
                     $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
-                    
+
                     $items['channel'][$key]['image'] = $image;
                     $items['channel'][$key]['image_attributes'] = $image_attributes;
-                else :    
+                else :
                     $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
                     $items['channel'][$key]['image_attributes'] = '';
                 endif;
@@ -650,7 +651,7 @@ function search_suggesion() {
 
         $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
         $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
-        
+
         $ratio = $ratio_height / $ratio_width;
     }
     $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
@@ -672,10 +673,10 @@ function search_suggesion() {
             $items[$key]['name'] = $data['_source']['title'];
             if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
                 $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
-                
+
                 $items['channel'][$key]['image'] = $image;
                 $items['channel'][$key]['image_attributes'] = $image_attributes;
-            else :    
+            else :
                 $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
                 $items['channel'][$key]['image_attributes'] = '';
             endif;
