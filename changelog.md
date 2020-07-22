@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2020-07-22
+
+### Fixed
+ - Resolved the player rendering issues in responsive view
+
 ## [1.4.9] - 2020-07-13
 
 ### Added

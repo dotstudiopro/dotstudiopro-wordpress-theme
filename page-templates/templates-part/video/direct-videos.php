@@ -40,20 +40,12 @@ if (!is_wp_error($video) && !empty($video)):
         $video_point = $get_video_data['data']['point'];
     }
     ?>
-    <div id="video-overlay">
-        <div class="video-content-div">
-            <div class="custom-container container">
-                <div class="video-player">
-                    <div class="player-content">
-                        <div class="player-content-inner">
-                            <div class="visible-desktop" id="hero-vid">
-                                <div class="player" data-video_id="<?php echo $video_id; ?>" data-nonce="<?php echo wp_create_nonce('save_point_data'); ?>"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="video-player-block">
+      <div class="player-container">
+        <div class="aspect-ratio-controller">
+          <div id="DotPlayer" class="player" data-video_id="<?php echo $video_id; ?>" data-nonce="<?php echo wp_create_nonce('save_point_data'); ?>"></div>
         </div>
+      </div>
     </div>
     <div class="video-page-content">
         <div class="row no-gutters">
@@ -98,7 +90,7 @@ if (!is_wp_error($video) && !empty($video)):
                 const mountObj = {
                     video_id: "<?php echo $video_id; ?>",
                     company_id: "<?php echo $company_id; ?>",
-                    target: ".player",
+                    target: "#DotPlayer",
                     autostart: <?php echo $autoplay ? "true" : "false"; ?>,
                     muted: <?php echo $mute_on_load ? "true" : "false"; ?>,
                     fluid: false,

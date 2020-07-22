@@ -372,7 +372,7 @@ if (!empty($trailer_id)) {
 
             <?php if (!empty($chnl_id)) { ?>
                 mountObj.channel_id = "<?php echo $chnl_id; ?>";
-                mountObj.channel_title = "<?php echo $chnl_title; ?>";
+                mountObj.channel_title = <?php echo json_encode($chnl_title); ?>;
             <?php } ?>
             <?php if(!empty($dspro_channel_id)) { ?>
                 mountObj.dspro_channel_id = "<?php echo $dspro_channel_id; ?>";
