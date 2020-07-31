@@ -23,7 +23,7 @@ if (have_posts()) {
         $dsp_api = new Dsp_External_Api_Request();
         $country_code = $dsp_api->get_country();
         $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
-        if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
+        if($country_code && !in_array("ALL", $dspro_channel_geo) && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
             ?>
             <div class="custom-container container pb-5">
                 <div class="row no-gutters other-categories text-center">

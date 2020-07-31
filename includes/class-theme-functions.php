@@ -203,7 +203,7 @@ class Theme_Functions {
             foreach ($channels->posts as $channel):
                 $post_meta = get_post_meta($channel->ID);
                 $geo = maybe_unserialize($post_meta['dspro_channel_geo'][0]);
-                if (count($geo) && !in_array($this->country, $geo)) {
+                if (count($geo) && !in_array("ALL", $geo) && !in_array($this->country, $geo)) {
                     // If the user doesn't have access to this channel due to
                     // location, we don't need to show it to them in the category
                     continue;
@@ -261,7 +261,7 @@ class Theme_Functions {
             $response[$key] = [];
             $channel_meta = get_post_meta($channel->ID);
             $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
-            if (count($geo) && !in_array($this->country, $geo)) {
+            if (count($geo) && !in_array("ALL", $geo) && !in_array($this->country, $geo)) {
                 // If the user doesn't have access to this channel due to
                 // location, we don't need to show it to them in the category
                 continue;
@@ -324,7 +324,7 @@ class Theme_Functions {
                 if ($channel):
                     $channel_meta = get_post_meta($channel->ID);
                     $geo = maybe_unserialize($channel_meta['dspro_channel_geo'][0]);
-                    if (count($geo) && !in_array($this->country, $geo)) {
+                    if (count($geo) && !in_array("ALL", $geo) && !in_array($this->country, $geo)) {
                         // If the user doesn't have access to this channel due to
                         // location, we don't need to show it to them in the category
                         continue;

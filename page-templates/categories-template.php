@@ -75,8 +75,15 @@ get_header();
                     else:
                         $category_channel = $theme_function->get_category_channels($category->post_name);
                         if (!empty($category_channel)) {
-                            $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template', array_values($category_channel)[0]->post_name);
+                            $child_channels = $theme_function->is_child_channels(array_values($category_channel)[0]->ID);
+                             if($child_channels){
+                                $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template', $category->post_name, array_values($category_channel)[0]->post_name, null);
+                             }
+                             else{
+                                $video = $theme_function->show_videos(array_values($category_channel)[0], 'categories-template', $category->post_name, null, null );
+                            }
                             $link = $video[0]['url'];
+                            
                         } else {
                             $link = get_permalink($category->ID);
                         }
