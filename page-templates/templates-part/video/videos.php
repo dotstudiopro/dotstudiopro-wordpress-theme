@@ -347,6 +347,12 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                         foreach ($parant_child_channels as $parant_child_channel) {
                             $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
+                            $single_channel_meta = get_post_meta($single_channel->ID);
+                            $check_subscription_status_single = $dsp_api->check_subscription_status($client_token, $single_channel_meta['dspro_channel_id'][0]);
+                            if (!is_wp_error($check_subscription_status_single) && empty($check_subscription_status_single['unlocked']))
+                                $channel_unlocked = false;
+                            else
+                                $channel_unlocked = true;
                             $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $p_channel_slug);
                             if ($videos) {
                                 ?>

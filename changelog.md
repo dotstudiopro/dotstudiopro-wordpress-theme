@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.2] - 2020-08-07
+
+### Fixed
+ - Resolved the jQuery conflict issue on search autocomplete and also fix image attribute issue on search
+
 ## [1.5.1] - 2020-07-31
 
 ### Fixed

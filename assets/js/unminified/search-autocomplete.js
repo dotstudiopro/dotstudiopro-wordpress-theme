@@ -127,7 +127,6 @@
             }
         }
     });
-})(jQuery);
 
 /**
  * Ajax call to change the result based on search suggesion click
@@ -179,3 +178,5 @@ jQuery(document).on('click', '.suggesion_click', function () {
         }
     });
 });
+
+})(jQuery);
