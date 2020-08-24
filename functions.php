@@ -675,12 +675,11 @@ function search_suggesion() {
             $items[$key]['name'] = $data['_source']['title'];
             if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
                 $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
-
-                $items['channel'][$key]['image'] = $image;
-                $items['channel'][$key]['image_attributes'] = $image_attributes;
+                $items[$key]['image'] = $image;
+                $items[$key]['image_attributes'] = $image_attributes;
             else :
-                $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
-                $items['channel'][$key]['image_attributes'] = '';
+                $items[$key]['image'] = $image.'/'.$width.'/'.$height;
+                $items[$key]['image_attributes'] = '';
             endif;
             $items[$key]['url'] = $url;
             $items[$key]['title'] = $title;

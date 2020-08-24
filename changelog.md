@@ -1,10 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.4.10] - 2020-08-24
+## [1.5.3] - 2020-08-24
 
 ### Added
 - Added Youbora analytics
+
+## [1.5.2] - 2020-08-07
+
+### Fixed
+ - Resolved the jQuery conflict issue on search autocomplete and also fix image attribute issue on search
+
+## [1.5.1] - 2020-07-31
+
+### Fixed
+ - Resolved the Geo Block issue
+
+## [1.5.0] - 2020-07-22
+
+### Fixed
+ - Resolved the player rendering issues in responsive view
 
 ## [1.4.9] - 2020-07-13
 

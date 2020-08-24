@@ -43,7 +43,7 @@ $channel_meta = get_post_meta($channel->ID);
 $dsp_api = new Dsp_External_Api_Request();
 $country_code = $dsp_api->get_country();
 $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
-if($country_code && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
+if($country_code && !in_array("ALL", $dspro_channel_geo) && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
     ?>
     <div class="custom-container container pb-5">
         <div class="row no-gutters other-categories text-center">
@@ -99,20 +99,12 @@ if (!is_wp_error($video) && !empty($video)):
     ?>
 
     <?php if (!empty($channel_unlocked)): ?>
-        <div id="video-overlay">
-            <div class="video-content-div">
-                <div class="custom-container container">
-                    <div class="video-player">
-                        <div class="player-content">
-                            <div class="player-content-inner">
-                                <div class="visible-desktop" id="hero-vid">
-                                    <div class="player" data-video_id="<?php echo $video_id; ?>" data-nonce="<?php echo wp_create_nonce('save_point_data'); ?>"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div id="video-player-block">
+          <div class="player-container">
+            <div class="aspect-ratio-controller">
+              <div id="DotPlayer" class="player" data-video_id="<?php echo $video_id; ?>" data-nonce="<?php echo wp_create_nonce('save_point_data'); ?>"></div>
             </div>
+          </div>
         </div>
     <?php else: ?>
         <div id="video-overlay">
@@ -355,6 +347,12 @@ if (!is_wp_error($video) && !empty($video)):
                         }
                         foreach ($parant_child_channels as $parant_child_channel) {
                             $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
+                            $single_channel_meta = get_post_meta($single_channel->ID);
+                            $check_subscription_status_single = $dsp_api->check_subscription_status($client_token, $single_channel_meta['dspro_channel_id'][0]);
+                            if (!is_wp_error($check_subscription_status_single) && empty($check_subscription_status_single['unlocked']))
+                                $channel_unlocked = false;
+                            else
+                                $channel_unlocked = true;
                             $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $p_channel_slug);
                             if ($videos) {
                                 ?>
@@ -415,7 +413,7 @@ if (!is_wp_error($video) && !empty($video)):
                 const mountObj = {
                     video_id: "<?php echo $video_id; ?>",
                     company_id: "<?php echo $company_id; ?>",
-                    target: ".player",
+                    target: "#DotPlayer",
                     autostart: <?php echo $autoplay ? "true" : "false"; ?>,
                     muted: <?php echo $mute_on_load ? "true" : "false"; ?>,
                     fluid: false,
@@ -447,7 +445,7 @@ if (!is_wp_error($video) && !empty($video)):
 
                 <?php if (!empty($chnl_id)) { ?>
                     mountObj.channel_id = "<?php echo $chnl_id; ?>";
-                    mountObj.channel_title = "<?php echo $chnl_title; ?>";
+                    mountObj.channel_title = <?php echo json_encode($chnl_title); ?>;
                 <?php } ?>
                 <?php if(!empty($dspro_channel_id)) { ?>
                     mountObj.dspro_channel_id = "<?php echo $dspro_channel_id; ?>";

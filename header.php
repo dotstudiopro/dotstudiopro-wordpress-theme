@@ -3,7 +3,7 @@
     <head>
         <meta charset="<?php bloginfo('charset'); ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         global $dsp_theme_options,$share_banner, $share_desc, $share_title;
         if (isset($dsp_theme_options['opt-favicon-url']['url'])) {

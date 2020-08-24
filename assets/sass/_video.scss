@@ -16,11 +16,11 @@
 
 /** KMT changes - start **/
 
-.video-player {
+/** .video-player {
   position: relative;
   min-height: 50px;
   max-height: 50%;
-}
+} **/
 
 .player-content {
   text-align: center;
@@ -54,7 +54,7 @@
   }
 }
 
-.player {
+/**.player {
   position: absolute;
   width: 100% !important;
   height: 100% !important;
@@ -64,7 +64,7 @@
 		height: 60vh !important;
 		position: relative !important;
 	}
-}
+}**/
 
 .player-content-inner {
   > *:first-child {
@@ -211,4 +211,59 @@
 }
 .video-js .vjs-big-play-button{
 	overflow: hidden !important;
+}
+
+#video-player-block{
+  background: black;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.player-container{ 
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  background: black;
+}
+
+.aspect-ratio-controller{
+  padding-top: 56.25%;
+  position: relative;
+}
+
+@media screen and (max-width:1920px) {
+  .player-container{
+    max-width: 1366px;
+  }
+}
+
+@media screen and (max-width:1440px) {
+  .player-container{
+    max-width: 900px;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .player-container{
+    max-width: 768px;
+  }
+}
+
+@media only screen and (max-width:768px) {
+  .player-container{
+    max-width: initial;
+  }
+}
+
+.metadata-container{
+  padding: 20px;
+  background: white;
+}
+
+#DotPlayer{
+  position:absolute;
+  top:0;
+  left:0;
+  right: 0;
+  bottom: 0;
 }

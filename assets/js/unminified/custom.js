@@ -199,7 +199,7 @@ jQuery.fn.putCursorAtEnd = function () {
      */
     window.addEventListener('beforeunload', function (e) {
         if (typeof DotPlayer.on !== "undefined") {
-            e.preventDefault();
+            //e.preventDefault();
             var play_time = DotPlayer.currentTime();
             var video_id = jQuery('.player').data('video_id');
             var nonce = jQuery('.player').data('nonce');
