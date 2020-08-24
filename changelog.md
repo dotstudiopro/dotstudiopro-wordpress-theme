@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.4.10] - 2020-08-24
+
+### Added
+- Added Youbora analytics
+
 ## [1.4.9] - 2020-07-13
 
 ### Added
@@ -8,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Display the category display name insted of title.
-- Update the player on the channel page 
+- Update the player on the channel page
 - Update the lock icon styles
 
 ## [1.4.8] - 2020-07-08
