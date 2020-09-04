@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.5] - 2020-09-03
+
+### Added
+- Added security patches
+
 ## [1.5.4] - 2020-09-03
 
 ### Added
