@@ -608,7 +608,16 @@ function autocomplete() {
             foreach ($search['data']['hits'] as $key => $data):
                 if ($type == 'channel'):
                     $url = get_site_url() . '/channel/' . $data['slug'];
-                    $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
+                    if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
+                       $image_type = $data['poster'];
+                    }
+                    elseif($dsp_theme_options['opt-search-channel-poster-type'] == 'spotlight_poster'){
+                        $image_type = $data['spotlight_poster'];
+                    }
+                    else{
+                        $image_type = $data['wallpaper'];
+                    }
+                    //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                     $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
                     $title = 'Channels';
@@ -662,7 +671,16 @@ function search_suggesion() {
         foreach ($search['data']['hits'] as $key => $data):
             if ($type == 'channel'):
                 $url = get_site_url() . '/channel/' . $data['slug'];
-                $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
+                if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
+                   $image_type = $data['poster'];
+                }
+                elseif($dsp_theme_options['opt-search-channel-poster-type'] == 'spotlight_poster'){
+                    $image_type = $data['spotlight_poster'];
+                }
+                else{
+                    $image_type = $data['wallpaper'];
+                }
+                //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                 $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
                 $title = 'Channels';

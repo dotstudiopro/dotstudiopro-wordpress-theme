@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.4] - 2020-09-03
+
+### Added
+- Added Channel wallpaper option
+
 ## [1.5.3] - 2020-08-24
 
 ### Added

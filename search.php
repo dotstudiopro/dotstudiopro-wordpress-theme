@@ -78,7 +78,16 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                         <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['_source']['title']; ?>">
                             <div class="holder">
                                 <?php
-                                $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
+                                if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
+                                   $image_type = $data['poster'];
+                                }
+                                elseif($dsp_theme_options['opt-search-channel-poster-type'] == 'spotlight_poster'){
+                                    $image_type = $data['spotlight_poster'];
+                                }
+                                else{
+                                    $image_type = $data['wallpaper'];
+                                }
+                                // $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                                 $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                                 if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
                                     $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);

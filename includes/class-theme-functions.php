@@ -269,7 +269,15 @@ class Theme_Functions {
             $response[$key]['id'] = $channel_meta['chnl_id'][0];
             $response[$key]['title'] = $channel->post_title;
             $response[$key]['description'] = $channel->post_content;
-            $image = ( $poster_type == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
+            if($poster_type == 'spotlight_poster'){
+                $image = $channel_meta['chnl_spotlight_poster'][0];
+            }
+            elseif($poster_type == 'wallpaper'){
+                $image = $channel_meta['chnl_wallpaper'][0];
+            }
+            else{
+                $image = $channel_meta['chnl_poster'][0];
+            }
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
             $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
@@ -332,7 +340,15 @@ class Theme_Functions {
                     $response[$key]['id'] = $channel_meta['chnl_id'][0];
                     $response[$key]['title'] = $channel->post_title;
                     $response[$key]['description'] = $channel->post_content;
-                    $image = ($dsp_theme_options['opt-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
+                    if($dsp_theme_options['opt-poster-type'] == 'spotlight_poster'){
+                        $image = $channel_meta['chnl_spotlight_poster'][0];
+                    }
+                    elseif($dsp_theme_options['opt-poster-type'] == 'wallpaper'){
+                        $image = $channel_meta['chnl_wallpaper'][0];
+                    }
+                    else{
+                        $image = $channel_meta['chnl_poster'][0];
+                    }
                     $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
 
                     if ($type == 'categories-template') {
@@ -547,7 +563,15 @@ class Theme_Functions {
                         $channel_meta = get_post_meta($channel->ID);
                         $recommendation_content[$key]['title'] = $channel->post_title;
                         $recommendation_content[$key]['description'] = $channel->post_content;
-                        $image = ($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster') ? $channel_meta['chnl_spotlight_poster'][0] : $channel_meta['chnl_poster'][0];
+                        if($dsp_theme_options['opt-related-channel-poster-type'] == 'spotlight_poster'){
+                            $image = $channel_meta['chnl_spotlight_poster'][0];
+                        }
+                        elseif($dsp_theme_options['opt-related-channel-poster-type'] == 'wallpaper'){
+                            $image = $channel_meta['chnl_wallpaper'][0];
+                        }
+                        else{
+                            $image = $channel_meta['chnl_poster'][0];
+                        }
                         $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }

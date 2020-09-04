@@ -6,7 +6,7 @@ global $client_token, $wp;
 
 $class_array = array();
 $cnt = 0;
-$channel_unlocked = false;
+$video_unlocked = $channel_unlocked = false;
 
 $channel = get_page_by_path($channel_slug, OBJECT, 'channel');
 $child_channels = $theme_function->is_child_channels($channel->ID);
@@ -77,11 +77,11 @@ if (!is_wp_error($video) && !empty($video)):
     // Code to check if user subscribe to watch this channel
     $check_subscription_status = $dsp_api->check_subscription_status($client_token, get_post_meta($channel->ID, 'dspro_channel_id', true));
     if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['unlocked'])):
-        $channel_unlocked = false;
+        $video_unlocked = $channel_unlocked = false;
     else:
         if (!is_wp_error($check_subscription_status) && empty($check_subscription_status['ads_enabled']))
             $show_ads = false;
-        $channel_unlocked = true;
+        $video_unlocked = $channel_unlocked = true;
     endif;
 
     $player_setting = '?targetelm=.player&' . implode('&', $settings);
@@ -407,7 +407,7 @@ if (!is_wp_error($video) && !empty($video)):
             ?>
         </div>
     </div>
-    <?php if ($channel_unlocked == true): ?>
+    <?php if ($video_unlocked == true): ?>
         <script>
             jQuery(document).ready(function (e) {
                 const mountObj = {

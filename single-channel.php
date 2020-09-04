@@ -10,7 +10,16 @@ $dspro_channel_id = isset($channel_meta['dspro_channel_id'][0]) ? $channel_meta[
 
 $share_title = $title = get_the_title();
 $share_desc = $desc =  apply_filters('the_content', get_post_field('post_content', get_the_ID()));
-$share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+//$share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+if($dsp_theme_options['opt-channel-poster-type'] == 'poster'){
+   $share_banner = $poster = $channel_meta['chnl_poster'][0];
+}
+elseif($dsp_theme_options['opt-channel-poster-type'] == 'spotlight_poster'){
+    $share_banner = $poster = $channel_meta['chnl_spotlight_poster'][0];
+}
+else{
+    $share_banner = $poster = $channel_meta['chnl_wallpaper'][0];
+}
 
 get_header();
 
@@ -62,7 +71,16 @@ if (have_posts()) {
                 $parant_channel_unlocked = true;
 
             $childchannels = $theme_function->is_child_channels(get_the_ID());
-            $channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+            //$channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
+            if($dsp_theme_options['opt-channel-poster-type'] == 'poster'){
+               $channel_banner_image = $poster = $channel_meta['chnl_poster'][0];
+            }
+            elseif($dsp_theme_options['opt-channel-poster-type'] == 'spotlight_poster'){
+                $channel_banner_image = $poster = $channel_meta['chnl_spotlight_poster'][0];
+            }
+            else{
+                $channel_banner_image = $poster = $channel_meta['chnl_wallpaper'][0];
+            }
             $banner = ($channel_banner_image) ? $channel_banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
             $first_child_id = get_post(get_the_ID(), OBJECT);
 			$p_channel_id = 0;

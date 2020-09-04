@@ -633,6 +633,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'default' => 'poster'
         ),
@@ -707,6 +708,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'default' => 'spotlight_poster'
         ),
@@ -1268,6 +1270,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'default' => 'poster'
         ),
@@ -1379,6 +1382,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'default' => 'spotlight_poster'
         ),
@@ -1615,6 +1619,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'required' => array(array('opt-related-section', '=', 1), array('opt-related-option', '=', 'channel')),
             'default' => 'spotlight_poster'
@@ -1836,6 +1841,7 @@ Redux::setSection($opt_name, array(
             'options' => array(
                 'spotlight_poster' => 'Spotlight Poster',
                 'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
             ),
             'required' => array('opt-search-option', '=', 'channel'),
             'default' => 'spotlight_poster'
