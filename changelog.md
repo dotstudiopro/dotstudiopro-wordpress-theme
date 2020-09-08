@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.6] - 2020-09-08
+
+### Fixed
+- Resolved direct video play issue.
+
 ## [1.5.5] - 2020-09-03
 
 ### Added
