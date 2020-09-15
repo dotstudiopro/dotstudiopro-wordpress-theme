@@ -61,6 +61,7 @@ if (!is_wp_error($video) && !empty($video)):
     $company_id = isset($video['company_id']) ? $video['company_id'] : '';
     $chnl_id = isset($main_channel_meta['chnl_id'][0]) ? $main_channel_meta['chnl_id'][0] : '';
     $dspro_channel_id = isset($main_channel_meta['dspro_channel_id'][0]) ? $main_channel_meta['dspro_channel_id'][0] : '';
+    $bypass_channel_lock = isset($video['bypass_channel_lock']) ? $video['bypass_channel_lock'] : '';
 
     if (!empty($duration)) {
         if ($duration < 60) {
@@ -98,7 +99,7 @@ if (!is_wp_error($video) && !empty($video)):
     }
     ?>
 
-    <?php if (!empty($channel_unlocked)): ?>
+    <?php if (!empty($channel_unlocked) || $bypass_channel_lock == 'true' || $bypass_channel_lock == true): ?>
         <div id="video-player-block">
           <div class="player-container">
             <div class="aspect-ratio-controller">
@@ -407,7 +408,7 @@ if (!is_wp_error($video) && !empty($video)):
             ?>
         </div>
     </div>
-    <?php if ($video_unlocked == true): ?>
+    <?php if ($video_unlocked == true || $bypass_channel_lock == 'true' || $bypass_channel_lock == true): ?>
         <script>
             jQuery(document).ready(function (e) {
                 const mountObj = {

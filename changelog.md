@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.7] - 2020-09-15
+
+### Added
+ - Added bypass_channel_lock flag condition
+
 ## [1.5.6] - 2020-09-08
 
 ### Fixed

@@ -3,10 +3,18 @@ global $client_token, $wp;
 
 $video_id = $video_slug;
 
+if (preg_match('/^[a-f\d]{24}$/i', $video_id)) {
+    $video = $dsp_api->get_video_by_id($video_id);
+} else {
+    wp_redirect(home_url());
+}
+
+$bypass_channel_lock = isset($video['bypass_channel_lock']) ? $video['bypass_channel_lock'] : '';
+
 $checkDefaultSubscriptionBehavior = $dsp_api->get_default_subscription_behavior();
 
 if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubscriptionBehavior)){
-    if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos'){
+    if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos' && $bypass_channel_lock != 'true' && $bypass_channel_lock != true){
         $user_subscribe = $dsp_api->get_user_subscription($client_token);
         if (is_wp_error($user_subscribe) || !$user_subscribe || empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
             get_header(); 

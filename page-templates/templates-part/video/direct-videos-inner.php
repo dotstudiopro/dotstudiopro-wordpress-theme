@@ -3,11 +3,7 @@
 /**
  * Get video information based on the id
  */
-if (preg_match('/^[a-f\d]{24}$/i', $video_id)) {
-    $video = $dsp_api->get_video_by_id($video_id);
-} else {
-    wp_redirect(home_url());
-} 
+ 
 
 if (!is_wp_error($video) && !empty($video)):
     global $share_banner, $share_desc, $share_title;

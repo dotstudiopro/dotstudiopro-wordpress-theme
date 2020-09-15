@@ -350,6 +350,7 @@ class Theme_Functions {
                         $image = $channel_meta['chnl_poster'][0];
                     }
                     $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
                     if ($type == 'categories-template') {
                         $dsp_theme_options['opt-play-btn-type'] = 'play-video';
@@ -388,6 +389,7 @@ class Theme_Functions {
                     $response[$key]['description'] = $video['description'];
                     $response[$key]['image'] = $video['thumb'];
                     $response[$key]['slug'] = ($video['slug']) ? $video['slug'] : '';
+                    $response[$key]['bypass_channel_lock'] = ($video['bypass_channel_lock']) ? $video['bypass_channel_lock'] : '';
                     $videoSlug = ($video['slug']) ? $video['slug'] : $video['_id'];
                     if ($p_channel)
                         $response[$key]['url'] = get_site_url() . '/channel/' . $p_channel . '/' . $channel->post_name . '/video/' . $videoSlug;
