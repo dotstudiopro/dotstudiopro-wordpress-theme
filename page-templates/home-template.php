@@ -9,9 +9,12 @@ global $dsp_theme_options, $client_token, $is_user_subscribed;
 get_header();
 
 $theme_function = new Theme_Functions();
+$dsp_api = new Dsp_External_Api_Request();
 $main_carousel = $theme_function->home_page_main_carousel();
 $main_carousel_width = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
 $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+$homepageAPI = $dsp_api->homepage($client_token);
+$homepageData = $homepageAPI['homepage'];
 ?>
 
 <!-- Home page Main carousal section start-->
@@ -109,22 +112,26 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
             )
         );
         $categories = $theme_function->query_categories_posts($category_args, "homepage_other_carousel_categories");
-        if (!empty($categories)) {
-            foreach ($categories as $category) {
-                $category_slug = $category->post_name;
-                $category_name = $category->post_title;
-                $category_display_name = get_post_meta($category->ID, 'cat_display_name', true);
-                $channels = $theme_function->home_page_other_carousel($category_slug, $dsp_theme_options['opt-carousel-poster-type'],'home-template');
+
+        if (!empty($homepageData)) {
+            foreach ($homepageData as $data) {
+                $category_slug = $data['category']['slug'];
+                if($category_slug == $dsp_theme_options['opt-home-carousel']){
+                    continue;
+                }
+                $channels = $theme_function->home_page_other_carousel_with_api($data['channels'], $dsp_theme_options['opt-carousel-poster-type']);
                 if ($channels) {
                     ?>
                     <div class="col-sm-12 no-gutters pt-7">
                         <h3 class="post-title mb-5">
-                            <a href="<?php echo '/channel-category/' . $category_slug; ?>">
-                                <?php if(!empty($category_display_name)) :
-                                    echo $category_display_name;
-                                else :    
-                                    echo $category_name; 
-                                endif; ?>    
+                            <?php 
+                            //if(count($channels) != 1)
+                                $category_url = '/channel-category/' . $data['category']['slug'];
+                            //else
+                                //$category_url = $channels[0]['url'];
+                             ?>
+                            <a href="<?php echo $category_url; ?>">
+                                <?php echo $data['category']['name']; ?>
                             </a>
                         </h3>
                         <?php
@@ -138,7 +145,7 @@ $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimen
                                 <div class="slide">
                                     <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'tooltip_content_' . $cnt . $i; ?>">
                                         <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                                            <?php if (isset($channel['dspro_is_product']) && $channel['dspro_is_product'] == 1 && $is_user_subscribed == false): ?>
+                                            <?php if (isset($channel['channel_unlock']) && $channel['channel_unlock'] == false && $channel['bypass_channel_lock'] != true && $channel['bypass_channel_lock'] != 'true'): ?>
                                                 <div class="locked-channel"><i class="fa fa-lock"></i></div>
                                             <?php endif; ?>
 

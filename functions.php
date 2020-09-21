@@ -991,7 +991,7 @@ function dsp_build_responsive_images($image, $target_width, $ratio) {
     $attributes['srcset'] = implode(', ', $srcset);
 
     // build the sizes attribute string
-    $size_quries = array('(max-width: '.$original_width.'px) 100vw, 50vw');
+    $size_quries = array('(max-width: '.$target_width.'px) 100vw, 50vw');
     $attributes['sizes'] = implode(', ', $size_quries);
 
     return $attributes;

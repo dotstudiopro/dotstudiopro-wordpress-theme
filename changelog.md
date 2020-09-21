@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.8] - 2020-09-21
+
+### Changed
+ - Load the homepage data using the API
+ - Check the child channel subscription status data using partent channel
+
 ## [1.5.7] - 2020-09-15
 
 ### Added

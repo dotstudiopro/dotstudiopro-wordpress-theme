@@ -338,7 +338,9 @@ if (!is_wp_error($video) && !empty($video)):
                 <?php
                 if (!empty($p_channel_slug)) {
                     $parent_channel = get_page_by_path($p_channel_slug, OBJECT, 'channel');
+                    $parent_channel_meta = get_post_meta($parent_channel->ID);
                     $parant_child_channels = $theme_function->is_child_channels($parent_channel->ID);
+                    $check_subscription_status_single = $dsp_api->check_subscription_status($client_token, $parent_channel_meta['dspro_channel_id'][0]);
                     /**
                      * function to display rails of the video in the paranet channel
                      */
@@ -349,11 +351,21 @@ if (!is_wp_error($video) && !empty($video)):
                         foreach ($parant_child_channels as $parant_child_channel) {
                             $single_channel = get_page_by_path($parant_child_channel, OBJECT, 'channel');
                             $single_channel_meta = get_post_meta($single_channel->ID);
-                            $check_subscription_status_single = $dsp_api->check_subscription_status($client_token, $single_channel_meta['dspro_channel_id'][0]);
-                            if (!is_wp_error($check_subscription_status_single) && empty($check_subscription_status_single['unlocked']))
-                                $channel_unlocked = false;
-                            else
+                            if (!is_wp_error($check_subscription_status_single) && !empty($check_subscription_status_single['childchannels'])){
+                                $checkIfChannelExists = array_search($single_channel_meta['dspro_channel_id'][0], array_column($check_subscription_status_single['childchannels'],'dspro_id'));
+                                if($checkIfChannelExists || $checkIfChannelExists == 0){
+                                    if (empty($check_subscription_status_single['childchannels'][$checkIfChannelExists]['unlocked']))
+                                        $channel_unlocked = false;
+                                    else
+                                        $channel_unlocked = true;
+                                }
+                                else{
+                                    $channel_unlocked = true;
+                                }
+                            }
+                            else{
                                 $channel_unlocked = true;
+                            }
                             $videos = $theme_function->show_videos($single_channel, 'other_carousel', null, $p_channel_slug);
                             if ($videos) {
                                 ?>

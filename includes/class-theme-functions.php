@@ -102,7 +102,7 @@ class Theme_Functions {
      * @global type $dsp_theme_options
      * @return type
      */
-        public function home_page_other_carousel($category_name, $poster_type = NULL, $template = '') {
+    public function home_page_other_carousel($category_name, $poster_type = NULL, $template = '') {
 
         global $dsp_theme_options;
         // Figure out how many slides we need to load
@@ -131,10 +131,16 @@ class Theme_Functions {
 
         if ($channels) {
 
+            $channel_is_parent = false;
+            $child_channels = get_post_meta(array_values($channels)[0]->ID, 'chnl_child_channels', true);
+            if ($child_channels)
+                $channel_is_parent = true;
+
+
             $total_channels = count($channels);
 
             $poster_type = ($poster_type) ? $poster_type : $dsp_theme_options['opt-poster-type'];
-            if ($total_channels > 1) {
+            if ($total_channels > 1 || $channel_is_parent == true) {
 
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
@@ -160,6 +166,94 @@ class Theme_Functions {
 
             }
         }
+    }
+
+    /**
+     * home page other carousel function with api data
+     * @since 1.5.7
+     *
+     * @global type $dsp_theme_options
+     * @return type
+     */
+
+    public function home_page_other_carousel_with_api($channels, $poster_type){
+
+        global $dsp_theme_options;
+
+        $cnt = null;        
+        $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
+        if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
+
+        $response = array();
+        if(count($channels) == 1 && $channels[0]['channel_type'] != 'parent'){
+            if($channels[0]['channel_type'] == 'video'){
+                $response[0]['id'] = $channels[0]['video']['_id'];
+                $response[0]['title'] = $channels[0]['video']['title'];
+                $response[0]['description'] = $channels[0]['video']['description'];
+                $response[0]['image'] = $channels[0]['video']['thumb'];
+                $response[0]['slug'] = ($channels[0]['video']['slug']) ? $channels[0]['video']['slug'] : '';
+                $response[0]['bypass_channel_lock'] = isset($channels[0]['video']['bypass_channel_lock']) ? $channels[0]['video']['bypass_channel_lock'] : false;
+                $response[0]['channel_unlock'] = isset($channels[0]['subscription_access']) ? $channels[0]['subscription_access']['unlocked'] : true;
+                $response[0]['url'] = '/channel/'.$channels[0]['slug'].'/video/'.$channels[0]['video']['slug'];
+            }
+            else if($channels[0]['channel_type'] == 'playlist'){
+              foreach ($channels[0]['playlist'] as $key => $singlePlaylist) {
+                if ($cnt && count($response) >= $cnt) break;
+                $response[$key]['id'] = $singlePlaylist['_id'];
+                $response[$key]['title'] = $singlePlaylist['title'];
+                $response[$key]['description'] = $singlePlaylist['description'];
+                $response[$key]['image'] = $singlePlaylist['thumb'];
+                $response[$key]['slug'] = ($singlePlaylist['slug']) ? $singlePlaylist['slug'] : '';
+                $response[$key]['bypass_channel_lock'] = isset($singlePlaylist['bypass_channel_lock']) ? $singlePlaylist['bypass_channel_lock'] : false;
+                $response[$key]['channel_unlock'] = isset($channels[0]['subscription_access']) ? $channels[0]['subscription_access']['unlocked'] : true;
+                $response[$key]['url'] = '/channel/'.$channels[0]['slug'].'/video/'.$singlePlaylist['slug'];
+              }
+            }
+        }
+        else if (count($channels) == 1 && $channels[0]['channel_type'] == 'parent'){
+            $response[0]['id'] = $channels[0]['_id'];
+            $response[0]['title'] = $channels[0]['title'];
+            $response[0]['description'] = $channels[0]['description'];
+            if($poster_type == 'spotlight_poster'){
+                $image = $channels[0]['spotlight_poster'];
+            }
+            elseif($poster_type == 'wallpaper'){
+                $image = $channels[0]['wallpaper'];
+            }
+            else{
+                $image = $channels[0]['poster'];
+            }
+            $response[0]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[0]['slug'] = ($channels[0]['slug']) ? $channels[0]['slug'] : '';
+            $response[0]['bypass_channel_lock'] =  '';
+            $response[0]['channel_unlock'] = isset($channels[0]['subscription_access']) ? $channels[0]['subscription_access']['unlocked'] : true;
+            $response[0]['url'] = '/channel/'.$channels[0]['slug'];
+        }
+        else{
+            if($cnt)
+                $channels = array_slice($channels, 0, $cnt); 
+            foreach ($channels as $key => $channel) {
+                $response[$key]['id'] = $channel['_id'];
+                $response[$key]['title'] = $channel['title'];
+                $response[$key]['description'] = $channel['description'];
+                if($poster_type == 'spotlight_poster'){
+                    $image = $channel['spotlight_poster'];
+                }
+                elseif($poster_type == 'wallpaper'){
+                    $image = $channel['wallpaper'];
+                }
+                else{
+                    $image = $channel['poster'];
+                }
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $response[$key]['slug'] = ($channel['slug']) ? $channel['slug'] : '';
+                $response[$key]['bypass_channel_lock'] =  '';
+                $response[$key]['channel_unlock'] = isset($channel['subscription_access']) ? $channel['subscription_access']['unlocked'] : true;
+                $response[$key]['url'] = '/channel/'.$channel['slug'];
+                
+            }
+        }
+        return $response;
     }
 
     /**
