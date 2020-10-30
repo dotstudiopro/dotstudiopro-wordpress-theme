@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.5.9] - 2020-10-30
+
+### Fixed
+ - Changed how the player loads so events work again properly
+
 ## [1.5.8] - 2020-09-21
 
 ### Changed
