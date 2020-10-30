@@ -17,7 +17,7 @@ if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubsc
     if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos' && $bypass_channel_lock != 'true' && $bypass_channel_lock != true){
         $user_subscribe = $dsp_api->get_user_subscription($client_token);
         if (is_wp_error($user_subscribe) || !$user_subscribe || empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
-            get_header(); 
+            get_header();
             ?>
             <div class="custom-container container pt-5 pb-5  pt-5 pb-5 center-page-content">
                 <div class="row no-gutters">
@@ -34,11 +34,11 @@ if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubsc
     else{
         include(locate_template('page-templates/templates-part/video/direct-videos-inner.php'));
     }
-    
+
 }
 else{
-   wp_redirect(home_url()); 
+   wp_redirect(home_url());
 }
 
 ?>
-    
+

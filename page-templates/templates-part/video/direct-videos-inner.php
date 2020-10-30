@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 /**
  * Get video information based on the id
  */
- 
+
 
 if (!is_wp_error($video) && !empty($video)):
     global $share_banner, $share_desc, $share_title;
@@ -11,7 +11,7 @@ if (!is_wp_error($video) && !empty($video)):
     $share_title = $title = isset($video['title']) ? $video['title'] : '';
     $share_banner = $banner = ($video['thumb']) ? $video['thumb'] : '';
 endif;
-get_header(); 
+get_header();
 
 if (!is_wp_error($video) && !empty($video)):
     $genres = isset($video['genres']) ? $video['genres'] : '';
@@ -121,29 +121,19 @@ endif;
         // Note: There are no channel-related params to pass,
         // as this is viewing a video outside of a channel
 
-        DotPlayer.mount(mountObj);
-
-        let playerMounted = false;
-
-        var dspPlayerCheck = setInterval(function () {
-            if (typeof DotPlayer.on !== "undefined") {
-                clearInterval(dspPlayerCheck);
-                DotPlayer.on("ended", function () {
-                    var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
-                    if (nextHref.length > 0)
-                        window.location.href = nextHref;
-                });
-                playerMounted = true;
-            }
-        }, 250);
-
-        <?php if ($client_token && $video_point) { ?>
-                var dspPlayerCheckTimepoint = setInterval(function () {
-                    if (playerMounted) {
-                        clearInterval(dspPlayerCheckTimepoint);
-                        DotPlayer.currentTime(<?php echo $video_point; ?>);
-                    }
-                }, 250);
-        <?php } ?>
+        DotPlayer.mount(mountObj).then(async (player) => {
+            await player.isPlayerLoaded();
+            const {vjs} = player;
+            vjs.on("ended", function () {
+                var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
+                if (nextHref.length > 0)
+                    window.location.href = nextHref;
+            });
+            <?php if ($client_token && $video_point) { ?>
+                    vjs.currentTime(<?php echo $video_point; ?>);
+            <?php } ?>
+        }).catch(mountErr => {
+            console.log({mountErr})
+        });
     });
 </script>
