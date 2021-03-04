@@ -471,6 +471,7 @@ if (!is_wp_error($video) && !empty($video)):
                 DotPlayer.mount(mountObj).then(async (player) => {
                     await player.isPlayerLoaded();
                     const {vjs} = player;
+                    storeVideoPoint(vjs);
                     vjs.on("ended", function () {
                         var nextHref = "<?php echo (!empty($next_video[0])) ? $next_video[0]['url'] : ''; ?>";
                         if (nextHref.length > 0)

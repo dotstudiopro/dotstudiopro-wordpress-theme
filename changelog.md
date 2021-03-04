@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2021-03-04
+
+### Fixed
+ - Changed how the player loads so events work again properly for countinue watching
+
 ## [1.5.9] - 2020-10-30
 
 ### Fixed
