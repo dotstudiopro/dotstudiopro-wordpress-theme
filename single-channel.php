@@ -120,6 +120,12 @@ if (have_posts()) {
                             <div class="subscribe_now mt-3">
                                 <?php if (empty($parant_channel_unlocked)): ?>
                                     <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
+                                    <?php
+                                    if (class_exists('Dotstudiopro_Subscription')) {
+                                        $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
+                                        $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
+                                    }
+                                    ?>
                                 <?php else: ?>
                                     <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                 <?php endif; ?>
@@ -184,6 +190,12 @@ if (have_posts()) {
                                         <div class="subscribe_now mt-3">
                                             <?php if (empty($parant_channel_unlocked)): ?>
                                                 <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
+                                                <?php
+                                                if (class_exists('Dotstudiopro_Subscription')) {
+                                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
+                                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
+                                                }
+                                                ?>
                                             <?php else: ?>
                                                 <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                             <?php endif; ?>

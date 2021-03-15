@@ -120,8 +120,8 @@ function check_user_status() {
         /* Check if user has any active subscription */
         if (class_exists('Dotstudiopro_Subscription')) {
             $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-            $user_subscribe = $dsp_subscription_object->getUserSubscription($client_token);
-            if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
+            $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+            if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
                 $is_user_subscribed = true;
             }
         }
@@ -867,13 +867,13 @@ function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $a
     update_user_meta($user_id, "dotstudiopro_client_token", $spotlight);
     update_user_meta($user_id, "dotstudiopro_client_token_expiration", time() + 5400);
 
-    if (class_exists('Dotstudiopro_Subscription_Request')) {
-        $subscriptionClass = new Dotstudiopro_Subscription_Request();
-        $subscription = $subscriptionClass->getUserSubscription($spotlight);
-        if (!empty($sub[0]->subscription->platform)) {
-            update_user_meta($user_id, "dotstudiopro_subscription_platform", $sub[0]->subscription->platform);
-        }
-    }
+    // if (class_exists('Dotstudiopro_Subscription_Request')) {
+    //     $subscriptionClass = new Dotstudiopro_Subscription_Request();
+    //     $subscription = $subscriptionClass->getUserSubscription($spotlight);
+    //     if (!empty($sub[0]->subscription->platform)) {
+    //         update_user_meta($user_id, "dotstudiopro_subscription_platform", $sub[0]->subscription->platform);
+    //     }
+    // }
 }
 
 add_action('auth0_user_login', 'dsp_add_customer_id_to_user', 10, 5);
