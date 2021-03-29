@@ -86,7 +86,7 @@ class Theme_Functions {
                     $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, array_values($channels)[0]->post_name, null);
                 }
                 else{
-                 $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, null, null);   
+                 $show_videos = $this->show_videos(array_values($channels)[0], 'main_carousel', $main_carousel_category, null, null);
                 }
                 if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
@@ -107,7 +107,7 @@ class Theme_Functions {
         global $dsp_theme_options;
         // Figure out how many slides we need to load
 
-        $cnt = null;        
+        $cnt = null;
         if($template == 'home-template'){
             $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
             if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
@@ -159,7 +159,7 @@ class Theme_Functions {
                     $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, array_values($channels)[0]->post_name, $cnt);
                 }
                 else{
-                 $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, null, $cnt);   
+                 $show_videos = $this->show_videos(array_values($channels)[0], 'other_carousel', $category_name, null, $cnt);
                 }
                 if (!empty($show_videos)) set_transient( $show_videos_cache_key, $show_videos, 3600 );
                 return $show_videos;
@@ -180,7 +180,7 @@ class Theme_Functions {
 
         global $dsp_theme_options;
 
-        $cnt = null;        
+        $cnt = null;
         $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
         if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
 
@@ -231,18 +231,18 @@ class Theme_Functions {
         }
         else{
             if($cnt)
-                $channels = array_slice($channels, 0, $cnt); 
+                $channels = array_slice($channels, 0, $cnt);
             foreach ($channels as $key => $channel) {
                 $response[$key]['id'] = $channel['_id'];
                 $response[$key]['title'] = $channel['title'];
-                $response[$key]['description'] = $channel['description'];
-                if($poster_type == 'spotlight_poster'){
+                $response[$key]['description'] = !empty($channel['description']) ? $channel['description'] : "";
+                if($poster_type == 'spotlight_poster' && !empty($channel['spotlight_poster'])){
                     $image = $channel['spotlight_poster'];
                 }
-                elseif($poster_type == 'wallpaper'){
+                elseif($poster_type == 'wallpaper' && !empty($channel['wallpaper'])){
                     $image = $channel['wallpaper'];
                 }
-                else{
+                else if (!empty($channel['poster'])){
                     $image = $channel['poster'];
                 }
                 $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
@@ -250,7 +250,7 @@ class Theme_Functions {
                 $response[$key]['bypass_channel_lock'] =  '';
                 $response[$key]['channel_unlock'] = isset($channel['subscription_access']) ? $channel['subscription_access']['unlocked'] : true;
                 $response[$key]['url'] = '/channel/'.$channel['slug'];
-                
+
             }
         }
         return $response;
@@ -349,7 +349,7 @@ class Theme_Functions {
         $response = [];
 
         if($total)
-            $channels = array_slice($channels, 0, $total); 
+            $channels = array_slice($channels, 0, $total);
 
         foreach ($channels as $key => $channel):
             $response[$key] = [];

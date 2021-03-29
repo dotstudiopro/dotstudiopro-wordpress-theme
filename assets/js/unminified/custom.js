@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
 
     /**
      * Tooltip options
@@ -15,7 +15,7 @@
      * init search
      */
     var searcheelements = document.querySelectorAll('[id=sb-search]');
-    searcheelements.forEach(function (item) {
+    searcheelements.forEach(function(item) {
         new UISearch(item);
     });
 
@@ -23,24 +23,23 @@
 
 })(jQuery);
 
-function storeVideoPoint(vjs){
-    window.addEventListener('beforeunload', function (e) {
-            //e.preventDefault();
-            var play_time = vjs.currentTime();
-            var video_id = jQuery('.player').data('video_id');
-            var nonce = jQuery('.player').data('nonce');
-            if (video_id && play_time && nonce) {
-                $.post(
-                    jsVariable.ajaxUrl,
-                    {
-                        'action': 'save_point_data',
-                        'play_time': play_time,
-                        'video_id': video_id,
-                        'nonce': nonce
-                    }
-                );
-            }
-            return null;
+function storeVideoPoint(vjs) {
+    window.addEventListener('beforeunload', function(e) {
+        //e.preventDefault();
+        var play_time = vjs.currentTime();
+        var video_id = jQuery('.player').data('video_id');
+        var nonce = jQuery('.player').data('nonce');
+        if (video_id && play_time && nonce) {
+            $.post(
+                jsVariable.ajaxUrl, {
+                    'action': 'save_point_data',
+                    'play_time': play_time,
+                    'video_id': video_id,
+                    'nonce': nonce
+                }
+            );
+        }
+        return null;
     });
 }
 
@@ -48,7 +47,7 @@ function storeVideoPoint(vjs){
  * Remove the class on keyup jquery
  * @param {type} param
  */
-jQuery(document).keyup(function (e) {
+jQuery(document).keyup(function(e) {
     if (e.key === "Escape") {
         if (jQuery("body").hasClass("search-suggestions-open")) {
             jQuery("body").removeClass("search-suggestions-open");
@@ -63,7 +62,7 @@ jQuery(document).keyup(function (e) {
  * @param {type} param2
  */
 
-jQuery(window).on("blur", function (event) {
+jQuery(window).on("blur", function(event) {
     if (jQuery('div.autocomplete-suggestions').is(':hidden')) {
         if (jQuery("body").hasClass("search-suggestions-open")) {
             jQuery("body").removeClass("search-suggestions-open")
@@ -79,7 +78,7 @@ jQuery(window).on("blur", function (event) {
  * Back to top button js
  * @param {type} param
  */
-jQuery(window).scroll(function () {
+jQuery(window).scroll(function() {
     if (jQuery(this).scrollTop() >= 50) {
         jQuery('#return-to-top').fadeIn(200);
         jQuery('header').addClass('small-header');
@@ -89,7 +88,7 @@ jQuery(window).scroll(function () {
     }
 });
 
-jQuery('#return-to-top').click(function () {
+jQuery('#return-to-top').click(function() {
     jQuery('body,html').animate({
         scrollTop: 0
     }, 500);
@@ -100,17 +99,17 @@ jQuery('#return-to-top').click(function () {
  * @returns {jQuery.fn@call;each}
  */
 
-jQuery.fn.putCursorAtEnd = function () {
+jQuery.fn.putCursorAtEnd = function() {
 
-    return this.each(function () {
+    return this.each(function() {
         var $el = jQuery(this),
-                el = this;
+            el = this;
         if (!$el.is(":focus")) {
             $el.focus();
         }
         if (el.setSelectionRange) {
             var len = $el.val().length * 2;
-            setTimeout(function () {
+            setTimeout(function() {
                 el.setSelectionRange(len, len);
             }, 1);
         } else {
@@ -121,13 +120,13 @@ jQuery.fn.putCursorAtEnd = function () {
 
 };
 
-(function () {
+(function() {
     var searchInput = jQuery(".search-autocomplete");
     searchInput
-            .putCursorAtEnd() // should be chainable
-            .on("focus", function () { // could be on any event
-                searchInput.putCursorAtEnd()
-            });
+        .putCursorAtEnd() // should be chainable
+        .on("focus", function() { // could be on any event
+            searchInput.putCursorAtEnd()
+        });
 })();
 
 /**
@@ -135,8 +134,8 @@ jQuery.fn.putCursorAtEnd = function () {
  * @param {type} $
  * @returns {undefined}
  */
-(function ($) {
-    $(window).on("load resize", function () {
+(function($) {
+    $(window).on("load resize", function() {
         if ($(window).width() < 992) {
             $("#content-1").mCustomScrollbar({
                 theme: "minimal"
@@ -146,11 +145,11 @@ jQuery.fn.putCursorAtEnd = function () {
         }
     });
 
-    jQuery(document).ajaxStart(function (event) {
+    jQuery(document).ajaxStart(function(event) {
         $("div.autocomplete-suggestions").mCustomScrollbar('destroy');
     });
 
-    jQuery(document).ajaxComplete(function (event) {
+    jQuery(document).ajaxComplete(function(event) {
         $("div.autocomplete-suggestions").mCustomScrollbar({
             theme: "minimal",
             scrollEasing: "easeOut"
@@ -161,8 +160,8 @@ jQuery.fn.putCursorAtEnd = function () {
 /**
  * Add functionality to Login button when clicked to trigger auth0 login
  */
-(function ($) {
-    $('.dsp-auth0-login-button').click(function () {
+(function($) {
+    $('.dsp-auth0-login-button').click(function() {
         // Make sure we have the auth0 login button before we try triggering events
         if (jQuery("#a0LoginButton").length > 0) {
             jQuery("#a0LoginButton").trigger('click');
@@ -173,18 +172,10 @@ jQuery.fn.putCursorAtEnd = function () {
     });
 
     /**
-     * Action to load login pop-up if user is not logged-in
-     */
-    jQuery('.login-link').on('click', function (e) {
-        e.preventDefault();
-        $('#a0LoginButton').click();
-    });
-
-    /**
      * Add funcationality to add to my watch list
      */
 
-    $(document).on('click', '.manage_my_list', function (e) {
+    $(document).on('click', '.manage_my_list', function(e) {
         e.preventDefault();
         $(this).prop('disabled', true);
 
@@ -194,19 +185,18 @@ jQuery.fn.putCursorAtEnd = function () {
         var parent_channel_id = $(this).data('parent_channel_id');
         var remove_list_nonce = null;
         var manage_my_list = $.post(
-                jsVariable.ajaxUrl,
-                {
-                    'action': action,
-                    'nonce': nonce,
-                    'channel_id': channel_id,
-                    'parent_channel_id': parent_channel_id
-                }
+            jsVariable.ajaxUrl, {
+                'action': action,
+                'nonce': nonce,
+                'channel_id': channel_id,
+                'parent_channel_id': parent_channel_id
+            }
         );
-        manage_my_list.done(function (response) {
+        manage_my_list.done(function(response) {
             $(this).prop('disabled', false);
             if (action == 'addToMyList') {
                 remove_list_nonce = $('.manage_my_list').next().data('nonce');
-                $('.my_list_button').html('<button class="btn btn-danger manage_my_list" data-channel_id="'+channel_id+'" data-parent_channel_id="'+parent_channel_id+'" data-action="removeFromMyList" data-nonce="'+remove_list_nonce+'"><i class="fa fa-minus-circle"></i>Remove from My List</button>');
+                $('.my_list_button').html('<button class="btn btn-danger manage_my_list" data-channel_id="' + channel_id + '" data-parent_channel_id="' + parent_channel_id + '" data-action="removeFromMyList" data-nonce="' + remove_list_nonce + '"><i class="fa fa-minus-circle"></i>Remove from My List</button>');
             } else {
                 window.location.reload();
             }
@@ -218,7 +208,7 @@ jQuery.fn.putCursorAtEnd = function () {
      * @param {type} param1
      * @param {type} param2
      */
-    window.addEventListener('beforeunload', function (e) {
+    window.addEventListener('beforeunload', function(e) {
         if (typeof DotPlayer.on !== "undefined") {
             //e.preventDefault();
             var play_time = DotPlayer.currentTime();
@@ -226,8 +216,7 @@ jQuery.fn.putCursorAtEnd = function () {
             var nonce = jQuery('.player').data('nonce');
             if (video_id && play_time && nonce) {
                 $.post(
-                    jsVariable.ajaxUrl,
-                    {
+                    jsVariable.ajaxUrl, {
                         'action': 'save_point_data',
                         'play_time': play_time,
                         'video_id': video_id,
@@ -242,7 +231,7 @@ jQuery.fn.putCursorAtEnd = function () {
 /**
  * Toogle the class on menu icon click
  */
-jQuery(document).on('click', '.navbar-toggler', function () {
+jQuery(document).on('click', '.navbar-toggler', function() {
     jQuery('body').toggleClass('fixed-body');
 });
 
