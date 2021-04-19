@@ -120,45 +120,48 @@ if (have_posts()) {
                             <div class="subscribe_now mt-3">
                                 <?php if (empty($parant_channel_unlocked)): ?>
                                     <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
-                                    <?php
-                                    if (class_exists('Dotstudiopro_Subscription')) {
-                                        $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
-                                        $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
-                                    }
-                                    ?>
                                 <?php else: ?>
                                     <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                 <?php endif; ?>
-                                <?php if (class_exists('WP_Auth0_Options')) { ?>
-                                    <div class="my_list_button">
-                                        <?php
-                                        if ($first_child_id) {
-                                            if ($client_token) {
-                                                $channel_id = get_post_meta($first_child_id->ID, 'chnl_id', true);
-                                                $obj = new Dsp_External_Api_Request();
-                                                $list_channel = $obj->get_user_watchlist($client_token);
-                                                $in_list = array();
-                                                if (!is_wp_error($list_channel) && $list_channel['channels'] && !empty($list_channel['channels'])) {
-                                                    foreach ($list_channel['channels'] as $ch) {
-                                                        $in_list[] = $ch['_id'];
-                                                    }
-                                                }
-                                                if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
-                                                    ?>
-                                                    <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
-                                                <?php } else { ?>
-                                                    <a href="#" class="btn btn-secondary btn-ds-secondary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</a>
-                                                    <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
-                                                <?php } ?>
-                                            <?php } else { ?>
-                                                <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-secondary btn-ds-secondary"><i class="fa fa-plus-circle"></i> Add to My List</a>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                <?php } ?>
                             </div>
+                            <div class="more_ways_to_watch_now ml-2 mt-3 mr-2">
+                                <?php 
+                                 if (empty($parant_channel_unlocked) && class_exists('Dotstudiopro_Subscription')) {
+                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
+                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
+
+                                }
+                                ?>
+                            </div>
+                            <?php if (class_exists('WP_Auth0_Options')) { ?>
+                                <div class="my_list_button mt-3">
+                                    <?php
+                                    if ($first_child_id) {
+                                        if ($client_token) {
+                                            $channel_id = get_post_meta($first_child_id->ID, 'chnl_id', true);
+                                            $obj = new Dsp_External_Api_Request();
+                                            $list_channel = $obj->get_user_watchlist($client_token);
+                                            $in_list = array();
+                                            if (!is_wp_error($list_channel) && $list_channel['channels'] && !empty($list_channel['channels'])) {
+                                                foreach ($list_channel['channels'] as $ch) {
+                                                    $in_list[] = $ch['_id'];
+                                                }
+                                            }
+                                            if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
+                                                ?>
+                                                <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
+                                            <?php } else { ?>
+                                                <a href="#" class="btn btn-secondary btn-ds-secondary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</a>
+                                                <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-secondary btn-ds-secondary"><i class="fa fa-plus-circle"></i> Add to My List</a>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -199,36 +202,45 @@ if (have_posts()) {
                                             <?php else: ?>
                                                 <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                             <?php endif; ?>
-                                            <?php if (class_exists('WP_Auth0_Options')) { ?>
-                                                <div class="my_list_button">
-                                                    <?php
-                                                    if ($first_child_id) {
-                                                        if ($client_token) {
-                                                            $channel_id = get_post_meta($first_child_id->ID, 'chnl_id', true);
-                                                            $obj = new Dsp_External_Api_Request();
-                                                            $list_channel = $obj->get_user_watchlist($client_token);
-                                                            $in_list = array();
-                                                            if (!is_wp_error($list_channel) && $list_channel['channels'] && !empty($list_channel['channels'])) {
-                                                                foreach ($list_channel['channels'] as $ch) {
-                                                                    $in_list[] = $ch['_id'];
-                                                                }
-                                                            }
-                                                            if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
-                                                                ?>
-                                                                <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
-                                                            <?php } else { ?>
-                                                                <button class="btn btn-primary btn-revry-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
-                                                                <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
-                                                            <?php } ?>
-                                                        <?php } else { ?>
-                                                            <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-primary btn-revry-primary"><i class="fa fa-plus-circle"></i> Add to My List</a>
-                                                            <?php
-                                                        }
-                                                    }
-                                                    ?>
-                                                </div>
-                                            <?php } ?>
                                         </div>
+                                        <div class="more_ways_to_watch_now ml-2 mt-3 mr-2">
+                                            <?php 
+                                             if (empty($parant_channel_unlocked) && class_exists('Dotstudiopro_Subscription')) {
+                                                $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
+                                                $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
+
+                                            }
+                                            ?>
+                                        </div>
+                                        <?php if (class_exists('WP_Auth0_Options')) { ?>
+                                            <div class="my_list_button">
+                                                <?php
+                                                if ($first_child_id) {
+                                                    if ($client_token) {
+                                                        $channel_id = get_post_meta($first_child_id->ID, 'chnl_id', true);
+                                                        $obj = new Dsp_External_Api_Request();
+                                                        $list_channel = $obj->get_user_watchlist($client_token);
+                                                        $in_list = array();
+                                                        if (!is_wp_error($list_channel) && $list_channel['channels'] && !empty($list_channel['channels'])) {
+                                                            foreach ($list_channel['channels'] as $ch) {
+                                                                $in_list[] = $ch['_id'];
+                                                            }
+                                                        }
+                                                        if (in_array($channel_id, $in_list)) { // $channel->isChannelInList($utoken)
+                                                            ?>
+                                                            <a href="#" class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove from My List</a>
+                                                        <?php } else { ?>
+                                                            <button class="btn btn-primary btn-revry-primary manage_my_list" data-channel_id="<?php echo $channel_id; ?>" data-parent_channel_id="<?php echo $p_channel_id; ?>" data-action="addToMyList" data-nonce="<?php echo wp_create_nonce('addToMyList'); ?>"><i class="fa fa-plus-circle"></i> Add to My List</button>
+                                                            <span data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>" style="display: none;"></span>
+                                                        <?php } ?>
+                                                    <?php } else { ?>
+                                                        <a href="<?php echo wp_login_url(home_url($wp->request)); ?>" class="btn btn-primary btn-revry-primary"><i class="fa fa-plus-circle"></i> Add to My List</a>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
