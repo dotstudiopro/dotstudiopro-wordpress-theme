@@ -15,9 +15,11 @@ $checkDefaultSubscriptionBehavior = $dsp_api->get_default_subscription_behavior(
 
 if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubscriptionBehavior)){
     if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos' && $bypass_channel_lock != 'true' && $bypass_channel_lock != true){
-        $user_subscribe = $dsp_api->get_user_subscription($client_token);
-        if (is_wp_error($user_subscribe) || !$user_subscribe || empty($user_subscribe['subscriptions'][0]['subscription']['product']['id'])) {
-            get_header();
+        if (class_exists('Dotstudiopro_Subscription')) {
+            $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+            $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+            if (is_wp_error($user_subscribe) || !$user_subscribe || (empty($user_subscribe['products']['svod'][0]['product']['id']) && empty($user_subscribe['products']['tvod'][0]['product']['id']))) {
+                get_header();
             ?>
             <div class="custom-container container pt-5 pb-5  pt-5 pb-5 center-page-content">
                 <div class="row no-gutters">

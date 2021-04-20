@@ -85,6 +85,17 @@ if (!is_wp_error($video) && !empty($video)):
         $video_unlocked = $channel_unlocked = true;
     endif;
 
+    $svod_products = array();
+    if (class_exists('Dotstudiopro_Subscription')) {
+        $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+        $check_product_by_channel = $dsp_subscription_object->getProductsByChannel(get_post_meta($channel->ID, 'dspro_channel_id', true));
+        if (!is_wp_error($check_product_by_channel) && !empty($check_product_by_channel['products'])){
+           $svod_products = array_values(array_filter($check_product_by_channel['products'], function($cp) {
+                return $cp && !empty($cp['product_type']) && $cp['product_type'] === 'svod';
+            }));
+        }
+    }
+
     $player_setting = '?targetelm=.player&' . implode('&', $settings);
 
     /*
@@ -121,7 +132,18 @@ if (!is_wp_error($video) && !empty($video)):
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
                                                         <p>In order to view this video you need to subscribe first</p>
-                                                        <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
+                                                         <?php if(!empty($svod_products)): ?>
+                                                            <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
+                                                            <?php endif; ?>
+                                                            <div class="more_ways_to_watch_now mt-3 mr-4">
+                                                                <?php 
+                                                                 if (class_exists('Dotstudiopro_Subscription')) {
+                                                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
+                                                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
+
+                                                                }
+                                                                ?>
+                                                            </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -70,6 +70,17 @@ if (have_posts()) {
             else
                 $parant_channel_unlocked = true;
 
+            $svod_products = array();
+            if (class_exists('Dotstudiopro_Subscription')) {
+                $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+                $check_product_by_channel = $dsp_subscription_object->getProductsByChannel($channel_meta['dspro_channel_id'][0]);
+                if (!is_wp_error($check_product_by_channel) && !empty($check_product_by_channel['products'])){
+                   $svod_products = array_values(array_filter($check_product_by_channel['products'], function($cp) {
+                        return $cp && !empty($cp['product_type']) && $cp['product_type'] === 'svod';
+                    }));
+                }
+            }
+
             $childchannels = $theme_function->is_child_channels(get_the_ID());
             //$channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
             if($dsp_theme_options['opt-channel-poster-type'] == 'poster'){
@@ -118,9 +129,9 @@ if (have_posts()) {
                             <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                             <?php the_content(); ?>
                             <div class="subscribe_now mt-3">
-                                <?php if (empty($parant_channel_unlocked)): ?>
+                                <?php if (!empty($svod_products) && empty($parant_channel_unlocked)): ?>
                                     <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
-                                <?php else: ?>
+                                <?php elseif(!empty($parant_channel_unlocked)): ?>
                                     <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                 <?php endif; ?>
                             </div>
@@ -191,15 +202,9 @@ if (have_posts()) {
                                         <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                                         <?php the_content(); ?>
                                         <div class="subscribe_now mt-3">
-                                            <?php if (empty($parant_channel_unlocked)): ?>
+                                            <?php if (!empty($svod_products) && empty($parant_channel_unlocked)): ?>
                                                 <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
-                                                <?php
-                                                if (class_exists('Dotstudiopro_Subscription')) {
-                                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
-                                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
-                                                }
-                                                ?>
-                                            <?php else: ?>
+                                            <?php elseif(!empty($parant_channel_unlocked)): ?>
                                                 <a href="<?php echo $first_video_url; ?>" class="btn btn-secondary btn-ds-secondary">Watch Now</a>
                                             <?php endif; ?>
                                         </div>
@@ -213,7 +218,7 @@ if (have_posts()) {
                                             ?>
                                         </div>
                                         <?php if (class_exists('WP_Auth0_Options')) { ?>
-                                            <div class="my_list_button">
+                                            <div class="my_list_button mt-3">
                                                 <?php
                                                 if ($first_child_id) {
                                                     if ($client_token) {
