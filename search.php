@@ -5,7 +5,17 @@
  * @since 1.0.0
  */
 get_header();
-global $dsp_theme_options, $is_user_subscribed;
+global $dsp_theme_options, $client_token;
+
+$is_user_subscribed = false;
+if (class_exists('Dotstudiopro_Subscription') && $client_token) {
+    $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
+        $is_user_subscribed = true;
+    }
+}
+
 $q = get_query_var('s');
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
     'options' => array(

@@ -189,7 +189,7 @@ class Theme_Functions {
             if($channels[0]['channel_type'] == 'video'){
                 $response[0]['id'] = $channels[0]['video']['_id'];
                 $response[0]['title'] = $channels[0]['video']['title'];
-                $response[0]['description'] = $channels[0]['video']['description'];
+                $response[0]['description'] = isset($channels[0]['video']['description']) ? $channels[0]['video']['description'] : '';
                 $response[0]['image'] = $channels[0]['video']['thumb'];
                 $response[0]['slug'] = ($channels[0]['video']['slug']) ? $channels[0]['video']['slug'] : '';
                 $response[0]['bypass_channel_lock'] = isset($channels[0]['video']['bypass_channel_lock']) ? $channels[0]['video']['bypass_channel_lock'] : false;

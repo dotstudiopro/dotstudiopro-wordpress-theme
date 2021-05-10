@@ -30,7 +30,11 @@ if (have_posts()) {
         $theme_function = new Theme_Functions();
         // Code to check if user subscribe to watch this channel
         $dsp_api = new Dsp_External_Api_Request();
-        $country_code = $dsp_api->get_country();
+        if(isset($_SESSION['dsp_theme_country']) && !is_array($_SESSION['dsp_theme_country'])) {
+            $country_code = $_SESSION['dsp_theme_country'];
+        }else{
+            $country_code = $dsp_api->get_country();    
+        }
         $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
         if($country_code && !in_array("ALL", $dspro_channel_geo) && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
             ?>
@@ -71,12 +75,16 @@ if (have_posts()) {
                 $parant_channel_unlocked = true;
 
             $svod_products = array();
+            $tvod_products = array();
             if (class_exists('Dotstudiopro_Subscription')) {
                 $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
                 $check_product_by_channel = $dsp_subscription_object->getProductsByChannel($channel_meta['dspro_channel_id'][0]);
                 if (!is_wp_error($check_product_by_channel) && !empty($check_product_by_channel['products'])){
                    $svod_products = array_values(array_filter($check_product_by_channel['products'], function($cp) {
                         return $cp && !empty($cp['product_type']) && $cp['product_type'] === 'svod';
+                    }));
+                   $tvod_products = array_values(array_filter($check_product_by_channel['products'], function($tcp) {
+                        return $tcp && !empty($tcp['product_type']) && $tcp['product_type'] === 'tvod';
                     }));
                 }
             }
@@ -112,6 +120,15 @@ if (have_posts()) {
                 $videoSlug = ($channel_videos[0]['slug']) ? $channel_videos[0]['slug'] : $channel_videos[0]['_id'];
                 $first_video_url = get_site_url() . '/channel/' . $post->post_name . '/video/' . $videoSlug;
             }
+
+            $live_stream_start_time = isset($channel_meta['chnl_live_stream_start_time'][0]) ? $channel_meta['chnl_live_stream_start_time'][0] : '';
+            if(!empty($live_stream_start_time)){
+                $timm = strtotime($live_stream_start_time);
+                $convert_live_stream_start_time_to_user_time = get_date_from_gmt( date( 'Y-m-d H:i:s', $timm ), 'Y/m/d H:i:s' );
+                $convert_live_stream_start_time = $live_stream_start_time;
+                $current_time = current_time('F j, Y H:i a');   
+            }
+
             ?>
 
             <!-- Channel Banner image or video section start -->
@@ -128,6 +145,11 @@ if (have_posts()) {
                             <?php }?>
                             <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                             <?php the_content(); ?>
+                            <?php if(!empty($live_stream_start_time) && $current_time < $convert_live_stream_start_time_to_user_time){ ?>
+                                <div class="available_on_info">
+                                   <br><p class="available_on_date"></p>
+                                </div>
+                            <?php } ?>
                             <div class="subscribe_now mt-3">
                                 <?php if (!empty($svod_products) && empty($parant_channel_unlocked)): ?>
                                     <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
@@ -136,13 +158,9 @@ if (have_posts()) {
                                 <?php endif; ?>
                             </div>
                             <div class="more_ways_to_watch_now ml-2 mt-3 mr-2">
-                                <?php 
-                                 if (empty($parant_channel_unlocked) && class_exists('Dotstudiopro_Subscription')) {
-                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
-                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
-
-                                }
-                                ?>
+                                <?php if (!empty($tvod_products) && empty($parant_channel_unlocked)): ?>
+                                    <a href="/more-ways-to-watch/<?php echo $post->post_name; ?>" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>
+                                <?php endif; ?>
                             </div>
                             <?php if (class_exists('WP_Auth0_Options')) { ?>
                                 <div class="my_list_button mt-3">
@@ -201,6 +219,11 @@ if (have_posts()) {
                                         <?php }?>
                                         <p class="w-100 pb-3"><?php echo dsp_get_channel_publication_meta(get_the_ID()); ?></p>
                                         <?php the_content(); ?>
+                                        <?php if(!empty($live_stream_start_time) && $current_time < $convert_live_stream_start_time_to_user_time){ ?>
+                                            <div class="available_on_info">
+                                               <br><p style="color:#AF202C;" class="available_on_date"></p>
+                                            </div>
+                                        <?php } ?>
                                         <div class="subscribe_now mt-3">
                                             <?php if (!empty($svod_products) && empty($parant_channel_unlocked)): ?>
                                                 <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
@@ -209,13 +232,9 @@ if (have_posts()) {
                                             <?php endif; ?>
                                         </div>
                                         <div class="more_ways_to_watch_now ml-2 mt-3 mr-2">
-                                            <?php 
-                                             if (empty($parant_channel_unlocked) && class_exists('Dotstudiopro_Subscription')) {
-                                                $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
-                                                $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
-
-                                            }
-                                            ?>
+                                            <?php if (!empty($tvod_products) && empty($parant_channel_unlocked)): ?>
+                                                <a href="/more-ways-to-watch/<?php echo $post->post_name; ?>" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>
+                                            <?php endif; ?>
                                         </div>
                                         <?php if (class_exists('WP_Auth0_Options')) { ?>
                                             <div class="my_list_button mt-3">
@@ -489,5 +508,22 @@ if (!empty($trailer_id)) {
 
         })(jQuery)
     </script>
+<?php } if(!empty($live_stream_start_time)){ ?>
+<script type="text/javascript">
+    var timezone_name = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var convert_live_stream_start_time = '<?php echo $convert_live_stream_start_time?>';
+    var updated_live_stream_start_time = convertTZ(convert_live_stream_start_time, timezone_name);
+    var formate_live_stream_start_time = updated_live_stream_start_time.toLocaleString('en-US', {
+        day: 'numeric', 
+        year: 'numeric', 
+        month: 'long', 
+        hour: '2-digit', 
+        minute: '2-digit',
+    });
+    jQuery('.available_on_date').text('Available On ' + formate_live_stream_start_time);
+    function convertTZ(date, tzString) {
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+    }
+</script>
 <?php } ?>
 <?php get_footer(); ?>

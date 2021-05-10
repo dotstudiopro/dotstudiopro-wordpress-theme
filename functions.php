@@ -97,9 +97,8 @@ add_action('init', 'check_user_status', 1);
 
 function check_user_status() {
     ob_start();
-    global $client_token, $is_user_subscribed;
+    global $client_token;
     $client_token = 0;
-    $is_user_subscribed = false;
     $client_id = get_current_user_id();
     if ($client_id) {
         $client_token = get_user_meta($client_id, 'dotstudiopro_client_token', true);
@@ -116,14 +115,6 @@ function check_user_status() {
             }
             update_user_meta($client_id, 'dotstudiopro_client_token', $client_token['client_token']);
             update_user_meta($client_id, 'dotstudiopro_client_token_expiration', time() + 5400);
-        }
-        /* Check if user has any active subscription */
-        if (class_exists('Dotstudiopro_Subscription')) {
-            $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-            $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
-            if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
-                $is_user_subscribed = true;
-            }
         }
     }
 }

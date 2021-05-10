@@ -5,7 +5,7 @@
  * This template is used to display Home Page of the site.
  * @since 1.0.0
  */
-global $dsp_theme_options, $client_token, $is_user_subscribed;
+global $dsp_theme_options, $client_token;
 get_header();
 
 $theme_function = new Theme_Functions();

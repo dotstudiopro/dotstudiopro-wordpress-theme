@@ -41,7 +41,11 @@ endif;
 get_header();
 $channel_meta = get_post_meta($channel->ID);
 $dsp_api = new Dsp_External_Api_Request();
-$country_code = $dsp_api->get_country();
+if(isset($_SESSION['dsp_theme_country']) && !is_array($_SESSION['dsp_theme_country'])) {
+    $country_code = $_SESSION['dsp_theme_country'];
+}else{
+    $country_code = $dsp_api->get_country();    
+}
 $dspro_channel_geo = unserialize($channel_meta['dspro_channel_geo'][0]);
 if($country_code && !in_array("ALL", $dspro_channel_geo) && !in_array($country_code, $dspro_channel_geo) && !empty($dspro_channel_geo)){
     ?>
@@ -86,12 +90,16 @@ if (!is_wp_error($video) && !empty($video)):
     endif;
 
     $svod_products = array();
+    $tvod_products = array();
     if (class_exists('Dotstudiopro_Subscription')) {
         $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
         $check_product_by_channel = $dsp_subscription_object->getProductsByChannel(get_post_meta($channel->ID, 'dspro_channel_id', true));
         if (!is_wp_error($check_product_by_channel) && !empty($check_product_by_channel['products'])){
            $svod_products = array_values(array_filter($check_product_by_channel['products'], function($cp) {
                 return $cp && !empty($cp['product_type']) && $cp['product_type'] === 'svod';
+            }));
+           $tvod_products = array_values(array_filter($check_product_by_channel['products'], function($tcp) {
+                return $tcp && !empty($tcp['product_type']) && $tcp['product_type'] === 'tvod';
             }));
         }
     }
@@ -136,13 +144,9 @@ if (!is_wp_error($video) && !empty($video)):
                                                             <a href="/packages" class="btn btn-secondary btn-ds-secondary">Subscribe Now</a>
                                                             <?php endif; ?>
                                                             <div class="more_ways_to_watch_now mt-3 mr-4">
-                                                                <?php 
-                                                                 if (class_exists('Dotstudiopro_Subscription')) {
-                                                                    $subscription_fornt_object = new Dotstudiopro_Subscription_Front('dotstudiopro-subscription', '1.1.0');
-                                                                    $subscription_fornt_object->show_more_ways_to_watch($dspro_channel_id);
-
-                                                                }
-                                                                ?>
+                                                                <?php if (!empty($tvod_products)): ?>
+                                                                <a href="/more-ways-to-watch/<?php echo $channel->post_name; ?>" class="btn btn-secondary btn-ds-secondary">More Ways to Watch</a>
+                                                            <?php endif; ?>
                                                             </div>
                                                     </div>
                                                 </div>

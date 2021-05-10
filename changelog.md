@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.2] - 2021-05-10
+
+### Changed
+ - Make Changes related to TVOD Products Button and also removed call to get use product form init function
+
 ## [1.6.1] - 2021-04-24
 
 ### Changed

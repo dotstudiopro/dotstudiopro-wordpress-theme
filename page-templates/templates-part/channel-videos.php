@@ -1,5 +1,6 @@
 <?php
-global $dsp_theme_options, $is_user_subscribed;
+global $dsp_theme_options;
+
 $slide_text_class = '';
 if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
     $slide_text_class .= 'slide-text-dec';
@@ -26,7 +27,7 @@ if (isset($channel_unlocked) && $channel_unlocked == 0)
         <div class="slide <?php echo $class; ?>">
             <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'channel_tooltip_content_' . $cnt . $i; ?>">
                 <div class="hover <?php echo $lock_video_class; ?> ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                    <?php if (isset($channel_unlocked) && $channel_unlocked == 0 && $is_user_subscribed == false && $video['bypass_channel_lock'] != true && $video['bypass_channel_lock'] != 'true'): ?>
+                    <?php if (isset($channel_unlocked) && $channel_unlocked == 0 && $video['bypass_channel_lock'] != true && $video['bypass_channel_lock'] != 'true'): ?>
                         <div class="locked-channel"><i class="fa fa-lock"></i></div>
                     <?php endif; ?>
 

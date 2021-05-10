@@ -30,7 +30,7 @@ function storeVideoPoint(vjs) {
         var video_id = jQuery('.player').data('video_id');
         var nonce = jQuery('.player').data('nonce');
         if (video_id && play_time && nonce) {
-            $.post(
+            jQuery.post(
                 jsVariable.ajaxUrl, {
                     'action': 'save_point_data',
                     'play_time': play_time,
