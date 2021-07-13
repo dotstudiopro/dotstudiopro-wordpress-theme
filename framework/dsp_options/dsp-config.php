@@ -2141,6 +2141,33 @@ Redux::setSection($opt_name, array(
     )
 ));
 
+
+/**
+ * Captcha Options
+ * @since 1.0.0
+ */
+Redux::setSection($opt_name, array(
+    'title' => __('Captcha', 'dotstudio-pro'),
+    'id' => 'captcha',
+    'icon' => 'el el-repeat',
+    'heading' => 'Google Captcha Keys',
+    'desc'    => 'Get reCaptcha v3 keys from <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">Google</a>.<br />',
+    'fields' => array(
+        array(
+            'id' => 'opt-captcha-site-key',
+            'type' => 'text',
+            'title' => __('Site Key', 'dotstudio-pro'),
+            'default' => '',
+        ),
+        array(
+            'id' => 'opt-captcha-secret-key',
+            'type' => 'text',
+            'title' => __('Secret Key', 'dotstudio-pro'),
+            'default' => '',
+        ),
+    )
+));
+
 add_filter('redux/options/' . $opt_name . '/compiler', 'compiler_action', 10, 3);
 
 /**

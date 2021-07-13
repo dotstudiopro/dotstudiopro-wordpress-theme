@@ -987,4 +987,17 @@ function dsp_build_responsive_images($image, $target_width, $ratio) {
 
     return $attributes;
 }
+
+/**
+ * Add shortcode for recaptcha
+ */
+function recaptchaAdd() {
+    global $dsp_theme_options;
+    $captchaSiteKey = ($dsp_theme_options['opt-captcha-site-key']) ? $dsp_theme_options['opt-captcha-site-key'] : '';
+    if($captchaSiteKey) {
+        return '<div class="g-recaptcha" data-sitekey="'.$captchaSiteKey.'" data-size="invisible"></div>';
+    }
+    return '';
+}
+add_shortcode('recaptcha', 'recaptchaAdd');
 ?>
