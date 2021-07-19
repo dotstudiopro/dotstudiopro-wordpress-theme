@@ -993,9 +993,8 @@ function dsp_build_responsive_images($image, $target_width, $ratio) {
  */
 function recaptchaAdd() {
     global $dsp_theme_options;
-    $captchaSiteKey = ($dsp_theme_options['opt-captcha-site-key']) ? $dsp_theme_options['opt-captcha-site-key'] : '';
-    if($captchaSiteKey) {
-        return '<div class="g-recaptcha" data-sitekey="'.$captchaSiteKey.'" data-size="invisible"></div>';
+    if(!empty($dsp_theme_options['opt-captcha-site-key']) && !empty($dsp_theme_options['opt-captcha-secret-key'])) {
+        return '<div class="g-recaptcha" data-sitekey="'.$dsp_theme_options['opt-captcha-site-key'].'" data-size="invisible"></div>';
     }
     return '';
 }
