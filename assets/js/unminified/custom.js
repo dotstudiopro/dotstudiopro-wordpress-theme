@@ -254,3 +254,19 @@ jQuery(document).ready(() => {
         }
     }, 500);
 })
+
+/**
+* Session Expired then show dialog
+*/
+jQuery(document).ready(() => {
+    if(getCookie('dsp_session_expired')) {
+        $("#login_again_dialog").modal("show");
+        $("header").css("z-index", "-1");
+    }
+});
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
