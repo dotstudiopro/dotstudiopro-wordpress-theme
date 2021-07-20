@@ -14,7 +14,10 @@ $main_carousel = $theme_function->home_page_main_carousel();
 $main_carousel_width = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
 $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
 $homepageAPI = $dsp_api->homepage($client_token);
-$homepageData = $homepageAPI['homepage'];
+$homepageData = [];
+if(!is_wp_error($homepageAPI)){
+    $homepageData = $homepageAPI['homepage'];
+}
 ?>
 
 <!-- Home page Main carousal section start-->

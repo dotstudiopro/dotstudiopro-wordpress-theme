@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.3] - 2021-07-20
+
+### Added
+ - Added DRM Session Changes
+ - Added Captcha Validation Shortcode
+
 ## [1.6.2] - 2021-05-10
 
 ### Changed

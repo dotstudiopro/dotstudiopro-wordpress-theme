@@ -27,6 +27,7 @@ if (isset($_GET['activated']) && is_admin()) {
     $categories_page = get_page_by_title('Categories');
     $video = get_page_by_title('Video');
     $my_list_page = get_page_by_title('My List');
+    $reset_device_login_page = get_page_by_title('Reset Device Login');
 
     if ($home_page == NULL || $home_page->post_status == 'trash')
         add_dotstudiopro_bootstrap_custom_pages('Home Page', 'home-page', 'home-template.php');
@@ -47,6 +48,12 @@ if (isset($_GET['activated']) && is_admin()) {
         add_dotstudiopro_bootstrap_custom_pages('My List', 'my-list', 'my-lists-template.php');
     else
         update_post_meta($my_list_page->ID, '_wp_page_template', 'page-templates/my-lists-template.php');
+
+    if ($reset_device_login_page == NULL || $reset_device_login_page->post_status == 'trash')
+        add_dotstudiopro_bootstrap_custom_pages('Reset Device Login', 'reset-device-login', 'reset-device-login-template.php');
+    else
+        update_post_meta($reset_device_login_page->ID, '_wp_page_template', 'page-templates/reset-device-login-template.php');
+
 }
 
 /**
@@ -101,9 +108,22 @@ function check_user_status() {
     $client_token = 0;
     $client_id = get_current_user_id();
     if ($client_id) {
-        $client_token = get_user_meta($client_id, 'dotstudiopro_client_token', true);
-        $client_token_expiration = get_user_meta($client_id, 'dotstudiopro_client_token_expiration', true);
-        if ($client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
+        // Check max login limit reached
+        if(!session_id())
+            session_start();
+
+        $current_page = trim($_SERVER['REQUEST_URI'], '/');
+        $is_account_information_post_call = false;
+        if(isset($_POST['action']) && $_POST['action'] == 'destroy_every_user_login_session'){
+            $is_account_information_post_call = true;
+        }
+        if(isset($_SESSION['max_login_limit_reached']) && $current_page != 'reset-device-login' && $is_account_information_post_call == false){
+            wp_redirect(home_url('reset-device-login'));
+        }
+
+        $client_token = isset($_SESSION['dotstudiopro_client_token']) ? $_SESSION['dotstudiopro_client_token'] : 0;
+        $client_token_expiration = isset($_SESSION['dotstudiopro_client_token_expiration']) ? $_SESSION['dotstudiopro_client_token_expiration'] : '';
+        if (!empty($client_token_expiration) && $client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
             $client = new Dsp_External_Api_Request();
             $client_token = $client->refresh_client_token($client_token);
             if (is_wp_error($client_token)) {
@@ -113,8 +133,8 @@ function check_user_status() {
                 $client_token = "";
                 return $client_token;
             }
-            update_user_meta($client_id, 'dotstudiopro_client_token', $client_token['client_token']);
-            update_user_meta($client_id, 'dotstudiopro_client_token_expiration', time() + 5400);
+            $_SESSION['dotstudiopro_client_token'] = $client_token['client_token'];
+            $_SESSION['dotstudiopro_client_token_expiration'] = time() + 5400;
         }
     }
 }
@@ -854,9 +874,16 @@ function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $a
     $customer_id = $userinfo->user_metadata->customer;
     $spotlight = $userinfo->user_metadata->spotlight;
 
-    update_user_meta($user_id, "dotstudiopro_customer_id", $customer_id);
-    update_user_meta($user_id, "dotstudiopro_client_token", $spotlight);
-    update_user_meta($user_id, "dotstudiopro_client_token_expiration", time() + 5400);
+    if(!session_id())
+        session_start();
+
+    if(isset($userinfo->user_metadata->clear_sessions_only) && !empty($userinfo->user_metadata->clear_sessions_only)){
+        $_SESSION['max_login_limit_reached'] = true;
+    }
+
+    $_SESSION['dotstudiopro_customer_id'] = $customer_id;
+    $_SESSION['dotstudiopro_client_token'] = $spotlight;
+    $_SESSION['dotstudiopro_client_token_expiration'] = time() + 5400;
 
     // if (class_exists('Dotstudiopro_Subscription_Request')) {
     //     $subscriptionClass = new Dotstudiopro_Subscription_Request();
@@ -999,4 +1026,83 @@ function recaptchaAdd() {
     return '';
 }
 add_shortcode('recaptcha', 'recaptchaAdd');
+
+/*
+ * Generate login again dialog (Session expired)
+ */
+add_action ('wp_head','header_login_again_dialog');
+function header_login_again_dialog() {
+    ?>
+    <div class="modal" tabindex="-1" data-backdrop="false" data-keyboard="false" style="background: rgba(0, 0, 0, 0.9);" role="dialog" aria-labelledby="login_again_dialog_label" id="login_again_dialog">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Session expired</h5>
+          </div>
+          <div class="modal-body">
+            <p>Your session has expired. Please log in again.</p>
+            <form action="<?php echo admin_url('admin-post.php'); ?>" method="POST">
+                <input type="hidden" name="action" value="logout_clear_session">
+                <input type="submit" class="btn btn-secondary btn-ds-secondary pull-right" value="OK">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php
+}
+
+/**
+ * Session expired then User logout and clear session
+ */
+add_action( 'admin_post_logout_clear_session', 'logout_clear_session' );
+function logout_clear_session() {
+    setcookie('dsp_session_expired', null, time() - 3600, "/");
+    wp_destroy_current_session();
+    wp_clear_auth_cookie();
+    wp_set_current_user(0);
+    wp_redirect(site_url().'/wp-login.php');
+}
+
+/**
+ * User logout destroy session and client token
+ */
+add_action( 'wp_logout', 'destroy_user_login_drm_session', 0);
+function destroy_user_login_drm_session() {
+    global $client_token;
+    $dsp_api = new Dsp_External_Api_Request();
+    $dsp_api->destroy_user_login_session($client_token);
+
+    if(!session_id())
+        session_start();
+
+    setcookie('dsp_session_expired', null, time() - 3600, "/");
+    unset($_SESSION['dotstudiopro_customer_id']);
+    unset($_SESSION['dotstudiopro_client_token']);
+    unset($_SESSION['dotstudiopro_client_token_expiration']);
+    return true;
+}
+
+/**
+ * Destroy all users login session and current user set client token
+ */
+add_action( 'admin_post_destroy_every_user_login_session', 'destroy_every_user_login_session' );
+function destroy_every_user_login_session() {
+    global $client_token;
+    $dsp_api = new Dsp_External_Api_Request();
+    $responce = $dsp_api->destroy_every_user_login_session($client_token);
+    if(isset($responce) && isset($responce['token'])) {
+        $client_token = $responce['token'];
+
+        if(!session_id())
+            session_start();
+
+        $_SESSION['dotstudiopro_client_token'] = $client_token;
+        $_SESSION['dotstudiopro_client_token_expiration'] = time() + 5400;
+        unset($_SESSION['max_login_limit_reached']);
+    }
+    wp_redirect(site_url());
+
+}
+
 ?>
