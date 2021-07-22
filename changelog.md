@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.4] - 2021-07-22
+
+### Fixed
+ - Fixed minified version of custom js
+ 
 ## [1.6.3] - 2021-07-20
 
 ### Added
