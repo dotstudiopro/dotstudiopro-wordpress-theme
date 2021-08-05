@@ -117,8 +117,9 @@ function check_user_status() {
         if(isset($_POST['action']) && $_POST['action'] == 'destroy_every_user_login_session'){
             $is_account_information_post_call = true;
         }
-        if(isset($_SESSION['max_login_limit_reached']) && $current_page != 'reset-device-login' && $is_account_information_post_call == false){
+        if(!is_admin() && isset($_SESSION['max_login_limit_reached']) && $current_page != 'reset-device-login' && $is_account_information_post_call == false){
             wp_redirect(home_url('reset-device-login'));
+            exit();
         }
 
         $client_token = isset($_SESSION['dotstudiopro_client_token']) ? $_SESSION['dotstudiopro_client_token'] : 0;
