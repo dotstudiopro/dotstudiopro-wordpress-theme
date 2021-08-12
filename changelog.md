@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.5] - 2021-08-12
+
+### Fixed
+ - Fixed minor issue related to the DRM Session
+
 ## [1.6.4] - 2021-07-22
 
 ### Fixed
