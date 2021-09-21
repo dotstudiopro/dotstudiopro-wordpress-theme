@@ -802,6 +802,24 @@ if(!function_exists('dsp_add_login_link')){
 add_filter('wp_nav_menu_items', 'dsp_add_login_link', 10, 2);
 
 /**
+ * Adjust the authorize URL before redirecting.
+ *
+ * @param string $auth_url - Built authorize URL.
+ * @param array  $auth_params - Existing URL parameters.
+ *
+ * @return string
+ */
+function ds_auth0_authorize_url( $auth_url, $auth_params ) {
+    if(dsp_wp_is_mobile())
+        $auth_url .= '&device_type=mobile_web';
+    else
+        $auth_url .= '&device_type=desktop_web';
+
+    return $auth_url;
+}
+add_filter( 'auth0_authorize_url', 'ds_auth0_authorize_url', 10, 2 );
+
+/**
  * Filter the excerpt "read more" string.
  *
  * @param string $more "Read more" excerpt string.
