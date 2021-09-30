@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.6] - 2021-09-30
+
+### Added
+ - Added Purchase History Menu
+ - Added Auth0 Device Type
+
 ## [1.6.5] - 2021-08-12
 
 ### Fixed
