@@ -786,7 +786,8 @@ if(!function_exists('dsp_add_login_link')){
                         . '<ul class="dropdown-menu position-absolute" role="menu">';
                 if (class_exists('Dotstudiopro_Subscription')):
                     $items .= '<li><a href="/packages">Subscriptions</a></li>'
-                            . '<li><a href="/payment-profile">My Payment Profile</a></li>';
+                            . '<li><a href="/payment-profile">My Payment Profile</a></li>'
+                            . '<li><a href="/purchase-history">My Purchases</a></li>';
                 endif;
                 $items .= '<li><a href="/my-list">My List</a></li>'
                         . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
