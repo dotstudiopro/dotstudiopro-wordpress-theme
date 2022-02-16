@@ -1125,4 +1125,8 @@ function destroy_every_user_login_session() {
 
 }
 
+function dsp_get_cc_field($credit_card = null, $field) {
+    return !empty($credit_card[$field]) ? $credit_card[$field] : null;
+}
+
 ?>

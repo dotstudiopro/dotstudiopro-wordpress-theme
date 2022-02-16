@@ -1814,6 +1814,43 @@ Redux::setSection($opt_name, array(
 ));
 
 /**
+* Payment Screen Options
+* @since 1.0.0
+*/
+Redux::setSection($opt_name, array(
+    'title' => __('Payment Screen', 'dotstudio-pro'),
+    'id' => 'payment_screen',
+    'icon' => 'el el-usd',
+    'fields' => array(
+        array(
+            'id' => 'opt-payment-method-choice',
+            'type' => 'button_set',
+            'title' => __('Payment Method', 'dotstudio-pro'),
+            'desc' => __('Choose whether your site takes credit cards through a Chargify.js embed or through card submission to Braintree.', 'dotstudio-pro'),
+            'options' => array(
+                '0' => 'Chargify.js (Recommended)',
+                '1' => 'Braintree'
+            ),
+            'default' => '0'
+        ),
+        array(
+            'id' => 'opt-chargifyjs-token',
+            'type' => 'text',
+            'title' => __('Chargify.js Public Token', 'dotstudio-pro'),
+            'desc' => __('The Chargify.js Public Token from your Chargify account.'),
+            'required' => array('opt-payment-method-choice','equals','0')
+        ),
+        array(
+            'id' => 'opt-chargifyjs-subdomain',
+            'type' => 'text',
+            'title' => __('Chargify Subdomain', 'dotstudio-pro'),
+            'desc' => __('The Chargify subdomain for your account, ex: acme if your site is acme.chargify.com.'),
+            'required' => array('opt-payment-method-choice','equals','0')
+        )
+    )
+ ));
+
+/**
  * Search results options
  * @since 1.0.0
  */
