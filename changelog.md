@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2022-02-16
+
+### Added
+- Integrated Chargify.js into the payment pages
+
 ## [1.6.6] - 2021-09-30
 
 ### Added
