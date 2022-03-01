@@ -67,11 +67,18 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                                 $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
                                 ?>
                                 <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
-                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); ?>
-
-                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                <?php else : ?>
-                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); 
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy" data-src="<?php echo $image; ?>?webp=1" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php endif; ?>
+                                <?php else : 
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>?webp=1">
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>
@@ -117,11 +124,18 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                                 <?php endif; ?>
 
                                 <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
-                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); ?>
-
-                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                <?php else : ?>    
-                                    <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); 
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy" data-src="<?php echo $image; ?>?webp=1" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php endif; ?>
+                                <?php else : 
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>   
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>?webp=1">
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 <div class='title-holder'>
                                     <h3><?php echo $title; ?></h3>

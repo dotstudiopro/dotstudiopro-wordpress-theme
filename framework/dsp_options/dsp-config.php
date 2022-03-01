@@ -147,6 +147,15 @@ Redux::setSection($opt_name, array(
             'desc' => __('Add google tag manager code with having SCRIPT tag', 'dotstudio-pro'),
             'default' => '',
         ),
+        array(
+            'id' => 'opt-display-webp-image',
+            'type' => 'switch',
+            'title' => __('Display WebP Images', 'dotstudio-pro'),
+            'subtitle' => __('Choose whether or not to display dotstudiopro images in webp format on the site. ', 'dotstudio-pro'),
+            'default' => 0,
+            'on' => 'On',
+            'off' => 'Off',
+        ),
     )
 ));
 

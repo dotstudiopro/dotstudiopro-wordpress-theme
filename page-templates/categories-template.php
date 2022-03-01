@@ -93,11 +93,18 @@ get_header();
                         <a href="<?php echo $link; ?>" title="<?php echo $category->post_title; ?>">
                             <div class="holder">
                                 <?php if( $dsp_theme_options['opt-categories-image-size'] == '1') :
-                                    $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio ); ?>
-
-                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                <?php else : ?>    
-                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>">
+                                    $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio ); 
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>?webp=1" class="lazy w-100" data-src="<?php echo $banner; ?>?webp=1" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                    <?php endif; ?> 
+                                <?php else :  
+                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>   
+                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $banner; ?>">
+                                    <?php else:?>
+                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy w-100" data-src="<?php echo $banner; ?>?webp=1">
+                                    <?php endif; ?> 
                                 <?php endif; ?> 
                                 <?php if ($dsp_theme_options['opt-categories-title'] == true): ?>
                                     <?php if(!empty($category_meta['cat_display_name'][0])) : ?>

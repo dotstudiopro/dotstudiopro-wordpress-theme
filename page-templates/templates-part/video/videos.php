@@ -135,7 +135,12 @@ if (!is_wp_error($video) && !empty($video)):
                             <div class="player-content-inner">
                                 <div class="visible-desktop" id="hero-vid">
                                     <div class="image">
-                                        <div class="inner-banner-img"><img src="<?php echo $banner . '/1300/731'; ?>" alt="<?php echo get_the_title(); ?>">
+                                        <div class="inner-banner-img">
+                                            <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                                <img src="<?php echo $banner . '/1300/731'; ?>" alt="<?php echo get_the_title(); ?>">
+                                            <?php else: ?>
+                                                <img src="<?php echo $banner . '/1300/731'; ?>?webp=1" alt="<?php echo get_the_title(); ?>">
+                                            <?php endif; ?>
                                             <div class="v-overlay">
                                                 <div class="lock_overlay"><i class="fa fa-lock"></i></span>
                                                     <div class="subscribe_now mt-3">
@@ -197,7 +202,11 @@ if (!is_wp_error($video) && !empty($video)):
                     }
                     ?>
                     <div class="text-center add_to_list mb-2 pt-5">
-                        <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
+                        <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                            <img src="<?php echo $channel_img; ?>" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
+                        <?php else:?>
+                            <img src="<?php echo $channel_img; ?>?webp=1" alt="<?php echo $channel->title; ?>" class="video-right-img mb-2">
+                        <?php endif; ?>
 			<?php if(class_exists('WP_Auth0_Options')){ ?>
 							<div class="my_list_button">
 								<?php

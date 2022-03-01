@@ -135,11 +135,22 @@ if (have_posts()) {
             <div class="chnl inner-banner-bg">
                 <!-- Channel Banner image section start -->
                 <div class="chanl_background_img">
-                    <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/900'; ?>" alt="<?php echo get_the_title(); ?>"></div>
+                    
+                    <div class="inner-banner-img">
+                        <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                            <img src="<?php echo $banner . '/1920/900'; ?>" alt="<?php echo get_the_title(); ?>">
+                        <?php else:?>
+                            <img src="<?php echo $banner . '/1920/900?webp=1'; ?>" alt="<?php echo get_the_title(); ?>">
+                        <?php endif; ?>
+                    </div>
                     <div class="inner-banner-content_bg">
                         <div class="inner-banner-content row no-gutters">
-                            <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){?>
-                                <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                            <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){
+                                if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                    <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                                <?php else:?>
+                                    <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400?webp=1'; ?>" alt="<?php echo get_the_title(); ?>">
+                                <?php endif; ?>
                             <?php }else{ ?>
                             <h2><?php echo get_the_title(); ?></h2>
                             <?php }?>
@@ -212,8 +223,12 @@ if (have_posts()) {
                                 <div class="player" data-video_id="<?php echo $trailer_id; ?>"></div>
                                 <div class="inner-banner-content_bg channel-teaser-info">
                                     <div class="inner-banner-content row no-gutters">
-                                        <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){?>
-                                            <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                                        <?php if($dsp_theme_options['opt-channel-poster-logo-title'] == 'logo' && !empty($channel_meta['chnl_logo'][0])){
+                                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                                <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400'; ?>" alt="<?php echo get_the_title(); ?>">
+                                            <?php else:?>
+                                                <img class="title_logo pb-3" src="<?php echo $channel_meta['chnl_logo'][0]. '/400?webp=1'; ?>" alt="<?php echo get_the_title(); ?>">
+                                            <?php endif; ?>
                                         <?php }else{ ?>
                                         <h2><?php echo get_the_title(); ?></h2>
                                         <?php }?>

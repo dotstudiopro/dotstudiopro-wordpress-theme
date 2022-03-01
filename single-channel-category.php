@@ -26,7 +26,13 @@ if (have_posts()) {
         
         <div class="category inner-banner-bg">
             <?php if($banner_visibility ): ?>
-                <div class="inner-banner-img"><img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo (!empty($category_meta['cat_display_name'][0]) ? $category_meta['cat_display_name'][0] : get_the_title() ); ?>"></div>
+                <div class="inner-banner-img">
+                    <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                        <img src="<?php echo $banner . '/1920/350'; ?>" alt="<?php echo (!empty($category_meta['cat_display_name'][0]) ? $category_meta['cat_display_name'][0] : get_the_title() ); ?>">
+                    <?php else:?>
+                        <img src="<?php echo $banner . '/1920/350?webp=1'; ?>" alt="<?php echo (!empty($category_meta['cat_display_name'][0]) ? $category_meta['cat_display_name'][0] : get_the_title() ); ?>">
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
             <?php if ($dsp_theme_options['opt-category-poster-information'] == true) : ?>
                 <div class="inner-banner-content_bg">
@@ -77,11 +83,18 @@ if (have_posts()) {
                                                 <?php endif; ?>
 
                                                 <?php if( $dsp_theme_options['opt-category-image-size'] == '1' ) :
-                                                    $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); ?>
-
-                                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                                <?php else : ?>    
-                                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                    $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); 
+                                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                                    <?php else:?>
+                                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image']; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                                                    <?php endif; ?>
+                                                <?php else : 
+                                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>   
+                                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                    <?php else:?>
+                                                        <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                                 <div class="overlay">
 
