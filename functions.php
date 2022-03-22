@@ -889,15 +889,25 @@ function dsp_get_category_list_lis() {
  */
 function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $access_token) {
 
-    if (empty($userinfo->user_metadata->customer) || empty($userinfo->user_metadata->spotlight))
+    $user_metadata_property_key = 'https://dotstudiopro.com/user_metadata';
+
+    if(isset($userinfo->{$user_metadata_property_key}) && !empty($userinfo->{$user_metadata_property_key})){
+        $user_metadata_info = $userinfo->{$user_metadata_property_key};
+    }
+
+    if(isset($userinfo->user_metadata) && !empty($userinfo->user_metadata)){
+        $user_metadata_info = $userinfo->user_metadata;
+    }
+
+    if (empty($user_metadata_info->customer) || empty($user_metadata_info->spotlight))
         return;
-    $customer_id = $userinfo->user_metadata->customer;
-    $spotlight = $userinfo->user_metadata->spotlight;
+    $customer_id = $user_metadata_info->customer;
+    $spotlight = $user_metadata_info->spotlight;
 
     if(!session_id())
         session_start();
 
-    if(isset($userinfo->user_metadata->clear_sessions_only) && !empty($userinfo->user_metadata->clear_sessions_only)){
+    if(isset($user_metadata_info->clear_sessions_only) && !empty($user_metadata_info->clear_sessions_only)){
         $_SESSION['max_login_limit_reached'] = true;
     }
 
