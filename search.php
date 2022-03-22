@@ -81,11 +81,11 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                     </div>
                 <?php endforeach; ?>
             </div>
-        <?php elseif ($result['data']['hits'] && $type == 'channel'): ?>
+        <?php elseif ($result['channels'] && $type == 'channel'): ?>
             <div class="row">
-                <?php foreach ($result['data']['hits'] as $data): ?>
+                <?php foreach ($result['channels'] as $data): ?>
                     <div class="col-6 col-sm-3 col-md-<?php echo $no_of_row; ?> p-2  search-custom-width">
-                        <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['_source']['title']; ?>">
+                        <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['title']; ?>">
                             <div class="holder">
                                 <?php
                                 if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
@@ -110,9 +110,9 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
 
                                     $ratio = $ratio_height / $ratio_width;
                                 }
-                                $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
+                                $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['title'];
                                 ?>
-                                <?php if (isset($data['_source']['is_product']) && $data['_source']['is_product'] == 1 && $is_user_subscribed == false): ?>
+                                <?php if (isset($data['is_product']) && $data['is_product'] == 1 && $is_user_subscribed == false): ?>
                                     <div class="locked-channel"><i class="fa fa-lock"></i></div>
                                 <?php endif; ?>
 

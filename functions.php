@@ -617,8 +617,8 @@ function autocomplete() {
         }
 
         if (!empty($search) && !is_wp_error($search)) {
-            foreach ($search['data']['hits'] as $key => $data):
-                if ($type == 'channel'):
+            if ($type == 'channel'):
+                foreach ($search['channels'] as $key => $data):
                     $url = get_site_url() . '/channel/' . $data['slug'];
                     if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
                        $image_type = $data['poster'];
@@ -629,31 +629,47 @@ function autocomplete() {
                     else{
                         $image_type = $data['wallpaper'];
                     }
-                    //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                     $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                    $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
+                    $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                     $title = 'Channels';
-                else:
+
+                    $items['channel'][$key]['name'] = $data['title'];
+                    if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                        $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+
+                        $items['channel'][$key]['image'] = $image;
+                        $items['channel'][$key]['image_attributes'] = $image_attributes;
+                    else :
+                        $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
+                        $items['channel'][$key]['image_attributes'] = '';
+                    endif;
+                    $items['channel'][$key]['url'] = $url;
+                    $items['channel'][$key]['is_product'] = $is_product;
+                    $items['channel'][$key]['title'] = $title;
+                    $items['channel'][$key]['flag'] = 'channel';
+                endforeach;  
+            else:
+                foreach ($search['data']['hits'] as $key => $data):
                     $url = get_site_url() . '/video/' . $data['_id'];
                     $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = 0;
                     $title = 'Videos';
-                endif;
-                $items['channel'][$key]['name'] = $data['_source']['title'];
-                if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
-                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+                    $items['channel'][$key]['name'] = $data['_source']['title'];
+                    if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                        $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
 
-                    $items['channel'][$key]['image'] = $image;
-                    $items['channel'][$key]['image_attributes'] = $image_attributes;
-                else :
-                    $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
-                    $items['channel'][$key]['image_attributes'] = '';
-                endif;
-                $items['channel'][$key]['url'] = $url;
-                $items['channel'][$key]['is_product'] = $is_product;
-                $items['channel'][$key]['title'] = $title;
-                $items['channel'][$key]['flag'] = 'channel';
-            endforeach;
+                        $items['channel'][$key]['image'] = $image;
+                        $items['channel'][$key]['image_attributes'] = $image_attributes;
+                    else :
+                        $items['channel'][$key]['image'] = $image.'/'.$width.'/'.$height;
+                        $items['channel'][$key]['image_attributes'] = '';
+                    endif;
+                    $items['channel'][$key]['url'] = $url;
+                    $items['channel'][$key]['is_product'] = $is_product;
+                    $items['channel'][$key]['title'] = $title;
+                    $items['channel'][$key]['flag'] = 'channel';
+                endforeach;  
+            endif;
         }
     }
 
@@ -680,8 +696,8 @@ function search_suggesion() {
     $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
 
     if (!empty($search) && !is_wp_error($search)) {
-        foreach ($search['data']['hits'] as $key => $data):
-            if ($type == 'channel'):
+        if ($type == 'channel'):
+            foreach ($search['channels'] as $key => $data):
                 $url = get_site_url() . '/channel/' . $data['slug'];
                 if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
                    $image_type = $data['poster'];
@@ -694,28 +710,43 @@ function search_suggesion() {
                 }
                 //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
                 $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                $is_product = (isset($data['_source']['is_product'])) ? $data['_source']['is_product'] : 0;
+                $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                 $title = 'Channels';
-            else:
+                $items[$key]['name'] = $data['title'];
+                if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+                    $items[$key]['image'] = $image;
+                    $items[$key]['image_attributes'] = $image_attributes;
+                else :
+                    $items[$key]['image'] = $image.'/'.$width.'/'.$height;
+                    $items[$key]['image_attributes'] = '';
+                endif;
+                $items[$key]['url'] = $url;
+                $items[$key]['title'] = $title;
+                $items[$key]['is_product'] = $is_product;
+                $items[$key]['flag'] = 'channel';
+            endforeach;  
+        else:
+            foreach ($search['data']['hits'] as $key => $data):
                 $url = get_site_url() . '/video/' . $data['_id'];
                 $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = 0;
                 $title = 'Videos';
-            endif;
-            $items[$key]['name'] = $data['_source']['title'];
-            if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
-                $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
-                $items[$key]['image'] = $image;
-                $items[$key]['image_attributes'] = $image_attributes;
-            else :
-                $items[$key]['image'] = $image.'/'.$width.'/'.$height;
-                $items[$key]['image_attributes'] = '';
-            endif;
-            $items[$key]['url'] = $url;
-            $items[$key]['title'] = $title;
-            $items[$key]['is_product'] = $is_product;
-            $items[$key]['flag'] = 'channel';
-        endforeach;
+                $items[$key]['name'] = $data['_source']['title'];
+                if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
+                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
+                    $items[$key]['image'] = $image;
+                    $items[$key]['image_attributes'] = $image_attributes;
+                else :
+                    $items[$key]['image'] = $image.'/'.$width.'/'.$height;
+                    $items[$key]['image_attributes'] = '';
+                endif;
+                $items[$key]['url'] = $url;
+                $items[$key]['title'] = $title;
+                $items[$key]['is_product'] = $is_product;
+                $items[$key]['flag'] = 'channel';
+            endforeach;
+        endif;
     }
     wp_send_json_success($items);
 }
