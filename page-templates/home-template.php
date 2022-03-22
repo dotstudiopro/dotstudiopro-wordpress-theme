@@ -104,22 +104,10 @@ if(!is_wp_error($homepageAPI)){
                 }
             }
         }
-        $category_args = array(
-            'post_type' => 'channel-category',
-            'posts_per_page' => -1,
-            'post__not_in' => !empty($home->ID) ? array($home->ID) : array(), // Ensure we have a home here, or else we get errors
-            'order' => 'ASC',
-            'meta_key' => 'weight',
-            'orderby' => 'meta_value_num',
-            'meta_query' => array(
-                array(
-                    'key' => 'is_on_cat_homepage',
-                    'value' => 1
-                )
-            )
-        );
+        
+        $category_args = $theme_function->category_args_homepage($home);
         $categories = $theme_function->query_categories_posts($category_args, "homepage_other_carousel_categories");
-
+        
         if (!empty($homepageData)) {
             foreach ($homepageData as $data) {
                 $category_slug = $data['category']['slug'];

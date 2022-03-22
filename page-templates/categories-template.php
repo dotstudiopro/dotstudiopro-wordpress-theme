@@ -24,31 +24,15 @@ get_header();
         if(isset($dsp_theme_options['opt-category-all']) && $dsp_theme_options['opt-category-all'] == 1){
             $arr = [];
         }
-        $category_args = array(
-            'post_type' => 'channel-category',
-            'posts_per_page' => -1,
-            'post_name__in' => $arr,
-            'order' => 'ASC',
-            'meta_key' => 'weight',
-            'orderby' => 'meta_value_num',
-        );
 
         $theme_function = new Theme_Functions();
+        $category_args =  $theme_function->category_args($arr);
         $categories = $theme_function->query_categories_posts($category_args, "categories_template");
 
         if ($categories) {
             foreach ($categories as $category) {
-                $channels_args = array(
-                    'post_type' => 'channel',
-                    'posts_per_page' => -1,
-                    'meta_query' => array(
-                        array(
-                            'key' => 'chnl_categories',
-                            'value' => ',' . $category->post_name . ',',
-                            'compare' => 'LIKE',
-                        )
-                    )
-                );
+                
+                $channels_args = $theme_function->channels_args($category->post_name);
                 $cache_key = "categories_channel_" . $category->post_name;
                 $channels = $theme_function->query_categories_posts($channels_args, $cache_key);
 

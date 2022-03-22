@@ -708,6 +708,72 @@ class Theme_Functions {
     }
 
     /**
+     * Category args for category template page
+     * @since 2.0.0
+     *
+     * @param object $args The arguments for the query
+     * @return object Query result
+     */
+    public function category_args($args){
+        $category_args = array(
+            'post_type' => 'channel-category',
+            'posts_per_page' => -1,
+            'post_name__in' => $args,
+            'order' => 'ASC',
+            'meta_key' => 'weight',
+            'orderby' => 'meta_value_num',
+        );
+        return $category_args;
+    }
+
+    /**
+     * Category args for Home page
+     * @since 2.0.0
+     *
+     * @param object $args The arguments for the query
+     * @return object Query result
+     */
+    public function category_args_homepage($args){
+       $category_args_homepage = array(
+            'post_type' => 'channel-category',
+            'posts_per_page' => -1,
+            'post__not_in' => !empty($args->ID) ? array($args->ID) : array(), // Ensure we have a home here, or else we get errors
+            'order' => 'ASC',
+            'meta_key' => 'weight',
+            'orderby' => 'meta_value_num',
+            'meta_query' => array(
+                array(
+                    'key' => 'is_on_cat_homepage',
+                    'value' => 1
+                )
+            )
+        );
+        return $category_args_homepage;
+    }
+
+    /**
+     * Channel args for category template page
+     * @since 2.0.0
+     *
+     * @param object $args The arguments for the query
+     * @return object Query result
+     */
+    public function channels_args($args){
+        $channels_args = array(
+            'post_type' => 'channel',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'chnl_categories',
+                    'value' => ',' . $args . ',',
+                    'compare' => 'LIKE',
+                )
+            )
+        );
+        return $channels_args;
+    }
+
+    /**
      * function to localize the option for the intializtion of slick slider
      * @since 1.0.0
      *
