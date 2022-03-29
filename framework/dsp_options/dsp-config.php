@@ -631,7 +631,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channel Banner Type For Main Carousel', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type you would like to display in the main carousel', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
@@ -706,7 +706,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Carousel Image Type', 'dotstudio-pro'),
             'subtitle' => __('Select the poster banner type you would like to display on the carousel', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
@@ -1268,7 +1268,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channel Poster Type', 'dotstudio-pro'),
             'subtitle' => __('The channel poster type you would like to display on category detail page', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
@@ -1380,7 +1380,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channel Banner Type', 'dotstudio-pro'),
             'subtitle' => __('Select the type of channel banner you would like to display', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
@@ -1617,7 +1617,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channel Banner Type', 'dotstudio-pro'),
             'subtitle' => __('Select the channel banner type to display', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
@@ -1876,7 +1876,7 @@ Redux::setSection($opt_name, array(
             'title' => __('Select Channel Banner Type', 'dotstudio-pro'),
             'subtitle' => __('The channel banner type you would like to display', 'dotstudio-pro'),
             'options' => array(
-                'spotlight_poster' => 'Spotlight Poster',
+                'spotlight_poster' => 'Key Art',
                 'poster' => 'Poster',
                 'wallpaper' => 'Wallpaper',
             ),
