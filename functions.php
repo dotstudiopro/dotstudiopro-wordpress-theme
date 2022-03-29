@@ -122,23 +122,21 @@ function check_user_status() {
             exit();
         }
         
-        $client_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI1Y2MwZDc4Zjk3ZjgxNWZiMmVlYWIzYzciLCJleHBpcmVzIjoxNjQ2MjE2Mzg1OTk3LCJjb250ZXh0Ijp7ImF2YXRhciI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyL2Q0MTViNDA3MmQyODRjY2NmODg1MTgxY2Y5OWQzNWUzP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGY2gucG5nIiwiaWQiOiI2MjE0YmFlMDYxMjFiZjBlOGZkZDA4OWQiLCJmaXJzdF9uYW1lIjoiIiwibGFzdF9uYW1lIjoiIn19.qIf77yN_k8eAFyGTHJ08AJvSUXcPXt0Z675rI6DIccA";
-
-        // $client_token = isset($_SESSION['dotstudiopro_client_token']) ? $_SESSION['dotstudiopro_client_token'] : 0;
-        // $client_token_expiration = isset($_SESSION['dotstudiopro_client_token_expiration']) ? $_SESSION['dotstudiopro_client_token_expiration'] : '';
-        // if (!empty($client_token_expiration) && $client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
-        //     $client = new Dsp_External_Api_Request();
-        //     $client_token = $client->refresh_client_token($client_token);
-        //     if (is_wp_error($client_token)) {
-        //         // If we have an error with the client token, we can't leave that value as a wp_error object;
-        //         // if we do, every API call involving a client token throws an error because we can't send a
-        //         // wp_error object as a header value, so we set an empty value instead
-        //         $client_token = "";
-        //         return $client_token;
-        //     }
-        //     $_SESSION['dotstudiopro_client_token'] = $client_token['client_token'];
-        //     $_SESSION['dotstudiopro_client_token_expiration'] = time() + 5400;
-        // }
+        $client_token = isset($_SESSION['dotstudiopro_client_token']) ? $_SESSION['dotstudiopro_client_token'] : 0;
+        $client_token_expiration = isset($_SESSION['dotstudiopro_client_token_expiration']) ? $_SESSION['dotstudiopro_client_token_expiration'] : '';
+        if (!empty($client_token_expiration) && $client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
+            $client = new Dsp_External_Api_Request();
+            $client_token = $client->refresh_client_token($client_token);
+            if (is_wp_error($client_token)) {
+                // If we have an error with the client token, we can't leave that value as a wp_error object;
+                // if we do, every API call involving a client token throws an error because we can't send a
+                // wp_error object as a header value, so we set an empty value instead
+                $client_token = "";
+                return $client_token;
+            }
+            $_SESSION['dotstudiopro_client_token'] = $client_token['client_token'];
+            $_SESSION['dotstudiopro_client_token_expiration'] = time() + 5400;
+        }
     }
 }
 
