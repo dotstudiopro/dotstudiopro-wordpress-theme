@@ -121,7 +121,7 @@ function check_user_status() {
             wp_redirect(home_url('reset-device-login'));
             exit();
         }
-
+        
         $client_token = isset($_SESSION['dotstudiopro_client_token']) ? $_SESSION['dotstudiopro_client_token'] : 0;
         $client_token_expiration = isset($_SESSION['dotstudiopro_client_token_expiration']) ? $_SESSION['dotstudiopro_client_token_expiration'] : '';
         if (!empty($client_token_expiration) && $client_token_expiration <= time() && class_exists('Dsp_External_Api_Request')) {
@@ -1064,8 +1064,12 @@ function dsp_build_responsive_images($image, $target_width, $ratio) {
     foreach($variant_factors as $factor) {
         $new_width = ceil($target_width * $factor);
         $new_height = ceil($ratio * $new_width);
-
-        $srcset[] = $image . '/'. $new_width . '/' . $new_height . ' ' . $new_width.'w';
+        global $dsp_theme_options;
+        if($dsp_theme_options['opt-display-webp-image'] == 0){
+            $srcset[] = $image . '/'. $new_width . '/' . $new_height . ' ' . $new_width.'w';    
+        }else{
+            $srcset[] = $image . '/'. $new_width . '/' . $new_height . '?webp=1 ' . $new_width.'w';    
+        }
     }
     $attributes['srcset'] = implode(', ', $srcset);
 
@@ -1168,6 +1172,10 @@ function destroy_every_user_login_session() {
 
 function dsp_get_cc_field($credit_card = null, $field) {
     return !empty($credit_card[$field]) ? $credit_card[$field] : null;
+}
+
+function dsp_get_theme_option($key) {
+    return $dsp_theme_options[$key];
 }
 
 ?>

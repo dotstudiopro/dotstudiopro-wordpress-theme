@@ -36,7 +36,11 @@ get_header();
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
                         <a href="<?php echo $link; ?>" title="<?php echo $title; ?>">
                             <div class="holder">
-                                <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
+                                <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
+                                <?php else:?>
+                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360?webp=1" class="lazy w-100" data-src="<?php echo $banner; ?>?webp=1"> 
+                                <?php endif; ?>
                                 <h4 class="pt-2 text-center"><?php echo $title; ?></h4>
                             </div>
                         </a>    

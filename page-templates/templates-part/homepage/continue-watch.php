@@ -20,11 +20,18 @@
                 <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'channel_tooltip_content_' . $c; ?>">
                     <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
                         <?php if( $dsp_theme_options['opt-continue-watch-image-size'] == '1' ) :
-                            $image_attributes = dsp_build_responsive_images( 'https://images.dotstudiopro.com/'.$video['thumb'], $c_width, $c_ratio ); ?>
-
-                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb']; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                        <?php else : ?>
-                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width . '/' . $c_height; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb'] . '/' . $c_width . '/' . $c_height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                            $image_attributes = dsp_build_responsive_images( 'https://images.dotstudiopro.com/'.$video['thumb'], $c_width, $c_ratio ); 
+                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb']; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                            <?php else:?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width; ?>?webp=1" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb']; ?>?webp=1" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                            <?php endif; ?>
+                        <?php else :
+                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width . '/' . $c_height; ?>" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb'] . '/' . $c_width . '/' . $c_height; ?>" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                            <?php else:?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $c_width . '/' . $c_height; ?>?webp=1" class="lazy w-100" data-src="<?php echo 'https://images.dotstudiopro.com/' . $video['thumb'] . '/' . $c_width . '/' . $c_height; ?>?webp=1" title="<?php echo $video['title']; ?>" alt="<?php echo $video['title']; ?>">
+                            <?php endif; ?>
                         <?php endif; ?>
                         <div class="overlay">
                             <div class="watch_now"><a class="info" href="<?php echo get_site_url() . '/video/' . $video['_id']; ?>" title="<?php echo $video['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>

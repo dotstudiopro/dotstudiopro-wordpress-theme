@@ -50,11 +50,18 @@ if (!empty($recommendation_content)):
                         <?php endif; ?>
 
                         <?php if( $dsp_theme_options['opt-related-image-size'] == '1' ) :
-                            $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); ?>
-
-                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                        <?php else : ?>    
-                            <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                            $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); 
+                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                            <?php else:?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image']; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
+                            <?php endif; ?>
+                        <?php else : 
+                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>    
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                            <?php else:?>
+                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
+                            <?php endif; ?>
                         <?php endif; ?>
                         <div class="overlay">
                             <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
