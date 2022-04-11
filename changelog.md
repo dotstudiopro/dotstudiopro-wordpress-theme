@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2022-04-11
+
+### Changed
+- Change "Spotlight Poster" to "Key Art" in theme menus
+- Auth0 user login webhook changes
+- Update Channel Search API
+
+### Added
+- Add Webp option for images
+
 ## [2.0.0] - 2022-02-16
 
 ### Added
