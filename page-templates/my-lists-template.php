@@ -5,56 +5,32 @@
  * This template is used to display all my list channels
  * @since 1.0.0
  */
-global $dsp_theme_options, $client_token;
-if (!$client_token) {
-    wp_redirect('/');
-}
+include(locate_template('page-templates/templates-processing/my-lists-template-processing.php'));
 get_header();
 ?>
 <div class="custom-container container">
     <h2 class="page-title pt-5">My List</h2>
     <div class="row no-gutters pt-3 pb-5">
         <?php
-        $dotstudio_api = new Dsp_External_Api_Request();
-        $all_channels = $dotstudio_api->get_user_watchlist($client_token);
-
-        if (!is_wp_error($all_channels)) {
-            if (!empty($all_channels['channels'])) {
-
-                foreach ($all_channels['channels'] as $channel) {
-                    $channel_id = $channel['_id'];
-					$title = $channel['title'];
-                    $link = '/channel/' . $channel['slug'];
-                    $banner = (isset($channel['spotlight_poster'])) ? $channel['spotlight_poster'] . '/240/360' : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360';
-					if(isset($channel['parent_channel']) && !empty($channel['parent_channel'])){
-                        $channel_id = $channel['parent_channel']['_id'];
-                        $title = $channel['parent_channel']['title'];
-                        $link = '/channel/' . $channel['parent_channel']['slug'];
-                        $banner = (isset($channel['parent_channel']['spotlight_poster'])) ? $channel['parent_channel']['spotlight_poster'] . '/240/360' : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360';
-                    }
-                    ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
-                        <a href="<?php echo $link; ?>" title="<?php echo $title; ?>">
-                            <div class="holder">
-                                <?php if($dsp_theme_options['opt-display-webp-image'] == 0):?>
-                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360" class="lazy w-100" data-src="<?php echo $banner; ?>"> 
-                                <?php else:?>
-                                    <img src="https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b/240/360?webp=1" class="lazy w-100" data-src="<?php echo $banner; ?>?webp=1"> 
-                                <?php endif; ?>
-                                <h4 class="pt-2 text-center"><?php echo $title; ?></h4>
-                            </div>
-                        </a>    
-                        <div class="text-center pb-2">
-                            <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel['_id']; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
+        if (!empty($final_my_list_page_data['channels'])) {
+            foreach ($final_my_list_page_data['channels'] as $channel) { ?>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center-img p-2">
+                    <a href="<?php echo $channel['link']; ?>" title="<?php echo $channel['title']; ?>">
+                        <div class="holder">
+                            <img src="<?php echo $final_my_list_page_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $channel['banner']; ?>"> 
+                            <h4 class="pt-2 text-center"><?php echo $channel['title']; ?></h4>
                         </div>
+                    </a>    
+                    <div class="text-center pb-2">
+                        <button class="btn btn-danger manage_my_list" data-channel_id="<?php echo $channel['channel_id']; ?>" data-action="removeFromMyList" data-nonce="<?php echo wp_create_nonce('removeFromMyList'); ?>"><i class="fa fa-minus-circle"></i> Remove</button>
                     </div>
-                    <?php
-                }
-            } else {
-                ?>
-                <h4>You don't have any titles added to your list. <a href="/">Explore</a> our selection to add some!</h4>
+                </div>
                 <?php
             }
+        } else {
+            ?>
+            <h4>You don't have any titles added to your list. <a href="/">Explore</a> our selection to add some!</h4>
+            <?php
         }
         ?>
     </div><!-- container -->

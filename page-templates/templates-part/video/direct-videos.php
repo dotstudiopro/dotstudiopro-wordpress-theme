@@ -7,6 +7,12 @@ if (preg_match('/^[a-f\d]{24}$/i', $video_id)) {
     $video = $dsp_api->get_video_by_id($video_id);
 } else {
     wp_redirect(home_url());
+    exit();
+}
+
+if (is_wp_error($video)){
+    wp_redirect(home_url());
+    exit();
 }
 
 $bypass_channel_lock = isset($video['bypass_channel_lock']) ? $video['bypass_channel_lock'] : '';
@@ -28,18 +34,19 @@ if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubsc
                 </div>
             </div>
             <?php
-        }
-        else{
-            include(locate_template('page-templates/templates-part/video/direct-videos-inner.php'));
+            }
+            else{
+                include(locate_template('page-templates/templates-part/video/direct-videos-inner.php'));
+            }
         }
     }
     else{
         include(locate_template('page-templates/templates-part/video/direct-videos-inner.php'));
     }
-
 }
 else{
    wp_redirect(home_url());
+   exit();
 }
 
 ?>
