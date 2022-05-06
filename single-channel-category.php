@@ -43,7 +43,7 @@ if (have_posts()) {
                                     <div class="tooltippp" data-tooltip-content="#<?php echo 'tooltip_content_' . $i; ?>">
                                         <div class="clearfix">
                                             <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                                                <?php if (isset($channel['dspro_is_product']) && $channel['dspro_is_product'] == 1 && $is_user_subscribed == false): ?>
+                                                <?php if (isset($channel['show_lock_icon']) && $channel['show_lock_icon'] == 1): ?>
                                                     <div class="locked-channel"><i class="fa fa-lock"></i></div>
                                                 <?php endif; ?>
                                                 <?php if(isset($channel['image_attributes_sizes']) && isset($channel['image_attributes_srcset'])) :?>

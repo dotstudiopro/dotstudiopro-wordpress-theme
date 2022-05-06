@@ -33,7 +33,9 @@ if ($channels) {
     foreach ($channels as $key => $channel) {
         $channels_data[$key]['url'] = $channel['url'];
         $channels_data[$key]['title'] = $channel['title'];
-        $channels_data[$key]['dspro_is_product'] = $channel['dspro_is_product'];
+        if (isset($channel['dspro_is_product']) && $channel['dspro_is_product'] == 1 && $is_user_subscribed == false){
+            $channels_data[$key]['show_lock_icon'] = true;    
+        }
         $banner = $channel['image'];
         if( $dsp_theme_options['opt-category-image-size'] == '1'){
             $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio );
