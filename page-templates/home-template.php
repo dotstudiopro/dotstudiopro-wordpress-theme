@@ -136,27 +136,16 @@ get_header();
                         <?php } ?>
                     </div>
                     <?php
-                        $style = '';
-                        switch (dsp_wp_is_mobile()) {
-                            case 0:
-                                if($total_channels <= $dsp_theme_options['opt-slick-home-slidetoshow']):
-                                    $style = 'style="display:none;"';
-                                endif;
-                                break;
-                            case 1:
-                                if($total_channels <= $dsp_theme_options['opt-slick-home-mobile-slidetoshow']):
-                                    $style = 'style="display:none;"';
-                                endif;
-                                break;
-                            case 2:
-                                if($total_channels <= $dsp_theme_options['opt-slick-home-tablet-slidetoshow']):
-                                    $style = 'style="display:none;"';
-                                endif;
-                                break;
-                            default:
-                                $style = '';
-                                break;
-                        }
+                    $display_opts = array(
+                        'desktop' => $dsp_theme_options['opt-slick-home-slidetoshow'],
+                        'mobile' => $dsp_theme_options['opt-slick-home-mobile-slidetoshow'],
+                        'tablet' => $dsp_theme_options['opt-slick-home-tablet-slidetoshow']
+                    );
+                    $display_index = dsp_wp_device_type();
+                    $style = '';
+                    if ($total_channels <= $display_opts[$display_index]) {
+                        $style = 'style="display:none;"';
+                    }
                     ?>
                     <div class="dsp-homepage-see-more" <?php echo $style; ?>>
                         <a href="<?php echo '/channel-category/' . $category_slug; ?>">View All</a>

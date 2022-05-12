@@ -25,7 +25,7 @@ if( $dsp_theme_options['opt-related-image-size'] == '0' ) {
     $ratio = $ratio_height / $ratio_width;
 }
 
-$final_releted_content_data = array();
+$final_related_content_data = array();
 
 $slide_text_class = '';
 if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
@@ -34,35 +34,35 @@ if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
     $slide_text_class .= 'slide-text';
 }
 
-$final_releted_content_data['slide_text_class'] = $slide_text_class;
+$final_related_content_data['slide_text_class'] = $slide_text_class;
 
-$releted_content_data = array();
+$related_content_data = array();
 if (!empty($recommendation_content)){
     foreach ($recommendation_content as $key => $channel){
         if (isset($channel['is_product']) && $channel['is_product'] == 1 && $is_user_subscribed == false){
-            $releted_content_data[$key]['show_lock_icon'] = true;
+            $related_content_data[$key]['show_lock_icon'] = true;
         }
         if( $dsp_theme_options['opt-related-image-size'] == '1'){
             $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio );
-            $releted_content_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
-            $releted_content_data[$key]['image_attributes_sizes'] = $image_attributes['sizes'];
+            $related_content_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
+            $related_content_data[$key]['image_attributes_sizes'] = $image_attributes['sizes'];
         }
-        $releted_content_data[$key]['image'] = $channel['image'].'/'.$width;
+        $related_content_data[$key]['image'] = $channel['image'].'/'.$width;
         if(isset($height))
-            $releted_content_data[$key]['image'] = $releted_content_data[$key]['image'].'/'.$height;
+            $related_content_data[$key]['image'] = $related_content_data[$key]['image'].'/'.$height;
         if($dsp_theme_options['opt-display-webp-image'] == 1)
-            $releted_content_data[$key]['image'] = $releted_content_data[$key]['image'].'?webp=1';
-        $releted_content_data[$key]['channel_title'] = $channel['title'];
-        $releted_content_data[$key]['channel_url'] = $channel['url'];
-        $releted_content_data[$key]['trim_channel_title'] = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-related-title-trim-word']) : $channel['title'];
-        $releted_content_data[$key]['trim_channel_description'] = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-related-description-trim-word']) : $channel['description'];
+            $related_content_data[$key]['image'] = $related_content_data[$key]['image'].'?webp=1';
+        $related_content_data[$key]['channel_title'] = $channel['title'];
+        $related_content_data[$key]['channel_url'] = $channel['url'];
+        $related_content_data[$key]['trim_channel_title'] = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-related-title-trim-word']) : $channel['title'];
+        $related_content_data[$key]['trim_channel_description'] = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-related-description-trim-word']) : $channel['description'];
     }
 }
 
-$final_releted_content_data['releted_content_data'] = $releted_content_data;
-$final_releted_content_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+$final_related_content_data['related_content_data'] = $related_content_data;
+$final_related_content_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
-    $final_releted_content_data['default_image'] = $final_releted_content_data['default_image'].'/'.$height;
+    $final_related_content_data['default_image'] = $final_related_content_data['default_image'].'/'.$height;
 
 
 ?>
