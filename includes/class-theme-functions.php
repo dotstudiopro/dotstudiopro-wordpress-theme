@@ -201,7 +201,7 @@ class Theme_Functions {
                 if ($cnt && count($response) >= $cnt) break;
                 $response[$key]['id'] = $singlePlaylist['_id'];
                 $response[$key]['title'] = $singlePlaylist['title'];
-                $response[$key]['description'] = $singlePlaylist['description'];
+                $response[$key]['description'] = isset($singlePlaylist['description']) ? $singlePlaylist['description'] : '';
                 $response[$key]['image'] = $singlePlaylist['thumb'];
                 $response[$key]['slug'] = ($singlePlaylist['slug']) ? $singlePlaylist['slug'] : '';
                 $response[$key]['bypass_channel_lock'] = isset($singlePlaylist['bypass_channel_lock']) ? $singlePlaylist['bypass_channel_lock'] : false;

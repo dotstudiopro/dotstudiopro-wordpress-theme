@@ -9,6 +9,7 @@ $company_id = "";
 $chnl_id = isset($channel_meta['chnl_id'][0]) ? $channel_meta['chnl_id'][0] : '';
 $dspro_channel_id = isset($channel_meta['dspro_channel_id'][0]) ? $channel_meta['dspro_channel_id'][0] : '';
 
+// title,description and banner is used for meta tags
 $share_title = $title = get_the_title();
 $share_desc = $desc =  apply_filters('the_content', get_post_field('post_content', get_the_ID()));
 //$share_banner = $poster = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
@@ -23,7 +24,8 @@ else{
 }
 
 $theme_function = new Theme_Functions();
-// Code to check if user subscribe to watch this channel
+
+// Code to check if channel is avialable on users country or not
 $dsp_api = new Dsp_External_Api_Request();
 if(isset($_SESSION['dsp_theme_country']) && !is_array($_SESSION['dsp_theme_country'])) {
     $country_code = $_SESSION['dsp_theme_country'];
@@ -81,6 +83,8 @@ if (class_exists('Dotstudiopro_Subscription')) {
     }
 }
 
+// Below var are used to display channel banner, logo, url and other information for main carousal 
+
 $childchannels = $theme_function->is_child_channels(get_the_ID());
 //$channel_banner_image = ($dsp_theme_options['opt-channel-poster-type'] == 'poster') ? $channel_meta['chnl_poster'][0] : $channel_meta['chnl_spotlight_poster'][0];
 if($dsp_theme_options['opt-channel-poster-type'] == 'poster'){
@@ -133,6 +137,7 @@ if(!empty($live_stream_start_time)){
     $current_time = current_time('F j, Y H:i a');   
 }
 
+// Code to display Add to mylist button or Remove form mylist button
 if ($first_child_id) {
     if ($client_token) {
         $channel_id = get_post_meta($first_child_id->ID, 'chnl_id', true);
@@ -150,6 +155,7 @@ if ($first_child_id) {
     }
 }
 
+// if the video has a trailer attached then pass the trailer id along with company
 $trailer_id = '';
 $video_id = $theme_function->first_video_id(get_the_ID());
 if (!empty($video_id)) {
@@ -163,6 +169,7 @@ if (!empty($video_id)) {
     }
 }
 
+// get width, height and ration based on the option selectes on theme
 if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
     $width = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
     $height = filter_var($dsp_theme_options['opt-channel-video-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -173,6 +180,7 @@ if( $dsp_theme_options['opt-channel-video-image-size'] == '0' ) {
     $ratio = $ratio_height / $ratio_width;
 }
 
+// code to pass the releted channel or video id based on the option selected for related content
 if ($dsp_theme_options['opt-related-option'] == 'channel') {
     $type = 'channel';
     $related_id = get_post_meta(get_the_ID(), 'dspro_channel_id', true);
@@ -182,6 +190,8 @@ if ($dsp_theme_options['opt-related-option'] == 'channel') {
 }
 
 $channel_data = array();
+// loop through channels data and add the required values into an array which we need to display on the page like videos, title, channel_unlocked, etc. 
+// Basically, this array is used to display the video rails on the channels page
 if (!$childchannels) {
     $channel_data[0]['videos'] = $theme_function->show_videos($post, 'other_carousel');
     $channel_data[0]['channel_unlocked'] = $parant_channel_unlocked;

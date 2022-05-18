@@ -1,6 +1,7 @@
 <?php
 
 if (!is_wp_error($video) && !empty($video)):
+    // title,description and banner is used for meta tags
     global $share_banner, $share_desc, $share_title;
     $share_desc = $desc = isset($video['description']) ? $video['description'] : '';
     $share_title = $title = isset($video['title']) ? $video['title'] : '';
@@ -8,6 +9,7 @@ if (!is_wp_error($video) && !empty($video)):
 endif;
 get_header();
 
+// get videos genres, duration, year, company_id, etc.
 if (!is_wp_error($video) && !empty($video)){
     $genres = isset($video['genres']) ? $video['genres'] : '';
     $duration = isset($video['duration']) ? $video['duration'] : '';
@@ -22,9 +24,7 @@ if (!is_wp_error($video) && !empty($video)){
         }
     }
 
-    /*
-     * Get "recently watched" data for a video.
-     */
+    // Get "recently watched" data for a video.
     $video_point = '';
     $get_video_data = $dsp_api->get_recent_viewed_data_video($client_token, $video_id);
     if (!is_wp_error($get_video_data) && !empty($get_video_data['data']['point'])) {

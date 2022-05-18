@@ -2,6 +2,8 @@
 global $dsp_theme_options;
 $selected_collections = $dsp_theme_options['opt-category-list'];
 $arr = [];
+
+// loop to display the selected category into the page
 foreach($selected_collections as $selected_collection_key => $value){
     if($value == 1){
         $arr[] = $selected_collection_key;
@@ -10,14 +12,18 @@ foreach($selected_collections as $selected_collection_key => $value){
 if(isset($dsp_theme_options['opt-category-all']) && $dsp_theme_options['opt-category-all'] == 1){
     $arr = [];
 }
+
 $theme_function = new Theme_Functions();
 $category_args =  $theme_function->category_args($arr);
 $categories = $theme_function->query_categories_posts($category_args, "categories_template");
 
 $final_category_data = array();
+// var used to display the number of rows for the category
 $final_category_data['number_of_row'] = $dsp_theme_options['opt-display-categories-row'];
 
 $category_data = array();
+
+// get width, height and ration based on the option selectes on theme
 
 if($dsp_theme_options['opt-categories-image-size'] == '1') {
     $width = filter_var($dsp_theme_options['opt-categories-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
@@ -33,6 +39,7 @@ else {
     $final_category_data['height'] = $height;
 }
 
+// loop through categories and add the required values into an array which we need to display on the page like title, link, banner, etc. 
 if ($categories) {
     foreach ($categories as $key => $category) {
         $channels_args = $theme_function->channels_args($category->post_name);
@@ -83,6 +90,7 @@ if ($categories) {
         }
     }
 }
+// assign all the data into a final array with the default image
 $final_category_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$final_category_data['width'];
 if(isset($final_category_data['height']))
     $final_category_data['default_image'] = $final_category_data['default_image'].'/'.$final_category_data['height'];

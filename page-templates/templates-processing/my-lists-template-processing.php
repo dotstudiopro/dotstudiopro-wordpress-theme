@@ -5,7 +5,10 @@ if (!$client_token) {
     exit();
 }
 $dotstudio_api = new Dsp_External_Api_Request();
+// Api call to get users mylist data
 $all_channels = $dotstudio_api->get_user_watchlist($client_token);
+
+// loop through mylist data if there is not any error or the data is not empty and add the required values into an array which we need to display on the page like title, link, banner, etc.
 $final_my_list_page_data = array();
 if (!is_wp_error($all_channels)) {
     if (!empty($all_channels['channels'])) {

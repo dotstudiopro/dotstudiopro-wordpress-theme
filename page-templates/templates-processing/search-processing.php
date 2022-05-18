@@ -1,7 +1,7 @@
 <?php
-
 global $dsp_theme_options, $client_token;
 
+// Code to check user is subscribed or not
 $is_user_subscribed = false;
 if (class_exists('Dotstudiopro_Subscription') && $client_token) {
     $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
@@ -21,13 +21,16 @@ $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
 $search_obj = new Dsp_External_Api_Request();
 $form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
 $type = $dsp_theme_options['opt-search-option'];
+// Api call to get search data
 $result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
 
 $final_channel_data = array();
+// var used to display the number of rows for the search result
 $final_channel_data['number_of_row'] = $dsp_theme_options['opt-search-columns-row'];
 
 if (!is_wp_error($result)){
 
+    // get width, height and ration based on the option selectes on theme
     if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
         $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
         $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -38,6 +41,7 @@ if (!is_wp_error($result)){
         $ratio = $ratio_height / $ratio_width;
     }
 
+    // if we select search type as video in theme option then loop through search videos and add the required values into an array which we need to display on the page like title, link, banner, etc. 
     if($type == 'video'){
         $search_data = array();
         if(isset($result['data']['hits']) && !empty($result['data']['hits'])){
@@ -59,6 +63,7 @@ if (!is_wp_error($result)){
         }
     }
 
+    // if we select search type as channels in theme option then loop through search channels and add the required values into an array which we need to display on the page like title, link, banner, etc. 
     if($type == 'channel'){
         $search_data = array();
         if(isset($result['channels']) && !empty($result['channels'])){
@@ -90,7 +95,8 @@ if (!is_wp_error($result)){
             }
         }
     }
-
+    
+    // assign all the data into a final array with the default image
     $final_channel_data['search_result'] = $search_data;
     $final_channel_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
     if(isset($height))

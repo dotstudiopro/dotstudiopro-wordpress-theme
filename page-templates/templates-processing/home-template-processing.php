@@ -5,6 +5,7 @@ $dsp_api = new Dsp_External_Api_Request();
 $main_carousel = $theme_function->home_page_main_carousel();
 $main_carousel_width = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
 $main_carousel_height = filter_var($dsp_theme_options['opt-main-home-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
+// Api call to get home page data
 $homepageAPI = $dsp_api->homepage($client_token);
 $homepageData = [];
 if(!is_wp_error($homepageAPI)){
@@ -13,6 +14,7 @@ if(!is_wp_error($homepageAPI)){
 
 $final_homepage_data = array();
 
+// Get Home page Main carousal Data
 if ($main_carousel) {
     $main_carousel_data = array();
     foreach ($main_carousel as $main_carousel_key => $slide) {
@@ -26,7 +28,7 @@ if ($main_carousel) {
     $final_homepage_data['main_carousel'] = $main_carousel_data;
 }
 
-// Secondary Courousal ////////////
+// get width, height and ration based on the option selectes on theme
 
 $home = get_page_by_path($dsp_theme_options['opt-home-carousel'], OBJECT, 'channel-category');
 if($dsp_theme_options['opt-home-image-size'] == "0") {
@@ -40,7 +42,10 @@ else {
     $ratio = $ratio_height / $ratio_width;
 }
 
+// Get Home page Secondary carousal Data
+
 $secondary_carousel_data = array();
+
 foreach ($homepageData as $homepagedata_key => $data) {
     $category_slug = $data['category']['slug'];
     if($category_slug == $dsp_theme_options['opt-home-carousel']){
@@ -48,6 +53,7 @@ foreach ($homepageData as $homepagedata_key => $data) {
     }
     $channels = $theme_function->home_page_other_carousel_with_api($data['channels'], $dsp_theme_options['opt-carousel-poster-type']);
     if ($channels) {
+        $secondary_carousel_data[$homepagedata_key]['category_slug'] = $category_slug;
         $secondary_carousel_data[$homepagedata_key]['category_url'] = '/channel-category/' . $data['category']['slug'];
         $secondary_carousel_data[$homepagedata_key]['category_name'] = $data['category']['name'];
         $category_channels = array();
@@ -73,7 +79,7 @@ foreach ($homepageData as $homepagedata_key => $data) {
         $secondary_carousel_data[$homepagedata_key]['channels'] = $category_channels;
     }
 }
-
+// assign all the data into a final array with the default image
 $final_homepage_data['secondary_carousel_data'] = $secondary_carousel_data;
 $final_homepage_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))

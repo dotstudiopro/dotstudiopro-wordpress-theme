@@ -73,6 +73,7 @@ get_header();
         }
         // Continue watching and watch again carousal section end
         
+        // Home page secondary carousal section start
         if (isset($final_homepage_data['secondary_carousel_data']) && !empty($final_homepage_data['secondary_carousel_data'])) {
             foreach($final_homepage_data['secondary_carousel_data'] as $data){
         ?>
@@ -148,7 +149,7 @@ get_header();
                     }
                     ?>
                     <div class="dsp-homepage-see-more" <?php echo $style; ?>>
-                        <a href="<?php echo '/channel-category/' . $category_slug; ?>">View All</a>
+                        <a href="<?php echo '/channel-category/' . $data['category_slug']; ?>">View All</a>
                     </div>
                 </div>
         <?php
@@ -157,6 +158,7 @@ get_header();
             $theme_function->slick_init_options('slick_carousel', $class_array, 'home');
             $theme_function->slick_init_options('slick_continue_watch', $continue_class_array, 'continue-watch');
         }
+        // Home page secondary carousal section end
         ?>
     </div><!-- no-gutters -->
 </div><!-- container -->

@@ -13,6 +13,8 @@ if (class_exists('Dotstudiopro_Subscription') && $client_token) {
 
 $theme_function = new Theme_Functions();
 $channels = $theme_function->home_page_other_carousel($post->post_name, $dsp_theme_options['opt-category-channel-poster-type'], 'category');
+
+// get width, height and ration based on the option selectes on theme
 if( $dsp_theme_options['opt-category-image-size'] == '0' ) {
     $width = filter_var($dsp_theme_options['opt-channel-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
     $height = filter_var($dsp_theme_options['opt-channel-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -24,11 +26,12 @@ if( $dsp_theme_options['opt-category-image-size'] == '0' ) {
 }
 
 $final_channel_data = array();
+// var used to display the number of rows for the category channels
 $final_channel_data['number_of_row'] = $dsp_theme_options['opt-display-row'];
 
 
 $channels_data = array();
-
+// loop through channels data and add the required values into an array which we need to display on the page like title, link, banner, etc. 
 if ($channels) {
     foreach ($channels as $key => $channel) {
         $channels_data[$key]['url'] = $channel['url'];
@@ -52,7 +55,7 @@ if ($channels) {
         $channels_data[$key]['trim_channel_description'] = ($dsp_theme_options['opt-channel-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-channel-description-trim-word']) : $channel['description'];
     }
 }
-
+// assign all the data into a final array with the default image
 $final_channel_data['channels'] = $channels_data;
 $final_channel_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))

@@ -1,5 +1,6 @@
 <?php
 
+// get width, height and ration based on the option selectes on theme
 if($dsp_theme_options['opt-continue-watch-image-size'] == '0') {
     $c_width = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
     $c_height = filter_var($dsp_theme_options['opt-continue-watch-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
@@ -12,6 +13,7 @@ else {
 }
 
 $final_continue_watching_data = array();
+// loop through countinue watch data and add the required values into an array which we need to display on the page like title, link, banner, etc. 
 $continue_watch_data = array();
 foreach ($watch_list['data']['continue-watching'] as $key => $video){
     $banner = (isset($video['thumb']) ? 'https://images.dotstudiopro.com/' . $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
@@ -34,7 +36,7 @@ foreach ($watch_list['data']['continue-watching'] as $key => $video){
     if(isset($video['description']) && !empty($video['description']))
         $continue_watch_data[$key]['trim_description'] = ($dsp_theme_options['opt-continue-watch-description-trim-word'] != 0) ? wp_trim_words($video['description'], $dsp_theme_options['opt-continue-watch-description-trim-word']) : $video['description'];
 }
-
+// assign all the data into a final array with the default image
 $final_continue_watching_data['continue_watching_data'] = $continue_watch_data;
 $final_continue_watching_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
