@@ -69,11 +69,13 @@ if (!is_wp_error($video) && !empty($video)):
                     <p><?php echo $video_data['year'] . ' - ' . $video_data['duration']; ?></p>
                     <p class="video-cat">
                         <?php
+                        $genresArray = array();
                         if ($video_data['genres']) {
                             foreach ($video_data['genres'] as $genre) {
-                                echo '<span>' . $genre . '</span>';
+                                $genresArray[] = '<span>' . $genre . '</span>';
                             }
                         }
+                        echo implode( ', ', $genresArray );
                         ?>
                     </p>
                     <p class="descr"><?php echo $desc; ?></p>
