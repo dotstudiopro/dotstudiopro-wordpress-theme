@@ -22,29 +22,34 @@ $bypass_channel_lock = isset($video['bypass_channel_lock']) ? $video['bypass_cha
 $checkDefaultSubscriptionBehavior = $dsp_api->get_default_subscription_behavior();
 
 // condition to check if default subscription is lock videos and user not subscribed then display the error message
-
-if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubscriptionBehavior)){
-    if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos' && $bypass_channel_lock != 'true' && $bypass_channel_lock != true){
-        if (class_exists('Dotstudiopro_Subscription')) {
-            $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-            $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
-            if (is_wp_error($user_subscribe) || !$user_subscribe || (empty($user_subscribe['products']['svod'][0]['product']['id']) && empty($user_subscribe['products']['tvod'][0]['product']['id']))) {
-                get_header();
-                $display_direct_video = false;
+if(wp_get_referer()){
+     $display_direct_video = true;
+}
+else{
+    if (!is_wp_error($checkDefaultSubscriptionBehavior) && !empty($checkDefaultSubscriptionBehavior)){
+        if($checkDefaultSubscriptionBehavior['behavior'] == 'lock_videos' && $bypass_channel_lock != 'true' && $bypass_channel_lock != true){
+            if (class_exists('Dotstudiopro_Subscription')) {
+                $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
+                $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
+                if (is_wp_error($user_subscribe) || !$user_subscribe || (empty($user_subscribe['products']['svod'][0]['product']['id']) && empty($user_subscribe['products']['tvod'][0]['product']['id']))) {
+                    get_header();
+                    $display_direct_video = false;
+                }
+                else{
+                    $display_direct_video = true;
+                }
             }
-            else{
-                $display_direct_video = true;
-            }
+        }
+        else{
+            $display_direct_video = true;
         }
     }
     else{
-        $display_direct_video = true;
+       wp_redirect(home_url());
+       exit();
     }
 }
-else{
-   wp_redirect(home_url());
-   exit();
-}
+
 
 
 // title,description and banner is used for meta tags

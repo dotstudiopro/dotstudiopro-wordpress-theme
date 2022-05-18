@@ -16,9 +16,9 @@ $final_continue_watching_data = array();
 // loop through countinue watch data and add the required values into an array which we need to display on the page like title, link, banner, etc. 
 $continue_watch_data = array();
 foreach ($watch_list['data']['continue-watching'] as $key => $video){
-    $banner = (isset($video['thumb']) ? 'https://images.dotstudiopro.com/' . $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+    $banner = (isset($video['thumb'])) ? 'https://images.dotstudiopro.com/' . $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
     if($dsp_theme_options['opt-continue-watch-image-size'] == '1'){
-        $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio );
+        $image_attributes = dsp_build_responsive_images( $banner, $c_width, $c_ratio );
         $continue_watch_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
         $continue_watch_data[$key]['image_attributes_sizes'] = $image_attributes['sizes'];
     }
@@ -38,8 +38,8 @@ foreach ($watch_list['data']['continue-watching'] as $key => $video){
 }
 // assign all the data into a final array with the default image
 $final_continue_watching_data['continue_watching_data'] = $continue_watch_data;
-$final_continue_watching_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
-if(isset($height))
-    $final_continue_watching_data['default_image'] = $final_continue_watching_data['default_image'].'/'.$height;
+$final_continue_watching_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$c_width;
+if(isset($c_height))
+    $final_continue_watching_data['default_image'] = $final_continue_watching_data['default_image'].'/'.$c_height;
 
 ?>
