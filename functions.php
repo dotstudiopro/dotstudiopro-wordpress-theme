@@ -768,7 +768,7 @@ function account_deletion() {
         $response = $dotstudio_api->remove_user_from_system($client_token);
         if (is_wp_error($response)) {
             $err = $response->get_error_message();
-            $send_response = array('message' => 'Server Error : ' . (is_string($err) ? $err : json_encode($err)));
+            $send_response = array('message' => (is_string($err) ? $err : json_encode($err)));
             wp_send_json_error($send_response, 403);
         } elseif (isset($response['success']) && $response['success'] == 1) {
             $send_response = array('message' => 'Your request for account deletion proceeds successfully.');
