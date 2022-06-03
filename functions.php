@@ -28,6 +28,7 @@ if (isset($_GET['activated']) && is_admin()) {
     $video = get_page_by_title('Video');
     $my_list_page = get_page_by_title('My List');
     $reset_device_login_page = get_page_by_title('Reset Device Login');
+    $account_deletion_page = get_page_by_title('Account Deletion');
 
     if ($home_page == NULL || $home_page->post_status == 'trash')
         add_dotstudiopro_bootstrap_custom_pages('Home Page', 'home-page', 'home-template.php');
@@ -53,6 +54,11 @@ if (isset($_GET['activated']) && is_admin()) {
         add_dotstudiopro_bootstrap_custom_pages('Reset Device Login', 'reset-device-login', 'reset-device-login-template.php');
     else
         update_post_meta($reset_device_login_page->ID, '_wp_page_template', 'page-templates/reset-device-login-template.php');
+
+    if ($account_deletion_page == NULL || $account_deletion_page->post_status == 'trash')
+        add_dotstudiopro_bootstrap_custom_pages('Account Deletion', 'account-deletion', 'account-deletion-template.php');
+    else
+        update_post_meta($account_deletion_page->ID, '_wp_page_template', 'page-templates/account-deletion-template.php');
 
 }
 
@@ -751,6 +757,32 @@ function search_suggesion() {
     wp_send_json_success($items);
 }
 
+ /**
+ * Function to delete user account
+ * @since 1.0.0
+ */
+function account_deletion() {
+    global $client_token;
+    if ($client_token && wp_verify_nonce($_POST['nonce'], 'account_deletion')) {
+        $dotstudio_api = new Dsp_External_Api_Request();
+        $response = $dotstudio_api->remove_user_from_system($client_token);
+        if (is_wp_error($response)) {
+            $err = $response->get_error_message();
+            $send_response = array('message' => 'Server Error : ' . (is_string($err) ? $err : json_encode($err)));
+            wp_send_json_error($send_response, 403);
+        } elseif (isset($response['success']) && $response['success'] == 1) {
+            $send_response = array('message' => 'Your request for account deletion proceeds successfully.');
+            wp_send_json_success($send_response, 200);
+        } else {
+            $send_response = array('message' => 'Internal Server Error');
+            wp_send_json_error($send_response, 500);
+        }
+    } else {
+        $send_response = array('message' => 'Internal Server Error');
+        wp_send_json_error($send_response, 500);
+    }
+}
+
 /**
  *
  * @global type $client_token
@@ -762,7 +794,7 @@ function addToMyList() {
     if (wp_verify_nonce($_POST['nonce'], 'addToMyList')) {
         $dotstudio_api = new Dsp_External_Api_Request();
         $channel_id = $_POST['channel_id'];
-		$parent_channel_id = ($_POST['parent_channel_id']) ? $_POST['parent_channel_id'] : null;
+        $parent_channel_id = ($_POST['parent_channel_id']) ? $_POST['parent_channel_id'] : null;
         $responce = $dotstudio_api->add_to_user_list($client_token, $channel_id, $parent_channel_id);
     }
     wp_send_json_success($responce);
@@ -792,6 +824,9 @@ add_action('wp_ajax_removeFromMyList', 'removeFromMyList');
 add_action('wp_ajax_nopriv_removeFromMyList', 'removeFromMyList');
 add_action('wp_ajax_search_suggesion', 'search_suggesion');
 add_action('wp_ajax_nopriv_search_suggesion', 'search_suggesion');
+add_action('wp_ajax_account_deletion', 'account_deletion');
+add_action('wp_ajax_nopriv_account_deletion', 'account_deletion');
+
 
 /**
  * Remove the admin bar for subscribers
@@ -821,6 +856,7 @@ if(!function_exists('dsp_add_login_link')){
                             . '<li><a href="/purchase-history">My Purchases</a></li>';
                 endif;
                 $items .= '<li><a href="/my-list">My List</a></li>'
+                        . '<li><a href="/account-deletion">Account Deletion</a></li>'
                         . '<li><a href="' . wp_logout_url(get_home_url()) . '">Log Out</a></li>'
                         . '</ul>'
                         . '</li>';
