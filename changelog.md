@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2022-06-14
+
+### Added
+- Added functionality to process account deletion within a template.
+- Added account deletion page template
+
 ## [2.0.1] - 2022-04-11
 
 ### Changed
