@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.1] - 2022-06-15
+
+### Fixed
+- Fixed minor javascript issue related to account deletion
+
 ## [2.1.0] - 2022-06-14
 
 ### Added
