@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.2] - 2022-07-19
+
+### Changed
+- Move processing logic out of the theme templates and into function files
+
 ## [2.1.1] - 2022-06-15
 
 ### Fixed
