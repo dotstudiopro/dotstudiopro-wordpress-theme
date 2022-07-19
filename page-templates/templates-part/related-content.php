@@ -1,96 +1,48 @@
 <?php
-$theme_function = new Theme_Functions();
-
-global $dsp_theme_options, $client_token;
-
-$is_user_subscribed = false;
-if (class_exists('Dotstudiopro_Subscription') && $client_token) {
-    $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
-    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
-        $is_user_subscribed = true;
-    }
-}
-
-$recommendation_content = $theme_function->get_recommendation_content($type, $related_id);
-
-if (!empty($recommendation_content)):
+include(locate_template('page-templates/templates-processing/related-content-processing.php'));
+if (!empty($final_related_content_data['related_content_data'])):
     ?>
     <h3 class="post-title mb-4"><?php echo $dsp_theme_options['opt-related-content-text']; ?></h3>
-    <?php
-    if( $dsp_theme_options['opt-related-image-size'] == '0' ) {
-        $width = filter_var($dsp_theme_options['opt-related-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-        $height = filter_var($dsp_theme_options['opt-related-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-    } else {
-        $width = filter_var($dsp_theme_options['opt-related-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
-
-        $ratio_width = filter_var($dsp_theme_options['opt-related-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
-        $ratio_height = filter_var($dsp_theme_options['opt-related-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
-
-        $ratio = $ratio_height / $ratio_width;
-    }
-    $slide_text_class = '';
-    if ($dsp_theme_options['opt-layout-slider-content'] == 1) {
-        $slide_text_class .= 'slide-text-dec';
-    } elseif ($dsp_theme_options['opt-layout-slider-content'] == 3) {
-        $slide_text_class .= 'slide-text';
-    }
-    ?>
-    <div class="slick-wrapper related_content <?php echo $slide_text_class; ?>">
+    <div class="slick-wrapper related_content <?php echo $final_related_content_data['slide_text_class']; ?>">
         <?php
         $i = 1;
-        foreach ($recommendation_content as $channel):
-            if(isset($channel)):
+        foreach ($final_related_content_data['related_content_data'] as $channel):
             ?>
             <div class="slide">
-                <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
+                <div class="slide_image tooltippp clearfix" data-tooltip-content="#<?php echo 'related_tooltip_content_' . $cnt . $i; ?>">
                     <div class="hover ehover<?php echo $dsp_theme_options['opt-img-hover']; ?>">
-                        <?php if(isset($channel['is_product']) && $channel['is_product'] == 1 && $is_user_subscribed == false): ?>
+                        <?php if(isset($channel['show_lock_icon']) && $channel['show_lock_icon'] == 1): ?>
                            <div class="locked-channel"><i class="fa fa-lock"></i></div>
                         <?php endif; ?>
-
-                        <?php if( $dsp_theme_options['opt-related-image-size'] == '1' ) :
-                            $image_attributes = dsp_build_responsive_images( $channel['image'], $width, $ratio ); 
-                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                            <?php else:?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image']; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                            <?php endif; ?>
-                        <?php else : 
-                            if($dsp_theme_options['opt-display-webp-image'] == 0):?>    
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
-                            <?php else:?>
-                                <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy w-100" data-src="<?php echo $channel['image'] . '/' . $width . '/' . $height; ?>?webp=1" title="<?php echo $channel['title']; ?>" alt="<?php echo $channel['title']; ?>">
-                            <?php endif; ?>
+                        <?php if(isset($channel['image_attributes_sizes']) && isset($channel['image_attributes_srcset'])) :?>
+                            <img src="<?php echo $final_related_content_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['channel_title']; ?>" alt="<?php echo $channel['channel_title']; ?>" srcset="<?php echo $channel['image_attributes_srcset']; ?>" sizes="<?php echo $channel['image_attributes_sizes']; ?>">
+                        <?php else : ?>   
+                            <img src="<?php echo $final_related_content_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $channel['image']; ?>" title="<?php echo $channel['channel_title']; ?>" alt="<?php echo $channel['channel_title']; ?>">
                         <?php endif; ?>
                         <div class="overlay">
-                            <div class="watch_now"><a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
+                            <div class="watch_now"><a class="info" href="<?php echo $channel['channel_url']; ?>" title="<?php echo $channel['channel_title']; ?>">&nbsp;<span>&nbsp;</span></a></div>
                         </div>
                     </div>
                 </div>
                 <!-- Condition to check display the content on tooltip or below the images-->
-                <?php
-                $title = ($dsp_theme_options['opt-related-title-trim-word'] != 0) ? wp_trim_words($channel['title'], $dsp_theme_options['opt-related-title-trim-word']) : $channel['title'];
-                $description = ($dsp_theme_options['opt-related-description-trim-word'] != 0) ? wp_trim_words($channel['description'], $dsp_theme_options['opt-related-description-trim-word']) : $channel['description'];
-                ?>
                 <?php if ($dsp_theme_options['opt-related-layout-slider-content'] == 1): ?>
                     <div class="slide_content">
-                        <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
-                            <p><?php echo $description; ?></p>
+                        <a class="info" href="<?php echo $channel['channel_url']; ?>" title="<?php echo $channel['channel_title']; ?>">
+                            <h4 class="pt-4 pb-1"><?php echo $channel['trim_channel_title']; ?></h4>
+                            <p><?php echo $channel['trim_channel_description']; ?></p>
                         </a>
                     </div>
                 <?php elseif ($dsp_theme_options['opt-related-layout-slider-content'] == 2): ?>
                     <div class="tooltip_templates">
-                        <span id="<?php echo 'releted_tooltip_content_' . $cnt . $i; ?>">
-                            <h4><?php echo $title; ?></h4>
-                            <p><?php echo $description; ?></p>
+                        <span id="<?php echo 'related_tooltip_content_' . $cnt . $i; ?>">
+                            <h4><?php echo $channel['trim_channel_title']; ?></h4>
+                            <p><?php echo $channel['trim_channel_description']; ?></p>
                         </span>
                     </div>
                 <?php elseif ($dsp_theme_options['opt-related-layout-slider-content'] == 3): ?>
                     <div class="slide_content">
-                        <a class="info" href="<?php echo $channel['url']; ?>" title="<?php echo $channel['title']; ?>">
-                            <h4 class="pt-4 pb-1"><?php echo $title; ?></h4>
+                        <a class="info" href="<?php echo $channel['channel_url']; ?>" title="<?php echo $channel['channel_title']; ?>">
+                            <h4 class="pt-4 pb-1"><?php echo $channel['trim_channel_title']; ?></h4>
                         </a>
                     </div>
                     <?php
@@ -99,9 +51,7 @@ if (!empty($recommendation_content)):
                 ?>
             </div>
             <?php
-            endif;
         endforeach;
         ?>
     </div><!-- related_content -->
-
 <?php endif; ?>

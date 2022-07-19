@@ -49,4 +49,5 @@ get_header();
             <?php endif; ?>
         </div>
     </div>
-    <?php get_footer(); ?>
+</div>
+<?php get_footer(); ?>

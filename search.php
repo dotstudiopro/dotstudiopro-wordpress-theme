@@ -4,36 +4,14 @@
  *
  * @since 1.0.0
  */
+
+include(locate_template('page-templates/templates-processing/search-processing.php'));
 get_header();
-global $dsp_theme_options, $client_token;
-
-$is_user_subscribed = false;
-if (class_exists('Dotstudiopro_Subscription') && $client_token) {
-    $dsp_subscription_object = new Dotstudiopro_Subscription_Request();
-    $user_subscribe = $dsp_subscription_object->getUserProducts($client_token);
-    if (!is_wp_error($user_subscribe) && $user_subscribe && !empty($user_subscribe['products']['svod'][0]['product']['id'])) {
-        $is_user_subscribed = true;
-    }
-}
-
-$q = get_query_var('s');
-$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
-    'options' => array(
-        'default' => 1,
-        'min_range' => 1,
-    ),
-        ));
-$search_obj = new Dsp_External_Api_Request();
-$form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
-$type = $dsp_theme_options['opt-search-option'];
-$result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
-$no_of_row = $dsp_theme_options['opt-search-columns-row'];
 ?>
 <div class="custom-container container mb-5 mt-5">
     <?php
-    if (!is_wp_error($result)):
+    if (isset($final_channel_data['search_result']) && !empty($final_channel_data['search_result'])):
         ?>
-
         <div class="row no-gutters">
             <h3 class="page-title mb-3"><?php printf(__('Search Results for : %s', 'twentyfifteen'), get_search_query()); ?></h3>
         </div>
@@ -45,133 +23,52 @@ $no_of_row = $dsp_theme_options['opt-search-columns-row'];
                 </div>
             </form>
         </div>
-        <?php if ($result['data']['hits'] && $type == 'video') : ?>
-            <div class="row">
-                <?php foreach ($result['data']['hits'] as $data): ?>
-                    <div class="col-6 col-sm-3 col-md-<?php echo $no_of_row; ?> p-2 search-custom-width">
-                        <a href="/video/<?php echo $data['_id']; ?>" title="<?php echo $data['_source']['title']; ?>">
-                            <div class="holder">
-                                <?php
-                                $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                                if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
-                                    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-                                } else {
-                                    $width = filter_var($dsp_theme_options['opt-search-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
+        <div class="row">
+            <?php foreach ($final_channel_data['search_result'] as $data): ?>
+                <div class="col-6 col-sm-3 col-md-<?php echo $final_channel_data['number_of_row']; ?> p-2  search-custom-width">
+                    <a href="<?php echo $data['slug']?>" title="<?php echo $data['title']; ?>">
+                        <div class="holder">
+                            <?php if (isset($data['is_product']) && $data['is_product'] == 1): ?>
+                                <div class="locked-channel"><i class="fa fa-lock"></i></div>
+                            <?php endif; ?>
 
-                                    $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
-
-                                    $ratio = $ratio_height / $ratio_width;
-                                }
-                                $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
-                                ?>
-                                <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
-                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); 
-                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                    <?php else:?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy" data-src="<?php echo $image; ?>?webp=1" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                    <?php endif; ?>
-                                <?php else : 
-                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
-                                    <?php else:?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>?webp=1">
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                                <div class='title-holder'>
-                                    <h3><?php echo $title; ?></h3>
-                                </div>
+                            <?php if(isset($data['image_attributes_sizes']) && isset($data['image_attributes_srcset'])) :?>
+                                <img src="<?php echo $final_channel_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $data['banner']; ?>" title="<?php echo $data['title']; ?>" alt="<?php echo $data['title']; ?>" srcset="<?php echo $data['image_attributes_srcset']; ?>" sizes="<?php echo $data['image_attributes_sizes']; ?>">
+                            <?php else : ?>   
+                                <img src="<?php echo $final_channel_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $data['banner']; ?>" title="<?php echo $data['title']; ?>" alt="<?php echo $data['title']; ?>">
+                            <?php endif; ?>
+                            <div class='title-holder'>
+                                <h3><?php echo $data['title']; ?></h3>
                             </div>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php elseif ($result['channels'] && $type == 'channel'): ?>
-            <div class="row">
-                <?php foreach ($result['channels'] as $data): ?>
-                    <div class="col-6 col-sm-3 col-md-<?php echo $no_of_row; ?> p-2  search-custom-width">
-                        <a href="/channel/<?php echo $data['slug']; ?>" title="<?php echo $data['title']; ?>">
-                            <div class="holder">
-                                <?php
-                                if($dsp_theme_options['opt-search-channel-poster-type'] == 'poster'){
-                                   $image_type = $data['poster'];
-                                }
-                                elseif($dsp_theme_options['opt-search-channel-poster-type'] == 'spotlight_poster'){
-                                    $image_type = $data['spotlight_poster'];
-                                }
-                                else{
-                                    $image_type = $data['wallpaper'];
-                                }
-                                // $image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
-                                $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
-                                if( $dsp_theme_options['opt-search-image-size'] == '0' ) {
-                                    $width = filter_var($dsp_theme_options['opt-search-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $height = filter_var($dsp_theme_options['opt-search-image-dimensions']['height'], FILTER_SANITIZE_NUMBER_INT);
-                                } else {
-                                    $width = filter_var($dsp_theme_options['opt-search-image-width']['width'], FILTER_SANITIZE_NUMBER_INT);
-
-                                    $ratio_width = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
-                                    $ratio_height = filter_var($dsp_theme_options['opt-search-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
-
-                                    $ratio = $ratio_height / $ratio_width;
-                                }
-                                $title = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['title'];
-                                ?>
-                                <?php if (isset($data['is_product']) && $data['is_product'] == 1 && $is_user_subscribed == false): ?>
-                                    <div class="locked-channel"><i class="fa fa-lock"></i></div>
-                                <?php endif; ?>
-
-                                <?php if($dsp_theme_options['opt-search-image-size'] == '1' ) :
-                                    $image_attributes = dsp_build_responsive_images( $image, $width, $ratio ); 
-                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>" class="lazy" data-src="<?php echo $image; ?>" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                    <?php else:?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width; ?>?webp=1" class="lazy" data-src="<?php echo $image; ?>?webp=1" srcset="<?php echo $image_attributes['srcset']; ?>" sizes="<?php echo $image_attributes['sizes']; ?>">
-                                    <?php endif; ?>
-                                <?php else : 
-                                    if($dsp_theme_options['opt-display-webp-image'] == 0):?>   
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>">
-                                    <?php else:?>
-                                        <img src="https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/<?php echo $width . '/' . $height; ?>?webp=1" class="lazy" data-src="<?php echo $image . '/' . $width . '/' . $height; ?>?webp=1">
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                                <div class='title-holder'>
-                                    <h3><?php echo $title; ?></h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else : ?>
-            <h4><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></h4>
-        <?php endif; ?>
-
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
         <div class="pagination-links">
             <nav class="navigation pagination" role="navigation">
                 <div class="nav-links">
                     <?php
-                    $total_pages = ceil($result['data']['total'] / $dsp_theme_options['opt-search-page-size']);
-                    if ($total_pages) {
-                        $paginate_links = paginate_links(array(
-                            'base' => @add_query_arg('page', '%#%'),
-                            'format' => '?page=%#%',
-                            'mid-size' => 1,
-                            'current' => $page,
-                            'total' => $total_pages,
-                            'prev_next' => True,
-                            'prev_text' => __('<< Previous'),
-                            'next_text' => __('Next >>')
-                        ));
-                        echo $paginate_links;
+                    if(isset($result['data']['total']) && !empty($result['data']['total'])){
+                        $total_pages = ceil($result['data']['total'] / $dsp_theme_options['opt-search-page-size']);
+                        if ($total_pages) {
+                            $paginate_links = paginate_links(array(
+                                'base' => @add_query_arg('page', '%#%'),
+                                'format' => '?page=%#%',
+                                'mid-size' => 1,
+                                'current' => $page,
+                                'total' => $total_pages,
+                                'prev_next' => True,
+                                'prev_text' => __('<< Previous'),
+                                'next_text' => __('Next >>')
+                            ));
+                            echo $paginate_links;
+                        }    
                     }
                     ?>
                 </div>
             </nav>
         </div>
-
     <?php else : ?>
         <h4><?php _e('It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentyseventeen'); ?></h4>
     <?php endif; ?>
