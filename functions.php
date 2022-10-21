@@ -966,10 +966,27 @@ function dsp_add_customer_id_to_user($user_id, $userinfo, $is_new, $id_token, $a
         $user_metadata_info = $userinfo->user_metadata;
     }
 
-    if (empty($user_metadata_info->customer) || empty($user_metadata_info->spotlight))
+    $empty_customer = false;
+    if((!empty($user_metadata_info->customer) && !empty($user_metadata_info->spotlight))){
+        $empty_customer = true;
+    } else if((!empty($user_metadata_info->dsp_customer_id) && !empty($user_metadata_info->dsp_customer_token))){
+        $empty_customer = true;
+    }
+    
+    if ($empty_customer == false)
         return;
-    $customer_id = $user_metadata_info->customer;
-    $spotlight = $user_metadata_info->spotlight;
+
+    if(isset($user_metadata_info->dsp_customer_id) && !empty($user_metadata_info->dsp_customer_id)){
+        $customer_id = $user_metadata_info->dsp_customer_id;
+    }else{
+        $customer_id = $user_metadata_info->customer;
+    }
+
+    if(isset($user_metadata_info->dsp_customer_token) && !empty($user_metadata_info->dsp_customer_token)){
+        $spotlight = $user_metadata_info->dsp_customer_token;
+    }else{
+        $spotlight = $user_metadata_info->spotlight;
+    }
 
     if(!session_id())
         session_start();
