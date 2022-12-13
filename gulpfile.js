@@ -35,7 +35,9 @@ gulp.task('css', function () {
 				const isDir = fs.existsSync(assets + '/css/' + fileName) && fs.lstatSync(assets + '/css/' + fileName).isDirectory();
 				// Ensure that we are looking only at css files, not minified files, and not directories
 				if (fileName.indexOf(".css") > -1 && fileName.indexOf(".min.css") < 0 && !isDir) {
-					fs.moveSync(assets + '/css/' + fileName, assets + '/css/unminified/' + fileName)
+					fs.moveSync(assets + '/css/' + fileName, assets + '/css/unminified/' + fileName, {
+						overwrite: true
+					})
 				}
 			});
 			// Minify our files
@@ -57,6 +59,9 @@ gulp.task('css', function () {
 			});
 			resolve("Done");
 		} catch (e) {
+			console.log({
+				e
+			})
 			reject(e.message);
 		}
 	});
