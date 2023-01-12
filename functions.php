@@ -1240,7 +1240,9 @@ function dspdl_customer_form_shortcode_theme() {
     }
     return $form;
 }
+
 add_shortcode('dspdl_show_form', 'dspdl_customer_form_shortcode_theme');
+add_shortcode('dsp_device_login_form', 'dspdl_customer_form_shortcode_theme');
 
 /*
  * Generate login again dialog (Session expired)
