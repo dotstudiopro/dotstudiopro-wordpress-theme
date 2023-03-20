@@ -49,8 +49,8 @@ get_header();
             <nav class="navigation pagination" role="navigation">
                 <div class="nav-links">
                     <?php
-                    if(isset($result['data']['total']) && !empty($result['data']['total'])){
-                        $total_pages = ceil($result['data']['total'] / $dsp_theme_options['opt-search-page-size']);
+                    if(isset($result['total']) && !empty($result['total'])){
+                        $total_pages = ceil($result['total'] / $dsp_theme_options['opt-search-page-size']);
                         if ($total_pages) {
                             $paginate_links = paginate_links(array(
                                 'base' => @add_query_arg('page', '%#%'),
