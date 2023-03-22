@@ -784,6 +784,37 @@ function account_deletion() {
 }
 
 /**
+ * Function to send device login code
+ * @since 1.0.0
+ */
+function dspdl_ajax_customer_code_theme() {
+    global $client_token;
+    if ($client_token && wp_verify_nonce($_POST['nonce'], 'customer_code')) {
+        $dotstudio_api = new Dsp_External_Api_Request();
+        if(isset($_SESSION['dotstudiopro_customer_id']) && !empty($_SESSION['dotstudiopro_customer_id'])){
+            $response = $dotstudio_api->submit_device_code($_POST['code'], $_SESSION['dotstudiopro_customer_id']);
+            if (is_wp_error($response)) {
+                $err = $response->get_error_message();
+                $send_response = array('message' => (is_string($err) ? $err : json_encode($err)));
+                wp_send_json_error($send_response, 403);
+            } elseif (isset($response['success']) && $response['success'] == 1) {
+                $send_response = array('message' => $response['message']);
+                wp_send_json_success($send_response, 200);
+            } else {
+                $send_response = array('message' => $response['error']);
+                wp_send_json_error($send_response, 500);
+            }
+        }else{
+            $send_response = array('success' => false, 'message' => 'Customer ID is missing');
+            wp_send_json_error($send_response, 500);
+        }
+    } else {
+        $send_response = array('success' => false, 'message' => 'Internal Server Error');
+        wp_send_json_error($send_response, 500);
+    }
+}
+
+/**
  *
  * @global type $client_token
  * @return type
@@ -826,6 +857,8 @@ add_action('wp_ajax_search_suggesion', 'search_suggesion');
 add_action('wp_ajax_nopriv_search_suggesion', 'search_suggesion');
 add_action('wp_ajax_account_deletion', 'account_deletion');
 add_action('wp_ajax_nopriv_account_deletion', 'account_deletion');
+add_action('wp_ajax_dspdl_ajax_customer_code_theme', 'dspdl_ajax_customer_code_theme');
+add_action('wp_ajax_nopriv_dspdl_ajax_customer_code_theme', 'dspdl_ajax_customer_code_theme');
 
 
 /**
@@ -1172,6 +1205,44 @@ function recaptchaAdd() {
     return '';
 }
 add_shortcode('recaptcha', 'recaptchaAdd');
+
+/**
+ * shortcode for device login plugin
+ */
+function dspdl_customer_form_shortcode_theme() {
+    global $dsp_theme_options, $client_token;
+    $user_id = get_current_user_id();
+    if (empty($user_id) || empty($client_token)) {
+        ob_start(); ?>
+        <div>
+            <h3 class='dspdl-customer-form-login-message text-center'>You must be logged in to submit a code.
+                <br><a href="<?php echo wp_login_url(get_permalink()); ?>" class="btn btn-secondary btn-ds-secondary">Log in or sign up here</a>
+            </h3>
+        </div>
+        <?php
+        $form = ob_get_contents();
+        ob_end_clean();
+    } else {
+        ob_start(); ?>
+            <div class='dspdl-customer-form-container'>
+                <div class='dspdl-customer-form-code'>
+                    <input type='text' name='dspdl-customer-code' />
+                    <input type="hidden" class="customer_code" name="customer_code" value="<?php echo wp_create_nonce('customer_code'); ?>">
+                </div>
+                <div class='dspdl-customer-form-button'>
+                    <div class='dspdl-customer-form-message'></div>
+                    <button class='btn btn-secondary btn-ds-secondary' type='button'>Submit Code</button>
+                </div>
+            </div>
+        <?php
+        $form = ob_get_contents();
+        ob_end_clean();
+    }
+    return $form;
+}
+
+add_shortcode('dspdl_show_form', 'dspdl_customer_form_shortcode_theme');
+add_shortcode('dsp_device_login_form', 'dspdl_customer_form_shortcode_theme');
 
 /*
  * Generate login again dialog (Session expired)

@@ -63,7 +63,10 @@ jobs:
         if: github.base_ref == 'master'
       - name: Zip output
         run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./ -x *.git* -x *DEPLOY_README.md*
-      - run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
+        if: github.base_ref == 'master'
+      - name: Copy zipped output to assets folder for upload
+        run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
+        if: github.base_ref == 'master'
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
