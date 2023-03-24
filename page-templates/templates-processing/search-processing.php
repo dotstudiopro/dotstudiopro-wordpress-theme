@@ -19,8 +19,11 @@ $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
     ),
         ));
 $search_obj = new Dsp_External_Api_Request();
-$form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
 $type = $dsp_theme_options['opt-search-option'];
+if ($type == 'channel')
+    $form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
+else
+    $form = $page;
 // Api call to get search data
 $result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
 
