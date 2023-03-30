@@ -64,14 +64,13 @@ jobs:
       - name: Move files to theme folder for zipping
         run: cp -r ./ ../dspdev-main-theme
       - name: Zip output
-        run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ../dspdev-main-theme -x *.git* -x *DEPLOY_README.md*
-        if: github.base_ref == 'master'
+        run: cd ../ && zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./dspdev-main-theme -x *.git* -x *DEPLOY_README.md*
       - name: Copy zipped output to assets folder for upload
         run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
         if: github.base_ref == 'master'
       - uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*'
+          args: --acl public-read --cache-control max-age=604800 --exclude '.git/*' --exclude '.github/*' --exclude '*css-dev/*' --exclude '*sass/*' --exclude '*.php' --exclude '*ugly-js*' --exclude '*unminified/*' --exclude '*node_modules/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
