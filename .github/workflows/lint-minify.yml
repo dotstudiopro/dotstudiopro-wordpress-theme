@@ -64,8 +64,7 @@ jobs:
       - name: Move files to theme folder for zipping
         run: cp -r ./ ../dspdev-main-theme
       - name: Zip output
-        run: zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ../dspdev-main-theme -x *.git* -x *DEPLOY_README.md*
-        if: github.base_ref == 'master'
+        run: cd ../ && zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./dspdev-main-theme -x *.git* -x *DEPLOY_README.md*
       - name: Copy zipped output to assets folder for upload
         run: cp ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ${{env.LOCAL_ASSETS}}
         if: github.base_ref == 'master'
