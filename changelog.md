@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2023-05-16
+
+### Updated
+- Updated recommendations to use new format from new API
+
 ## [2.1.2] - 2022-07-19
 
 ### Changed

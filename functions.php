@@ -591,36 +591,36 @@ function autocomplete() {
 
             $ratio = $ratio_height / $ratio_width;
         }
-        $suggesion = $dotstudio_api->search_suggestion($q);
-        $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
+        //$suggesion = $dotstudio_api->search_suggestion($q);
+        $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 1, $q);
 
-        if (!empty($suggesion['data']['directors']['results'][0]['options']) && !is_wp_error($suggesion)) {
-            foreach ($suggesion['data']['directors']['results'][0]['options'] as $key => $director) {
-                $items['director'][$key]['name'] = $director['text'];
-                $items['director'][$key]['flag'] = 'director';
-            }
-        }
+        // if (!empty($suggesion['data']['directors']['results'][0]['options']) && !is_wp_error($suggesion)) {
+        //     foreach ($suggesion['data']['directors']['results'][0]['options'] as $key => $director) {
+        //         $items['director'][$key]['name'] = $director['text'];
+        //         $items['director'][$key]['flag'] = 'director';
+        //     }
+        // }
 
-        if (!empty($suggesion['data']['title']['results'][0]['options']) && !is_wp_error($suggesion)) {
-            foreach ($suggesion['data']['title']['results'][0]['options'] as $key => $title) {
-                $items['title'][$key]['name'] = $title['text'];
-                $items['title'][$key]['flag'] = 'title';
-            }
-        }
+        // if (!empty($suggesion['data']['title']['results'][0]['options']) && !is_wp_error($suggesion)) {
+        //     foreach ($suggesion['data']['title']['results'][0]['options'] as $key => $title) {
+        //         $items['title'][$key]['name'] = $title['text'];
+        //         $items['title'][$key]['flag'] = 'title';
+        //     }
+        // }
 
-        if (!empty($suggesion['data']['actors']['results'][0]['options']) && !is_wp_error($suggesion)) {
-            foreach ($suggesion['data']['actors']['results'][0]['options'] as $key => $actors) {
-                $items['actors'][$key]['name'] = $actors['text'];
-                $items['actors'][$key]['flag'] = 'actors';
-            }
-        }
+        // if (!empty($suggesion['data']['actors']['results'][0]['options']) && !is_wp_error($suggesion)) {
+        //     foreach ($suggesion['data']['actors']['results'][0]['options'] as $key => $actors) {
+        //         $items['actors'][$key]['name'] = $actors['text'];
+        //         $items['actors'][$key]['flag'] = 'actors';
+        //     }
+        // }
 
-        if (!empty($suggesion['data']['tags']['results'][0]['options']) && !is_wp_error($suggesion)) {
-            foreach ($suggesion['data']['tags']['results'][0]['options'] as $key => $tags) {
-                $items['tags'][$key]['name'] = $tags['text'];
-                $items['tags'][$key]['flag'] = 'tags';
-            }
-        }
+        // if (!empty($suggesion['data']['tags']['results'][0]['options']) && !is_wp_error($suggesion)) {
+        //     foreach ($suggesion['data']['tags']['results'][0]['options'] as $key => $tags) {
+        //         $items['tags'][$key]['name'] = $tags['text'];
+        //         $items['tags'][$key]['flag'] = 'tags';
+        //     }
+        // }
 
         if (!empty($search) && !is_wp_error($search)) {
             if ($type == 'channel'):
@@ -699,7 +699,7 @@ function search_suggesion() {
 
         $ratio = $ratio_height / $ratio_width;
     }
-    $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 0, $q);
+    $search = $dotstudio_api->search($type, $dsp_theme_options['opt-search-page-size'], 1, $q);
 
     if (!empty($search) && !is_wp_error($search)) {
         if ($type == 'channel'):
