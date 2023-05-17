@@ -19,8 +19,11 @@ $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
     ),
         ));
 $search_obj = new Dsp_External_Api_Request();
-$form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
 $type = $dsp_theme_options['opt-search-option'];
+if ($type == 'channel')
+    $form = ($page - 1) * $dsp_theme_options['opt-search-page-size'];
+else
+    $form = $page;
 // Api call to get search data
 $result = $search_obj->search($type, $dsp_theme_options['opt-search-page-size'], $form, $q);
 
@@ -44,11 +47,11 @@ if (!is_wp_error($result)){
     // if we select search type as video in theme option then loop through search videos and add the required values into an array which we need to display on the page like title, link, banner, etc. 
     if($type == 'video'){
         $search_data = array();
-        if(isset($result['data']['hits']) && !empty($result['data']['hits'])){
-            foreach ($result['data']['hits'] as $key => $data){
-                $search_data[$key]['title'] = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['_source']['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['_source']['title'];
+        if(isset($result['videos']) && !empty($result['videos'])){
+            foreach ($result['videos'] as $key => $data){
+                $search_data[$key]['title'] = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['title'];
                 $search_data[$key]['slug'] = '/video/'.$data['_id'];
-                $banner = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $banner = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                 if($dsp_theme_options['opt-search-image-size'] == '1'){
                     $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio );
                     $search_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
