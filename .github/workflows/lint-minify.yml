@@ -55,6 +55,10 @@ jobs:
       - run: gulp css
       - run: gulp sass
       - run: gulp js
+      - name: Create asset folder
+        run: mkdir -p $LOCAL_ASSETS && ls -l && echo ${pwd}
+      - name: Move files to theme folder for zipping
+        run: cp -r ./ ../dspdev-main-theme
       - name: Zip output
         run: cd ../ && zip -r ${{ format('{0}.{1}', needs.version_check.outputs.wp_version, 'zip') }} ./dspdev-main-theme -x *.git* -x *DEPLOY_README.md*
         if: github.base_ref == 'master'
