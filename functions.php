@@ -655,12 +655,12 @@ function autocomplete() {
                     $items['channel'][$key]['flag'] = 'channel';
                 endforeach;  
             else:
-                foreach ($search['data']['hits'] as $key => $data):
+                foreach ($search['videos'] as $key => $data):
                     $url = get_site_url() . '/video/' . $data['_id'];
-                    $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = 0;
                     $title = 'Videos';
-                    $items['channel'][$key]['name'] = $data['_source']['title'];
+                    $items['channel'][$key]['name'] = $data['title'];
                     if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
                         $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
 
@@ -733,12 +733,12 @@ function search_suggesion() {
                 $items[$key]['flag'] = 'channel';
             endforeach;  
         else:
-            foreach ($search['data']['hits'] as $key => $data):
+            foreach ($search['videos'] as $key => $data):
                 $url = get_site_url() . '/video/' . $data['_id'];
-                $image = (isset($data['_source']['thumb'])) ? get_option('dsp_cdn_img_url_field') . '/' . $data['_source']['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = 0;
                 $title = 'Videos';
-                $items[$key]['name'] = $data['_source']['title'];
+                $items[$key]['name'] = $data['title'];
                 if( $dsp_theme_options['opt-search-image-size'] == '1' ) :
                     $image_attributes = dsp_build_responsive_images( $image, $width, $ratio );
                     $items[$key]['image'] = $image;
