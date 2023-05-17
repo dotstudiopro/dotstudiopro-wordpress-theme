@@ -1,10 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.3.0] - 2023-05-16
+## [2.3.0] - 2023-05-17
 
 ### Updated
-- Updated recommendations to use new format from new API
+- Updated video search and recommendations to use new format from new API
+
+## [2.2.0] - 2023-04-05
+
+### Updated
+- Minor fixes/patches
 
 ## [2.1.2] - 2022-07-19
 
