@@ -651,7 +651,11 @@ class Theme_Functions {
         if (is_wp_error($recommendations))
             return array();
         else {
-            foreach ($recommendations['data']['hits'] as $key => $recommendation):
+            if($type == 'channel')
+                $recommendationsData = $recommendations['channels'];
+            else
+                $recommendationsData = $recommendations['videos'];
+            foreach ($recommendationsData as $key => $recommendation):
                 if ($type == 'channel') {
                     $channel = $this->get_channelByChannelId($recommendation['_id']);
                     if (!empty($channel)) {
