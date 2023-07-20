@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] - 2023-07-20
+
+### Updated
+- Updated cdn url for js and css files to append the theme version
+
 ## [2.3.0] - 2023-05-17
 
 ### Updated
