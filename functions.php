@@ -234,8 +234,8 @@ function bootstrapstarter_enqueue_styles() {
  */
 function bootstrapstarter_enqueue_footer_styles_scripts() {
     $bootstrapcdn_js_url = 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js';
-    $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick.css';
-    $slickthemecdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick-theme.css';
+    $slickcdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick.min.css';
+    $slickthemecdn_url = DSP_THEME_ASSETS_BASE_URL . '/css/slick-theme.min.css';
     $popper_url = 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js';
     // Get our URLs into an array to properly determine type and such
     $urls = array(
