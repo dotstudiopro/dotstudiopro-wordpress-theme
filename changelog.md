@@ -1,10 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.3.0] - 2023-05-16
+## [2.4.0] - 2023-07-20
 
 ### Updated
-- Updated recommendations to use new format from new API
+- Updated cdn url for js and css files to append the theme version
+
+## [2.3.0] - 2023-05-17
+
+### Updated
+- Updated video search and recommendations to use new format from new API
+
+## [2.2.0] - 2023-04-05
+
+### Updated
+- Minor fixes/patches
 
 ## [2.1.2] - 2022-07-19
 
