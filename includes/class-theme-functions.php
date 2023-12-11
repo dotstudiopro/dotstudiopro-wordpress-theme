@@ -223,7 +223,7 @@ class Theme_Functions {
             else{
                 $image = $channels[0]['poster'];
             }
-            $response[0]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[0]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             $response[0]['slug'] = ($channels[0]['slug']) ? $channels[0]['slug'] : '';
             $response[0]['bypass_channel_lock'] =  '';
             $response[0]['channel_unlock'] = isset($channels[0]['subscription_access']) ? $channels[0]['subscription_access']['unlocked'] : true;
@@ -245,7 +245,7 @@ class Theme_Functions {
                 else if (!empty($channel['poster'])){
                     $image = $channel['poster'];
                 }
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $response[$key]['slug'] = ($channel['slug']) ? $channel['slug'] : '';
                 $response[$key]['bypass_channel_lock'] =  '';
                 $response[$key]['channel_unlock'] = isset($channel['subscription_access']) ? $channel['subscription_access']['unlocked'] : true;
@@ -372,7 +372,7 @@ class Theme_Functions {
             else{
                 $image = $channel_meta['chnl_poster'][0];
             }
-            $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -443,7 +443,7 @@ class Theme_Functions {
                     else{
                         $image = $channel_meta['chnl_poster'][0];
                     }
-                    $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
                     if ($type == 'categories-template') {
@@ -672,7 +672,7 @@ class Theme_Functions {
                         else{
                             $image = $channel_meta['chnl_poster'][0];
                         }
-                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
                 } else {
@@ -681,7 +681,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['_id'] = isset($video['_id']) ? $video['_id'] : '';
                         $recommendation_content[$key]['title'] = isset($video['title']) ? $video['title'] : '';
                         $recommendation_content[$key]['description'] = isset($video['description']) ? $video['description'] : '';
-                        $recommendation_content[$key]['image'] = isset($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                        $recommendation_content[$key]['image'] = isset($video['thumb']) ? $video['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_site_url() . '/video/' . $video['_id'];
                     }
                 }

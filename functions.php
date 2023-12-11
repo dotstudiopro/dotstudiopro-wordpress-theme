@@ -636,7 +636,7 @@ function autocomplete() {
                     else{
                         $image_type = $data['wallpaper'];
                     }
-                    $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $image = (!empty($image_type)) ? $image_type : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                     $title = 'Channels';
 
@@ -658,7 +658,7 @@ function autocomplete() {
             else:
                 foreach ($search['videos'] as $key => $data):
                     $url = get_site_url() . '/video/' . $data['_id'];
-                    $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = 0;
                     $title = 'Videos';
                     $items['channel'][$key]['name'] = $data['title'];
@@ -716,7 +716,7 @@ function search_suggesion() {
                     $image_type = $data['wallpaper'];
                 }
                 //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
-                $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $image = (!empty($image_type)) ? $image_type : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                 $title = 'Channels';
                 $items[$key]['name'] = $data['title'];
@@ -736,7 +736,7 @@ function search_suggesion() {
         else:
             foreach ($search['videos'] as $key => $data):
                 $url = get_site_url() . '/video/' . $data['_id'];
-                $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = 0;
                 $title = 'Videos';
                 $items[$key]['name'] = $data['title'];

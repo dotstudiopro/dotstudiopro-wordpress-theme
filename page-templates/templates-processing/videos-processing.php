@@ -121,7 +121,7 @@ if (!empty($client_token)) {
 
 // Code to display channel image for the selected video
 $channel_meta = get_post_meta($channel->ID);
-$channel_img = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/240/360';
+$channel_img = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/240/360';
 $channel_id = $channel_meta['chnl_id'][0];
 if ($channel_meta['chnl_spotlight_poster'][0]) {
     $channel_img = $channel_meta['chnl_spotlight_poster'][0] . '/240/360';
