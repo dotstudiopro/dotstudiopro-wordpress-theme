@@ -15,7 +15,7 @@ get_header();
          foreach ($final_category_data['category'] as $category) {
          ?>
          <div class="col-md-<?php echo $final_category_data['number_of_row']; ?> p-4">
-            <a href="<?php echo $link; ?>" title="<?php echo $category['title']; ?>">
+            <a href="<?php echo $category['link']; ?>" title="<?php echo $category['title']; ?>">
                 <div class="holder">
                     <?php if(isset($category['image_attributes_sizes']) && isset($category['image_attributes_srcset'])) :?>
                         <img src="<?php echo $final_category_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $category['banner']; ?>" srcset="<?php echo $category['image_attributes_srcset']; ?>" sizes="<?php echo $category['image_attributes_sizes']; ?>">

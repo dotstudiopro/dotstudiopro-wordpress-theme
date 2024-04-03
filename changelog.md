@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.3] - 2024-04-03
+
+### Fixed
+
+- Fixed category links pulling from the wrong variable on the template
+
 ## [2.4.2] - 2024-04-02
 
 ### Fixed
