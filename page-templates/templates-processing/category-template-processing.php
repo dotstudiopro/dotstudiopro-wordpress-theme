@@ -48,7 +48,7 @@ if ($categories) {
         if($channels){
             $category_meta = get_post_meta($category->ID);
             $category_banner = ($dsp_theme_options['opt-categories-poster-type'] == 'wallpaper') ? $category->cat_wallpaper : $category->cat_poster;
-            $banner = ($category_banner) ? $category_banner : 'https://images.dotstudiopro.com/5bd9eb28d57fdf6513eb280b';
+            $banner = ($category_banner) ? $category_banner : 'https://defaultdspmedia.cachefly.net/images/5bd9eb28d57fdf6513eb280b';
             $category_listing_option = $dsp_theme_options['opt-cateogry-listing-option'];
             if ($category_listing_option == 'category-listing-page'):
                 $link = get_permalink($category->ID);
@@ -91,7 +91,7 @@ if ($categories) {
     }
 }
 // assign all the data into a final array with the default image
-$final_category_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$final_category_data['width'];
+$final_category_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$final_category_data['width'];
 if(isset($final_category_data['height']))
     $final_category_data['default_image'] = $final_category_data['default_image'].'/'.$final_category_data['height'];
 $final_category_data['category'] = $category_data;

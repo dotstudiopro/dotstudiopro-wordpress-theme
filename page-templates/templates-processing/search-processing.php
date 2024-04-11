@@ -51,7 +51,7 @@ if (!is_wp_error($result)){
             foreach ($result['videos'] as $key => $data){
                 $search_data[$key]['title'] = ($dsp_theme_options['opt-search-title-trim-word'] != 0) ? wp_trim_words($data['title'], $dsp_theme_options['opt-search-title-trim-word'], '...') : $data['title'];
                 $search_data[$key]['slug'] = '/video/'.$data['_id'];
-                $banner = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $banner = (isset($data['thumb'])) ? $data['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 if($dsp_theme_options['opt-search-image-size'] == '1'){
                     $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio );
                     $search_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
@@ -82,7 +82,7 @@ if (!is_wp_error($result)){
                 else{
                     $image_type = $data['wallpaper'];
                 }
-                $banner = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $banner = (!empty($image_type)) ? $image_type : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 if($dsp_theme_options['opt-search-image-size'] == '1'){
                     $image_attributes = dsp_build_responsive_images( $banner, $width, $ratio );
                     $search_data[$key]['image_attributes_srcset'] = $image_attributes['srcset'];
@@ -101,7 +101,7 @@ if (!is_wp_error($result)){
     
     // assign all the data into a final array with the default image
     $final_channel_data['search_result'] = $search_data;
-    $final_channel_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+    $final_channel_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$width;
     if(isset($height))
         $final_channel_data['default_image'] = $final_channel_data['default_image'].'/'.$height;
 
