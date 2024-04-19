@@ -37,9 +37,9 @@ get_header();
                             <?php else : ?>   
                                 <img src="<?php echo $final_channel_data['default_image']; ?>" class="lazy w-100" data-src="<?php echo $data['banner']; ?>" title="<?php echo $data['title']; ?>" alt="<?php echo $data['title']; ?>">
                             <?php endif; ?>
-                            <div class='title-holder'>
-                                <h3><?php echo $data['title']; ?></h3>
-                            </div>
+                            <!-- <div class='title-holder'>
+                                <h3><?php //echo $data['title']; ?></h3>
+                            </div> -->
                         </div>
                     </a>
                 </div>

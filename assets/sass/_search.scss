@@ -10,7 +10,7 @@
     @include rem(padding, 15px 25px);
     clear: both;
     display: inline-block;
-    @include rem(margin-top, 18px);
+    @include rem(margin-top, 1px);
     position: absolute;
     right: 10%;
     top: 0;
@@ -47,7 +47,7 @@
     right: 0;
     border: none;
     outline: none;
-    width: 100%;
+    width: 80%;
     @include rem(height, 50px);
     margin: 0;
     z-index: 10;
@@ -156,12 +156,12 @@ body.stickey-nav .autocomplete-suggestions {
   z-index: 999999;
   width: 100% !important;
   left: 0 !important;
-  height: calc(100vh - 5rem) !important;
+  height: calc(100vh - 7rem) !important;
   overflow-y: scroll;
   max-height: inherit;
   padding: 3% 5%;
   background: $light-gray1;
-  @include rem(top, 80px !important);
+  @include rem(top, 110px !important);
 
   .information-top {
     h5 {
@@ -286,8 +286,4 @@ body.stickey-nav .autocomplete-suggestions {
     background: $green;
     color: $white;
   }
-}
-
-.search-suggestions-open {
-  position: fixed;
 }

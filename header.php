@@ -52,9 +52,11 @@
                 .sb-search.sb-search-open .sb-search-input {
                     border-bottom-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
-                .slide.active {
+                .slide.active .slide_image {
                     -webkit-box-shadow: inset 0 0 10px #87b145;
                     box-shadow: inset 0 0 10px <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
+                    border: 1px solid <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
+                    padding: 7px;
                 }
                 .custom-tooltip.tooltipster-sidetip .tooltipster-box,
                 .center_title:before, .jconfirm.jconfirm-custom .jconfirm-box, .card .card-block {
@@ -76,6 +78,9 @@
                 .watch_now a:after {
                     border-left-color: <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
                 }
+                .search-textbox, .search-btn{
+                        border: 2px solid <?php echo $dsp_theme_options['opt-main-theme-color']; ?>;
+                }
 
                 .mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCS-minimal.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
                     background-color: <?php echo $dsp_theme_options['opt-main-theme-color'] . ' !important'; ?>;
@@ -90,24 +95,24 @@
                 /* hover css */
                 .simple-navigation-item-content:hover,
                 .other-categories .slick-arrow.slick-prev:hover,
-                .other-categories .slick-arrow.slick-next:hover {
+                .other-categories .slick-arrow.slick-next:hover,
+                .pagination-links span.page-numbers.current,
+                .search-btn,
+                .dsp-homepage-see-more a {
                     background: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
-                }
-                .dsp-homepage-see-more a{
-                    float: right;
-                    color: #000000;
                 }
                 .main-navigation .navbar-nav > li.current-menu-item a,
                 .other-categories h3 a:hover,
                 .main-navigation .navbar-nav > li a:hover,
                 .other-categories .slick-slide:hover h4,
                 .footer-nav ul li a:hover,
+                 a.page-numbers,
                 .autocomplete-suggestions .information-top ul li a:hover,
-                .autocomplete-suggestions .channl_information a:hover h5,
-                .dsp-homepage-see-more a
+                .autocomplete-suggestions .channl_information a:hover h5
                 {
                     color: <?php echo $dsp_theme_options['opt-main-theme-hover-color']; ?>;
                 }
+
             </style>
         <?php endif; ?>
         <?php
