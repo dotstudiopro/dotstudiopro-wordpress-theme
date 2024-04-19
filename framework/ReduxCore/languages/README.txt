@@ -1,1 +1,4 @@
-Please visit: https://github.com/ReduxFramework/ReduxFramework/wiki/Translate for details on how you can help.
+Translations have moved to
+https://translate.wordpress.org/projects/wp-plugins/redux-framework
+
+Thank you for your contribution.

@@ -4,12 +4,13 @@
  * A script/plugin that communicates with our WP Updater service to determine theme updates
  */
 require 'theme-update-checker/theme-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker(
                 'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
-$theme_data = get_theme_data(get_template_directory().'/style.css');
+$theme_data = wp_get_theme();
 $url = "https://wordpress-assets.dotstudiopro.com/main-theme/v".$theme_data['Version'];
 $buster = date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css'));
 if (defined('DOTSTUDIOPRO_DEV')) {
@@ -216,7 +217,7 @@ function bootstrapstarter_enqueue_styles() {
 
     wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', array(), null);
 
-    wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+    wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css');
 
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 
@@ -277,7 +278,7 @@ function dsp_bootstrap_process_defer() {
     global $deferred_scripts;
 
     $scripts = "<script>
-                    var dsp_bootstrap_opts = document.querySelector('style.options-output');";
+                    var dsp_bootstrap_opts = document.querySelector('style.redux-options-output');";
     if (!is_array($deferred_scripts)) return $scripts;
     foreach($deferred_scripts as $url) {
         // Make sure we have what we need
@@ -385,7 +386,7 @@ function register_theme_scripts() {
     wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php'), 'company_id' => $configs->company_id, 'subdomain' => $configs->subdomain  ));
 }
 
-add_action('wp_enqueue_scripts', 'register_theme_scripts');
+add_action('wp_enqueue_scripts', 'register_theme_scripts', 99);
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
