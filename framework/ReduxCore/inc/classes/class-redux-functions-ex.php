@@ -316,7 +316,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 				return true;
 			}
 
-			return false;
+			return true;
 		}
 
 		/**
