@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2024-04-22
+
+### Updated
+
+- Updated Redux, theme update checker, css
+
 ## [2.4.3] - 2024-04-03
 
 ### Fixed
