@@ -105,6 +105,19 @@ if (!isset($redux_owd) && file_exists(dirname(__FILE__) . '/framework/dsp_option
 // initialize the the theme's option
 Redux::init('dsp_theme_options');
 
+// Add the action so it will delete all transients on save button click
+add_action('redux/options/dsp_theme_options/saved', 'delete_my_transients_on_save');
+
+function delete_my_transients_on_save() {
+    // Get all transients
+    global $wpdb;
+    $transients = $wpdb->get_results("SELECT option_name FROM $wpdb->options WHERE option_name LIKE '\_transient\_%'");
+    // Delete each transient
+    foreach ($transients as $transient) {
+        delete_option($transient->option_name);
+    }
+}
+
 /*
  * checking if user is logged
  */
