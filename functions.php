@@ -111,7 +111,19 @@ add_action('redux/options/dsp_theme_options/saved', 'delete_my_transients_on_sav
 function delete_my_transients_on_save() {
     // Get all transients
     global $wpdb;
-    $transients = $wpdb->get_results("SELECT option_name FROM $wpdb->options WHERE option_name LIKE '\_transient\_%'");
+    $transients = $wpdb->get_results("
+                        SELECT option_name
+                        FROM $wpdb->options
+                        WHERE option_name LIKE '_transient_home_page_main_%'
+                           OR option_name LIKE '_transient_home_page_other_%'
+                           OR option_name LIKE '_transient_show_channels_%'
+                           OR option_name LIKE '_transient_show_videos_%'
+                           OR option_name LIKE '_transient_get_channel_by_name_%'
+                           OR option_name LIKE '_transient_get_channel_videos_%'
+                           OR option_name LIKE '_transient_first_video_id_%'
+                           OR option_name LIKE '_transient_get_channelByChannelId_%'
+                   ");
+
     // Delete each transient
     foreach ($transients as $transient) {
         delete_option($transient->option_name);
