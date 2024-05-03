@@ -114,19 +114,14 @@ function delete_my_transients_on_save() {
     $transients = $wpdb->get_results("
                         SELECT option_name
                         FROM $wpdb->options
-                        WHERE option_name LIKE '_transient_home_page_main_%'
-                           OR option_name LIKE '_transient_home_page_other_%'
-                           OR option_name LIKE '_transient_show_channels_%'
-                           OR option_name LIKE '_transient_show_videos_%'
-                           OR option_name LIKE '_transient_get_channel_by_name_%'
-                           OR option_name LIKE '_transient_get_channel_videos_%'
-                           OR option_name LIKE '_transient_first_video_id_%'
-                           OR option_name LIKE '_transient_get_channelByChannelId_%'
+                        WHERE option_name LIKE '_transient_dotstudiopro_%'
                    ");
 
     // Delete each transient
     foreach ($transients as $transient) {
-        delete_option($transient->option_name);
+        $transient_name = str_replace('_transient_', '', $transient->option_name);
+        // Delete the transient
+        $deleted = delete_transient($transient_name);
     }
 }
 
