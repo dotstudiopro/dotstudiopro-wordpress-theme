@@ -15,6 +15,33 @@ $opt_name = "dsp_theme_options";
 
 $theme = wp_get_theme(); // For use with some settings. Not necessary.
 
+// First, define the validation callback function
+function validate_dimensions($field, $value, $existing_value) {
+    $error = false;
+    $max_width = 500;
+    $max_height = 500;
+
+    if ($value['width'] > $max_width) {
+        $value['width'] = $max_width;
+        $error = true;
+    }
+
+    if ($value['height'] > $max_height) {
+        $value['height'] = $max_height;
+        $error = true;
+    }
+
+    $return['value'] = $value;
+
+    if ($error) {
+        $field['msg'] = __('The dimensions exceeded the maximum allowed values. Max you can set 500px', 'dotstudio-pro');
+        $return['error'] = $field;
+    }
+
+    return $return;
+}
+
+
 $args = array(
     'opt_name' => $opt_name,
     'display_name' => $theme->get('Name'),
@@ -635,6 +662,49 @@ Redux::setSection($opt_name, array(
             'default' => $default_option
         ),
         array(
+            'id' => 'opt-main-home-template',
+            'type' => 'select',
+            'title' => __('Select template to display main carousel', 'dotstudio-pro'),
+            'subtitle' => __('Choose any one template', 'dotstudio-pro'),
+            'options' => array(
+                1 => 'Template 1',
+                2 => 'Template 2',
+            ),
+            'default' => 1
+        ),
+        array(
+            'id' => 'opt-main-home-bg-poster-display',
+            'title' => __('Enable Main Carousel Background', 'dotstudio-pro'),
+            'subtitle' => __('Enable/disable the Main Carousel Background ', 'dotstudio-pro'),
+            'description' => __('By default, this is set to "on".', 'dotstudio-pro'),
+            'type' => 'switch',
+            'default' => true,
+            'required' => array('opt-main-home-template', '=', '2'),
+            
+        ),
+        array(
+            'id' => 'opt-main-home-bg-color',
+            'type' => 'color',
+            'title' => __('Main Carousel Background Color', 'dotstudio-pro'),
+            'subtitle' => __('Pick a text color for the main carousel background.', 'dotstudio-pro'),
+            'default' => '#000000',
+            'validate' => 'color',
+            'required' => array(array('opt-main-home-template', '=', '2'), array('opt-main-home-bg-poster-display', '=', false)),
+        ),
+        array(
+            'id' => 'opt-main-home-template-bg-poster-type',
+            'type' => 'radio',
+            'title' => __('Select Channel Banner Type For Main Carousel Background', 'dotstudio-pro'),
+            'subtitle' => __('Select the channel banner type you would like to display in the main carousel background', 'dotstudio-pro'),
+            'options' => array(
+                'spotlight_poster' => 'Key Art',
+                'poster' => 'Poster',
+                'wallpaper' => 'Wallpaper',
+            ),
+            'default' => 'wallpaper',
+            'required' => array(array('opt-main-home-template', '=', '2'), array('opt-main-home-bg-poster-display', '=', true)),  
+        ),
+        array(
             'id' => 'opt-poster-type',
             'type' => 'radio',
             'title' => __('Select Channel Banner Type For Main Carousel', 'dotstudio-pro'),
@@ -647,6 +717,42 @@ Redux::setSection($opt_name, array(
             'default' => 'poster'
         ),
         array(
+            'id' => 'opt-main-home-template2-image-aspect-ratio',
+            'type' => 'dimensions',
+            'title' => __('Aspect ratio Option for the carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Choose aspect ratio width and height for the carousel thumbnails', 'dotstudio-pro'),
+            'units' => array(),
+            'default' => array(
+                'width' => 16,
+                'height' => 9,
+            ),
+            'required' => array('opt-main-home-template', '=', '2'),
+        ),
+        array(
+            'id' => 'opt-main-home-template2-image-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width and height for the main thumbnails carousel.', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 400,
+                'height' => 225,
+            ),
+            'validate_callback' => 'validate_dimensions',
+            'required' => array('opt-main-home-template', '=', '2'),
+        ),
+        array(
+            'id' => 'opt-main-home-template2-image-mobile-dimensions',
+            'type' => 'dimensions',
+            'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
+            'subtitle' => __('Allow your users to choose width and height for the main thumbnails carousel.', 'dotstudio-pro'),
+            'default' => array(
+                'width' => 320,
+                'height' => 180,
+            ),
+            'validate_callback' => 'validate_dimensions',
+            'required' => array('opt-main-home-template', '=', '2'),
+        ),
+        array(
             'id' => 'opt-main-home-image-dimensions',
             'type' => 'dimensions',
             'title' => __('Dimensions (Width/Height) Option for the main carousel thumbnails', 'dotstudio-pro'),
@@ -654,7 +760,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 1920,
                 'height' => 650,
-            )
+            ),
+            'required' => array('opt-main-home-template', '=', '1'),
         ),
         array(
             'id' => 'opt-main-home-image-mobile-dimensions',
@@ -664,7 +771,8 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'width' => 600,
                 'height' => 450,
-            )
+            ),
+            'required' => array('opt-main-home-template', '=', '1'),
         ),
         array(
             'id' => 'opt-play-btn-type',

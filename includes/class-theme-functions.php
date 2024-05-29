@@ -67,12 +67,13 @@ class Theme_Functions {
             $total_channels = count($channels);
 
             $poster_type = $dsp_theme_options['opt-poster-type'];
+            $poster_bg_type = $dsp_theme_options['opt-main-home-template-bg-poster-type'];
             if ($total_channels > 1) {
 
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type, null);
+                $show_channels = $this->show_channels($channels, 'main_carousel', $main_carousel_category, $poster_type, null, $poster_bg_type);
                 if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -140,12 +141,13 @@ class Theme_Functions {
             $total_channels = count($channels);
 
             $poster_type = ($poster_type) ? $poster_type : $dsp_theme_options['opt-poster-type'];
+            $poster_bg_type = $dsp_theme_options['opt-main-home-template-bg-poster-type'];
             if ($total_channels > 1 || $channel_is_parent == true) {
 
                 $transient_show_channels = get_transient( $show_channels_cache_key );
                 if ($transient_show_channels) return $transient_show_channels;
 
-                $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type, $cnt);
+                $show_channels = $this->show_channels($channels, 'other_carousel', $category_name, $poster_type, $cnt, $poster_bg_type);
                 if (!empty($show_channels)) set_transient( $show_channels_cache_key, $show_channels, 3600 );
                 return $show_channels;
 
@@ -339,7 +341,7 @@ class Theme_Functions {
      * @param type $channels
      * return type
      */
-    public function show_channels($channels, $type, $category, $poster_type, $total = null) {
+    public function show_channels($channels, $type, $category, $poster_type, $total = null, $poster_bg_type = null) {
 
         $cache_key = "dotstudiopro_show_channels_" . $type . "_" . $category . "_" . $this->country . "_" . $total;
         $cache = get_transient($cache_key);
@@ -371,6 +373,19 @@ class Theme_Functions {
             }
             else{
                 $image = $channel_meta['chnl_poster'][0];
+            }
+
+            if(!empty($poster_bg_type)){
+                if($poster_bg_type == 'spotlight_poster'){
+                    $image_bg = $channel_meta['chnl_spotlight_poster'][0];
+                }
+                elseif($poster_bg_type == 'wallpaper'){
+                    $image_bg = $channel_meta['chnl_wallpaper'][0];
+                }
+                else{
+                    $image_bg = $channel_meta['chnl_poster'][0];
+                }
+                $response[$key]['image_bg'] = (!empty($image_bg)) ? $image_bg : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             }
             $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
@@ -444,6 +459,20 @@ class Theme_Functions {
                         $image = $channel_meta['chnl_poster'][0];
                     }
                     $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
+
+                    $poster_bg_type = $dsp_theme_options['opt-main-home-template-bg-poster-type'];
+                    if(!empty($poster_bg_type)){
+                        if($dsp_theme_options['opt-main-home-template-bg-poster-type'] == 'spotlight_poster'){
+                            $image_bg = $channel_meta['chnl_spotlight_poster'][0];
+                        }
+                        elseif($dsp_theme_options['opt-main-home-template-bg-poster-type'] == 'wallpaper'){
+                            $image_bg = $channel_meta['chnl_wallpaper'][0];
+                        }
+                        else{
+                            $image_bg = $channel_meta['chnl_poster'][0];
+                        }
+                        $response[$key]['image_bg'] = (!empty($image_bg)) ? $image_bg : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
+                    }
                     $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
                     if ($type == 'categories-template') {
