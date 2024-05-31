@@ -153,9 +153,6 @@ a.page-numbers {
   .page-title {
     text-align: center;
   }
-  a.page-numbers:not(.prev):not(.next), .page-numbers.current {
-    font-size: 55px;
-  }
   a.page-numbers.prev:after, a.page-numbers.next:before {
     content: ' ';
     display: block;
@@ -170,7 +167,6 @@ a.page-numbers {
 }
 
 body.fixed-body{
-	position: fixed;
 	overflow: hidden;
   background: $black;
 	height: 100vh;

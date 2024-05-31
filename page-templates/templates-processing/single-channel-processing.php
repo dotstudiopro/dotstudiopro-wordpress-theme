@@ -97,7 +97,7 @@ else{
     $channel_banner_image = $poster = $channel_meta['chnl_wallpaper'][0];
 }
 
-$banner = ($channel_banner_image) ? $channel_banner_image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+$banner = ($channel_banner_image) ? $channel_banner_image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
 $banner = $banner.'/1920/900';
 if($dsp_theme_options['opt-display-webp-image'] == 0)
     $banner = $banner.'?webp=1';

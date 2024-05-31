@@ -22,17 +22,17 @@
 }
 
 @mixin watch_now_big {
-	@include rem(height, 180px);
-	@include rem(width, 180px);
-	@include rem(margin-top, -180px);
+	@include rem(height, 95px);
+	@include rem(width, 95px);
+	@include rem(margin-top, -95px);
 	a {
-		@include rem(height, 180px);
-		@include rem(width, 180px);
+		@include rem(height, 95px);
+		@include rem(width, 95px);
     &:after {
-			@include rem(border-top, 40px solid transparent);
-			@include rem(border-bottom, 40px solid transparent);
-			@include rem(border-left, 70px solid $green);
-			@include rem(margin-top, 46px);
+			@include rem(border-top, 25px solid transparent);
+			@include rem(border-bottom, 25px solid transparent);
+			@include rem(border-left, 45px solid $green);
+			@include rem(margin-top, 26px);
     }
   }
 }

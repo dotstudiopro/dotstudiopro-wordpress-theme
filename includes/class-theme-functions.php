@@ -44,9 +44,9 @@ class Theme_Functions {
     public function home_page_main_carousel() {
 
         global $dsp_theme_options;
-        $channels_cache_key = "home_page_main_carousel_channels_" . $this->country;
-        $show_channels_cache_key = "home_page_main_carousel_show_channels_" . $this->country;
-        $show_videos_cache_key = "home_page_main_carousel_show_videos_" . $this->country;
+        $channels_cache_key = "dotstudiopro_home_page_main_carousel_channels_" . $this->country;
+        $show_channels_cache_key = "dotstudiopro_home_page_main_carousel_show_channels_" . $this->country;
+        $show_videos_cache_key = "dotstudiopro_home_page_main_carousel_show_videos_" . $this->country;
         $response = array();
 
         $main_carousel_category = $dsp_theme_options['opt-home-carousel'];
@@ -112,9 +112,9 @@ class Theme_Functions {
             $cnt = $dsp_theme_options['opt-slick-home-slidestoload'];
             if (empty($cnt)) $cnt = $dsp_theme_options['opt-slick-home-slidetoscroll'] * 2;
         }
-        $channels_cache_key = "home_page_other_carousel_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
-        $show_channels_cache_key = "home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
-        $show_videos_cache_key = "home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country . "_total_" . $cnt;
+        $channels_cache_key = "dotstudiopro_home_page_other_carousel_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
+        $show_channels_cache_key = "dotstudiopro_home_page_other_carousel_show_channels_" . $category_name . "_" . $this->country . "_total_" . $cnt;
+        $show_videos_cache_key = "dotstudiopro_home_page_other_carousel_show_videos_" . $category_name . "_" . $this->country . "_total_" . $cnt;
         $response = array();
         // Try to avoid having to get all of our channels via a giant call if we can
         $transient_channels = get_transient( $channels_cache_key );
@@ -223,7 +223,7 @@ class Theme_Functions {
             else{
                 $image = $channels[0]['poster'];
             }
-            $response[0]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[0]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             $response[0]['slug'] = ($channels[0]['slug']) ? $channels[0]['slug'] : '';
             $response[0]['bypass_channel_lock'] =  '';
             $response[0]['channel_unlock'] = isset($channels[0]['subscription_access']) ? $channels[0]['subscription_access']['unlocked'] : true;
@@ -245,7 +245,7 @@ class Theme_Functions {
                 else if (!empty($channel['poster'])){
                     $image = $channel['poster'];
                 }
-                $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $response[$key]['slug'] = ($channel['slug']) ? $channel['slug'] : '';
                 $response[$key]['bypass_channel_lock'] =  '';
                 $response[$key]['channel_unlock'] = isset($channel['subscription_access']) ? $channel['subscription_access']['unlocked'] : true;
@@ -265,7 +265,7 @@ class Theme_Functions {
      */
     public function get_category_channels($category_name) {
 
-        $cache_key = "show_channels_" . $category_name . "_" . $this->country;
+        $cache_key = "dotstudiopro_show_channels_" . $category_name . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -341,7 +341,7 @@ class Theme_Functions {
      */
     public function show_channels($channels, $type, $category, $poster_type, $total = null) {
 
-        $cache_key = "show_channels_" . $type . "_" . $category . "_" . $this->country . "_" . $total;
+        $cache_key = "dotstudiopro_show_channels_" . $type . "_" . $category . "_" . $this->country . "_" . $total;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -372,7 +372,7 @@ class Theme_Functions {
             else{
                 $image = $channel_meta['chnl_poster'][0];
             }
-            $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+            $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
             $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
             if ($type == 'other_carousel' || $dsp_theme_options['opt-play-btn-type'] == 'watch_now')
@@ -412,7 +412,7 @@ class Theme_Functions {
      */
     public function show_videos($channel, $type, $category = null, $p_channel = null, $total = null) {
 
-        $cache_key = "show_videos_" . $channel->ID . "_" . $this->country;
+        $cache_key = "dotstudiopro_show_videos_" . $channel->ID . "_" . $this->country;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
         $response = array();
@@ -443,7 +443,7 @@ class Theme_Functions {
                     else{
                         $image = $channel_meta['chnl_poster'][0];
                     }
-                    $response[$key]['image'] = (!empty($image)) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $response[$key]['image'] = (!empty($image)) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $response[$key]['dspro_is_product'] = $channel_meta['dspro_is_product'][0];
 
                     if ($type == 'categories-template') {
@@ -505,7 +505,7 @@ class Theme_Functions {
      */
     public function get_channel_by_name($channel_name) {
 
-        $cache_key = "get_channel_by_name_" . $channel_name;
+        $cache_key = "dotstudiopro_get_channel_by_name_" . $channel_name;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -549,7 +549,7 @@ class Theme_Functions {
      */
     public function get_channel_videos($channel_id) {
 
-        $cache_key = "get_channel_videos_" . $channel_id;
+        $cache_key = "dotstudiopro_get_channel_videos_" . $channel_id;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -581,7 +581,7 @@ class Theme_Functions {
      */
     public function first_video_id($channel_id) {
 
-        $cache_key = "first_video_id_" . $channel_id;
+        $cache_key = "dotstudiopro_first_video_id_" . $channel_id;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
         // If we don't have a video, we can bring in global variables and such;
@@ -610,7 +610,7 @@ class Theme_Functions {
      */
     public function get_channelByChannelId($channel_id) {
 
-        $cache_key = "get_channelByChannelId_" . $channel_id;
+        $cache_key = "dotstudiopro_get_channelByChannelId_" . $channel_id;
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
@@ -672,7 +672,7 @@ class Theme_Functions {
                         else{
                             $image = $channel_meta['chnl_poster'][0];
                         }
-                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                        $recommendation_content[$key]['image'] = ($image) ? $image : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_the_permalink($channel->ID);
                     }
                 } else {
@@ -681,7 +681,7 @@ class Theme_Functions {
                         $recommendation_content[$key]['_id'] = isset($video['_id']) ? $video['_id'] : '';
                         $recommendation_content[$key]['title'] = isset($video['title']) ? $video['title'] : '';
                         $recommendation_content[$key]['description'] = isset($video['description']) ? $video['description'] : '';
-                        $recommendation_content[$key]['image'] = isset($video['thumb']) ? $video['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                        $recommendation_content[$key]['image'] = isset($video['thumb']) ? $video['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                         $recommendation_content[$key]['url'] = get_site_url() . '/video/' . $video['_id'];
                     }
                 }

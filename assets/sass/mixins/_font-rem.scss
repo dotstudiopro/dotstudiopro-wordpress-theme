@@ -21,10 +21,12 @@
 			@if $unit=="px" {
 				$px: append($px, $value);
 				$rem: append($rem, calc($val / $root) + rem);
+        $rem: str-slice(#{$rem}, 1, str-index(#{$rem}, "px") - 1) + rem;
 			}
 
 			@if $unit=="rem" {
 				$px: append($px, calc($val * $root) + px);
+        $px: str-slice(#{$px}, 1, str-index(#{$px}, "rem") - 1) + px;
 				$rem: append($rem, $value);
 			}
 		}

@@ -33,7 +33,7 @@ $args = array(
     'dev_mode' => true,
     'update_notice' => true,
     'customizer' => true,
-    'page_priority' => null,
+    'page_priority' => 80,
     'page_parent' => 'themes.php',
     'page_permissions' => 'manage_options',
     'menu_icon' => '',
@@ -86,7 +86,7 @@ Redux::setArgs($opt_name, $args);
 
 // Set the help sidebar
 $content = __('<p>This is the sidebar content, HTML is allowed.</p>', 'dotstudio-pro');
-Redux::setHelpSidebar($opt_name, $content);
+Redux::set_help_sidebar($opt_name, $content);
 
 /**
  * General Options
@@ -293,7 +293,7 @@ Redux::setSection($opt_name, array(
             'units' => array('em', 'px', '%'),
             'width' => false,
             'default' => array(
-                'height' => 75,
+                'height' => 55,
             )
         ),
         array(
@@ -458,7 +458,7 @@ Redux::setSection($opt_name, array(
             'google' => true,
             'color' => false,
             'default' => array(
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
             ),
         ),
         array(
@@ -476,10 +476,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
-                'font-size' => ' 4.9375',
-                'line-height' => ' 4.9375'
+                'font-size' => '3',
+                'line-height' => '3'
             ),
         ),
         array(
@@ -497,10 +497,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
-                'font-size' => ' 4.9375',
-                'line-height' => ' 4.9375'
+                'font-size' => '2.5',
+                'line-height' => '2.5'
             ),
         ),
         array(
@@ -518,10 +518,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
-                'font-size' => '3.125',
-                'line-height' => '3.125'
+                'font-size' => '2',
+                'line-height' => '2'
             ),
         ),
         array(
@@ -539,10 +539,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
-                'font-size' => '1.875',
-                'line-height' => '1.875'
+                'font-size' => '1.5',
+                'line-height' => '1.5'
             ),
         ),
         array(
@@ -560,10 +560,10 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
-                'font-size' => '1.5',
-                'line-height' => '1.5'
+                'font-size' => '1.2',
+                'line-height' => '1.2'
             ),
         ),
         array(
@@ -581,7 +581,7 @@ Redux::setSection($opt_name, array(
             'default' => array(
                 'color' => '#333',
                 'font-style' => '700',
-                'font-family' => 'Arial,Helvetica,sans-serif',
+                'font-family' => 'Arial, Helvetica, sans-serif',
                 'google' => true,
                 'font-size' => '1',
                 'line-height' => '1'
@@ -1821,43 +1821,6 @@ Redux::setSection($opt_name, array(
         ),
     ),
 ));
-
-/**
-* Payment Screen Options
-* @since 1.0.0
-*/
-Redux::setSection($opt_name, array(
-    'title' => __('Payment Screen', 'dotstudio-pro'),
-    'id' => 'payment_screen',
-    'icon' => 'el el-usd',
-    'fields' => array(
-        array(
-            'id' => 'opt-payment-method-choice',
-            'type' => 'button_set',
-            'title' => __('Payment Method', 'dotstudio-pro'),
-            'desc' => __('Choose whether your site takes credit cards through a Chargify.js embed or through card submission to Braintree.', 'dotstudio-pro'),
-            'options' => array(
-                '0' => 'Chargify.js (Recommended)',
-                '1' => 'Braintree'
-            ),
-            'default' => '0'
-        ),
-        array(
-            'id' => 'opt-chargifyjs-token',
-            'type' => 'text',
-            'title' => __('Chargify.js Public Token', 'dotstudio-pro'),
-            'desc' => __('The Chargify.js Public Token from your Chargify account.'),
-            'required' => array('opt-payment-method-choice','equals','0')
-        ),
-        array(
-            'id' => 'opt-chargifyjs-subdomain',
-            'type' => 'text',
-            'title' => __('Chargify Subdomain', 'dotstudio-pro'),
-            'desc' => __('The Chargify subdomain for your account, ex: acme if your site is acme.chargify.com.'),
-            'required' => array('opt-payment-method-choice','equals','0')
-        )
-    )
- ));
 
 /**
  * Search results options

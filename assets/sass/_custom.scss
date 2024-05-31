@@ -2,6 +2,16 @@
 .watch_now {
     @include watch_now;
 }
+.dsp-homepage-see-more a{
+    float: right;
+    width: 8rem;
+    margin-top: 1rem;
+    text-align: center;
+    color: #fff;
+    border-radius: 2rem;
+    font-weight: bold;
+    padding: 7px 13px;
+}
 .home-main-slider .slide_content {
     @include rem(padding-bottom, 20px);
     background: $black;
@@ -92,15 +102,18 @@
         margin: 0 -5px;
     }
     .slick-arrow {
-        @include rem(top, -70px);
+        @include rem(top, -58px);
         background: $black;
-        @include rem(width, 50px);
-        @include rem(height, 50px);
+        @include rem(width, 55px);
+        @include rem(height, 55px);
         &.slick-prev {
             @include rem(right, 70px);
             left: inherit;
             &:hover {
                 background: $green;
+            }
+            &:focus {
+                background: $black;
             }
             @include media-breakpoint-only(xs) {
                 left: 3px;
@@ -112,6 +125,9 @@
             @include rem(right, 0px);
             &:hover {
                 background: $green;
+            }
+            &:focus {
+                background: $black;
             }
             @include media-breakpoint-only(xs) {
                 top: 50%;

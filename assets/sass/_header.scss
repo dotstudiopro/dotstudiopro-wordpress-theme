@@ -1,6 +1,6 @@
 header {
-    @include rem(height, 112px);
-    @include rem(padding-top, 28px);
+    @include rem(height, 110px);
+    @include rem(padding-top, 24px);
     position: relative;
     z-index: 9999;
 
@@ -38,17 +38,16 @@ header {
             }
 
             @include media-breakpoint-down(sm) {
-                @include rem(padding-top, 16px);
+                @include rem(padding-top, 0px);
             }
         }
     }
 
     .site-logo {
-        line-height: 1.2;
 
         >img {
             @include respond-to(handhelds) {
-                @include rem(height, 87px);
+                @include rem(height, 70px);
             }
         }
     }
@@ -145,12 +144,10 @@ header {
             }
 
             a {
-                @include rem(font-size, 14px);
+                @include rem(font-size, 24px);
                 color: $white;
-                font-family: $font-family-Roboto;
                 font-display: $font-display;
                 @include rem(margin, 35px 32px);
-                text-transform: uppercase;
                 @include rem(padding-bottom, 34px);
 
                 @include media-breakpoint-down(md) {
@@ -252,7 +249,7 @@ header {
 
 /* fixed header */
 header.fixed-top.small-header {
-    @include rem(height, 80px);
+    @include rem(height, 96px);
     padding-top: 0.8rem;
     z-index: 9999;
 

@@ -6,7 +6,7 @@ if (have_posts()) {
         $theme_function = new Theme_Functions();
         $category_meta = get_post_meta(get_the_ID());
         $banner_image = ($dsp_theme_options['opt-category-poster-type'] == 'poster') ? $category_meta['cat_poster'][0] : $category_meta['cat_wallpaper'][0];
-        $banner = ($banner_image) ? $banner_image.'/1920/350' : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/1920/350';
+        $banner = ($banner_image) ? $banner_image.'/1920/350' : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/1920/350';
         if($dsp_theme_options['opt-display-webp-image'] == 1)
             $banner = $banner.'?webp=1';
         $category_title = (!empty($category_meta['cat_display_name'][0]) ? $category_meta['cat_display_name'][0] : get_the_title() );

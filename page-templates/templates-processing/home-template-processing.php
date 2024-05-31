@@ -81,7 +81,7 @@ foreach ($homepageData as $homepagedata_key => $data) {
 }
 // assign all the data into a final array with the default image
 $final_homepage_data['secondary_carousel_data'] = $secondary_carousel_data;
-$final_homepage_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+$final_homepage_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
     $final_homepage_data['default_image'] = $final_homepage_data['default_image'].'/'.$height;
 

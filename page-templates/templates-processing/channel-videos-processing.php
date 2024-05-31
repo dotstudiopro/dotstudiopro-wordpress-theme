@@ -49,7 +49,7 @@ foreach ($videos as $key => $video){
 }
 // assign all the data into a final array with the default image
 $final_videos_data['final_videos'] = $final_videos;
-$final_videos_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+$final_videos_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
     $final_videos_data['default_image'] = $final_videos_data['default_image'].'/'.$height;
 
