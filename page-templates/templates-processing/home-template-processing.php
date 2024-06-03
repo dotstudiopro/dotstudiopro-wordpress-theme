@@ -20,7 +20,21 @@ if ($main_carousel) {
     foreach ($main_carousel as $main_carousel_key => $slide) {
         $main_carousel_data[$main_carousel_key]['title'] = ($dsp_theme_options['opt-homepage-main-title-trim-word'] != 0) ? wp_trim_words($slide['title'], $dsp_theme_options['opt-homepage-main-title-trim-word']) : $slide['title'];
         $main_carousel_data[$main_carousel_key]['description'] = ($dsp_theme_options['opt-homepage-main-description-trim-word'] != 0) ? wp_trim_words($slide['description'], $dsp_theme_options['opt-homepage-main-description-trim-word']) : $slide['description'];
-        $main_carousel_data[$main_carousel_key]['image'] = $slide['image'] . '/' . $main_carousel_width . '/' . $main_carousel_height;
+        
+        if(isset($dsp_theme_options['opt-main-home-template']) && $dsp_theme_options['opt-main-home-template'] == 2){
+            $width = filter_var($dsp_theme_options['opt-main-home-template2-image-dimensions']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $ratio_width = filter_var($dsp_theme_options['opt-main-home-template2-image-aspect-ratio']['width'], FILTER_SANITIZE_NUMBER_INT);
+            $ratio_height = filter_var($dsp_theme_options['opt-main-home-template2-image-aspect-ratio']['height'], FILTER_SANITIZE_NUMBER_INT);
+            $ratio = $ratio_height / $ratio_width;
+            $image_attributes_main = dsp_build_responsive_images($slide['image'], $width, $ratio );
+            $main_carousel_data[$main_carousel_key]['image_attributes_srcset'] = $image_attributes_main['srcset'];
+            $main_carousel_data[$main_carousel_key]['image_attributes_sizes'] = $image_attributes_main['sizes'];
+            $main_carousel_data[$main_carousel_key]['image'] = $slide['image'] . '/' . $width;
+            $main_carousel_data[$main_carousel_key]['image_bg'] = $slide['image_bg'] . '/' . $width;
+        }
+        else{
+            $main_carousel_data[$main_carousel_key]['image'] = $slide['image'] . '/' . $main_carousel_width . '/' . $main_carousel_height;    
+        }
         if($dsp_theme_options['opt-display-webp-image'] == 1)
             $main_carousel_data[$main_carousel_key]['image'] = $main_carousel_data[$main_carousel_key]['image'] .'?webp=1';
         $main_carousel_data[$main_carousel_key]['url'] = $slide['url'];

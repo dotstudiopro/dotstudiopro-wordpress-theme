@@ -49,6 +49,167 @@
     }
 }
 
+.home-main-slider-template-2{
+    .slide {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .slick-prev, .slick-next{
+        top: 45%;
+    }
+
+    .slide_image {
+        position: relative;
+        width: 100%;
+        height:87vh;
+        @media (max-width: 767px) {
+            height:65vh;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            height:50vh;
+        }
+    }
+    .slide .slide_image .img{
+        -webkit-filter:blur(15px);
+        filter:blur(15px);
+        object-fit:cover;
+        -webkit-transition:opacity .4s ease-out 0s;
+        -moz-transition:opacity .4s ease-out 0s;
+        transition:opacity .4s ease-out 0s;
+        opacity:0.8;
+    }
+    .slideCard-inner {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        top: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 60px;
+        z-index: 3;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+        color: white;
+        box-sizing: border-box;
+        @media (max-width: 767px) {
+            -moz-box-orient: vertical;
+            -moz-box-direction: reverse;
+            flex-direction: column-reverse;
+            padding: 30px 30px 0;
+        }
+    }
+    .slideCard-inner-content{
+        width: 45%;
+        display: -moz-box;
+        display: flex;
+        -moz-box-orient: vertical;
+        -moz-box-direction: normal;
+        flex-direction: column;
+        margin-left: 5%;
+        position: relative;
+        z-index: 2;
+        @media (max-width: 767px) {
+            width: 100%;
+            margin-bottom: 10vh;
+        }
+        @media (max-width: 380px) {
+            width: 100%;
+            margin-bottom: 3vh;
+        }
+    }
+
+    .slideCard-title {
+        font-size: 38px;
+        line-height: 72px;
+        font-weight: 500;
+        color: #ececec;
+        text-shadow: 0 2px 6px #0006;
+        word-wrap: break-word;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        @media (max-width: 767px) {
+            white-space: nowrap;
+            font-size: 24px;
+            text-align: center;
+            display: block;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: unset;
+            text-overflow: ellipsis;
+            text-shadow: 0 2px 6px #0006;
+            padding-bottom: 5px;
+            line-height: 52px;
+        }
+    }
+
+    .slideCard-desc {
+        margin-top: 25px;
+        font-size: 18px;
+        color: #ddd;
+        line-height: 1.5;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        text-shadow: 0 3px 9px #0006;
+        overflow: hidden;
+        @media (max-width: 767px) {
+            margin-top: 0;
+            font-size: 12px;
+            line-height: 18px;
+            margin-bottom: 20px;
+            -webkit-line-clamp: 3;
+        }
+    }
+
+    .primary-btn{
+        margin-top: 20px;
+        white-space: nowrap;
+        font-size: 17px;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        padding: 5px 19px;
+        @media (max-width: 767px) {
+            background: #56bdaf;
+            margin-top: 20px;
+            display: none;
+        }
+    }
+
+    .slideCard-inner-img{
+        width: 50%;
+        display: -moz-box;
+        display: flex;
+        -moz-box-pack: center;
+        justify-content: center;
+        z-index: 2;
+        @media (max-width: 767px) {
+            width: 100%;
+            -moz-box-pack: center;
+            justify-content: center;
+        }
+    }
+
+    .slideCard-inner-img img{
+        -webkit-transition: opacity .4s ease-out 0s;
+        -moz-transition: opacity .4s ease-out 0s;
+        transition: opacity .4s ease-out 0s;
+        border-radius: 7px;
+        -webkit-box-shadow: 0 8px 15px #0006;
+        box-shadow: 0 8px 15px #0006;
+        object-fit: cover;
+        opacity: 1;
+        display: block;
+    }
+
+    
+}
+
 /* Other-categories -- this appears in multiple templates and should be global */
 .other-categories {
     h3 a{
