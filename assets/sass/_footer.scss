@@ -20,6 +20,7 @@ footer {
   }
   .copyright {
 		@include rem(padding-top, 55px);
+    @include rem(padding-left, 30px);
     p {
 			@include rem(font-size, 20px);
 			margin-left: 2px;

@@ -114,9 +114,6 @@
 		@include respond-to(tablet-landscape) {
 			width: 100%;
 		}
-		@include media-breakpoint-only(xs) {
-			width: auto;
-		}
 	}
 }
 
@@ -177,10 +174,6 @@
 }
 
 .slide.active {
-  -moz-box-shadow: inset 0 0 10px $green;
-  -webkit-box-shadow: inset 0 0 10px $green;
-  box-shadow: inset 0 0 10px $green;
-  padding: 15px;
   .slide_content h4 {
     color: $green;
   }

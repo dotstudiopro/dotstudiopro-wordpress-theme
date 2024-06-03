@@ -57,7 +57,7 @@ if ($channels) {
 }
 // assign all the data into a final array with the default image
 $final_channel_data['channels'] = $channels_data;
-$final_channel_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+$final_channel_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
     $final_channel_data['default_image'] = $final_channel_data['default_image'].'/'.$height;
 

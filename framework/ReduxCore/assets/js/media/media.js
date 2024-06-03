@@ -1,223 +1,244 @@
-/*global redux_change, wp, redux, libFilter */
+/*global redux_change, wp, redux */
 
 /**
  * Media Uploader
  * Dependencies        : jquery, wp media uploader
  * Feature added by    : Smartik - http://smartik.ws/
- * Date                  : 05.28.2013
+ * Date                : 05.28.2013
+ *
+ * Modified by         : Kevin Provance (kprovance/svl-studios)
+ * Date                : 07.07.2021
  */
 
-(function($){
-    "use strict";
+( function ( $ ) {
+	'use strict';
 
-    redux.field_objects         = redux.field_objects || {};
-    redux.field_objects.media   = redux.field_objects.media || {};
+	var isFiltered;
 
-    var isFiltered;
+	redux.field_objects       = redux.field_objects || {};
+	redux.field_objects.media = redux.field_objects.media || {};
 
-    redux.field_objects.media.init = function( selector ) {
-        if ( !selector ) {
-            selector = $( document ).find( ".redux-group-tab:visible" ).find( '.redux-container-media:visible' );
-        }
-        $( selector ).each(
-            function() {
-                var el = $( this );
-                var parent = el;
+	redux.field_objects.media.init = function ( selector ) {
+		if ( ! selector ) {
+			selector = $( document ).find( '.redux-group-tab:visible' ).find( '.redux-container-media:visible' );
+		}
 
-                if ( !el.hasClass( 'redux-field-container' ) ) {
-                    parent = el.parents( '.redux-field-container:first' );
-                }
-                if ( parent.is( ":hidden" ) ) { // Skip hidden fields
-                    return;
-                }
-                if ( parent.hasClass( 'redux-field-init' ) ) {
-                    parent.removeClass( 'redux-field-init' );
-                } else {
-                    return;
-                }
+		$( selector ).each(
+			function () {
+				var el     = $( this );
+				var parent = el;
 
-                isFiltered = false;
+				if ( ! el.hasClass( 'redux-field-container' ) ) {
+					parent = el.parents( '.redux-field-container:first' );
+				}
 
-                // Remove the image button
-                el.find( '.remove-image, .remove-file' ).unbind( 'click' ).on(
-                    'click', function() {
-                        redux.field_objects.media.removeFile( $( this ).parents( 'fieldset.redux-field:first' ) );
-                    }
-                );
-                // Upload media button
-                el.find( '.media_upload_button' ).unbind().on(
-                    'click', function( event ) {
-                        redux.field_objects.media.addFile( event, $( this ).parents( 'fieldset.redux-field:first' ) );
-                    }
-                );
-            }
-        );
-    };
+				if ( parent.is( ':hidden' ) ) {
+					return;
+				}
 
-    // Add a file via the wp.media function
-    redux.field_objects.media.addFile = function( event, selector ) {
-        event.preventDefault();
+				if ( parent.hasClass( 'redux-field-init' ) ) {
+					parent.removeClass( 'redux-field-init' );
+				} else {
+					return;
+				}
 
-        var frame;
-        var jQueryel = $( this );
-        var libFilter;
+				if ( undefined !== redux.field_objects.image_filters) {
+					redux.field_objects.image_filters.sliderInit( el, 'media' );
+					redux.field_objects.image_filters.checkbox( el, 'media' );
+				}
 
-        // If the media frame already exists, reopen it.
-        if ( frame ) {
-            frame.open();
-            return;
-        }
+				isFiltered = false;
 
-        // Get library filter data
-        var filter = $( selector ).find('.library-filter').data('lib-filter');
+				// Remove the image button.
+				el.find( '.remove-image, .remove-file' ).off( 'click' ).on(
+					'click',
+					function () {
+						redux.field_objects.media.removeFile( $( this ).parents( 'fieldset.redux-field:first' ) );
+					}
+				);
 
-        // Must exist to do decoding
-        if (filter !== undefined) {
-            if (filter !== ''){
-                libFilter = [];
-                isFiltered = true;
-                filter = decodeURIComponent(filter);
-                filter = JSON.parse(filter);
+				// Upload media button.
+				el.find( '.media_upload_button' ).off().on(
+					'click',
+					function ( event ) {
+						redux.field_objects.media.addFile( event, $( this ).parents( 'fieldset.redux-field:first' ) );
+					}
+				);
+			}
+		);
+	};
 
-                $.each(filter, function(index, value) {
-                    libFilter.push(value);
-                });
-            }
-        }
+	// Add a file via the wp.media function.
+	redux.field_objects.media.addFile = function ( event, selector ) {
+		var frame;
+		var libFilter;
+		var filter;
+		var data;
+		var thumbSrc;
+		var height;
+		var key;
+		var object;
 
-        // Create the media frame.
-        frame = wp.media(
-            {
-                multiple: false,
-                library: {
-                    type: libFilter //Only allow images
-                },
+		var jQueryel = $( this );
 
-                // Set the title of the modal.
-                title: jQueryel.data( 'choose' ),
+		event.preventDefault();
 
-                // Customize the submit button.
-                button: {
-                    // Set the text of the button.
-                    text: jQueryel.data( 'update' )
-                    // Tell the button not to close the modal, since we're
-                    // going to refresh the page when the image is selected.
-                }
-            }
-        );
+		// If the media frame already exists, reopen it.
+		if ( frame ) {
+			frame.open();
+			return;
+		}
 
-        // When an image is selected, run a callback.
-        frame.on(
-            'select', function() {
+		// Get library filter data.
+		filter = $( selector ).find( '.library-filter' ).data( 'lib-filter' );
 
-                // Grab the selected attachment.
-                var attachment = frame.state().get( 'selection' ).first();
-                frame.close();
+		// Must exist to do decoding.
+		if ( undefined !== filter ) {
+			if ( '' !== filter ) {
+				libFilter  = [];
+				isFiltered = true;
+				filter     = decodeURIComponent( filter );
+				filter     = JSON.parse( filter );
 
-                var data = $( selector ).find('.data').data();
+				$.each(
+					filter,
+					function ( index, value ) {
+						index = null;
+						libFilter.push( value );
+					}
+				);
+			}
+		}
 
-                if ( typeof redux.field_objects.media === 'undefined' || typeof redux.field_objects.media === undefined ) {
-                    redux.field_objects.media = {};
-                }
+		// Create the media frame.
+		frame = wp.media(
+			{ multiple: false,
+				library: { type: libFilter },  // Only allow images.
 
-                if ( data === undefined || data.mode === 'undefined' ) {
-                    data = {};
-                    data.mode = "image";
-                }
+				// Set the title of the modal.
+				title: jQueryel.data( 'choose' ),
 
-                if (isFiltered === true) {
-                    data.mode = 0;
-                }
+				// Customize the submit button.
+				button: {
 
-                if (data.mode === 0) {
+					// Set the text of the button.
+					text: jQueryel.data( 'update' )
 
-                } else {
-                    if ( data.mode !== false) {
-                        if (attachment.attributes.type !== data.mode) {
-                            if (attachment.attributes.subtype !== data.mode ) {
-                                return;
-                            }
-                        }
-                    }
-                }
-console.log(attachment);
+					// Tell the button not to close the modal, since we're
+					// going to refresh the page when the image is selected.
+				}
+			}
+		);
 
-                selector.find( '.upload' ).val( attachment.attributes.url );
-                selector.find( '.upload-id' ).val( attachment.attributes.id );
-                selector.find( '.upload-height' ).val( attachment.attributes.height );
-                selector.find( '.upload-width' ).val( attachment.attributes.width );
-                selector.find( '.upload-title' ).val( attachment.attributes.title );
-                selector.find( '.upload-caption' ).val( attachment.attributes.caption );
-                selector.find( '.upload-alt' ).val( attachment.attributes.alt );
-                selector.find( '.upload-description' ).val( attachment.attributes.description );
+		// When an image is selected, run a callback.
+		frame.on(
+			'select',
+			function () {
 
-                redux_change( $( selector ).find( '.upload-id' ) );
+				// Grab the selected attachment.
+				var attachment = frame.state().get( 'selection' ).first();
+				frame.close();
 
-                var thumbSrc = attachment.attributes.url;
-                if ( typeof attachment.attributes.sizes !== 'undefined' && typeof attachment.attributes.sizes.thumbnail !== 'undefined' ) {
-                    thumbSrc = attachment.attributes.sizes.thumbnail.url;
-                } else if ( typeof attachment.attributes.sizes !== 'undefined' ) {
-                    var height = attachment.attributes.height;
+				data = $( selector ).find( '.data' ).data();
 
-                    for ( var key in attachment.attributes.sizes ) {
-                        var object = attachment.attributes.sizes[key];
+				if ( 'undefined' === typeof redux.field_objects.media || undefined === typeof redux.field_objects.media ) {
+					redux.field_objects.media = {};
+				}
 
-                        if ( object.height < height ) {
-                            height = object.height;
-                            thumbSrc = object.url;
-                        }
-                    }
-                } else {
-                    thumbSrc = attachment.attributes.icon;
-                }
+				if ( undefined === data || 'undefined' === data.mode ) {
+					data      = {};
+					data.mode = 'image';
+				}
 
-                selector.find( '.upload-thumbnail' ).val( thumbSrc );
-                if ( !selector.find( '.upload' ).hasClass( 'noPreview' ) ) {
-                    selector.find( '.screenshot' ).empty().hide().append( '<img class="redux-option-image" src="' + thumbSrc + '">' ).slideDown( 'fast' );
-                }
+				if ( true === isFiltered ) {
+					data.mode = 0;
+				}
 
-                //selector.find('.media_upload_button').unbind();
-                selector.find( '.remove-image' ).removeClass( 'hide' );//show "Remove" button
-                selector.find( '.redux-background-properties' ).slideDown();
-            }
-        );
+				if ( 0 === data.mode ) {
 
-        // Finally, open the modal.
-        frame.open();
-    };
+				} else {
+					if ( false !== data.mode ) {
+						if ( attachment.attributes.type !== data.mode ) {
+							if ( attachment.attributes.subtype !== data.mode ) {
+								return;
+							}
+						}
+					}
+				}
 
-    // Function to remove the image on click. Still requires a save
-    redux.field_objects.media.removeFile = function( selector ) {
+				selector.find( '.upload' ).val( attachment.attributes.url );
+				selector.find( '.upload-id' ).val( attachment.attributes.id );
+				selector.find( '.upload-height' ).val( attachment.attributes.height );
+				selector.find( '.upload-width' ).val( attachment.attributes.width );
 
-        // This shouldn't have been run...
-        if ( !selector.find( '.remove-image' ).addClass( 'hide' ) ) {
-            return;
-        }
+				redux_change( $( selector ).find( '.upload-id' ) );
 
-        selector.find( '.remove-image' ).addClass( 'hide' );//hide "Remove" button
-        selector.find( '.upload' ).val( '' );
-        selector.find( '.upload-id' ).val( '' );
-        selector.find( '.upload-height' ).val( '' );
-        selector.find( '.upload-width' ).val( '' );
-        selector.find( '.upload-title' ).val( '' );
-        selector.find( '.upload-caption' ).val( '' );
-        selector.find( '.upload-alt' ).val( '' );
-        selector.find( '.upload-description' ).val( '' );
-        selector.find( '.upload-thumbnail' ).val( '' );
-        redux_change( $( selector ).find( '.upload-id' ) );
-        selector.find( '.redux-background-properties' ).hide();
+				thumbSrc = attachment.attributes.url;
 
-        var screenshot = selector.find( '.screenshot' );
+				if ( 'undefined' !== typeof attachment.attributes.sizes && 'undefined' !== typeof attachment.attributes.sizes.thumbnail ) {
+					if ( 'thumbnail' === data.previewSize ) {
+						thumbSrc = attachment.attributes.sizes.thumbnail.url;
+					}
+				} else if ( 'undefined' !== typeof attachment.attributes.sizes ) {
+					height = attachment.attributes.height;
 
-        // Hide the screenshot
-        screenshot.slideUp();
+					for ( key in attachment.attributes.sizes ) {
+						if ( attachment.attributes.sizes.hasOwnProperty( key ) ) {
+							object = attachment.attributes.sizes[ key ];
 
-        selector.find( '.remove-file' ).unbind();
+							if ( object.height < height ) {
+								height   = object.height;
+								thumbSrc = object.url;
+							}
+						}
+					}
+				} else {
+					thumbSrc = attachment.attributes.icon;
+				}
 
-        // We don't display the upload button if .upload-notice is present
-        // This means the user doesn't have the WordPress 3.5 Media Library Support
-        if ( selector.find( '.section-upload .upload-notice' ).length > 0 ) {
-            selector.find( '.media_upload_button' ).remove();
-        }
-    };
-})( jQuery );
+				selector.find( '.upload-thumbnail' ).val( thumbSrc );
+				if ( ! selector.find( '.upload' ).hasClass( 'noPreview' ) ) {
+					selector.find( '.screenshot' ).empty().hide().append( '<img class="redux-option-image" src="' + thumbSrc + '">' ).slideDown( 'fast' );
+				}
+
+				selector.find( '.remove-image' ).removeClass( 'hide' ); // Show "Remove" button.
+				selector.find( '.redux-background-properties' ).slideDown();
+			}
+		);
+
+		// Finally, open the modal.
+		frame.open();
+	};
+
+	// Function to remove the image on click. Still requires a save.
+	redux.field_objects.media.removeFile = function ( selector ) {
+		var screenshot;
+
+		// This shouldn't have been run...
+		if ( ! selector.find( '.remove-image' ).addClass( 'hide' ) ) {
+			return;
+		}
+
+		selector.find( '.remove-image' ).addClass( 'hide' ); // Hide "Remove" button.
+		selector.find( '.upload' ).val( '' );
+		selector.find( '.upload-id' ).val( '' );
+		selector.find( '.upload-height' ).val( '' );
+		selector.find( '.upload-width' ).val( '' );
+		selector.find( '.upload-thumbnail' ).val( '' );
+		redux_change( $( selector ).find( '.upload-id' ) );
+		selector.find( '.redux-background-properties' ).hide();
+
+		screenshot = selector.find( '.screenshot' );
+
+		// Hide the screenshot.
+		screenshot.slideUp();
+
+		selector.find( '.remove-file' ).off();
+
+		// We don't display the upload button if .upload-notice is present.
+		// This means the user doesn't have the WordPress 3.5 Media Library Support.
+		if ( selector.find( '.section-upload .upload-notice' ).length > 0 ) {
+			selector.find( '.media_upload_button' ).remove();
+		}
+	};
+} )( jQuery );

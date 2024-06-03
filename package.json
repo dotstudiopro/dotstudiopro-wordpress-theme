@@ -12,15 +12,15 @@
   "author": "dotstudioPRO",
   "license": "ISC",
   "dependencies": {
-    "fs-extra": "^7.0.1",
-    "gulp": "^4.0.0",
-    "gulp-clean-css": "^4.0.0",
+    "fs-extra": "^11.2.0",
+    "gulp": "^5.0.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-minify": "^3.1.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.5"
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0"
   },
   "devDependencies": {
     "gulp-sass": "^5.1.0",
-    "sass": "^1.56.2"
+    "sass": "^1.75.0"
   }
 }

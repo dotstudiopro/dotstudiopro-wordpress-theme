@@ -10,6 +10,42 @@ get_header();
 ?>
 
 <!-- Home page Main carousal section start-->
+<?php  if(isset($dsp_theme_options['opt-main-home-template']) && $dsp_theme_options['opt-main-home-template'] == 2):?>
+<div class="row no-gutters home-main-slider-template-2 claerfix">
+    <div class="col-sm-12 ">
+        <?php if (isset($final_homepage_data['main_carousel']) && !empty($final_homepage_data['main_carousel'])) { ?>
+            <div class="columns slick-wrapper small-12 slider" >
+                <?php foreach ($final_homepage_data['main_carousel'] as $slide) { ?>
+                    <div class="slide">
+                        <?php if(isset($dsp_theme_options['opt-main-home-bg-poster-display']) && $dsp_theme_options['opt-main-home-bg-poster-display'] == true):?>
+                            <div class="slide_image">
+                                <img class="img img-fluid w-100" src="<?php echo $slide['image_bg'] ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>">
+                            </div>
+                        <?php else: ?>
+                            <div class="slide_image" style="background: <?php echo $dsp_theme_options['opt-main-home-bg-color']; ?>;">
+                            </div>
+                        <?php endif; ?>
+                        <div class="slideCard-inner">
+                            <div class="slideCard-inner-content">
+                                <div class="slideCard-title"><?php echo $slide['title'];; ?></div>
+                                <div class="slideCard-desc"><?php echo $slide['description']; ?></div>
+                                <a href="<?php echo $slide['url']; ?>" class="btn btn-primary btn-ds-primary primary-btn">Watch Now</a>
+                            </div>
+                            <div class="slideCard-inner-img">
+                                <?php if(dsp_wp_is_mobile()): ?>
+                                    <a href="<?php echo $slide['url']; ?>"><img src="<?php echo $final_homepage_data['default_image']; ?>" class="lazy" data-src="<?php echo $slide['image']; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>" srcset="<?php echo $slide['image_attributes_srcset']; ?>" sizes="<?php echo $slide['image_attributes_sizes']; ?>" style="width: <?php echo $dsp_theme_options['opt-main-home-template2-image-mobile-dimensions']['width']; ?>; height: <?php echo $dsp_theme_options['opt-main-home-template2-image-mobile-dimensions']['height']; ?>;"></a>
+                                <?php else: ?>
+                                <img src="<?php echo $final_homepage_data['default_image']; ?>" class="lazy" data-src="<?php echo $slide['image']; ?>" title="<?php echo $slide['title']; ?>" alt="<?php echo $slide['title']; ?>" srcset="<?php echo $slide['image_attributes_srcset']; ?>" sizes="<?php echo $slide['image_attributes_sizes']; ?>" style="width: <?php echo $dsp_theme_options['opt-main-home-template2-image-dimensions']['width']; ?>; height: <?php echo $dsp_theme_options['opt-main-home-template2-image-dimensions']['height']; ?>;">
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+    </div>
+</div><!-- no-gutters -->
+<?php else: ?>    
 <div class="row no-gutters home-main-slider claerfix">
     <div class="col-sm-12 ">
         <?php if (isset($final_homepage_data['main_carousel']) && !empty($final_homepage_data['main_carousel'])) { ?>
@@ -35,6 +71,7 @@ get_header();
         <?php } ?>
     </div>
 </div><!-- no-gutters -->
+<?php endif; ?>
 <!-- Home page Main carousal section end-->
 
 <!-- Home page other carousal section start-->

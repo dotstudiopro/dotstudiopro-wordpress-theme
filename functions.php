@@ -4,13 +4,14 @@
  * A script/plugin that communicates with our WP Updater service to determine theme updates
  */
 require 'theme-update-checker/theme-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker(
                 'https://updates.wordpress.dotstudiopro.com/wp-update-server/?action=get_metadata&slug=dspdev-main-theme', __FILE__, 'dspdev-main-theme'
 );
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
-$theme_data = get_theme_data(get_template_directory().'/style.css');
-$url = "https://wordpress-assets.dotstudiopro.com/main-theme/v".$theme_data['Version'];
+$theme_data = wp_get_theme();
+$url = "https://wordpress-assets.dotstudiopro.com/main-theme/v".$theme_data->Version;
 $buster = date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css'));
 if (defined('DOTSTUDIOPRO_DEV')) {
     $url = get_template_directory_uri() . "/assets";
@@ -103,6 +104,26 @@ if (!isset($redux_owd) && file_exists(dirname(__FILE__) . '/framework/dsp_option
 
 // initialize the the theme's option
 Redux::init('dsp_theme_options');
+
+// Add the action so it will delete all transients on save button click
+add_action('redux/options/dsp_theme_options/saved', 'delete_my_transients_on_save');
+
+function delete_my_transients_on_save() {
+    // Get all transients
+    global $wpdb;
+    $transients = $wpdb->get_results("
+                        SELECT option_name
+                        FROM $wpdb->options
+                        WHERE option_name LIKE '_transient_dotstudiopro_%'
+                   ");
+
+    // Delete each transient
+    foreach ($transients as $transient) {
+        $transient_name = str_replace('_transient_', '', $transient->option_name);
+        // Delete the transient
+        $deleted = delete_transient($transient_name);
+    }
+}
 
 /*
  * checking if user is logged
@@ -216,7 +237,7 @@ function bootstrapstarter_enqueue_styles() {
 
     wp_enqueue_style('bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', array(), null);
 
-    wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+    wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css');
 
     wp_enqueue_style('redux-global', get_template_directory_uri() . '/framework/dsp_options/redux-global.css');
 
@@ -277,7 +298,7 @@ function dsp_bootstrap_process_defer() {
     global $deferred_scripts;
 
     $scripts = "<script>
-                    var dsp_bootstrap_opts = document.querySelector('style.options-output');";
+                    var dsp_bootstrap_opts = document.querySelector('style.redux-options-output');";
     if (!is_array($deferred_scripts)) return $scripts;
     foreach($deferred_scripts as $url) {
         // Make sure we have what we need
@@ -385,7 +406,7 @@ function register_theme_scripts() {
     wp_localize_script('custom', 'jsVariable', array('ajaxUrl' => admin_url('admin-ajax.php'), 'company_id' => $configs->company_id, 'subdomain' => $configs->subdomain  ));
 }
 
-add_action('wp_enqueue_scripts', 'register_theme_scripts');
+add_action('wp_enqueue_scripts', 'register_theme_scripts', 99);
 
 // function to register and enqueue all other styles
 function register_theme_styles() {
@@ -636,7 +657,7 @@ function autocomplete() {
                     else{
                         $image_type = $data['wallpaper'];
                     }
-                    $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $image = (!empty($image_type)) ? $image_type : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                     $title = 'Channels';
 
@@ -658,7 +679,7 @@ function autocomplete() {
             else:
                 foreach ($search['videos'] as $key => $data):
                     $url = get_site_url() . '/video/' . $data['_id'];
-                    $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                    $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                     $is_product = 0;
                     $title = 'Videos';
                     $items['channel'][$key]['name'] = $data['title'];
@@ -716,7 +737,7 @@ function search_suggesion() {
                     $image_type = $data['wallpaper'];
                 }
                 //$image_type = ($dsp_theme_options['opt-search-channel-poster-type'] == 'poster') ? $data['poster'] : $data['spotlight_poster'];
-                $image = (!empty($image_type)) ? $image_type : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $image = (!empty($image_type)) ? $image_type : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = (isset($data['is_product'])) ? $data['is_product'] : 0;
                 $title = 'Channels';
                 $items[$key]['name'] = $data['title'];
@@ -736,7 +757,7 @@ function search_suggesion() {
         else:
             foreach ($search['videos'] as $key => $data):
                 $url = get_site_url() . '/video/' . $data['_id'];
-                $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1';
+                $image = (isset($data['thumb'])) ? $data['thumb'] : 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1';
                 $is_product = 0;
                 $title = 'Videos';
                 $items[$key]['name'] = $data['title'];

@@ -65,7 +65,7 @@ if (!empty($recommendation_content)){
 }
 // assign all the data into a final array with the default image
 $final_related_content_data['related_content_data'] = $related_content_data;
-$final_related_content_data['default_image'] = 'https://images.dotstudiopro.com/5bd9ea4cd57fdf6513eb27f1/'.$width;
+$final_related_content_data['default_image'] = 'https://defaultdspmedia.cachefly.net/images/5bd9ea4cd57fdf6513eb27f1/'.$width;
 if(isset($height))
     $final_related_content_data['default_image'] = $final_related_content_data['default_image'].'/'.$height;
 
