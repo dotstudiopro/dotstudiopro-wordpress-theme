@@ -11,7 +11,12 @@ $myUpdateChecker = PucFactory::buildUpdateChecker(
 // The base url for theme assets; note that Bootstrap and some other things
 // pull from a different url
 $theme_data = wp_get_theme();
-$url = "https://wordpress-assets.dotstudiopro.com/main-theme/v".$theme_data->Version;
+$parent_theme = $theme_data->parent();
+if ($parent_theme)
+    $theme_version = $parent_theme->Version;
+else
+    $theme_version = $theme_data->Version;
+$url = "https://wordpress-assets.dotstudiopro.com/main-theme/v".$theme_version;
 $buster = date("YmdHi", filemtime( __DIR__ . '/assets/css/ds-global.min.css'));
 if (defined('DOTSTUDIOPRO_DEV')) {
     $url = get_template_directory_uri() . "/assets";
