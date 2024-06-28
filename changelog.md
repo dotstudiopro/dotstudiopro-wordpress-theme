@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.1] - 2024-06-28
+
+### Fixed
+
+- Fixed theme version issue for wordpress assets
+
 ## [3.0.0] - 2024-04-22
 
 ### Updated
