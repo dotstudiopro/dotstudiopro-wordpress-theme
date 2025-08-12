@@ -26,20 +26,15 @@ if (!empty($channel_slug) && !empty($video_slug)) {
         $main_channel_meta = get_post_meta($channel_object->ID);
     }
     $chnl_title = $channel_object->post_title;
-    if (isset($main_channel_meta['chnl_categories'][0])) {
-        $categories = array_filter(explode(',', $main_channel_meta['chnl_categories'][0]));
-        foreach ($categories as $channel_cat) {
-            $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
-            $cache_key = "single_video_categories_" . $channel_cat;
-            $slug_query = $theme_function->query_categories_posts($args, $cache_key);
-            if ($slug_query) {
-                $plateform_web = true;
-                break;
-            }
-        }
-    } else {
+    $dspro_channel_id = isset($main_channel_meta['dspro_channel_id'][0]) ? $main_channel_meta['dspro_channel_id'][0] : '';
+    // Code to check channel is avilable on web platform or not
+    $matched_categories = $theme_function->get_categories_by_channel($dspro_channel_id);
+    if ($matched_categories->have_posts()) {
         $plateform_web = true;
+    }else{
+        $plateform_web = false;
     }
+
     if ($plateform_web)
         include(locate_template('page-templates/templates-part/video/videos.php'));
     else{

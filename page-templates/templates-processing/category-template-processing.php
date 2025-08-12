@@ -42,7 +42,7 @@ else {
 // loop through categories and add the required values into an array which we need to display on the page like title, link, banner, etc. 
 if ($categories) {
     foreach ($categories as $key => $category) {
-        $channels_args = $theme_function->channels_args($category->post_name);
+        $channels_args = $theme_function->category_channels_args($category->post_name);
         $cache_key = "categories_channel_" . $category->post_name;
         $channels = $theme_function->query_categories_posts($channels_args, $cache_key);
         if($channels){

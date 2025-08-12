@@ -271,66 +271,64 @@ class Theme_Functions {
         $cache = get_transient($cache_key);
         if ($cache) return $cache;
 
-        $channels_args = array(
-            'post_type' => 'channel',
-            'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
-                    'key' => 'chnl_categories',
-                    'value' => ',' . $category_name . ',',
-                    'compare' => 'LIKE',
-                )
-            )
-        );
-
-        $channels = new WP_Query($channels_args);
-
         $category = get_page_by_path($category_name, OBJECT, 'channel-category');
         // Make sure we actually have something here to show, or else this throws an error
         if (empty($category->ID))
             return array();
 
         $category_meta = get_post_meta($category->ID, 'cat_id');
+        $category_channels = get_post_meta($category->ID, 'categories_chnl');
         $category_id = $category_meta[0];
 
+        /////////// New Code
+
+        $channel_ids = array_values(array_filter(explode(',', $category_channels[0])));
+
+        $channels_args = array(
+            'post_type' => 'channel',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'dspro_channel_id',
+                    'value' => $channel_ids,
+                    'compare' => 'IN',
+                )
+            )
+        );
+
+        $channels = new WP_Query($channels_args);
+
         if ($channels->have_posts()) {
-            $channels_array = array();
-            $i = 999;
-            foreach ($channels->posts as $channel):
-                $post_meta = get_post_meta($channel->ID);
-                $geo = maybe_unserialize($post_meta['dspro_channel_geo'][0]);
-                if (count($geo) && !in_array("ALL", $geo) && !in_array($this->country, $geo)) {
-                    // If the user doesn't have access to this channel due to
-                    // location, we don't need to show it to them in the category
-                    continue;
-                }
-                $channel_weightings = !empty($post_meta['chnl_weightings']) ? maybe_unserialize($post_meta['chnl_weightings'][0]) : array();
-                if (!empty($channel_weightings)) {
-                    $weightings = maybe_unserialize($channel_weightings);
-                    $channel_add = false;
-                    if(is_array($weightings)){
-                        foreach ($weightings as $weighting):
-                            foreach ($weighting as $key => $value):
-                                if ($key == $category_id) {
-                                    $channels_array[$value] = $channel;
-                                    $channel_add = true;
-                                }
-                            endforeach;
-                        endforeach;
+            // First create a mapping of channel_id to channel post
+            $channel_map = array();
+            foreach ($channels->posts as $channel) {
+                $channel_id = get_post_meta($channel->ID, 'dspro_channel_id', true);
+                $channel_map[$channel_id] = $channel;
+            }
+
+            // Then build the ordered array based on the original $channel_ids order
+            $ordered_channels = array();
+            $i = 999; // Your starting index
+
+            foreach ($channel_ids as $channel_id) {
+                if (isset($channel_map[$channel_id])) {
+                    $channel = $channel_map[$channel_id];
+                    $post_meta = get_post_meta($channel->ID);
+                    $geo = maybe_unserialize($post_meta['dspro_channel_geo'][0]);
+
+                    if (count($geo) && !in_array("ALL", $geo) && !in_array($this->country, $geo)) {
+                        continue; // Skip geo-restricted channels
                     }
-                    if ($channel_add == false)
-                        $channels_array[$i] = $channel;
+
+                    $ordered_channels[$i] = $channel;
+                    $i++;
                 }
-                else {
-                    $channels_array[$i] = $channel;
-                }
-                $i++;
-            endforeach;
-            ksort($channels_array);
-            set_transient($cache_key, $channels_array, 3600);
-            return $channels_array;
-        } else
+            }
+            set_transient($cache_key, $ordered_channels, 3600);
+            return $ordered_channels;
+        } else {
             return array();
+        }
     }
 
     /**
@@ -760,6 +758,34 @@ class Theme_Functions {
     }
 
     /**
+     * Get categories linked to a specific channel by checking the 'categories_chnl' meta key.
+     * Assumes channel IDs are stored as comma-separated strings.
+     *
+     * @since 2.0.0
+     *
+     * @param string $channel_id The ID of the channel to check.
+     * @return WP_Query The query result containing matched categories (if any).
+     */
+    public function get_categories_by_channel($channel_id) {
+        $args = array(
+            'post_type'      => 'channel-category',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'meta_query'     => array(
+                array(
+                    'key'     => 'categories_chnl',
+                    'value'   => $channel_id,
+                    'compare' => 'LIKE',
+                ),
+            ),
+        );
+
+        return new WP_Query($args);
+    }
+
+
+
+    /**
      * Category args for Home page
      * @since 2.0.0
      *
@@ -800,6 +826,42 @@ class Theme_Functions {
                     'key' => 'chnl_categories',
                     'value' => ',' . $args . ',',
                     'compare' => 'LIKE',
+                )
+            )
+        );
+        return $channels_args;
+    }
+
+    /**
+     * Category Channel args for category template page
+     * @since 2.0.0
+     *
+     * @param object $args The arguments for the query
+     * @return object Query result
+     */
+    public function category_channels_args($args){
+
+        $category = get_page_by_path($args, OBJECT, 'channel-category');
+        // Make sure we actually have something here to show, or else this throws an error
+        if (empty($category->ID))
+            return array();
+
+        $category_meta = get_post_meta($category->ID, 'cat_id');
+        $category_channels = get_post_meta($category->ID, 'categories_chnl');
+        $category_id = $category_meta[0];
+
+        /////////// New Code
+
+        $channel_ids = array_values(array_filter(explode(',', $category_channels[0])));
+
+        $channels_args = array(
+            'post_type' => 'channel',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'dspro_channel_id',
+                    'value' => $channel_ids,
+                    'compare' => 'IN',
                 )
             )
         );
