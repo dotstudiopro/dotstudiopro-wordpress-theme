@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.2] - 2025-08-12
+
+### Updated
+
+- Restructured data model: Channels are now stored within categories instead of categories within channels.
+
 ## [3.0.1] - 2024-06-28
 
 ### Fixed
