@@ -38,25 +38,13 @@ if($country_code && !in_array("ALL", $dspro_channel_geo) && !in_array($country_c
     $channel_geoblock = true;
 }
 
+$chnl_title = get_the_title();
 // Code to check channel is avilable on web platform or not
-if (isset($channel_meta['chnl_categories'][0])) {
-    $categories = array_filter(explode(',', $channel_meta['chnl_categories'][0]));
-    $chnl_title = get_the_title();
-
-    // Condition to check platform is web true or not for this channel category
-    $plateform_web = false;
-    foreach ($categories as $channel_cat) {
-        $args = array('name' => $channel_cat, 'post_type' => 'channel-category');
-        $cache_key = "single_video_categories_" . $channel_cat;
-        $slug_query = $theme_function->query_categories_posts($args, $cache_key);
-        if ($slug_query) {
-            $plateform_web = true;
-            break;
-        }
-    }
-} else {
-    $chnl_title = get_the_title();
+$matched_categories = $theme_function->get_categories_by_channel($dspro_channel_id);
+if ($matched_categories->have_posts()) {
     $plateform_web = true;
+}else{
+    $plateform_web = false;
 }
 
 // Code to check parent channel is unlock or not
